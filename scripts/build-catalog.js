@@ -53,7 +53,9 @@ const table = (items, link, label) =>
     ...items.map((s) => `| [\`${label(s)}\`](${link(s)}) | ${s.category} | ${s.risk} | ${firstSentence(s.description)} |`),
   ].join('\n');
 
+const plural = (n, one, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
 const sections = {
+  counts: `<p align="center">${[plural(skills.length, 'skill'), plural(agents.length, 'agent'), plural(commands.length, 'command'), plural(rules.length, 'rule'), plural(hooks.length, 'hook'), plural(mcp.length, 'MCP server')].join(' · ')}</p>`,
   catalog: table(skills, (s) => `skills/${s.dir}/SKILL.md`, (s) => s.dir),
   agents: table(agents, (a) => `agents/${a.dir}/AGENT.md`, (a) => a.dir),
   commands: table(commands, (c) => `commands/${c.dir}.md`, (c) => `/${c.dir}`),

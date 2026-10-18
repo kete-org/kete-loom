@@ -7,13 +7,17 @@
 <p align="center"><strong>Curated, tested Agent Skills, subagents and commands for coding agents.</strong><br/>
 One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code and Kiro.</p>
 
+<!-- counts:start -->
+<p align="center">211 skills · 59 agents · 46 commands · 19 rules · 12 hooks · 20 MCP servers</p>
+<!-- counts:end -->
+
 <!-- languages:start -->
 <p align="center"><a href="README.md">English</a> · <a href="docs/i18n/README.ar.md">العربية</a> · <a href="docs/i18n/README.de.md">Deutsch</a> · <a href="docs/i18n/README.es.md">Español</a> · <a href="docs/i18n/README.fr.md">Français</a> · <a href="docs/i18n/README.ja.md">日本語</a> · <a href="docs/i18n/README.pt-BR.md">Português (Brasil)</a> · <a href="docs/i18n/README.sw.md">Kiswahili</a> · <a href="docs/i18n/README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
 <!-- languages:end -->
 
 ---
 
-Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It ships three kinds of items: **skills** (folders the agent loads when relevant), **agents** (subagents it delegates to) and **commands** (slash commands you type). It takes a quality-first approach: fewer items, and every one of them is
+Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It ships **skills** (folders the agent loads when relevant), **agents** (subagents it delegates to), **commands** (slash commands you type), **rules** (short always-on guidance), **hooks** (checks that run around the agent's tool calls and when it finishes) and **MCP server configs**. It takes a quality-first approach: fewer items, and every one of them is
 
 - **portable**: uses the strictest common subset of the [Agent Skills](https://agentskills.io) format, so no host rejects it;
 - **tested**: skills and agents ship trigger evals that check they load for the right requests and stay out of the way for the wrong ones, and the discipline skills add behaviour evals that check the agent actually follows them under pressure, compared with a run without the skill;
@@ -84,6 +88,22 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | Any skills CLI | `npx skills add Kete-org/kete-loom` |
 
 Plugin installs update through the host's own plugin manager. Use either a plugin install or the `npx` installer for a given host, not both, or the host may list each skill twice.
+
+## A development method
+
+Install `--profile method` for a complete way of working, from idea to merged branch, with a review gate at each step:
+
+| Step | Use | What happens |
+|---|---|---|
+| 1. Design | `/brainstorm` (`design-brainstorming`) | One question at a time, two or three approaches with trade-offs, your approval section by section, HTML mockups for visual choices, then a design doc in the repo. |
+| 2. Isolate | `git-worktrees` | A separate, git-ignored worktree with dependencies installed and a baseline test run, so existing failures are known. |
+| 3. Plan | `/plan-feature` (`implementation-plans`) | Tasks of a few minutes each, with exact files, the failing test to write first, the command to run and its expected output, and a commit per task. |
+| 4. Build | `subagent-driven-development` with the `task-implementer` agent | A fresh subagent per task works test-first and reports a status. The `spec-reviewer` checks it against the task, then `code-reviewer` checks its quality, looping until both pass. |
+| 5. Debug | `/debug` (`systematic-debugging`) | Root cause before any fix: reproduce, trace the bad value to its source, one hypothesis at a time. After three failed fixes it stops and questions the design. |
+| 6. Review | `responding-to-code-review` | Checks each comment against the code, pushes back with evidence when a suggestion is wrong, and replies in the review thread. |
+| 7. Finish | `/finish-branch` (`finishing-a-branch`) | Tests first, then merge locally, open a pull request, keep the branch, or discard it (only after you type a confirmation). |
+
+`/feature-dev` runs the whole sequence with a stop for your approval between stages, and the `use-skills` rule keeps the agent reaching for these skills instead of working from memory.
 
 ## Skills
 
@@ -577,7 +597,17 @@ Read [`docs/SKILL_SPEC.md`](docs/SKILL_SPEC.md) (skills, agents and commands) an
 ```bash
 npm run lint      # frontmatter, length, references, evals, manifest versions
 npm test          # installer and linter tests
-npm run eval      # eval file checks (CI also runs live routing evals)
+npm run eval      # trigger and behaviour eval file checks (CI also runs them live)
+```
+
+Two kinds of evals keep items honest:
+
+- **Trigger evals** (`evals/triggers.json`): a model routes realistic prompts and near misses the way hosts do, and each item must be picked for its own prompts and only those.
+- **Behaviour evals** (`evals/behavior.json`): scenarios that pressure the agent to skip the item's discipline ("just patch it, we ship in ten minutes"). Each runs with the item and without it, a judge model grades every reply, and the report shows what the item adds. `--host claude` runs them as real headless Claude Code sessions.
+
+```bash
+npm run eval:live -- --skill my-skill                     # routing
+npm run eval:behavior -- --live --skill my-skill          # behaviour, with and without the skill
 ```
 
 The `skill-authoring` skill walks your agent through writing a new skill to this standard.
