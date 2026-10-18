@@ -31,6 +31,7 @@
     "agents/",
     "commands/",
     "hooks/",
+    "profiles.json",
     "schemas/",
     "README.md",
     "LICENSE"

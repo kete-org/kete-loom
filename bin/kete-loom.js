@@ -12,6 +12,7 @@ const { SKILLS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks }
 const { TARGETS, KINDS, HOST_READS, resolveTarget, detected } = require('../scripts/lib/targets');
 const { MARKER_RE, render } = require('../scripts/lib/render');
 const Hooks = require('../scripts/lib/hooks-install');
+const { loadProfiles, resolveProfiles } = require('../scripts/lib/profiles');
 
 const MARKER = '.kete-loom.json';
 const pkg = require('../package.json');
@@ -33,6 +34,7 @@ function parseArgs(argv) {
     else if (a === '--command') opts.commands = csv(next());
     else if (a === '--hook') opts.hookNames = csv(next());
     else if (a === '--hooks') opts.withHooks = true;
+    else if (a === '--profile' || a === '-P') opts.profiles = csv(next());
     else if (a === '--category' || a === '-c') opts.categories = csv(next());
     else if (a === '--scope') opts.scope = next();
     else if (a === '--project' || a === '-p') opts.scope = 'project';
@@ -60,7 +62,8 @@ Usage
   kete-loom install   [options]   Copy skills, agents and commands into host folders (hooks with --hooks)
   kete-loom update    [options]   Same as install (refreshes kete-loom items; never overwrites yours)
   kete-loom uninstall [options]   Remove items that kete-loom installed
-  kete-loom list      [--json]    List available skills, agents and commands
+  kete-loom list      [--json]    List available skills, agents, commands and hooks
+  kete-loom profiles  [--json]    List install profiles
   kete-loom doctor    [options]   Show what is installed where, and which hosts can see it
 
 Options
@@ -82,6 +85,10 @@ Options
       --hooks          Also install every hook. Hooks run before each shell command and are
                        registered in each host's config, including Claude Code's and Gemini
                        CLI's settings.json (backed up first). User scope only.
+  -P, --profile <a,b>  Install a preset: minimal, core, developer, security, ai, data,
+                       business, full (see "kete-loom profiles"). core and the profiles
+                       built on it add the language and framework packs this project uses.
+                       Combines with --skill, --agent, --command and --hook.
   -c, --category <a,b> Only these categories
       --link           Symlink skills instead of copying (for skill authors)
   -f, --force          Overwrite items with the same name not installed by kete-loom
@@ -94,6 +101,7 @@ Examples
   npx @ketecode/loom install --target codex --agent code-reviewer
   npx @ketecode/loom install --dir ~/.my-agent/skills
   npx @ketecode/loom install --hook block-dangerous-commands
+  npx @ketecode/loom install --profile developer
 `);
 }
 
@@ -101,9 +109,30 @@ function catalog(opts) {
   return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands(), hooks: listHooks() };
 }
 
-// Returns { skills, agents, commands } after the --skill/--agent/--command/--category filters.
+// Folds --profile into the explicit --skill/--agent/--command/--hook lists (or "everything" for full).
+function applyProfiles(opts, all) {
+  if (!opts.profiles || opts.profileApplied) return;
+  const r = resolveProfiles(opts.profiles, { catalog: all, cwd: process.cwd() });
+  opts.profileApplied = true;
+  opts.detected = r.detected;
+  if (r.all) {
+    opts.withHooks = true;
+    return;
+  }
+  const merge = (key, set) => (set.size || opts[key] ? (opts[key] = [...new Set([...(opts[key] || []), ...set])]) : undefined);
+  merge('skills', r.skills);
+  merge('agents', r.agents);
+  merge('commands', r.commands);
+  if (r.hooks.size && opts.scope === 'project') opts.droppedHooks = [...r.hooks];
+  else merge('hookNames', r.hooks);
+  // A profile names its items, so an empty kind means "none of these", not "all of them".
+  for (const k of KINDS) opts[k] ||= [];
+}
+
+// Returns { skills, agents, commands, hooks } after the profile and --skill/--agent/--command/--hook/--category filters.
 function selectItems(opts) {
   const all = catalog(opts);
+  applyProfiles(opts, all);
   const named = KINDS.some((k) => opts[k]) || Boolean(opts.hookNames);
   const chosen = {};
   for (const kind of KINDS) {
@@ -293,6 +322,8 @@ function install(opts) {
   }
   results.push(...installHooks(selected.hooks, opts));
   report(results, opts);
+  if (!opts.json && opts.detected && opts.detected.length) console.log(`\nDetected in this project: ${opts.detected.join(', ')}.`);
+  if (!opts.json && opts.droppedHooks) console.log(`\nSkipped the profile's hooks (${opts.droppedHooks.join(', ')}): hooks install for your user only. Run the install without --project to add them.`);
   const notes = [...new Set(results.map((r) => r.note).filter(Boolean))];
   if (notes.length && !opts.json) console.log(`\n${notes.join('\n')}`);
   const missing = missingRequirements(KINDS.flatMap((k) => selected[k]));
@@ -308,6 +339,7 @@ function install(opts) {
 const itemName = (entry) => entry.replace(/(\.agent)?\.(md|toml)$/, '');
 
 function uninstall(opts) {
+  applyProfiles(opts, catalog(opts)); // `uninstall --profile x` removes only that profile's items
   const named = KINDS.some((k) => opts[k]) || Boolean(opts.hookNames);
   const results = [];
   for (const { target, kind, dir } of destinations(opts)) {
@@ -364,6 +396,19 @@ function list(opts) {
   }
   const count = (k) => `${selected[k].length} ${k.slice(0, -1)}(s)`;
   console.log(`\n${KINDS.map(count).join(', ')}, ${catalog(opts).hooks.length} hook(s). Install with: npx @ketecode/loom install (hooks: --hooks)`);
+}
+
+function profiles(opts) {
+  const all = loadProfiles();
+  const items = catalog(opts);
+  const rows = Object.entries(all).map(([name, p]) => {
+    const r = resolveProfiles([name], { catalog: items, cwd: process.cwd() });
+    const count = r.all ? 'everything' : ['skills', 'agents', 'commands', 'hooks'].map((k) => `${r[k].size} ${k}`).join(', ');
+    return { name, description: p.description, count, detects: Boolean(p.detect) || (p.extends || []).some((e) => all[e] && all[e].detect) };
+  });
+  if (opts.json) return console.log(JSON.stringify(rows, null, 2));
+  for (const r of rows) console.log(`${r.name.padEnd(10)} ${r.description}\n${' '.repeat(11)}${r.count} in this folder${r.detects ? ' (includes packs detected here)' : ''}\n`);
+  console.log('Install one with: npx @ketecode/loom install --profile <name>');
 }
 
 function doctor(opts) {
@@ -432,6 +477,9 @@ function main(argv) {
       case 'list':
       case 'ls':
         list(opts);
+        break;
+      case 'profiles':
+        profiles(opts);
         break;
       case 'doctor':
         doctor(opts);

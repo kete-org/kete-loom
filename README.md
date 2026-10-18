@@ -27,6 +27,25 @@ npx @ketecode/loom install
 
 This installs every skill into `~/.agents/skills` (read by Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code) and `~/.claude/skills` (Claude Code). Agents and commands go into `~/.claude/agents` and `~/.claude/commands` (read by Claude Code, and for agents also Cursor and VS Code Copilot), and into Codex, OpenCode, Gemini CLI and Kete Code's own folders when those hosts are installed. Each agent and command is converted to the format its host expects. Restart your agent afterwards.
 
+Or pick a profile instead of installing everything:
+
+| Profile | What it installs |
+|---|---|
+| `minimal` | Test-first work, verification, security review, code review |
+| `core` | The essentials, planning, git, onboarding and session handoff, **plus the language and framework packs your project uses** (detected from `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` and so on) |
+| `developer` | `core` plus the four safety hooks |
+| `security` | Every security and compliance item, plus the safety hooks |
+| `ai`, `data` | `core` plus every AI or data item |
+| `business` | Marketing, research, investor, writing, PRD and operations skills |
+| `full` | Everything, including every hook |
+
+```bash
+npx @ketecode/loom install --profile developer     # run it inside your project so detection sees it
+npx @ketecode/loom profiles                        # what each profile would install here
+```
+
+Profiles combine with `--skill`, `--agent`, `--command` and `--hook`, and `uninstall --profile <name>` removes only that profile's items.
+
 Common options:
 
 ```bash

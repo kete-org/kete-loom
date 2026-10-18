@@ -7,6 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks } = require('./lib/skills');
 const { TOOLS } = require('./lib/render');
+const { loadProfiles, DETECT } = require('./lib/profiles');
 
 const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const SEMVER_RE = /^\d+\.\d+\.\d+$/;
@@ -151,6 +152,33 @@ function lintHook(hook) {
   return errors;
 }
 
+// profiles.json: known keys, existing names, valid categories, and extends that resolve.
+function lintProfiles(items) {
+  const errors = [];
+  let profiles;
+  try {
+    profiles = loadProfiles();
+  } catch (e) {
+    return [`profiles.json: ${e.message}`];
+  }
+  const KEYS = new Set(['description', 'extends', 'skills', 'agents', 'commands', 'hooks', 'categories', 'detect', 'all']);
+  for (const [name, p] of Object.entries(profiles)) {
+    if (!NAME_RE.test(name)) errors.push(`profiles.json: profile name "${name}" must match ${NAME_RE}`);
+    for (const k of Object.keys(p)) if (!KEYS.has(k)) errors.push(`profiles.json: ${name} has unknown key "${k}"`);
+    if (typeof p.description !== 'string' || p.description.length < 20) errors.push(`profiles.json: ${name} needs a description of at least 20 characters`);
+    for (const parent of p.extends || []) if (!profiles[parent]) errors.push(`profiles.json: ${name} extends unknown profile "${parent}"`);
+    for (const c of p.categories || []) if (!CATEGORIES.includes(c)) errors.push(`profiles.json: ${name} has unknown category "${c}"`);
+    for (const k of ['skills', 'agents', 'commands', 'hooks']) {
+      for (const n of p[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profiles.json: ${name} lists unknown ${k.slice(0, -1)} "${n}"`);
+    }
+  }
+  // Every item project detection can add must exist.
+  for (const d of DETECT) {
+    for (const k of ['skills', 'agents']) for (const n of d[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profile detection (${d.what}) names unknown ${k.slice(0, -1)} "${n}"`);
+  }
+  return errors;
+}
+
 function lintManifests() {
   const errors = [];
   const version = require(path.join(REPO_ROOT, 'package.json')).version;
@@ -214,6 +242,7 @@ function main() {
   const warn = (msg) => (console.log(`! ${msg}`), warnCount++);
 
   for (const e of lintManifests()) error(`manifest  ${e}`);
+  for (const e of lintProfiles({ skills, agents, commands, hooks })) error(e);
   for (const e of [...strayFolders(SKILLS_DIR, 'SKILL.md'), ...strayFolders(AGENTS_DIR, 'AGENT.md'), ...strayFolders(HOOKS_DIR, 'HOOK.md')]) error(e);
 
   for (const item of [...skills, ...agents, ...commands, ...hooks]) {

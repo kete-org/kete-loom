@@ -109,3 +109,32 @@ test('install.sh passes commands through instead of installing', { skip: process
   assert.match(out, /skill\(s\)/);
   assert.ok(!fs.existsSync(path.join(home, '.agents')));
 });
+
+test('profiles install only their items, detect the project, and uninstall only theirs', () => {
+  const home = tmp();
+  const repo = tmp();
+  fs.writeFileSync(path.join(repo, 'go.mod'), 'module example.com/app\n');
+  fs.writeFileSync(path.join(repo, 'Dockerfile'), 'FROM scratch\n');
+  const out = run(['install', '--home', home, '--profile', 'core'], repo);
+  assert.match(out, /Detected in this project: Go, Docker/);
+  const skills = fs.readdirSync(path.join(home, '.claude', 'skills'));
+  for (const s of ['tdd-workflow', 'go-patterns', 'go-testing', 'docker-patterns']) assert.ok(skills.includes(s), s);
+  assert.ok(!skills.includes('python-patterns'), 'no packs for languages the project does not use');
+  assert.ok(fs.existsSync(path.join(home, '.claude', 'agents', 'go-reviewer.md')));
+  assert.ok(!fs.existsSync(path.join(home, '.claude', 'settings.json')), 'core has no hooks');
+
+  run(['install', '--home', home, '--skill', 'stripe-integration'], repo);
+  run(['uninstall', '--home', home, '--profile', 'core'], repo);
+  assert.deepStrictEqual(fs.readdirSync(path.join(home, '.claude', 'skills')), ['stripe-integration'], 'uninstall --profile removes only that profile');
+});
+
+test('profile hooks are skipped with a note at project scope', () => {
+  const repo = tmp();
+  const out = run(['install', '--project', '--profile', 'developer'], repo);
+  assert.match(out, /Skipped the profile's hooks/);
+  assert.ok(fs.existsSync(path.join(repo, '.claude', 'skills', 'tdd-workflow')));
+});
+
+test('unknown profiles are a clear error', () => {
+  assert.throws(() => run(['install', '--home', tmp(), '--profile', 'nope']), /unknown profile "nope"/);
+});
