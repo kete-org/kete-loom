@@ -24,7 +24,8 @@ fi
 
 if command -v node >/dev/null && [ "$(node -p 'process.versions.node.split(".")[0]')" -ge 18 ]; then
   [ $# -eq 0 ] && set -- install
-  case "$1" in install|update|uninstall|list|doctor|help) ;; *) set -- install "$@" ;; esac
+  # Options only (e.g. `--project`) mean install; any command goes to the CLI as-is.
+  case "$1" in -h|--help|-v|--version) ;; -*) set -- install "$@" ;; esac
   exec node "$SRC/bin/kete-loom.js" "$@"
 fi
 

@@ -69,3 +69,9 @@ test('overlong SKILL.md fails', () => {
 test('plugin manifests agree on version', () => {
   assert.deepStrictEqual(lintManifests(), []);
 });
+
+test('a SKILL.md of exactly 300 lines passes', () => {
+  const head = `---\n${GOOD}\n---\n`.split('\n').length - 1;
+  const { errors } = lintSkill(makeSkill('good-skill', GOOD, 'line\n'.repeat(300 - head)));
+  assert.ok(!errors.some((e) => e.includes('limit is 300')), errors.join('; '));
+});

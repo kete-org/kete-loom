@@ -41,8 +41,9 @@ function files(argv) {
   if (explicit.length) return explicit;
   if (argv.includes('--all')) return git(['ls-files']).split('\n').filter(Boolean);
   const changed = [
-    ...git(['diff', '--name-only', 'HEAD']).split('\n'),
-    ...git(['diff', '--name-only', '--cached']).split('\n'),
+    // --relative: diff paths are repo-root based by default; ls-files is cwd based
+    ...git(['diff', '--name-only', '--relative', 'HEAD']).split('\n'),
+    ...git(['diff', '--name-only', '--relative', '--cached']).split('\n'),
     ...git(['ls-files', '--others', '--exclude-standard']).split('\n'),
   ];
   return [...new Set(changed.filter(Boolean))];
@@ -61,7 +62,8 @@ for (const file of files(process.argv.slice(2))) {
     const seen = new Set();
     for (const [label, re] of RULES) {
       const m = re.exec(line);
-      if (!m || PLACEHOLDER.test(line) || seen.has(m[0])) continue;
+      // Check the match, not the line: `process.env.KEY || "sk_live_..."` is still a leak.
+      if (!m || PLACEHOLDER.test(m[0]) || seen.has(m[0])) continue;
       seen.add(m[0]); // most specific rule wins (rules are ordered specific-first)
       hits.push({ file, line: i + 1, rule: label, match: mask(m[0]) });
     }

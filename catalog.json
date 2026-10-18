@@ -13,7 +13,7 @@
     },
     {
       "name": "security-review",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "security",
       "risk": "read-only",
       "requires": [
@@ -45,7 +45,7 @@
     },
     {
       "name": "verification-loop",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [

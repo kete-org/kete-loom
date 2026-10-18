@@ -29,7 +29,8 @@ if (has('package.json')) {
     pkg = JSON.parse(read('package.json'));
   } catch {}
   const pm = has('pnpm-lock.yaml') ? 'pnpm' : has('yarn.lock') ? 'yarn' : has('bun.lockb') || has('bun.lock') ? 'bun' : 'npm';
-  const run = (s) => (pm === 'npm' ? `npm run ${s}` : `${pm} ${s}`);
+  // bun needs `run`: `bun test` / `bun build` are its own runner and bundler, not the scripts.
+  const run = (s) => (pm === 'npm' || pm === 'bun' ? `${pm} run ${s}` : `${pm} ${s}`);
   const scripts = pkg.scripts || {};
   const map = [
     ['build', /^build$/],

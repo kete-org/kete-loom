@@ -105,10 +105,17 @@ function readMarker(dir) {
   }
 }
 
-function isOurs(dir) {
+function isInside(child, parent) {
+  const rel = path.relative(parent, child);
+  return rel !== '' && !rel.startsWith('..') && !path.isAbsolute(rel);
+}
+
+// A symlink is ours when it points into our skills folder or the --source folder it was linked from.
+function isOurs(dir, opts = {}) {
   try {
     if (fs.lstatSync(dir).isSymbolicLink()) {
-      return path.resolve(path.dirname(dir), fs.readlinkSync(dir)).startsWith(path.resolve(SKILLS_DIR));
+      const target = path.resolve(path.dirname(dir), fs.readlinkSync(dir));
+      return [SKILLS_DIR, opts.source].some((src) => src && isInside(target, path.resolve(src)));
     }
   } catch {
     return false;
@@ -138,7 +145,7 @@ function install(opts) {
     for (const skill of skills) {
       const dest = path.join(dir, skill.dir);
       const exists = fs.existsSync(dest) || isSymlink(dest);
-      if (exists && !isOurs(dest) && !opts.force) {
+      if (exists && !isOurs(dest, opts) && !opts.force) {
         results.push({ target, skill: skill.dir, action: 'skipped', reason: 'a skill with this name exists and was not installed by kete-loom (use --force)', dest });
         continue;
       }
@@ -184,7 +191,7 @@ function uninstall(opts) {
     for (const entry of fs.readdirSync(dir)) {
       const p = path.join(dir, entry);
       if (names && !names.has(entry)) continue;
-      if (!isOurs(p)) continue;
+      if (!isOurs(p, opts)) continue;
       if (!opts.dryRun) fs.rmSync(p, { recursive: true, force: true });
       results.push({ target, skill: entry, action: 'removed', dest: p });
     }
@@ -236,7 +243,7 @@ function doctor(opts) {
   for (const scope of ['user', 'project']) {
     for (const t of Object.keys(TARGETS)) {
       const dir = resolveTarget(t, { scope, home, cwd: process.cwd() });
-      const ours = fs.existsSync(dir) ? fs.readdirSync(dir).filter((e) => isOurs(path.join(dir, e))) : [];
+      const ours = fs.existsSync(dir) ? fs.readdirSync(dir).filter((e) => isOurs(path.join(dir, e), opts)) : [];
       rows.push({ scope, target: t, dir, skills: ours });
     }
   }

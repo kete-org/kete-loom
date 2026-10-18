@@ -4,7 +4,7 @@ description: Security review of a code change or module covering secrets, inject
 license: MIT
 compatibility: Any Agent Skills host. The secret scanner needs Node 18+ and git.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: security
   kete-loom/risk: read-only
   kete-loom/requires: "git, node"
@@ -22,11 +22,11 @@ Find real, exploitable problems in the code in front of you and explain how to f
 
 ## 2. Scan for secrets first
 
-Run the scanner from this skill's folder, from the repo root:
+Run the scanner from the root of the repo being reviewed, pointing at this skill's folder (`<skill-dir>` is the folder holding this SKILL.md):
 
 ```
-node scripts/scan-secrets.js            # changed files vs. HEAD and staged work
-node scripts/scan-secrets.js --all      # every tracked file
+node <skill-dir>/scripts/scan-secrets.js            # changed files vs. HEAD and staged work
+node <skill-dir>/scripts/scan-secrets.js --all      # every tracked file
 ```
 
 Treat any hit as **critical** until shown to be a test fixture or placeholder. If a real secret was committed, tell the user it must be **rotated**: removing it from the code is not enough, because it stays in git history.

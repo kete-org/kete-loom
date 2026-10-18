@@ -4,7 +4,7 @@ description: Pre-merge verification that detects the project's build, lint, type
 license: MIT
 compatibility: Any Agent Skills host. The detection script needs Node 18+; without Node, detect commands by reading project files manually.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/requires: "git, node"

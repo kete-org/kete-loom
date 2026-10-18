@@ -92,3 +92,20 @@ test('custom --dir supports any other agent', () => {
 test('unknown skill is a clear error', () => {
   assert.throws(() => run(['install', '--home', tmp(), '--skill', 'does-not-exist']), /unknown skill/);
 });
+
+test('uninstall removes skills linked from a --source folder', () => {
+  const src = path.join(tmp(), 'skills');
+  fs.cpSync(path.join(__dirname, '..', 'skills'), src, { recursive: true });
+  const dir = path.join(tmp(), 'skills');
+  run(['install', '--source', src, '--link', '--dir', dir, '--skill', SKILLS[0]]);
+  assert.ok(fs.lstatSync(path.join(dir, SKILLS[0])).isSymbolicLink());
+  run(['uninstall', '--source', src, '--dir', dir]);
+  assert.ok(!fs.existsSync(path.join(dir, SKILLS[0])));
+});
+
+test('install.sh passes commands through instead of installing', { skip: process.platform === 'win32' }, () => {
+  const home = tmp();
+  const out = execFileSync('bash', [path.join(__dirname, '..', 'install.sh'), 'ls'], { encoding: 'utf8', env: { ...process.env, HOME: home } });
+  assert.match(out, /skill\(s\)/);
+  assert.ok(!fs.existsSync(path.join(home, '.agents')));
+});

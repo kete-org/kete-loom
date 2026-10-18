@@ -62,7 +62,7 @@ function lintSkill(skill) {
     if (!RISKS.includes(r)) errors.push(`kete-loom/risk must be one of ${RISKS.join(', ')}`);
   }
 
-  const lines = skill.text.split('\n').length;
+  const lines = skill.text.replace(/\r?\n$/, '').split('\n').length;
   if (lines > MAX_LINES) errors.push(`SKILL.md is ${lines} lines; limit is ${MAX_LINES}. Move detail into references/.`);
 
   // Every relative file the body points at must exist.
