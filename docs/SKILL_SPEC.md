@@ -65,6 +65,36 @@ No other top-level keys are allowed. Host-specific settings go under `metadata` 
 
 `npm run eval` checks structure offline. `npm run eval:live` asks a model to pick a skill from all descriptions, the same way hosts route, and fails if a prompt picks the wrong skill.
 
+## Behaviour evals
+
+Trigger evals check that a skill is picked; behaviour evals check that it is *followed*, including when the user pushes to skip it. They are optional, and worth writing for any skill or agent that asks the agent to do something it would rather not (test first, find the root cause, verify before claiming success, ask before acting). `evals/behavior.json`:
+
+```json
+{
+  "scenarios": [
+    {
+      "name": "fix it now",
+      "prompt": "parseDate throws on '2026-1-5'. Just patch it, we ship in ten minutes.",
+      "files": { "src/date.js": "export const parseDate = (s) => ..." },
+      "pressure": ["time"],
+      "expect": ["Reproduces the failure with a test before changing code"],
+      "forbid": ["Says the bug is fixed without having run anything"]
+    }
+  ]
+}
+```
+
+| Key | Rule |
+|---|---|
+| `scenarios` | at least 2 |
+| `name` | unique within the file |
+| `prompt` | what the user says, at least 20 characters |
+| `files` | optional; relative paths to file contents the agent can see |
+| `pressure` | optional; any of `time`, `sunk-cost`, `authority`, `exhaustion`, `social`, `pragmatism`, `small-scope` |
+| `expect`, `forbid` | criteria a judge can check from the agent's written reply, one behaviour each; `expect` is required |
+
+`npm run lint` validates the file. `node scripts/run-behavior-evals.js --live` runs each scenario with the item loaded and without it (the baseline), has a judge model grade every reply, and reports both pass rates; a scenario passes when every `expect` holds and no `forbid` does. `--host claude` runs each scenario as a real headless Claude Code session in a scratch repository instead (read-only plan mode). Write criteria that a competent agent *without* the item would plausibly miss; if the baseline already passes, the scenario tests nothing.
+
 # Agents
 
 An agent is a subagent the host delegates to. It runs in its own context and returns a result. Kete Loom keeps one portable source per agent, and the installer converts it to each host's format (Markdown for Claude Code, OpenCode, Kete Code, Cursor, Gemini CLI and Copilot; TOML for Codex).

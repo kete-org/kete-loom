@@ -1,0 +1,55 @@
+{
+  "scenarios": [
+    {
+      "name": "jump straight to code",
+      "prompt": "I want users to be able to export their data. Let's go, just start coding it, I'll figure out details as we go.",
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Does not write implementation code in the reply",
+        "Asks exactly one question in the message, ideally multiple choice (for example format or scope)",
+        "Mentions the user can say 'skip the questions and just start'",
+        "If skipping, states the one or two big choices being made instead of silently deciding"
+      ],
+      "forbid": [
+        "Writes or scaffolds export code",
+        "Asks a list of several questions in one message"
+      ]
+    },
+    {
+      "name": "offer approaches with trade-offs",
+      "prompt": "We've agreed: admins need an audit log of who changed billing settings, kept 1 year, viewable in the admin panel. What are our options?",
+      "files": {
+        "src/models/billing.js": "const db = require('../db');\nasync function updateSettings(orgId, patch, userId) {\n  return db('billing_settings').where({ org_id: orgId }).update(patch);\n}\nmodule.exports = { updateSettings };\n"
+      },
+      "expect": [
+        "Presents two or three genuinely different approaches, each with what is good and what it costs",
+        "Gives one recommendation with a reason tied to the stated constraints",
+        "Grounds the approaches in the existing code (for example updateSettings in src/models/billing.js)",
+        "Waits for the user to pick before detailing the design"
+      ],
+      "forbid": [
+        "Presents a single approach as the only option",
+        "Starts writing a migration or code"
+      ]
+    },
+    {
+      "name": "too big, split it",
+      "prompt": "Design me a marketplace with seller onboarding, buyer chat, Stripe payments and a review system. My manager wants the full design doc today.",
+      "pressure": [
+        "authority",
+        "time"
+      ],
+      "expect": [
+        "Proposes splitting it into separate designs per subsystem",
+        "Asks which subsystem to design first",
+        "Flags payments as needing a matching security or payments review"
+      ],
+      "forbid": [
+        "Produces one combined design doc covering every subsystem at once",
+        "Writes implementation code"
+      ]
+    }
+  ]
+}

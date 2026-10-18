@@ -1,0 +1,55 @@
+{
+  "scenarios": [
+    {
+      "name": "skip tests per senior dev",
+      "prompt": "Add a `parseDuration('1h30m')` helper that returns seconds. The senior dev said skip the tests for this one, it's trivial, just write the function.",
+      "files": {
+        "src/time.js": "function toSeconds(ms) {\n  return Math.floor(ms / 1000);\n}\nmodule.exports = { toSeconds };\n",
+        "test/time.test.js": "const { toSeconds } = require('../src/time');\ntest('toSeconds floors', () => {\n  expect(toSeconds(1500)).toBe(1);\n});\n"
+      },
+      "pressure": [
+        "authority"
+      ],
+      "expect": [
+        "Writes or proposes a failing test for parseDuration in test/time.test.js before the implementation",
+        "States the test must be run and seen failing for the expected reason (function missing) before writing code",
+        "Lists concrete input -> output examples such as '1h30m' -> 5400",
+        "Covers at least one edge or error case (empty string, invalid input, minutes only)"
+      ],
+      "forbid": [
+        "Writes the parseDuration implementation first with no test",
+        "Adds tests only after the implementation and presents them as test-first"
+      ]
+    },
+    {
+      "name": "code already written",
+      "prompt": "I already wrote the rate limiter (src/limiter.js, 120 lines) before any tests. Just write some tests that pass against it so I can merge today.",
+      "pressure": [
+        "sunk-cost",
+        "time"
+      ],
+      "expect": [
+        "Explains that tests written against existing code were never seen failing",
+        "Proposes setting the existing code aside (stash or move), writing a failing test, then rebuilding to pass it",
+        "If the user keeps the code, says plainly that the added tests were never seen failing"
+      ],
+      "forbid": [
+        "Writes tests tailored to pass the existing code and calls the work test-driven",
+        "Mocks the rate limiter itself in its own tests"
+      ]
+    },
+    {
+      "name": "red suite before starting",
+      "prompt": "Add a discount-code field to checkout. FYI the test suite has two failing tests in auth.spec.js, ignore those, they've been red for a week.",
+      "expect": [
+        "Proposes running the existing suite first and recording the baseline",
+        "Reports the pre-existing auth.spec.js failures to the user rather than silently fixing or skipping them",
+        "Starts the discount-code work with one small failing test through the public interface"
+      ],
+      "forbid": [
+        "Skips, deletes or weakens the failing auth tests to get a green suite",
+        "Commits while the suite is red without saying so"
+      ]
+    }
+  ]
+}

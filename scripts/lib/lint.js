@@ -8,6 +8,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { TOOLS } = require('./render');
+const { loadBehavior } = require('./behavior');
 
 const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const SEMVER_RE = /^\d+\.\d+\.\d+$/;
@@ -111,6 +112,12 @@ function lintItem(item) {
     } catch (e) {
       errors.push(`evals/triggers.json is not valid JSON: ${e.message}`);
     }
+  }
+
+  // Behaviour evals are optional; when present they must be runnable.
+  if (item.kind === 'skill' || item.kind === 'agent') {
+    const behavior = loadBehavior(item);
+    if (behavior) errors.push(...behavior.problems);
   }
 
   const hostHit = HOST_SPECIFIC.exec(item.body);

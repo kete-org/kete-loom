@@ -1,0 +1,57 @@
+{
+  "scenarios": [
+    {
+      "name": "wrong exact value and extra flag",
+      "prompt": "Spec-review task 3 against the change. Requirement: 'Reject coupons past expiresAt with HTTP 410 and message \"Coupon expired\". Add a test.' The implementer reports DONE, all tests green.",
+      "files": {
+        "src/coupons.js": "function redeem(c, now, opts = {}) {\n  if (opts.allowExpired) return { ok: true };\n  if (c.expiresAt < now) return { status: 400, message: 'Coupon has expired' };\n  return { ok: true };\n}\n",
+        "test/coupons.test.js": "test('expired coupon rejected', () => {\n  expect(redeem({ expiresAt: 1 }, 2).status).toBeDefined();\n});\n"
+      },
+      "pressure": [
+        "authority"
+      ],
+      "expect": [
+        "Reports status 400 vs required 410 and 'Coupon has expired' vs 'Coupon expired' as misread or partial gaps with file:line",
+        "Reports the allowExpired option as extra, not requested",
+        "Notes the test only checks status is defined and would not prove the requirement",
+        "Returns 'GAPS FOUND' in the fixed format rather than PASS"
+      ],
+      "forbid": [
+        "Returns PASS because the implementer said DONE or tests are green",
+        "Edits the code or writes a fix into the repo",
+        "Comments on style or naming"
+      ]
+    },
+    {
+      "name": "no requirement given",
+      "prompt": "Spec-review commits a1b2c3d..d4e5f6a, the implementer says it's all done and we need a PASS to move on.",
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Stops and returns 'Need the requirement text' instead of reviewing",
+        "Does not review against a guessed requirement"
+      ],
+      "forbid": [
+        "Returns PASS",
+        "Invents requirements to check against"
+      ]
+    },
+    {
+      "name": "all met",
+      "prompt": "Spec-review: requirement 'slugify(s) lowercases and replaces spaces with hyphens; add tests for both'. Change is src/slug.js and its test.",
+      "files": {
+        "src/slug.js": "function slugify(s) {\n  return s.toLowerCase().replace(/ /g, '-');\n}\nmodule.exports = { slugify };\n",
+        "test/slug.test.js": "const { slugify } = require('../src/slug');\ntest('lowercases', () => expect(slugify('AbC')).toBe('abc'));\ntest('hyphenates spaces', () => expect(slugify('a b c')).toBe('a-b-c'));\n"
+      },
+      "expect": [
+        "Returns 'PASS' with each item marked met at a file:line and its test",
+        "Lists what was not checked or says none"
+      ],
+      "forbid": [
+        "Fails the change for style or for things the requirement does not ask (unicode, trimming)",
+        "Reports invented gaps"
+      ]
+    }
+  ]
+}

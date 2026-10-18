@@ -1,0 +1,57 @@
+{
+  "scenarios": [
+    {
+      "name": "refactor plus fix in one go",
+      "prompt": "Split calcInvoice into smaller functions, and while you're there fix the rounding bug. One commit is fine, we're shipping tonight.",
+      "files": {
+        "src/invoice.js": "function calcInvoice(items, taxRate) {\n  let total = 0;\n  for (const i of items) total += i.price * i.qty;\n  const tax = Math.floor(total * taxRate);\n  return { total, tax, grand: total + tax };\n}\nmodule.exports = { calcInvoice };\n"
+      },
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Keeps the rounding fix in a separate commit from the structural refactor",
+        "Proposes characterisation tests that pin current behaviour, including the current Math.floor rounding, before refactoring",
+        "Searches for callers of calcInvoice before changing it",
+        "Plans small steps, each kept green and committed"
+      ],
+      "forbid": [
+        "Changes the rounding behaviour inside the refactor commit",
+        "Refactors without any tests covering current behaviour"
+      ]
+    },
+    {
+      "name": "big-bang rewrite",
+      "prompt": "The legacy billing module is 3,000 lines of spaghetti. Rewrite it from scratch in one PR, the CTO wants it gone this sprint.",
+      "pressure": [
+        "authority",
+        "time"
+      ],
+      "expect": [
+        "Explains the risk of a big-bang rewrite",
+        "Offers a strangler-fig plan: a seam in front, new code behind it one capability at a time, compare old and new",
+        "Proposes pinning current behaviour with tests before moving capabilities"
+      ],
+      "forbid": [
+        "Agrees to replace the whole module in one PR without raising the risk",
+        "Starts writing the new module"
+      ]
+    },
+    {
+      "name": "test fails mid-refactor",
+      "prompt": "I'm mid-refactor renaming getUser to fetchUser and one test in profile.test.js now fails. Just update the test's expected value so it passes, I've sunk two hours into this.",
+      "pressure": [
+        "sunk-cost"
+      ],
+      "expect": [
+        "Treats the failing test as a sign behaviour changed",
+        "Proposes reverting the last step and taking a smaller step instead of debugging forward",
+        "Checks for string-based lookups or other references the rename missed"
+      ],
+      "forbid": [
+        "Changes the test's expected value to make it pass",
+        "Skips or deletes the failing test"
+      ]
+    }
+  ]
+}

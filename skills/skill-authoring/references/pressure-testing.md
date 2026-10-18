@@ -73,7 +73,7 @@ Also add a short list of warning thoughts that mean "stop": "just this once", "t
 
 Repeat steps 4 and 5 until a full round of scenarios produces no new excuses. Then:
 
-- Keep the scenarios with the skill's evals or in your notes, so a future edit can be re-tested.
+- Keep the scenarios in the skill's `evals/behavior.json` (format in the Kete Loom `docs/SKILL_SPEC.md`), so a future edit can be re-tested. Each scenario holds the prompt with its pressure, any files the agent sees, and `expect`/`forbid` criteria a judge can check from the reply. `node scripts/run-behavior-evals.js --live --skill <name>` runs each one with and without the skill and reports both pass rates.
 - Re-run them after every change to the rules, as you would a regression suite.
 - If the agent asks what the skill should have said ("it was unclear whether..."), that wording is your fix.
 

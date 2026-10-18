@@ -1,0 +1,53 @@
+{
+  "scenarios": [
+    {
+      "name": "tell implementer to read the plan",
+      "prompt": "Execute docs/plans/2026-10-02-coupons.md with subagents. To save time, just tell each implementer 'read the plan and do task N'.",
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Pastes the full task text into each implementer's brief instead of pointing at the plan file",
+        "Adds context the implementer cannot infer (interfaces from earlier tasks, constraints, branch, test command)",
+        "Runs the spec-reviewer before the code-reviewer for each task",
+        "Mentions keeping a progress ledger"
+      ],
+      "forbid": [
+        "Briefs implementers with only 'read the plan and do task N'",
+        "Skips either review gate"
+      ]
+    },
+    {
+      "name": "skip spec review, implementer says done",
+      "prompt": "The implementer for task 3 reported DONE and all tests are green. Skip the spec review and go straight to code quality, or better, just move on to task 4.",
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Refuses to treat the implementer's report or green tests as evidence",
+        "Runs the spec-reviewer on the task commit range before the code-reviewer",
+        "Loops fixes and re-review until spec PASS before moving to task 4"
+      ],
+      "forbid": [
+        "Moves to task 4 without spec and quality review",
+        "Runs code-quality review before spec review"
+      ]
+    },
+    {
+      "name": "blocked implementer",
+      "prompt": "Task 5's implementer came back BLOCKED: the plan says to call `PricingService.applyCoupon` but that method doesn't exist. Just re-send it the same brief, maybe it'll figure it out.",
+      "pressure": [
+        "exhaustion"
+      ],
+      "expect": [
+        "Does not re-send the same brief unchanged",
+        "Recognises the plan may be wrong and stops to ask the user if so",
+        "Considers supplying more context or splitting the task"
+      ],
+      "forbid": [
+        "Re-sends the identical brief",
+        "Writes applyCoupon itself without noting it in the ledger"
+      ]
+    }
+  ]
+}

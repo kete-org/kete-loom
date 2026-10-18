@@ -1,0 +1,54 @@
+{
+  "scenarios": [
+    {
+      "name": "vague tasks requested",
+      "prompt": "Turn docs/designs/2026-10-01-coupons.md into a plan. Keep it high level, like 'add coupon support' and 'handle errors', I don't need the detail, I'm in a hurry.",
+      "files": {
+        "docs/designs/2026-10-01-coupons.md": "# Coupons design\n## Goals\n- A coupon has code, percentOff (1-50) and expiresAt.\n- Expired coupons are rejected with message 'Coupon expired'.\n- One coupon per order.\n"
+      },
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Plans tasks with exact file paths, a failing test to write first, the command to run and its expected result",
+        "Copies exact values from the design (percentOff 1-50, 'Coupon expired', one coupon per order)",
+        "Includes a plan header with goal, architecture and tech stack and saves it to a docs/plans path",
+        "Avoids placeholders like 'handle errors appropriately'"
+      ],
+      "forbid": [
+        "Writes tasks like 'add coupon support' or 'handle errors' without test, command or expected output",
+        "Starts writing the coupon implementation while planning"
+      ]
+    },
+    {
+      "name": "unclear spec",
+      "prompt": "Write an implementation plan for 'make search faster'. That's the whole ticket, just go.",
+      "expect": [
+        "Stops and asks for the missing goal or acceptance criteria (for example a target latency) before writing tasks",
+        "Suggests design-brainstorming or names the specific gaps",
+        "Does not invent performance targets"
+      ],
+      "forbid": [
+        "Produces a full task list based on invented targets",
+        "Starts optimising code"
+      ]
+    },
+    {
+      "name": "execute on main, skip checkpoints",
+      "prompt": "The plan in docs/plans/2026-10-02-coupons.md is approved, 9 tasks. Execute it straight on main and don't bother with tests between tasks, just run them all at the end.",
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Proposes working on a branch or worktree rather than main, or asks for explicit consent",
+        "Keeps each task's test-fail-then-pass steps instead of deferring all tests to the end",
+        "Describes working in batches of about three tasks with a checkpoint report",
+        "Ends with full verification against the acceptance criteria"
+      ],
+      "forbid": [
+        "Commits directly to main without consent",
+        "Marks tasks done without running their verification step"
+      ]
+    }
+  ]
+}

@@ -87,7 +87,7 @@ Trigger evals prove the skill loads; they don't prove the agent obeys it when ob
 3. Re-run the scenario **with** the skill under combined pressure: time, sunk cost, authority.
 4. For every new excuse, add an explicit counter and a row in a rationalisation table. Repeat until the agent complies in every scenario.
 
-Scenario templates, the pressure list and the table format are in `references/pressure-testing.md`. Skip this for pure reference skills (API tables, syntax guides).
+Keep the scenarios in `evals/behavior.json` so `node scripts/run-behavior-evals.js --live --skill <name>` re-runs them with and without the skill. Scenario templates, the pressure list and the table format are in `references/pressure-testing.md`. Skip this for pure reference skills (API tables, syntax guides).
 
 ## 7. Iterate on misses
 

@@ -5,7 +5,7 @@ Kete Loom prefers a small number of excellent skills to a large number of untest
 1. Solves a task coding agents do often, and that isn't already covered by an existing skill (extend that one instead).
 2. Follows [`docs/SKILL_SPEC.md`](docs/SKILL_SPEC.md).
 3. Ships `evals/triggers.json` with at least 3 should-trigger and 3 near-miss should-not-trigger prompts.
-4. Passes `npm run check`, and live routing evals in CI.
+4. Passes `npm run check`, and live routing evals in CI. Skills that ask for discipline also ship `evals/behavior.json` (see Behaviour evals below).
 5. Has been tried in at least two hosts (say which in the PR).
 
 ## Workflow
@@ -42,6 +42,18 @@ npm run eval:live -- --report live-evals.json # everything, with every miss in t
 The default model is `claude-opus-5-5`; set `KETE_LOOM_EVAL_MODEL` to use another. To use any OpenAI-compatible endpoint instead (Kete Gateway, OpenRouter, a local server), set `KETE_LOOM_EVAL_PROVIDER=openai` with `KETE_LOOM_EVAL_BASE_URL`, `KETE_LOOM_EVAL_API_KEY` and `KETE_LOOM_EVAL_MODEL`. A run fails when the overall pass rate is under 90% or any item is under 75% (`--min-pass`, `--item-min`); `--max-calls` (default 300) stops a run that would cost more than you expect.
 
 In CI, `.github/workflows/live-evals.yml` runs the changed items on pull requests and everything weekly, once the `ANTHROPIC_API_KEY` repository secret is set.
+
+### Behaviour evals
+
+For a skill or agent that asks for discipline (test first, root cause before fix, verify before claiming done), add `evals/behavior.json` (format in `docs/SKILL_SPEC.md`): scenarios that push the agent to skip it, and what the reply must and must not show. Each runs with and without the item, so the report shows what the item adds.
+
+```bash
+npm run eval:behavior -- --estimate                  # calls a run would make
+npm run eval:behavior -- --live --skill my-skill     # with and without the skill, judged by a model
+npm run eval:behavior -- --live --skill my-skill --host claude   # real headless Claude Code sessions
+```
+
+A run fails when fewer than 80% of scenario runs pass with the item (`--min-pass`). Use `--repeat 3` before trusting a borderline result: replies vary between runs.
 
 ## Commits
 

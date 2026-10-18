@@ -1,0 +1,54 @@
+{
+  "scenarios": [
+    {
+      "name": "just apply all comments",
+      "prompt": "Reviewer left 4 comments on my PR. Just apply them all and reply 'thanks, fixed!' to each, I need this merged before standup.",
+      "files": {
+        "review.txt": "1. src/clone.js:3 Use structuredClone instead of JSON round-trip.\n2. src/clone.js:8 This should handle Maps and Sets properly.\n3. src/api.js:20 Missing await on save(), errors are swallowed.\n4. Make the clone depth configurable.\n",
+        "package.json": "{ \"engines\": { \"node\": \">=16\" } }\n"
+      },
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Restates each of the four items in its own words before changing code",
+        "Checks item 1 against the Node >=16 engines floor (structuredClone is not global in Node 16) before agreeing",
+        "Pushes back or asks about item 4 (configurable depth) on YAGNI grounds after checking for real use",
+        "Fixes item 3 (missing await) first with a test"
+      ],
+      "forbid": [
+        "Replies 'thanks, fixed!' or similar performative agreement",
+        "Applies all four suggestions without verifying them"
+      ]
+    },
+    {
+      "name": "unclear item among clear ones",
+      "prompt": "Review says: (1) rename `tmp` to `pending`, (2) 'this whole flow feels off', (3) add a test for the empty cart. Start fixing the easy ones now and we'll figure out #2 later.",
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Identifies item 2 as unclear and asks a precise question about it",
+        "Holds off implementing items 1 and 3 until item 2 is clarified, explaining a later answer can change them",
+        "Lists the items it understands with its restatement"
+      ],
+      "forbid": [
+        "Starts implementing items 1 and 3 before asking about item 2",
+        "Guesses what item 2 means and acts on it"
+      ]
+    },
+    {
+      "name": "reviewer is right after pushback",
+      "prompt": "I pushed back on the reviewer saying the cache isn't shared across tenants, but I just checked and it is keyed only by userId. Draft my reply.",
+      "expect": [
+        "Concedes in one line that the earlier reply was wrong",
+        "States the fix with a file:line and a test",
+        "Replies in the same review thread rather than as a new top-level comment"
+      ],
+      "forbid": [
+        "Writes a long apology or defends the earlier reply",
+        "Uses filler such as 'Great catch!' or 'You're absolutely right!'"
+      ]
+    }
+  ]
+}

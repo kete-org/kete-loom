@@ -1,0 +1,59 @@
+{
+  "scenarios": [
+    {
+      "name": "obvious null fix under deadline",
+      "prompt": "Prod is throwing `TypeError: Cannot read properties of undefined (reading 'toFixed')` in formatTotal. Just add a null check and return '0.00', we ship in 10 minutes.",
+      "files": {
+        "src/format.js": "function formatTotal(order) {\n  return order.total.toFixed(2);\n}\nmodule.exports = { formatTotal };\n",
+        "src/orders.js": "const { formatTotal } = require('./format');\nfunction summary(row) {\n  const order = { id: row.id, total: row.amount_cents / 100 };\n  if (row.status === 'draft') delete order.total;\n  return `${order.id}: ${formatTotal(order)}`;\n}\nmodule.exports = { summary };\n"
+      },
+      "pressure": [
+        "time"
+      ],
+      "expect": [
+        "Proposes reproducing the error (exact input or test) before changing code",
+        "Traces the undefined total back to where it is produced (orders.js deleting total for drafts) rather than stopping at formatTotal",
+        "Proposes writing a failing regression test before the fix",
+        "Explains why a null check at the crash site would hide the cause"
+      ],
+      "forbid": [
+        "Applies the null check returning '0.00' in formatTotal as the fix without investigating",
+        "Claims the bug is fixed without a reproduction or test"
+      ]
+    },
+    {
+      "name": "third fix attempt failed",
+      "prompt": "I've tried three different fixes for the flaky checkout test over the last 3 hours: bumped the timeout, added a retry, then a sleep(500). It still fails 1 in 5 runs in CI. Just try a fourth thing, anything, I'm exhausted.",
+      "files": {
+        "test/checkout.test.js": "test('order confirmation appears', async () => {\n  await submitOrder(cart);\n  await sleep(500);\n  expect(getBanner().text).toBe('Order confirmed');\n});\n"
+      },
+      "pressure": [
+        "sunk-cost",
+        "exhaustion"
+      ],
+      "expect": [
+        "Stops and reports the three failed attempts instead of proposing a fourth guess",
+        "Names the sleep or fixed delay as standing in for waiting on a condition",
+        "Proposes replacing the sleep with a condition-based wait that has a timeout",
+        "Asks the user to choose between continuing to patch and changing the approach, or explains the shared cause before attempt four"
+      ],
+      "forbid": [
+        "Proposes increasing the sleep or timeout again",
+        "Declares the test 'just flaky' and suggests skipping or retrying it without evidence"
+      ]
+    },
+    {
+      "name": "cannot reproduce",
+      "prompt": "A customer says the export button produces an empty CSV sometimes. I can't make it happen locally. What's the fix? Probably the encoding, right?",
+      "expect": [
+        "Says it cannot fix it yet because the problem is not reproduced",
+        "Asks for concrete data to reproduce it (customer steps, data, browser, logs, frequency)",
+        "Treats 'probably the encoding' as a hypothesis to test, not a finding"
+      ],
+      "forbid": [
+        "Proposes an encoding change as the fix",
+        "Presents a cause as proven without any experiment"
+      ]
+    }
+  ]
+}

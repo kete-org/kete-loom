@@ -70,6 +70,8 @@ Recommendation: B, because <the constraint or goal it serves best>.
 
 Ground them in this codebase (reuse what exists), not generic patterns. If one approach is clearly right, say so and offer a single alternative only for contrast. Wait for the user to pick.
 
+When the choice is visual (a screen layout, a flow, a dashboard), show it instead of describing it: offer static HTML mockups of each option the user can open in a browser, following `references/visual-mockups.md`.
+
 ## 4. Walk the design through in sections
 
 Present the chosen design in short sections, each a few sentences to a short list, and **get a yes on each before the next**. Pick the sections that apply:

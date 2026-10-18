@@ -47,9 +47,10 @@
   },
   "scripts": {
     "lint": "node scripts/lint-skills.js",
-    "eval": "node scripts/run-evals.js",
+    "eval": "node scripts/run-evals.js && node scripts/run-behavior-evals.js",
     "eval:estimate": "node scripts/run-evals.js --estimate",
     "eval:live": "node scripts/run-evals.js --live",
+    "eval:behavior": "node scripts/run-behavior-evals.js",
     "test": "node --test",
     "check": "npm run lint && npm test && npm run eval",
     "catalog": "node scripts/build-catalog.js",

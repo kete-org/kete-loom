@@ -16,7 +16,7 @@ One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini C
 Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It ships three kinds of items: **skills** (folders the agent loads when relevant), **agents** (subagents it delegates to) and **commands** (slash commands you type). It takes a quality-first approach: fewer items, and every one of them is
 
 - **portable**: uses the strictest common subset of the [Agent Skills](https://agentskills.io) format, so no host rejects it;
-- **tested**: skills and agents ship trigger evals that check they load for the right requests and stay out of the way for the wrong ones;
+- **tested**: skills and agents ship trigger evals that check they load for the right requests and stay out of the way for the wrong ones, and the discipline skills add behaviour evals that check the agent actually follows them under pressure, compared with a run without the skill;
 - **short**: under 300 lines, with detail moved into `references/` that the agent reads only when needed;
 - **versioned and labelled**: semver, category and a risk level (`read-only`, `writes-files`, `runs-commands`, `network`) in its metadata;
 - **script-backed** where the work is deterministic.
