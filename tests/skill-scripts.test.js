@@ -54,3 +54,38 @@ test('detect-checks runs bun scripts with "bun run"', () => {
   const out = JSON.parse(spawnSync(process.execPath, [DETECT, dir], { encoding: 'utf8' }).stdout);
   assert.deepStrictEqual(out.checks.map((c) => c.command), ['bun run build', 'bun run test']);
 });
+
+const MOMO = require(path.join(SKILLS, 'mtn-momo-integration', 'scripts', 'sandbox-setup.js'));
+
+function fakeFetch(responses) {
+  const calls = [];
+  const fetchImpl = async (url, init) => {
+    calls.push({ url, init });
+    const [status, body] = responses.shift();
+    return { status, text: async () => (body === undefined ? '' : JSON.stringify(body)) };
+  };
+  return { calls, fetchImpl };
+}
+
+test('momo sandbox-setup creates a user and key, then checks the token', async () => {
+  const { calls, fetchImpl } = fakeFetch([[201], [201, { apiKey: 'k123' }], [200, { access_token: 't', expires_in: 3600 }]]);
+  const r = await MOMO.setup({ subscriptionKey: 'sub', callbackHost: 'pay.example.com', fetchImpl, uuid: () => 'u-1' });
+  assert.deepStrictEqual(r, { apiUser: 'u-1', apiKey: 'k123', expiresIn: 3600 });
+  assert.strictEqual(calls[0].url, 'https://sandbox.momodeveloper.mtn.com/v1_0/apiuser');
+  assert.strictEqual(calls[0].init.headers['x-reference-id'], 'u-1');
+  assert.deepStrictEqual(JSON.parse(calls[0].init.body), { providerCallbackHost: 'pay.example.com' });
+  assert.strictEqual(calls[1].url, 'https://sandbox.momodeveloper.mtn.com/v1_0/apiuser/u-1/apikey');
+  assert.strictEqual(calls[2].url, 'https://sandbox.momodeveloper.mtn.com/collection/token/');
+  assert.strictEqual(calls[2].init.headers.authorization, `Basic ${Buffer.from('u-1:k123').toString('base64')}`);
+  assert.strictEqual(calls[2].init.body, undefined, 'token call must have no body');
+});
+
+test('momo sandbox-setup reports API errors and rejects bad input', async () => {
+  const { fetchImpl } = fakeFetch([[401, { message: 'Access denied due to invalid subscription key' }]]);
+  await assert.rejects(MOMO.setup({ subscriptionKey: 'bad', callbackHost: 'pay.example.com', fetchImpl }), /returned 401: .*invalid subscription key/);
+  await assert.rejects(MOMO.setup({ callbackHost: 'pay.example.com', fetchImpl }), /MOMO_SUBSCRIPTION_KEY/);
+  for (const host of ['https://pay.example.com', 'pay.example.com/cb', '10.0.0.1', 'localhost']) {
+    assert.throws(() => MOMO.parseArgs(['--callback-host', host]), /bare hostname/, host);
+  }
+  assert.throws(() => MOMO.parseArgs(['--callback-host', 'pay.example.com', '--product', 'loans']), /--product/);
+});

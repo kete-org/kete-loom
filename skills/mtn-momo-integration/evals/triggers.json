@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Integrate the MTN MoMo Open API so customers in Ghana can pay with request to pay",
+    "Our momodeveloper sandbox keeps returning 401 when I call /collection/token/",
+    "MoMo callbacks never reach our server and payments stay PENDING forever",
+    "Add payouts to agents' mobile money wallets using the MTN MoMo disbursement API",
+    "Why does requesttopay return 409 when we retry after a timeout?"
+  ],
+  "should_not_trigger": [
+    "Let users pay with MTN MoMo through Paystack in the mobile app",
+    "My Paystack webhook says invalid signature every time, can you fix it?",
+    "Integrate M-Pesa STK push with the Safaricom Daraja API",
+    "Write a market report on mobile money adoption in Uganda",
+    "Add Stripe checkout to the pricing page"
+  ]
+}

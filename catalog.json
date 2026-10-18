@@ -3,6 +3,17 @@
   "version": "0.1.0",
   "skills": [
     {
+      "name": "mtn-momo-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [
+        "node"
+      ],
+      "description": "Builds and reviews direct integrations with the MTN Mobile Money (MoMo) Open API from momodeveloper.mtn.com, including Collection request-to-pay, Disbursement transfers and refunds, API user and access token handling, X-Reference-Id idempotency, unsigned callbacks confirmed by status checks, and sandbox testing for MTN markets such as Ghana, Uganda and Cameroon. Use when integrating MTN MoMo directly rather than through Paystack or another aggregator, calling requesttopay or disbursement endpoints, handling MoMo callbacks, or debugging MoMo API errors such as 401, 409 or INVALID_CALLBACK_URL_HOST.",
+      "path": "skills/mtn-momo-integration"
+    },
+    {
       "name": "paystack-integration",
       "version": "0.1.0",
       "category": "integrations",
