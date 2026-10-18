@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's Task 3 of the plan with its full text and context. Implement just that task test-first, commit, and report back with a status",
+    "Dispatch a fresh subagent to build plan task 5 (add the coupon expiry check) exactly as written, then report DONE or BLOCKED",
+    "Implement this single plan task in a clean context: the failing test, the minimal code, a commit, and a self-review of the diff",
+    "Hand the next task from our implementation plan to an implementer subagent and have it report in the fixed status format",
+    "Build only this fully specified task: files src/coupons.ts and its test, red then green, nothing outside the file list"
+  ],
+  "should_not_trigger": [
+    "Turn the coupon design doc into a step-by-step implementation plan with tests for each task",
+    "Check whether the commits for task 4 actually meet the task text and list any gaps",
+    "Run the whole plan task by task with reviews between each task",
+    "Review this diff for correctness bugs before I merge it",
+    "Split this large refactor across several parallel agents with separate file ownership"
+  ]
+}

@@ -93,6 +93,7 @@
     ],
     "agents": [
       "planner",
+      "task-implementer",
       "spec-reviewer",
       "code-reviewer"
     ],

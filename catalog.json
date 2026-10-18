@@ -3064,6 +3064,23 @@
       "path": "agents/swift-reviewer"
     },
     {
+      "name": "task-implementer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Focused build subagent that carries out exactly one task from an implementation plan, from the full task text and context handed to it. Asks its questions before touching anything, works test-first (a failing test seen to fail for the stated reason, then the smallest code that passes), stays inside the task's file list, commits, reviews its own diff, and reports with a fixed DONE, DONE_WITH_CONCERNS, NEEDS_CONTEXT or BLOCKED status instead of guessing past a problem. Use when a controller running a plan task by task needs one task built in a fresh context, or when the user hands over a single, fully specified plan task to implement.",
+      "path": "agents/task-implementer"
+    },
+    {
       "name": "typescript-build-resolver",
       "version": "0.1.0",
       "category": "coding",

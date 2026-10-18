@@ -33,7 +33,7 @@ Input: a plan with self-contained tasks, normally written with `implementation-p
 
 ## 1. Per task: brief the implementer
 
-Start a **fresh** subagent for the task (a general-purpose subagent with edit and shell tools). Build the brief from `references/implementer-brief.md`:
+Start a **fresh** subagent for the task: the `task-implementer` agent when it is installed, otherwise a general-purpose subagent with edit and shell tools. Build the brief from `references/implementer-brief.md` (the `task-implementer` agent already knows the working rules and report format, so for it the task text and context are enough):
 
 - Paste the **full task text** from the plan. Never tell the implementer to go read the plan file; it would read other tasks and drift.
 - Add the context it can't infer: where the task fits, the interfaces earlier tasks produced (names and signatures), the global constraints, the working directory and branch, the test command.
