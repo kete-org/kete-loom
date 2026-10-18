@@ -8,7 +8,7 @@
 One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.</p>
 
 <!-- languages:start -->
-<p align="center"><a href="README.md">English</a> · <a href="docs/i18n/README.ar.md">العربية</a> · <a href="docs/i18n/README.de.md">Deutsch</a> · <a href="docs/i18n/README.es.md">Español</a> · <a href="docs/i18n/README.fr.md">Français</a> · <a href="docs/i18n/README.ja.md">日本語</a> · <a href="docs/i18n/README.pt-BR.md">Português (Brasil)</a> · <a href="docs/i18n/README.sw.md">Kiswahili</a> · <a href="docs/i18n/README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="README.md">English</a> · <a href="docs/i18n/README.ar.md">العربية</a> · <a href="docs/i18n/README.de.md">Deutsch</a> · <a href="docs/i18n/README.es.md">Español</a> · <a href="docs/i18n/README.fr.md">Français</a> · <a href="docs/i18n/README.ja.md">日本語</a> · <a href="docs/i18n/README.pt-BR.md">Português (Brasil)</a> · <a href="docs/i18n/README.sw.md">Kiswahili</a> · <a href="docs/i18n/README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
 <!-- languages:end -->
 
 ---

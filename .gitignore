@@ -1,6 +1,7 @@
 node_modules/
 *.log
 coverage/
+site/
 
 # Hidden files and folders (.claude/, .codex/, .cursor/, .env, .DS_Store, ...)
 .*

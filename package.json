@@ -47,6 +47,7 @@
     "eval:live": "node scripts/run-evals.js --live",
     "test": "node --test",
     "check": "npm run lint && npm test && npm run eval",
-    "catalog": "node scripts/build-catalog.js"
+    "catalog": "node scripts/build-catalog.js",
+    "site": "node scripts/build-site.js"
   }
 }

@@ -20,6 +20,8 @@ const LANGUAGES = {
   sw: 'Kiswahili',
   'zh-CN': '简体中文',
 };
+// The searchable catalog site, deployed by .github/workflows/pages.yml.
+const SITE_URL = 'https://kete-org.github.io/kete-loom/';
 const SOURCE_RE = /<!-- translated from README\.md, source ([0-9a-f]{12}) -->/;
 const GENERATED_RE = /(<!-- (\w+):start -->)[\s\S]*?(<!-- \2:end -->)/g;
 const SWITCHER_RE = /<!-- languages:start -->[\s\S]*?<!-- languages:end -->/;
@@ -32,7 +34,7 @@ const sourceHash = (text = fs.readFileSync(path.join(REPO_ROOT, 'README.md'), 'u
 const switcher = (from = '') =>
   `<!-- languages:start -->\n<p align="center">${[['README.md', 'English'], ...Object.entries(LANGUAGES).map(([code, label]) => [`docs/i18n/README.${code}.md`, label])]
     .map(([file, label]) => `<a href="${path.posix.relative(from || '.', file)}">${label}</a>`)
-    .join(' · ')}</p>\n<!-- languages:end -->`;
+    .join(' · ')} · <a href="${SITE_URL}">Browse the catalog ↗</a></p>\n<!-- languages:end -->`;
 
 // Each translation that exists: its language and whether it matches the current English prose.
 function translations() {

@@ -14,6 +14,7 @@ This repo is a library of Agent Skills, subagents and slash commands, plus the t
 - `scripts/lint-skills.js`, `scripts/run-evals.js`, `scripts/build-catalog.js`: quality gates and catalog.
 - `.claude-plugin/`, `.codex-plugin/`, `.agents/plugins/`, `gemini-extension.json`: native plugin manifests. Their versions must match `package.json`.
 - `profiles.json`: install profiles; `scripts/lib/profiles.js` resolves them and detects a project's languages and frameworks.
+- `scripts/build-site.js`: builds the static catalog site (`npm run site`, output in the git-ignored `site/`); `.github/workflows/pages.yml` deploys it.
 - `docs/SKILL_SPEC.md`: the rules every skill, agent and command follows.
 
 ## Rules
