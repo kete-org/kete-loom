@@ -5,6 +5,7 @@
 // repository-wide checks on top.
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { TOOLS } = require('./render');
 
@@ -15,7 +16,7 @@ const CATEGORIES = ['coding', 'testing', 'security', 'integrations', 'devops', '
 const RISKS = ['read-only', 'writes-files', 'runs-commands', 'network'];
 const MAX_LINES = 300;
 const MIN_EVALS = 3;
-const HOOK_EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start'];
+const HOOK_EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start', 'stop', 'stop-gate'];
 const MAX_RULE_LINES = 80;
 // Tool names that only exist in one host. Skills should describe the action instead.
 const HOST_SPECIFIC = /\b(Bash tool|Read tool|Edit tool|Write tool|Grep tool|Glob tool|TodoWrite|apply_patch|str_replace_editor)\b/;
@@ -138,6 +139,21 @@ function lintHook(hook) {
   } catch (e) {
     return [...errors, `cases.json missing or invalid: ${e.message}`];
   }
+  // Hooks that remember what they've seen keep it under KETE_LOOM_STATE_DIR; give each lint run a fresh one.
+  const prevState = process.env.KETE_LOOM_STATE_DIR;
+  const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kete-loom-lint-'));
+  process.env.KETE_LOOM_STATE_DIR = stateDir;
+  try {
+    lintCases(check, cases, errors);
+  } finally {
+    if (prevState === undefined) delete process.env.KETE_LOOM_STATE_DIR;
+    else process.env.KETE_LOOM_STATE_DIR = prevState;
+    fs.rmSync(stateDir, { recursive: true, force: true });
+  }
+  return errors;
+}
+
+function lintCases(check, cases, errors) {
   for (const [key, want] of [['should_block', true], ['should_allow', false]]) {
     if (!Array.isArray(cases[key]) || cases[key].length < MIN_EVALS) errors.push(`cases.json needs at least ${MIN_EVALS} "${key}" cases`);
     for (const c of cases[key] || []) {
@@ -152,7 +168,6 @@ function lintHook(hook) {
       if (got !== want) errors.push(`case ${JSON.stringify(c)} should ${want ? 'block' : 'be allowed'}`);
     }
   }
-  return errors;
 }
 
 module.exports = { lintItem, lintHook, words, jaccard, NAME_RE, SEMVER_RE, CATEGORIES, RISKS, MAX_LINES, HOOK_EVENTS };

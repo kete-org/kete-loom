@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a connector for the Acme Logistics REST API: OAuth client credentials, cursor pagination and rate limits",
+    "Our sync job against the vendor's API keeps getting 429s and sometimes creates duplicate records on retry. Make the client robust.",
+    "Add a client for the partner's shipment-tracking API that matches how our other integrations in src/integrations are built",
+    "The CRM vendor's access token expires mid-sync and several workers all refresh at once. Fix the token handling in our client.",
+    "Build a typed wrapper around this third-party weather API with timeouts, retries and recorded tests"
+  ],
+  "should_not_trigger": [
+    "Add Stripe Checkout and the customer portal to our billing page",
+    "Design the endpoints and error format for our own public REST API",
+    "Set up an OpenAPI spec and mock server so the frontend and backend teams can work in parallel",
+    "Write a GitHub App that labels new issues using the REST API",
+    "Explain in general when a function should throw versus return an error value"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's the JSONL log of our coding agent's run. It called grep 30 times in a row and never finished. Why?",
+    "The agent ignored the rule in AGENTS.md about not touching migrations. Figure out from the transcript what went wrong",
+    "Our support bot made up an order status that the lookup tool never returned. Diagnose this session and fix it",
+    "After context compaction the agent forgot which files it had already changed and redid them. Here's the trace",
+    "Why did the agent stop and say done without running the tests? I attached the session transcript"
+  ],
+  "should_not_trigger": [
+    "Grade these 200 agent transcripts against our rubric and tell me the overall pass rate",
+    "Design the context compaction and tool permissions for the new agent harness we're building",
+    "My Python service crashes with a KeyError in production, here is the stack trace",
+    "Write a blameless postmortem for last week's database outage",
+    "Summarise how many tokens and dollars my agent sessions used this week"
+  ]
+}

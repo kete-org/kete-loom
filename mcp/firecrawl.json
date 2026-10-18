@@ -1,0 +1,11 @@
+{
+  "name": "firecrawl",
+  "description": "Firecrawl's remote MCP server: scrape, crawl, map and search websites into clean Markdown or structured data, signed in with Firecrawl OAuth.",
+  "version": "0.1.0",
+  "category": "data",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.firecrawl.dev/v2/mcp-oauth",
+  "auth": "oauth",
+  "homepage": "https://docs.firecrawl.dev/mcp-server"
+}

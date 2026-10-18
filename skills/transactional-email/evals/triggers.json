@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Send our password reset and order receipt emails through Postmark templates from the Node backend",
+    "Our signup confirmation email sometimes goes out twice when the job retries, how do we make sends idempotent with Resend?",
+    "Set up an SES sandbox test using the mailbox simulator so our test suite never emails real customers",
+    "Verify SendGrid's signed event webhook and add bounced addresses to our own suppression table",
+    "Point staging at a Mailtrap sandbox inbox and assert in our tests that the welcome email arrived",
+    "Move our email sending out of the request handler into an outbox table and a worker"
+  ],
+  "should_not_trigger": [
+    "Set up SPF, DKIM and DMARC records for our new sending domain",
+    "Write a five-email welcome nurture sequence for trial users",
+    "Our receipts land in Gmail spam even though DKIM passes, what is wrong with our reputation?",
+    "Write a four-step cold email sequence for operations managers at hospitals",
+    "Triage my unread email and draft replies for the urgent ones"
+  ]
+}

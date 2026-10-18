@@ -12,6 +12,15 @@
       "path": "skills/accounting-api-integration"
     },
     {
+      "name": "agent-failure-debugging",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Post-mortem for a single failed or poor LLM agent run, reading its transcript, tool-call log or trace to find the first step where it went wrong, sorting the cause into a fixed taxonomy (tool loop, tool error mishandled, context lost or overflowed, ambiguous or conflicting instructions, wrong tool chosen, missing tool or permission, model limit), then changing the prompt, tool definitions or harness and re-running the same task to prove the fix. Use when an agent got stuck repeating itself, ignored an instruction, gave up early, edited the wrong files, hallucinated a tool result, or produced a bad answer and someone has the session log and wants to know why.",
+      "path": "skills/agent-failure-debugging"
+    },
+    {
       "name": "agent-harness-design",
       "version": "0.1.0",
       "category": "ai",
@@ -19,6 +28,26 @@
       "requires": [],
       "description": "Architecture for the loop around an LLM agent, covering which tools to give it, how to manage and compact its context window, plan-act-verify cycles, permission tiers and sandboxing, tracing and cost limits, and recovery when steps fail or the agent loops. Use when you are building or debugging the harness of a coding agent, task-automation agent or other tool-calling loop (not tuning your own session), or when the agent you built forgets earlier work, runs dangerous commands, or stops before the job is done.",
       "path": "skills/agent-harness-design"
+    },
+    {
+      "name": "agent-outbound-messaging",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "network",
+      "requires": [],
+      "description": "Send policy for AI agents that write to people over email, Slack, Teams, SMS, issue trackers or social channels, sorting every message by audience (internal, external, public) before it is written, gating @-mentions, @channel and @here broadcasts and mass sends, requiring a draft-then-approve step for anything leaving the organisation, stripping internal context, secrets and other people's personal data, and keeping an audit log of what was sent, to whom and who approved it. Use when building or configuring an agent that posts, replies or notifies on someone's behalf, or when an agent is about to send a message and needs rules for what it may send without a human.",
+      "path": "skills/agent-outbound-messaging"
+    },
+    {
+      "name": "agent-security",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "Hardens AI coding agents and their configuration against hijacking and overreach, tracing prompt-injection paths through tool output, fetched web pages and repository files, cutting shell and tool permissions to least privilege, pinning and vetting MCP servers before they are added, keeping secrets out of the agent's reach, and putting spend caps and human approval on agents that can move money or sign wallet transactions. Use when auditing a repo's agent surface (hooks, MCP configs, permission settings, AGENTS.md or CLAUDE.md), deciding whether a new MCP server is safe to install, or locking down an agent that reads untrusted content or holds payment credentials.",
+      "path": "skills/agent-security"
     },
     {
       "name": "ai-media-generation",
@@ -39,6 +68,15 @@
       ],
       "description": "Modern Angular guidance for standalone components, signal state with input(), output(), model(), computed and effect, RxJS subscriptions that cannot leak, OnPush and zoneless change detection, inject()-based dependency injection, typed reactive or signal forms, and TestBed component tests. Use when writing, migrating or debugging an Angular application, such as moving NgModules to standalone, replacing decorators with signals, fixing a view that does not refresh, or stopping a subscription leak.",
       "path": "skills/angular-patterns"
+    },
+    {
+      "name": "api-client-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Builds a dependable client or connector for any third-party HTTP API that has no dedicated Kete Loom skill, covering API-key and OAuth 2.0 auth with single-flight token refresh, connect and read timeouts, retries with exponential backoff and jitter limited to idempotent calls or calls carrying an idempotency key, Retry-After and rate-limit headers, cursor, offset and Link-header pagination, HMAC webhook signature checks on the raw body, and recorded-response contract tests, all shaped to the integration patterns the repo already uses. Use when wiring up a new vendor or partner REST API, writing a sync job or connector against an external service, or hardening a flaky integration that times out, hits 429s or double-submits.",
+      "path": "skills/api-client-integration"
     },
     {
       "name": "api-design",
@@ -151,6 +189,26 @@
       "path": "skills/bioinformatics-workflows"
     },
     {
+      "name": "blender-automation",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "blender"
+      ],
+      "description": "Scripts Blender through its bpy Python API and command line - inspecting armatures, bone hierarchies, rest and pose transforms, constraints and vertex groups, diagnosing broken rigs and retargeted animation (wrong bone roll, scale on the armature, mismatched rest poses, missing action slots), editing actions and F-Curves through layers, strips and channelbags, batch-editing objects, materials and modifiers across many .blend files, and rendering headless with blender -b. Use when a rig or imported FBX animation looks wrong in Blender, when the same change must be applied to dozens of scenes or assets, or when renders must run from a script or on a farm without the UI.",
+      "path": "skills/blender-automation"
+    },
+    {
+      "name": "brand-strategy",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Brand identity strategy run as a structured interview, one question block at a time, covering purpose, positioning against named alternatives, the primary audience and their job to be done, three to five values tied to behaviours, personality traits and a naming brief, then written up as a one-page brand brief with open questions marked. Use when a founder or team is starting or rebranding a company or product and needs its positioning, audience, values and personality decided before voice guides, names, logos or campaigns are made.",
+      "path": "skills/brand-strategy"
+    },
+    {
       "name": "brand-voice",
       "version": "0.1.0",
       "category": "business",
@@ -178,6 +236,17 @@
       ],
       "description": "Working with Bun as a JavaScript runtime, package manager, test runner and bundler, and knowing where it differs from Node and npm, including bun.lock and trustedDependencies, bunfig.toml, bun test with bun:test mocks, bun build and --compile, Bun.serve, automatic .env loading, Node API compatibility gaps, and when to stay on Node. Use when adopting or migrating to Bun, debugging something that works on Node but fails under Bun, setting up bun test or bun install in CI, or deciding whether Bun is a safe choice for a project.",
       "path": "skills/bun-runtime"
+    },
+    {
+      "name": "change-impact-analysis",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Blast-radius analysis for a code change, built from the real dependency graph rather than guesswork, using import search, the build graph and monorepo tooling (nx affected, turbo --affected, bazel query rdeps, go list, pnpm filters, Maven -amd, Gradle buildDependents) to find downstream consumers, then running the tests of changed modules and every dependent, and reconciling the predicted impact against the actual diff. Use when asked what a change could break, which packages or services consume a module, which tests must run for a diff, or whether a shared library edit is safe to merge.",
+      "path": "skills/change-impact-analysis"
     },
     {
       "name": "cisco-ios-config",
@@ -256,6 +325,24 @@
       "requires": [],
       "description": "Keeps a long agent task inside its context window by deciding what to read in full versus search for, reading files in slices, summarising findings into a running notes file, pushing bulky reads and log analysis to subagents that return short answers, and checkpointing before the window runs out. Use when a task spans many files or huge outputs (logs, lockfiles, generated code, large diffs), when earlier details start getting lost, or when the user warns the session is close to its context limit.",
       "path": "skills/context-budget"
+    },
+    {
+      "name": "contract-drafting",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Assembles first-draft commercial agreements, namely master services agreements, NDAs, statements of work and GDPR-style data processing agreements, by filling the organisation's own clause template from a structured term sheet, logging every departure from the standard position in a deviation register with its risk and approver, and producing a plain-language redline summary, with a mandatory gate that a qualified lawyer reviews the draft before anyone signs or sends it. Use when you need a first draft of an MSA, NDA, SOW or DPA from your template and agreed terms, when the other side's paper must be compared against your playbook, or when preparing a summary of changes for legal sign-off.",
+      "path": "skills/contract-drafting"
+    },
+    {
+      "name": "contract-first-development",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Coordinates frontend and backend teams, or two services, around one machine-checked interface contract in OpenAPI, AsyncAPI, protobuf or JSON Schema that is reviewed and merged before code, then drives generated clients and server stubs, mock servers for parallel work, CI gates for breaking changes with oasdiff and buf breaking, and Pact consumer-driven contract tests with can-i-deploy checks. Use when two teams or services must build against the same interface at the same time, a spec keeps drifting from the implementation, or a provider change broke a consumer that nobody tested against.",
+      "path": "skills/contract-first-development"
     },
     {
       "name": "conventional-commits",
@@ -392,6 +479,15 @@
       "path": "skills/dbt-patterns"
     },
     {
+      "name": "decision-council",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Runs a council of independent viewpoints on one hard call, giving several role-played advisers or separate models (or providers) the same brief in isolation so none sees another's answer, then cross-examining their positions and synthesising a single recommendation that records the strongest dissent, the confidence level and what evidence would change the outcome. Use when facing an ambiguous or contested choice, a go/no-go or launch call, a build-versus-buy or vendor pick, or whenever the user asks for a second opinion, a devil's advocate, a panel or a debate before committing.",
+      "path": "skills/decision-council"
+    },
+    {
       "name": "deep-research",
       "version": "0.1.0",
       "category": "meta",
@@ -419,6 +515,15 @@
       "path": "skills/deployment-strategies"
     },
     {
+      "name": "desktop-app-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Automates end-to-end UI tests for native desktop applications (WPF, WinForms, Win32, Qt and Electron) by driving them through UI Automation with pywinauto, through the Appium Windows driver backed by WinAppDriver, or through Playwright's Electron support, with stable automation IDs instead of screen coordinates, isolated app data per test, screenshots on failure, and CI runners that have a real interactive desktop session or a virtual display. Use when writing UI tests for a Windows or cross-platform desktop app, a desktop test passes locally but cannot find windows in CI, choosing between pywinauto, Appium and Playwright for a desktop app, or replacing coordinate-click scripts that break on every resolution change.",
+      "path": "skills/desktop-app-testing"
+    },
+    {
       "name": "django-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -439,6 +544,21 @@
       ],
       "description": "Writes and fixes Dockerfiles and Docker Compose files that build small, cacheable, non-root images, using multi-stage builds, a tight .dockerignore, BuildKit cache and secret mounts, healthchecks, and a Compose setup for local development with dependent services. Use when containerising an app, shrinking a bloated or slow image build, removing secrets baked into image layers, or wiring a local stack of app, database and queue with Compose.",
       "path": "skills/docker-patterns"
+    },
+    {
+      "name": "document-processing",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "python3",
+        "qpdf",
+        "ocrmypdf",
+        "tesseract",
+        "pdftotext"
+      ],
+      "description": "Pipelines for PDFs and scanned paperwork built on open tools - triage each file as born-digital, scanned or mixed, pull text and tables with pdfplumber or pdftotext, add a searchable text layer with OCRmyPDF and Tesseract language packs, split, merge, rotate, decrypt and repair with qpdf, read and fill AcroForm fields with pypdf or pdftk, redact so the underlying text and metadata are truly gone and prove it, and translate a document while keeping its layout. Use when someone has a folder of PDFs or scans to extract data from, needs a scanned contract made searchable, wants a PDF form filled from a spreadsheet, or must hand over a redacted document that has to survive copy-paste and text extraction.",
+      "path": "skills/document-processing"
     },
     {
       "name": "e2e-testing-playwright",
@@ -473,6 +593,15 @@
       ],
       "description": "Gets email into the inbox instead of spam by setting up SPF, DKIM, DMARC and BIMI DNS records with alignment, splitting transactional and marketing mail onto separate subdomains and streams, choosing a sending provider, processing bounces and complaints, keeping lists clean and warming a new domain or IP. Use when mail lands in spam or bounces, a domain needs authenticating before sending, Gmail, Yahoo or Outlook bulk-sender rules must be met, or a new sending domain is about to go live.",
       "path": "skills/email-deliverability"
+    },
+    {
+      "name": "energy-procurement",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Commercial electricity and natural gas buying for offices, plants, warehouses and multi-site portfolios, covering how to read utility bills and tariffs (energy, demand, capacity and transmission charges), analysing 15-minute interval load data for load factor and peaks, comparing fixed-price, index and block-and-index supply contracts, running a supplier RFP on a like-for-like basis, layering purchases to manage price risk, and renewable options such as green tariffs, unbundled certificates and power purchase agreements. Use when a supply contract is up for renewal, a site's energy costs jumped, you are comparing supplier offers, or a sustainability target needs a renewable electricity plan, in a market where the customer can choose a supplier.",
+      "path": "skills/energy-procurement"
     },
     {
       "name": "error-handling-patterns",
@@ -565,6 +694,15 @@
       "path": "skills/flutterwave-integration"
     },
     {
+      "name": "freight-carrier-management",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [],
+      "description": "Truckload, LTL and intermodal carrier sourcing and governance for shippers and brokers, covering FMCSA operating authority and safety record checks on SAFER and SMS, certificates of insurance and cargo cover, double-brokering and identity fraud red flags, lane rate benchmarking against spot and contract indices, carrier scorecards for on-time, tender acceptance and claims, routing-guide tendering, and contract and rate negotiation. Use when onboarding or vetting a new carrier, running a freight bid or RFP, building a routing guide or carrier scorecard, or deciding which carriers to keep, grow or drop on a lane.",
+      "path": "skills/freight-carrier-management"
+    },
+    {
       "name": "fsharp-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -652,6 +790,27 @@
       ],
       "description": "Writes and fixes Go tests with the standard testing package, including table-driven tests with t.Run subtests, t.Helper and t.Cleanup, httptest servers and recorders, hand-written fakes instead of mock frameworks, the race detector, native fuzzing, benchmarks and golden files. Use when adding or repairing _test.go files, making flaky Go tests deterministic, testing an HTTP handler or client in Go, or writing a Go fuzz target or benchmark.",
       "path": "skills/go-testing"
+    },
+    {
+      "name": "google-workspace-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Calls the Google Drive v3, Docs, Sheets and Slides REST APIs from application code, covering the choice between user OAuth, a service account and domain-wide delegation, the narrowest scopes (drive.file before restricted drive), files.list queries with shared-drive flags, documents and presentations batchUpdate requests applied in descending index order, Sheets A1 ranges with valueInputOption, and per-minute quotas handled with truncated exponential backoff on 429 and 403 rate errors. Use when code must create, read, fill or export Google Docs, Sheets, Slides or Drive files, a service account gets 403 or storageQuotaExceeded, or a Workspace sync hits rate limits.",
+      "path": "skills/google-workspace-integration"
+    },
+    {
+      "name": "harmonyos-arkts",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "hvigorw",
+        "ohpm"
+      ],
+      "description": "Builds and fixes HarmonyOS NEXT apps written in ArkTS with ArkUI declarative components, choosing between the V1 state decorators (@State, @Prop, @Link, @Observed/@ObjectLink) and the V2 set (@ComponentV2, @Local, @Param, @Event, @ObservedV2/@Trace, @Monitor, @Computed) without mixing them illegally, wiring the UIAbility lifecycle and page routing, and running hvigorw and ohpm builds and clearing typical ArkTS compiler, signing and dependency errors. Use when writing or restructuring ArkUI pages and components, migrating state from V1 to V2 decorators, debugging a UI that does not refresh, or getting a HarmonyOS project in DevEco Studio or CI to build and install a HAP.",
+      "path": "skills/harmonyos-arkts"
     },
     {
       "name": "hexagonal-architecture",
@@ -744,6 +903,17 @@
       "path": "skills/invoicing-and-tax"
     },
     {
+      "name": "ios-platform-features",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "xcodebuild"
+      ],
+      "description": "Adopts recent Apple platform APIs in an existing app without dropping older OS versions, covering the Liquid Glass design (glassEffect, GlassEffectContainer, glass button styles, UIGlassEffect, UIDesignRequiresCompatibility), the on-device Foundation Models framework with SystemLanguageModel availability, LanguageModelSession, @Generable guided generation and the Tool protocol, #available checks with real fallbacks, and layered Icon Composer app icons. Use when an iOS, iPadOS or macOS app is moving to the iOS 26 or later SDK, adding an Apple Intelligence text feature that runs on device, gating a new API behind an availability check, or replacing an AppIcon asset catalog with an .icon file.",
+      "path": "skills/ios-platform-features"
+    },
+    {
       "name": "java-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -797,6 +967,15 @@
       ],
       "description": "Jakarta Persistence and Hibernate ORM data-layer rules for entity and association mapping, LAZY-by-default fetch plans, finding and fixing N+1 selects with JOIN FETCH, entity graphs or batch fetching, transaction scope and LazyInitializationException, @Version optimistic locking, and evolving the schema through Flyway or Liquibase rather than ddl-auto. Use when mapping JPA entities, chasing slow or repeated SQL from Hibernate, fixing lazy loading or stale-update errors, or adding a database migration in a Java or Kotlin JVM project.",
       "path": "skills/jpa-hibernate"
+    },
+    {
+      "name": "jvm-sql-mappers",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Writes and reviews SQL-first data access on the JVM without an ORM session, using MyBatis XML or annotation mappers with dynamic SQL and resultMaps, jOOQ's generated typesafe DSL, or Kotlin Exposed DSL and DAO tables, plus explicit transaction boundaries, HikariCP pool sizing, JDBC batch inserts and loading child rows without one query per parent. Use when a Java or Kotlin service uses MyBatis, jOOQ or Exposed rather than JPA, a mapper or query builder produces the wrong or slow SQL, ${} string substitution needs auditing for injection, bulk inserts are slow, or the connection pool times out under load.",
+      "path": "skills/jvm-sql-mappers"
     },
     {
       "name": "kotlin-multiplatform",
@@ -970,6 +1149,15 @@
       "path": "skills/ml-experiment-workflow"
     },
     {
+      "name": "mobile-accessibility",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Makes native iOS and Android screens usable with VoiceOver and TalkBack by fixing labels, traits and roles, grouping and reading order, focus moves after navigation, Dynamic Type and sp font scaling, 44pt and 48dp touch targets and colour contrast, across SwiftUI, UIKit, Jetpack Compose and Android Views, then proving it with Accessibility Inspector, Accessibility Scanner and automated audits in UI tests. Use when a native mobile screen must work with a screen reader, large text or switch access, an app store or customer audit flagged accessibility issues, or accessibility checks need adding to XCUITest, Espresso or Compose tests.",
+      "path": "skills/mobile-accessibility"
+    },
+    {
       "name": "mongodb-patterns",
       "version": "0.1.0",
       "category": "data",
@@ -1034,6 +1222,15 @@
       "path": "skills/network-automation"
     },
     {
+      "name": "network-design",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Produces a vendor-neutral design for an enterprise campus or multi-site network before anything is configured, from requirements and an aggregatable IPv4 and IPv6 addressing plan through OSPF area layout, the BGP edge to ISPs, VLANs, VRFs and segmentation zones, first-hop redundancy and dual uplinks, WAN or SD-WAN topology, and a staged cutover plan with rollback points and validation tests. Use when planning a new office, data centre or branch network, redesigning a flat or outgrown network, merging two company networks, choosing between MPLS, internet VPN and SD-WAN, or writing the migration plan for a network change that must not cause an outage.",
+      "path": "skills/network-design"
+    },
+    {
       "name": "network-troubleshooting",
       "version": "0.1.0",
       "category": "devops",
@@ -1077,6 +1274,28 @@
       "path": "skills/nuxt-patterns"
     },
     {
+      "name": "observability",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "OpenTelemetry-first service instrumentation that adds structured JSON logs carrying trace IDs, RED metrics with bounded-cardinality labels and distributed traces (SDK and exporter setup, semantic conventions, W3C traceparent propagation, head and tail sampling), then turns them into SLIs, SLOs, multi-window burn-rate alerts and on-call dashboards in Grafana, Prometheus or a vendor backend. Use when instrumenting a service with OpenTelemetry, traces break across service hops, logs cannot be joined to a request, defining an SLO or error budget, replacing noisy threshold alerts with burn-rate alerts, or building the operational board on-call opens first.",
+      "path": "skills/observability"
+    },
+    {
+      "name": "open-source-release",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "gitleaks",
+        "git-filter-repo"
+      ],
+      "description": "Takes a private or internal codebase public safely by scanning the working tree and full git history for secrets, personal data and internal hostnames with gitleaks and trufflehog, rewriting history with git filter-repo or starting a fresh history, choosing an outbound licence and checking third-party licence compatibility, adding README, CONTRIBUTING, SECURITY and CODE_OF_CONDUCT files and public CI, then walking a pre-publish checklist with explicit sign-off points. Use when someone wants to open-source an internal project, flip a private GitHub repository to public, or publish company code under an open licence for the first time.",
+      "path": "skills/open-source-release"
+    },
+    {
       "name": "parallel-agent-orchestration",
       "version": "0.1.0",
       "category": "meta",
@@ -1086,6 +1305,15 @@
       ],
       "description": "Fans a large coding job out to several subagents at once and merges the results. Covers cutting the job into independent units with disjoint file ownership, writing a self-contained brief and return contract for each worker, isolating writers in separate git worktrees or branches, and checking every result before integrating it. Use when work splits naturally into pieces that can run side by side (many modules, many packages, a survey plus several fixes), or when the user asks to run agents in parallel or orchestrate a team of subagents.",
       "path": "skills/parallel-agent-orchestration"
+    },
+    {
+      "name": "patent-research",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "network",
+      "requires": [],
+      "description": "Patent and trademark search groundwork across USPTO Patent Public Search and Trademark Search, EPO Espacenet, Google Patents and WIPO PATENTSCOPE and Global Brand Database, covering breaking an invention into searchable features, keyword and CPC classification queries, prior-art and freedom-to-operate lead lists, reading independent claims element by element, checking legal status, family and expiry, and knockout trademark screens by Nice class, with every result labelled as leads for a registered patent attorney or trademark lawyer to assess. Use when checking whether an idea looks new before filing, looking for patents that might block a product launch, mapping competitors' patent filings, summarising what a patent actually claims, or screening a brand name before adopting it.",
+      "path": "skills/patent-research"
     },
     {
       "name": "paystack-integration",
@@ -1212,6 +1440,26 @@
       "path": "skills/prompt-engineering"
     },
     {
+      "name": "prospect-research",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [],
+      "description": "B2B prospect list building and enrichment from public sources such as company websites, filings, job posts, press and public directories, with a written ideal-customer-fit scorecard, a 0-100 fit score and a cited reason per account, buying-committee roles to contact, and warm-introduction paths found in the user's own contacts and investors, while keeping to platform terms and privacy law with no scraping behind logins. Use when a founder or sales team needs a target account list researched, scored and enriched before any outreach is written, or wants to know who in their network can introduce them to a target company.",
+      "path": "skills/prospect-research"
+    },
+    {
+      "name": "python-app-distribution",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "Ships a Python application to people who do not have Python, by freezing it with PyInstaller or compiling it with Nuitka per target OS, wrapping Windows builds in an Inno Setup or MSIX installer with Authenticode signing, signing macOS app bundles with a Developer ID under the hardened runtime and notarizing them with notarytool, and publishing wheels and an sdist to PyPI through GitHub trusted publishing. Use when turning a Python script, CLI or Qt/Tk GUI into a downloadable .exe, .app or .dmg, an installer, or a pip-installable release, or when a frozen build misses data files, gets flagged by SmartScreen or Gatekeeper, or a PyPI upload needs to drop API tokens.",
+      "path": "skills/python-app-distribution"
+    },
+    {
       "name": "python-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -1243,6 +1491,15 @@
       ],
       "description": "Writes and fixes PyTorch training code, covering nn.Module and training loop structure, device and dtype placement, DataLoader setup, torch.amp mixed precision, checkpoint save and resume, seeding for reproducibility, and tracking down NaN losses and tensor shape errors. Use when building or debugging a PyTorch model, a training or evaluation loop, or a checkpoint that will not load.",
       "path": "skills/pytorch-patterns"
+    },
+    {
+      "name": "quality-nonconformance",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Nonconformance report (NCR) and corrective and preventive action (CAPA) workflow for regulated manufacturing such as medical devices under FDA's Quality Management System Regulation (21 CFR 820, which incorporates ISO 13485:2016) and automotive suppliers under IATF 16949, covering NCR intake and severity triage, containment and quarantine, root cause analysis with 5 Whys, Ishikawa diagrams and 8D, disposition decisions (use as is, rework, repair, scrap, return to supplier), CAPA plans, and effectiveness verification before closure. Use when a part, lot or process fails a specification, a customer complaint or audit finding needs a CAPA, you are writing or fixing an NCR or CAPA procedure or tracker, or a corrective action keeps failing to stop a repeat defect.",
+      "path": "skills/quality-nonconformance"
     },
     {
       "name": "quarkus-patterns",
@@ -1311,6 +1568,26 @@
       "path": "skills/react-performance"
     },
     {
+      "name": "react-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "node"
+      ],
+      "description": "React Testing Library tests for components and custom hooks under Vitest or Jest, written the way a user drives the UI - userEvent.setup() interactions, getByRole and accessible-name queries, findBy and waitFor for async updates, MSW request handlers instead of mocked fetch, render wrappers for providers, routers and query clients, and renderHook for hooks. Use when writing or fixing tests for a React component or hook, replacing Enzyme or snapshot-heavy tests, a test fails with \"not wrapped in act(...)\" or cannot find an element, or tests break whenever a component is refactored.",
+      "path": "skills/react-testing"
+    },
+    {
+      "name": "recommender-systems",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Designs and debugs recommendation, ranking and personalised feed systems as a multi-stage pipeline, from candidate generation with co-visitation, two-tower retrieval and approximate nearest neighbour indexes (FAISS, ScaNN, HNSW), through a learned ranker on logged impressions, to re-ranking for diversity, freshness and business rules, plus cold-start fallbacks, leakage-free time-based offline evaluation with recall@k, NDCG and coverage, and online A/B tests with guardrail metrics. Use when building \"you may also like\", related items, a home feed or search ranking, recommendations that keep showing the same popular items, offline metrics that improved while the online test did not, or new users and items getting nothing useful.",
+      "path": "skills/recommender-systems"
+    },
+    {
       "name": "redis-patterns",
       "version": "0.1.0",
       "category": "data",
@@ -1354,6 +1631,15 @@
       ],
       "description": "Remotion video projects written in React, covering Composition and Sequence timing, frame-driven animation with interpolate and spring, staticFile assets, font loading held by delayRender, deterministic rendering with the remotion CLI or renderMedia, and serverless rendering on AWS Lambda with concurrency and S3 privacy settings. Use when building or fixing a Remotion composition, timing scenes in frames, animating with useCurrentFrame, rendering an MP4 from React code, or setting up Remotion Lambda.",
       "path": "skills/remotion-video"
+    },
+    {
+      "name": "reproducible-dev-environments",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Pins a project's whole toolchain so a fresh laptop and the CI runner get identical versions from one setup command, choosing between Nix flakes or Flox, Dev Containers, and mise or asdf version files, pinning the JavaScript package manager through the packageManager field and corepack, committing every lockfile, and making CI install from the same pins. Use when onboarding takes a day of manual installs, \"works on my machine\" bugs come from tool version drift, CI uses different Node, Python or Go versions than developers, or a team is adding a devcontainer.json, flake.nix, mise.toml or .tool-versions.",
+      "path": "skills/reproducible-dev-environments"
     },
     {
       "name": "returns-reverse-logistics",
@@ -1479,6 +1765,15 @@
       "requires": [],
       "description": "Builds Slack apps on the Bolt framework (JavaScript, Python or Java), from the app manifest and minimal bot scopes through Events API subscriptions, slash commands and shortcuts acknowledged within three seconds, Block Kit messages and modals with interactive actions, and v0 HMAC request signing checks, to tiered Web API rate limits with Retry-After, Socket Mode versus HTTP endpoints, and OAuth v2 installs for distributing an app to other workspaces. Use when creating or fixing a Slack bot, slash command, modal or interactive message, choosing Slack scopes, debugging dispatch_failed or invalid signature errors, or preparing a Slack app for multi-workspace distribution.",
       "path": "skills/slack-app-integration"
+    },
+    {
+      "name": "slide-decks",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Builds presentation decks end to end - a storyline of one idea per slide with action titles, then layouts, charts and speaker notes - as reveal.js or hand-written HTML/CSS slides, or as PowerPoint files generated with python-pptx or pandoc, edited from an existing .pptx or brand template, and exported to PDF with reveal.js print-pdf, decktape or LibreOffice. Use when someone needs a talk, team update, conference or training deck made, an outline turned into slides, an existing deck converted between HTML and PowerPoint, or slides exported to a shareable PDF.",
+      "path": "skills/slide-decks"
     },
     {
       "name": "smart-contract-security",
@@ -1635,6 +1930,15 @@
       "path": "skills/threat-modeling"
     },
     {
+      "name": "transactional-email",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Application code that sends one-to-one system email (sign-up confirmation, password reset, receipts, alerts) through a provider HTTP API such as Postmark, Amazon SES, Resend, Mailtrap or SendGrid, with versioned templates rendered from a typed model, sends queued and made idempotent by a stored message key, test inboxes and simulator addresses instead of real recipients, verified bounce, complaint and delivery webhooks, and a suppression check before every send. Use when wiring a provider SDK into a backend, building the email-sending service or queue worker, testing email flows without mailing real users, or handling a provider's bounce and complaint events in code.",
+      "path": "skills/transactional-email"
+    },
+    {
       "name": "typescript-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -1657,6 +1961,55 @@
       "path": "skills/typescript-testing"
     },
     {
+      "name": "ui-demo-recording",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node",
+        "npx",
+        "ffmpeg"
+      ],
+      "description": "Produces polished, repeatable product demo videos and feature walkthroughs of a web app by scripting the story as a Playwright run with recordVideo, seeding fixed demo data and a frozen clock, pacing actions for a human viewer, injecting a visible cursor and click ripples, adding captions or chapter titles, then trimming, scaling and encoding the WebM with FFmpeg into MP4 or GIF. Use when marketing, docs or a release note needs a screen recording of the app, when an existing demo video is out of date after a UI change, or when the same walkthrough must be re-recorded on every release.",
+      "path": "skills/ui-demo-recording"
+    },
+    {
+      "name": "ui-design-polish",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Visual design direction and design-engineering finish for product UI - choosing a deliberate aesthetic instead of template defaults, then applying a spacing scale, a modular type scale, semantic colour tokens, hover, focus, active and disabled states, optical alignment, and real empty, loading and error states; also inventories an existing codebase's ad-hoc colours, sizes and components into a design-system audit. Use when a screen looks generic, unfinished or inconsistent, someone asks to make the UI look better or more professional, or wants the de facto design system extracted from scattered styles.",
+      "path": "skills/ui-design-polish"
+    },
+    {
+      "name": "ui-flow-audit",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Static trace of every user-facing control in a frontend, following each click, toggle or submit through its event handler, state setters, effects, store actions, network calls and their responses to the final rendered state, to find interactions that each work alone but cancel each other, race, double-fire or leave the screen in the wrong state, reported flow by flow. Use when a feature behaves correctly in isolation yet breaks when actions are combined or repeated, a toggle snaps back, a filter or form resets unexpectedly, or someone wants an audit of how the UI's state changes fit together before a release.",
+      "path": "skills/ui-flow-audit"
+    },
+    {
+      "name": "ui-motion",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Interface animation for the web with the Motion library (motion/react, formerly Framer Motion) and plain CSS transitions, keyframes and the View Transitions API - motion duration and easing tokens, spring physics, hover, tap and drag gestures, AnimatePresence exit animations, layout and shared-element transitions, route changes, prefers-reduced-motion fallbacks, and keeping animation on transform and opacity within the frame budget. Use when adding or fixing a micro-interaction, modal or list animation, page transition or draggable element, an animation stutters or causes layout shift, or motion must respect reduced-motion settings.",
+      "path": "skills/ui-motion"
+    },
+    {
+      "name": "unicode-text-processing",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Code-level correctness for text in complex and non-Latin scripts such as Bengali, Devanagari, Tamil, Arabic, Hebrew, Thai, Khmer, Chinese, Japanese and Korean - choosing NFC versus NFKC normalization and case folding, counting and truncating by grapheme cluster instead of code unit, detecting scripts from the Unicode Script property, dictionary-based word segmentation for languages written without spaces, ICU collation, locale-aware sorting and search folding, bidirectional text isolation, display width, and confusable or invisible characters. Use when string length, slicing, sorting, search matching, tokenization or rendering breaks on non-English text, when a database or search index must compare such text correctly, or when user input mixes scripts.",
+      "path": "skills/unicode-text-processing"
+    },
+    {
       "name": "verification-loop",
       "version": "0.1.1",
       "category": "testing",
@@ -1667,6 +2020,18 @@
       ],
       "description": "Pre-merge verification that detects the project's build, lint, type-check and test commands, runs them in order, fixes what it safely can and reports a pass/fail verdict. Use when the user asks to verify, check or validate changes before committing, opening a pull request, merging or shipping.",
       "path": "skills/verification-loop"
+    },
+    {
+      "name": "video-editing",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "ffmpeg",
+        "ffprobe"
+      ],
+      "description": "Editorial workflow for turning raw footage into a finished cut - logging clips and pulling selects, building a paper edit, rough cut then fine cut, pacing and J/L cuts, matching the rhythm of a reference edit, subtitles and captions in SRT or WebVTT, loudness to a delivery target, basic colour correction, and conforming from an edit decision list with FFmpeg or DaVinci Resolve's Python scripting API. Use when someone hands you interviews, B-roll or screen footage and wants a finished video, asks to tighten a rough cut, wants subtitles and levels fixed before delivery, or needs a timeline assembled or rendered from a script.",
+      "path": "skills/video-editing"
     },
     {
       "name": "vite-patterns",
@@ -2112,6 +2477,20 @@
       ],
       "description": "Localisation-readiness reviewer that reads a UI diff in its own context and reports verified defects that will break in other languages - user-visible text left out of the message catalog, sentences glued together from fragments, hand-rolled or missing plural forms, dates, numbers and currency formatted without the locale, keys missing from or orphaned in locale files, and layout that won't mirror right-to-left - without editing any files. Use when the user wants a front-end or mobile change, branch or pull request checked for translation and locale problems before merge, or asks whether a screen is ready to be localised.",
       "path": "agents/i18n-reviewer"
+    },
+    {
+      "name": "inbox-triager",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [],
+      "tools": [
+        "read",
+        "search",
+        "web"
+      ],
+      "description": "Message triage subagent for email, Slack, Teams and similar threads the user points it at, which sorts each item by urgency and type, pulls out deadlines, commitments and follow-ups, drafts replies for the user to approve, and returns one prioritised digest, without ever sending, deleting, archiving, labelling or marking anything read. Use when the user wants a backlog of messages, an exported inbox or a set of channels cleared down into what needs them today, what can wait and what to say back.",
+      "path": "agents/inbox-triager"
     },
     {
       "name": "infra-reviewer",
@@ -2723,6 +3102,17 @@
       "path": "commands/deps-audit.md"
     },
     {
+      "name": "dual-review",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Two independent reviewers, optionally on different models or providers, review the same change against one rubric; fix and repeat until both approve or the round limit is hit, then report disagreements.",
+      "path": "commands/dual-review.md"
+    },
+    {
       "name": "epic-decompose",
       "version": "0.1.0",
       "category": "docs",
@@ -2748,6 +3138,17 @@
       "requires": [],
       "description": "Build a feature end to end: plan it, implement it test-first, review it and verify it, stopping for approval between stages.",
       "path": "commands/feature-dev.md"
+    },
+    {
+      "name": "fix-bug",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Fix a reported bug by reproducing it as a failing regression test, finding the root cause, making the smallest fix, verifying, reviewing the diff and offering a commit.",
+      "path": "commands/fix-bug.md"
     },
     {
       "name": "hookify",
@@ -2893,6 +3294,15 @@
       "path": "commands/prd.md"
     },
     {
+      "name": "production-readiness",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Audit a service before launch for health checks, observability, rollback, backups, limits, secrets and runbooks, and return a go/no-go list with evidence.",
+      "path": "commands/production-readiness.md"
+    },
+    {
       "name": "project-init",
       "version": "0.1.0",
       "category": "meta",
@@ -3001,6 +3411,15 @@
       "requires": [],
       "description": "Update the README, API docs, changelog and code comments that the current change made stale, without touching unrelated docs.",
       "path": "commands/update-docs.md"
+    },
+    {
+      "name": "usage-report",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Summarise token usage and estimated cost per session, project and model from local agent session logs (Claude Code, Codex, Gemini CLI, OpenCode, Kete Code), read-only.",
+      "path": "commands/usage-report.md"
     },
     {
       "name": "verify",
@@ -3263,6 +3682,16 @@
       "path": "hooks/block-dangerous-commands"
     },
     {
+      "name": "block-foreground-servers",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-shell",
+      "description": "Stops the agent from starting a dev server or file watcher in the foreground, where it never exits and hangs the agent's shell, and tells it to run it in the background with output going to a log.",
+      "path": "hooks/block-foreground-servers"
+    },
+    {
       "name": "block-no-verify",
       "version": "0.1.0",
       "category": "security",
@@ -3271,6 +3700,16 @@
       "event": "pre-shell",
       "description": "Stops the agent from skipping the project's git hooks with git commit --no-verify, -n, HUSKY=0, SKIP= or a swapped core.hooksPath, so pre-commit checks keep running.",
       "path": "hooks/block-no-verify"
+    },
+    {
+      "name": "capture-lessons",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "event": "stop-gate",
+      "description": "Once per session, when the agent finishes with changes in the repository, asks it to propose up to three reusable lessons from the session for /learn, saving nothing unless you approve.",
+      "path": "hooks/capture-lessons"
     },
     {
       "name": "format-on-edit",
@@ -3303,6 +3742,16 @@
       "path": "hooks/load-session-context"
     },
     {
+      "name": "notify-on-stop",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "event": "stop",
+      "description": "Shows a desktop notification when the agent finishes its turn, so you can switch away during long tasks and come back when it is your move.",
+      "path": "hooks/notify-on-stop"
+    },
+    {
       "name": "protect-files",
       "version": "0.1.0",
       "category": "security",
@@ -3311,6 +3760,36 @@
       "event": "pre-edit",
       "description": "Stops the agent from editing files that should never be hand-edited, such as .env files with secrets, package lockfiles, anything inside .git, and private keys.",
       "path": "hooks/protect-files"
+    },
+    {
+      "name": "protect-lint-config",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-edit",
+      "description": "Stops the agent from editing existing linter, formatter and type-checker configs, so it fixes the code that breaks a rule instead of weakening or switching off the rule.",
+      "path": "hooks/protect-lint-config"
+    },
+    {
+      "name": "read-before-edit",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "event": "pre-edit",
+      "description": "Stops the first edit of each existing file in a session and tells the agent to read the file and search for its callers first, so changes are grounded in the real code rather than a guess.",
+      "path": "hooks/read-before-edit"
+    },
+    {
+      "name": "verify-before-stop",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "event": "stop-gate",
+      "description": "When the agent says it is done, runs the project's own lint and type-check commands if files changed, and sends it back to fix any failure instead of letting it finish with broken code.",
+      "path": "hooks/verify-before-stop"
     }
   ],
   "mcp": [
@@ -3337,6 +3816,17 @@
       "path": "mcp/chrome-devtools.json"
     },
     {
+      "name": "clickhouse",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "ClickHouse Cloud's remote MCP server: list databases and tables and run read-only SQL on services you enable it for, signed in with ClickHouse Cloud OAuth.",
+      "homepage": "https://clickhouse.com/docs/cloud/features/ai-ml/remote-mcp",
+      "path": "mcp/clickhouse.json"
+    },
+    {
       "name": "cloudflare",
       "version": "0.1.0",
       "category": "devops",
@@ -3359,6 +3849,17 @@
       "path": "mcp/context7.json"
     },
     {
+      "name": "exa",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "network",
+      "transport": "http",
+      "auth": "none",
+      "description": "Exa's remote MCP server: web search, page contents and code search for the model. Free and rate-limited without a key; no sign-in needed.",
+      "homepage": "https://exa.ai/docs/reference/exa-mcp",
+      "path": "mcp/exa.json"
+    },
+    {
       "name": "fetch",
       "version": "0.1.0",
       "category": "docs",
@@ -3379,6 +3880,17 @@
       "description": "Figma's remote MCP server: bring design context (frames, components, variables) into code, signed in with Figma.",
       "homepage": "https://developers.figma.com/docs/figma-mcp-server/",
       "path": "mcp/figma.json"
+    },
+    {
+      "name": "firecrawl",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Firecrawl's remote MCP server: scrape, crawl, map and search websites into clean Markdown or structured data, signed in with Firecrawl OAuth.",
+      "homepage": "https://docs.firecrawl.dev/mcp-server",
+      "path": "mcp/firecrawl.json"
     },
     {
       "name": "git",
@@ -3489,6 +4001,17 @@
       "description": "The reference Time MCP server: current time and timezone conversion.",
       "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/time",
       "path": "mcp/time.json"
+    },
+    {
+      "name": "vercel",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Vercel's remote MCP server: search the docs, manage projects and deployments, read deployment logs and query Web Analytics, signed in with Vercel OAuth.",
+      "homepage": "https://vercel.com/docs/agent-resources/vercel-mcp",
+      "path": "mcp/vercel.json"
     }
   ]
 }

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write UI tests for our WPF invoicing app that click through creating a customer",
+    "Our pywinauto tests pass locally but can't find the main window on the CI Windows runner",
+    "Should we use pywinauto or Appium with WinAppDriver to test our WinForms client?",
+    "Add end-to-end tests for our Electron app that launch it and check the main window",
+    "Replace our AutoIt scripts that click screen coordinates with something that survives a resolution change"
+  ],
+  "should_not_trigger": [
+    "Write Playwright tests for the login page of our React web app",
+    "Add xUnit unit tests for the tax calculation class in our C# library",
+    "Package our Python Qt app into a signed Windows installer",
+    "Check our web app's forms for screen reader and keyboard accessibility",
+    "Test our iOS app's onboarding flow with XCUITest on a simulator"
+  ]
+}

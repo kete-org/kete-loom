@@ -10,6 +10,7 @@
 //   Copilot CLI  ~/.copilot/mcp-config.json `mcpServers`; local servers only (its OAuth isn't documented)
 //   OpenCode     opencode.json `mcp` (command is an array)
 //   Kete Code    kete.json `mcp.servers`
+//   Kiro         ~/.kiro/settings/mcp.json `mcpServers` (remote servers sign in with OAuth)
 // An entry is ours when it equals what we would write, so a server you configured yourself under the
 // same name is never touched. Claude Code's CLI-managed servers are tracked in ~/.kete-loom/mcp.json.
 
@@ -33,6 +34,7 @@ const RENDER = {
   copilot: (s) => (http(s) ? null : { type: 'local', command: s.command, args: s.args, tools: ['*'] }),
   opencode: (s) => (http(s) ? { type: 'remote', url: s.url, enabled: true } : { type: 'local', command: [s.command, ...s.args], enabled: true }),
   kete: (s) => (http(s) ? { type: 'remote', url: s.url } : { type: 'local', command: [s.command, ...s.args] }),
+  kiro: (s) => (http(s) ? { url: s.url } : { command: s.command, args: s.args }),
 };
 
 const SIGN_IN = {
@@ -42,6 +44,7 @@ const SIGN_IN = {
   cursor: (n) => `Cursor asks you to sign in to ${n} the first time it connects`,
   opencode: (n) => `opencode mcp auth ${n}`,
   kete: (n) => `kete mcp auth ${n}`,
+  kiro: (n) => `Kiro opens a browser to sign in to ${n} the first time it connects`,
 };
 
 const keteFile = (dir) => (fs.existsSync(path.join(dir, 'kete.jsonc')) ? path.join(dir, 'kete.jsonc') : path.join(dir, 'kete.json'));
@@ -54,8 +57,9 @@ const JSON_HOSTS = {
   copilot: { file: { user: (h) => path.join(process.env.COPILOT_HOME || path.join(h, '.copilot'), 'mcp-config.json') }, holder: (d) => (d.mcpServers ||= {}), standalone: true },
   opencode: { file: { user: (h) => path.join(h, '.config', 'opencode', 'opencode.json'), project: (cwd) => path.join(cwd, 'opencode.json') }, holder: (d) => (d.mcp ||= {}) },
   kete: { file: { user: (h) => keteFile(path.join(h, '.config', 'kete')), project: (cwd) => keteFile(path.join(cwd, '.kete')) }, holder: (d) => ((d.mcp ||= {}).servers ||= {}) },
+  kiro: { file: { user: (h) => path.join(h, '.kiro', 'settings', 'mcp.json'), project: (cwd) => path.join(cwd, '.kiro', 'settings', 'mcp.json') }, holder: (d) => (d.mcpServers ||= {}), standalone: true },
 };
-const MCP_HOSTS = ['claude', 'codex', 'gemini', 'cursor', 'copilot', 'opencode', 'kete'];
+const MCP_HOSTS = ['claude', 'codex', 'gemini', 'cursor', 'copilot', 'opencode', 'kete', 'kiro'];
 
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 

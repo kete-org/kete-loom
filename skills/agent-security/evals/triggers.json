@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Audit our repo's .mcp.json, .claude/settings.json and hooks for anything that lets the agent run wild",
+    "Someone wants to add a community MCP server that runs via npx -y. Is it safe to install and how should we pin it?",
+    "Our support agent reads customer emails and can also post to Slack and query the CRM. How do we stop prompt injection from leaking data?",
+    "We're giving an agent a crypto wallet to pay for API calls. What spend limits and approvals should it have?",
+    "Check whether our Codex config with danger-full-access and approval never is too permissive"
+  ],
+  "should_not_trigger": [
+    "Review my last commit for SQL injection and missing auth checks in the API",
+    "Design the tool set and context compaction for the coding agent we're building",
+    "Build an MCP server that exposes our Postgres database as tools",
+    "Set the agent to loop overnight until every lint error is fixed, with a spend cap",
+    "Our agent run last night got stuck calling the same tool 40 times, figure out why from the transcript"
+  ]
+}

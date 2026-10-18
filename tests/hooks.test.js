@@ -202,3 +202,108 @@ test('--hooks registers every hook where its event is supported, and uninstall r
   assert.deepStrictEqual(fs.readdirSync(path.join(home, '.copilot', 'hooks')), []);
   assert.ok(!fs.existsSync(path.join(home, '.kete-loom')));
 });
+
+test('stop-gate sends the agent back in each host\'s dialect; stop never blocks', () => {
+  const dir = tmp();
+  fs.mkdirSync(path.join(dir, 'gate'));
+  fs.writeFileSync(path.join(dir, 'gate', 'hook.js'), "exports.check = (e) => ({ block: !e.again, reason: 'fix lint' })");
+  const gate = (host, payload, event = 'stop-gate') => respond(host, 'gate', JSON.stringify(payload), dir, event);
+  for (const host of ['claude', 'codex', 'gemini']) {
+    const r = gate(host, { session_id: 's1', cwd: '/tmp' });
+    assert.strictEqual(r.code, 2, host);
+    assert.match(r.stderr, /fix lint/, host);
+    assert.strictEqual(gate(host, { stop_hook_active: true }).code, 0, `${host} lets a continued turn end`);
+  }
+  assert.deepStrictEqual(JSON.parse(gate('cursor', { status: 'completed', loop_count: 0 }).stdout), { followup_message: 'fix lint' });
+  assert.strictEqual(gate('cursor', { loop_count: 1 }).stdout, '');
+  const copilot = gate('copilot', {});
+  assert.strictEqual(copilot.code, 0, 'Copilot treats exit 2 as a warning, so it gets JSON');
+  assert.deepStrictEqual(JSON.parse(copilot.stdout), { decision: 'block', reason: 'fix lint' });
+  assert.strictEqual(gate('claude', {}, 'stop').code, 0, 'a stop hook only notifies');
+});
+
+test('stop-gate hooks skip hosts whose stop hook cannot continue; stop hooks reach Kete Code', () => {
+  const home = tmp();
+  const out = run(['install', '--home', home, '--all-targets', '--hook', 'verify-before-stop,notify-on-stop', '--json']);
+  const claude = readJson(path.join(home, '.claude', 'settings.json'));
+  assert.strictEqual(claude.hooks.Stop.length, 2);
+  assert.ok(!('matcher' in claude.hooks.Stop[0]));
+  assert.strictEqual(readJson(path.join(home, '.gemini', 'settings.json')).hooks.AfterAgent.length, 2);
+  const kete = readJson(path.join(home, '.config', 'kete', 'kete.json')).kete.hooks.Stop;
+  assert.strictEqual(kete.length, 1);
+  assert.match(kete[0].command, /notify-on-stop stop$/);
+  assert.match(out, /kete has no stop-gate hook/);
+  assert.ok(fs.existsSync(path.join(home, '.copilot', 'hooks', 'kete-loom-verify-before-stop.json')));
+  run(['uninstall', '--home', home, '--all-targets', '--hook', 'verify-before-stop,notify-on-stop']);
+  assert.ok(!('hooks' in readJson(path.join(home, '.claude', 'settings.json'))));
+});
+
+const gitRepo = (files) => {
+  const dir = tmp();
+  for (const [f, c] of Object.entries(files)) fs.writeFileSync(path.join(dir, f), c);
+  execFileSync('git', ['init', '-q'], { cwd: dir });
+  return dir;
+};
+
+test('verify-before-stop runs the project lint only when code changed, and once in a row', () => {
+  const { check } = require('../hooks/verify-before-stop/hook.js');
+  const failing = gitRepo({ 'package.json': JSON.stringify({ scripts: { lint: 'node -e "console.log(\'bad semi\');process.exit(1)"' } }), 'a.js': 'x' });
+  const v = check({ cwd: failing });
+  assert.strictEqual(v.block, true);
+  assert.match(v.reason, /npm run lint[\s\S]*bad semi/);
+  assert.strictEqual(check({ cwd: failing, again: true }).block, false);
+  const passing = gitRepo({ 'package.json': JSON.stringify({ scripts: { lint: 'node -e ""' } }), 'a.js': 'x' });
+  assert.strictEqual(check({ cwd: passing }).block, false);
+  const docsOnly = gitRepo({ 'README.md': 'x' });
+  assert.strictEqual(check({ cwd: docsOnly }).block, false);
+  assert.strictEqual(check({ cwd: tmp() }).block, false, 'not a git repository');
+});
+
+test('capture-lessons asks once per session; read-before-edit refuses only the first edit', () => {
+  const prev = process.env.KETE_LOOM_STATE_DIR;
+  process.env.KETE_LOOM_STATE_DIR = tmp();
+  try {
+    const lessons = require('../hooks/capture-lessons/hook.js');
+    const repo = gitRepo({ 'a.js': 'x' });
+    assert.strictEqual(lessons.check({ cwd: repo, session: 's1' }).block, true);
+    assert.strictEqual(lessons.check({ cwd: repo, session: 's1' }).block, false);
+    assert.strictEqual(lessons.check({ cwd: repo, session: 's2', again: true }).block, false);
+    assert.strictEqual(lessons.check({ cwd: gitRepo({}), session: 's3' }).block, false, 'nothing changed');
+
+    const rbe = require('../hooks/read-before-edit/hook.js');
+    const ev = (session) => ({ cwd: repo, session, files: [{ path: 'a.js' }] });
+    assert.match(rbe.check(ev('s1')).reason, /read the whole file/);
+    assert.strictEqual(rbe.check(ev('s1')).block, false);
+    assert.strictEqual(rbe.check(ev('s2')).block, true, 'a new session starts over');
+    assert.strictEqual(rbe.check({ cwd: repo, session: 's1', files: [{ path: 'new.js' }] }).block, false);
+  } finally {
+    if (prev === undefined) delete process.env.KETE_LOOM_STATE_DIR;
+    else process.env.KETE_LOOM_STATE_DIR = prev;
+  }
+});
+
+test('notify-on-stop picks the platform notifier and never blocks', () => {
+  const { notifier } = require('../hooks/notify-on-stop/hook.js');
+  assert.strictEqual(notifier('darwin')('T', 'b "q"')[0], 'osascript');
+  assert.strictEqual(notifier('win32'), null);
+  assert.strictEqual(notifier('linux', { PATH: '' }), null);
+});
+
+test('doctor --fix restores an out-of-date hook runtime and drops hooks the catalog no longer has', () => {
+  const home = tmp();
+  run(['install', '--home', home, '--hook', HOOK]);
+  const runtime = path.join(home, '.kete-loom', 'hooks', HOOK, 'hook.js');
+  fs.writeFileSync(runtime, '// edited');
+  const settings = path.join(home, '.claude', 'settings.json');
+  const data = readJson(settings);
+  data.hooks.PreToolUse.push({ matcher: 'Bash', hooks: [{ type: 'command', command: data.hooks.PreToolUse[0].hooks[0].command.replace(HOOK, 'retired-hook') }] });
+  fs.writeFileSync(settings, JSON.stringify(data));
+  const report = run(['doctor', '--home', home]);
+  assert.match(report, /out of date: block-dangerous-commands/);
+  assert.match(report, /retired-hook/);
+  assert.match(run(['doctor', '--home', home, '--fix']), /Repaired:/);
+  assert.strictEqual(fs.readFileSync(runtime, 'utf8'), fs.readFileSync(path.join(HOOKS, HOOK, 'hook.js'), 'utf8'));
+  assert.doesNotMatch(fs.readFileSync(settings, 'utf8'), /retired-hook/);
+  assert.match(fs.readFileSync(settings, 'utf8'), /block-dangerous-commands/);
+  assert.doesNotMatch(run(['doctor', '--home', home]), /Problems:/);
+});

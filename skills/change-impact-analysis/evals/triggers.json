@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "I changed the signature of formatCurrency in packages/shared-utils. Which apps in the monorepo use it and could break?",
+    "What's the blast radius of renaming the user_status column? Find every consumer before I merge.",
+    "Run nx affected for my branch and tell me which downstream projects need testing",
+    "Before I bump the logging library interface, map every service and package that depends on it and run their tests",
+    "My diff ended up touching more than I planned. Compare what I expected to affect against what actually changed."
+  ],
+  "should_not_trigger": [
+    "Break this feature request into ordered implementation steps before I start coding",
+    "Rename the parseDate helper across the codebase without changing behaviour",
+    "Run lint, type-check and the test suite before I open a pull request",
+    "Scan our npm dependencies for known vulnerabilities",
+    "Explain how this repository is structured, I just cloned it"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our MyBatis mapper uses ${orderBy} from the request, make it injection-safe",
+    "The MyBatis nested collection select runs one query per order, fix the N+1",
+    "Load orders with their line items in one jOOQ query using multiset",
+    "Bulk inserting 50k rows with Kotlin Exposed takes minutes, speed it up with batchInsert",
+    "HikariCP 'Connection is not available, request timed out after 30000ms' under load in our jOOQ service"
+  ],
+  "should_not_trigger": [
+    "Fix LazyInitializationException on a Hibernate @OneToMany association",
+    "Our Postgres query is slow, read this EXPLAIN ANALYZE output",
+    "Add a Flyway migration for a new column in our Spring Data JPA entity",
+    "Write a Ktor route that returns JSON with kotlinx.serialization",
+    "Fix N+1 queries in our EF Core DbContext with Include"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our electricity supply contract for three plants in Ohio ends in March, should we go fixed price or block and index this time?",
+    "I have 12 months of 15-minute interval data for our warehouse, work out the load factor and what is driving our demand charges",
+    "Compare these four retail electricity supplier offers, some pass through capacity and transmission and some do not",
+    "Write a natural gas and power procurement policy with hedge targets for the next three years",
+    "We want 100% renewable electricity for our offices, compare a utility green tariff, unbundled RECs and a virtual PPA"
+  ],
+  "should_not_trigger": [
+    "Calculate our Scope 1 and Scope 2 greenhouse gas inventory for this year's sustainability report",
+    "Size a rooftop solar array and battery for my house and estimate the payback",
+    "Write a Python job that pulls smart meter readings from our IoT gateway into TimescaleDB",
+    "Our supplier sent a batch of out-of-spec castings, open a nonconformance and start the root cause",
+    "Find a reliable truckload carrier for our new Houston to Denver lane"
+  ]
+}

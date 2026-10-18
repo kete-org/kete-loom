@@ -10,6 +10,7 @@ const MARKER_RE = /^(?:# |<!-- )kete-loom [a-z0-9-]+@/m;
 
 const CLAUDE_TOOLS = { read: ['Read'], search: ['Grep', 'Glob'], shell: ['Bash'], edit: ['Edit', 'Write'], web: ['WebFetch', 'WebSearch'] };
 const COPILOT_TOOLS = { read: 'read', search: 'search', shell: 'execute', edit: 'edit', web: 'web' };
+const KIRO_TOOLS = { read: ['read'], search: ['glob', 'grep'], shell: ['shell'], edit: ['write'], web: ['web_search', 'web_fetch'] };
 
 const marker = (item) => `# kete-loom ${item.dir}@${item.version}`;
 // JSON strings are valid YAML double-quoted scalars and TOML basic strings (TOML also bans raw DEL).
@@ -58,12 +59,15 @@ const AGENT = {
   gemini: (a) => ({ file: `${a.dir}.md`, content: markdown(a, { name: a.dir, description: a.description }) }),
   kete: (a) => AGENT.opencode(a), // Kete Code reads the OpenCode agent format
   copilot: (a) => ({ file: `${a.dir}.agent.md`, content: markdown(a, { name: a.dir, description: a.description, tools: a.tools && a.tools.map((t) => COPILOT_TOOLS[t]) }) }),
+  kiro: (a) => ({ file: `${a.dir}.md`, content: markdown(a, { name: a.dir, description: a.description, tools: a.tools && a.tools.flatMap((t) => KIRO_TOOLS[t]) }) }),
 };
 
 const COMMAND = {
   claude: (c) => ({ file: `${c.dir}.md`, content: markdown(c, { description: c.description, 'argument-hint': c.argumentHint }) }),
   opencode: (c) => ({ file: `${c.dir}.md`, content: markdown(c, { description: c.description }) }),
   kete: (c) => COMMAND.opencode(c),
+  // Kiro prompts are plain Markdown and take $ARGUMENTS as is.
+  kiro: (c) => ({ file: `${c.dir}.md`, content: `<!-- ${marker(c).slice(2)} -->\n${body(c)}` }),
   gemini: (c) => ({ file: `${c.dir}.toml`, content: toml(c, { description: c.description, prompt: body(c).replace(/\$ARGUMENTS/g, '{{args}}') }) }),
 };
 
@@ -74,6 +78,8 @@ const RULE = {
   claude: (r) => ({ file: `${r.dir}.md`, content: markdown(r, { paths: r.paths.length ? r.paths : undefined }) }),
   copilot: (r) => ({ file: `${r.dir}.instructions.md`, content: markdown(r, { applyTo: r.paths.length ? r.paths.join(',') : '**' }) }),
   cursor: (r) => ({ file: `${r.dir}.mdc`, content: markdown(r, { description: r.description, globs: r.paths.length ? r.paths.join(', ') : undefined, alwaysApply: !r.paths.length }) }),
+  // Steering front matter must come first; inclusion: fileMatch scopes it like a path rule.
+  kiro: (r) => ({ file: `${r.dir}.md`, content: markdown(r, r.paths.length ? { inclusion: 'fileMatch', fileMatchPattern: r.paths } : { inclusion: 'always' }) }),
   plain: (r) => ({ file: `${r.dir}.md`, content: `<!-- ${marker(r).slice(2)} -->\n# ${r.dir} rules\n\n${appliesTo(r)}${body(r)}` }),
 };
 

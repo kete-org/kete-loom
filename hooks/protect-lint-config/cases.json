@@ -1,0 +1,18 @@
+{
+  "should_block": [
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": ".eslintrc.json", "content": "{\"rules\":{}}" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "eslint.config.mjs", "content": "export default []" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "biome.json", "content": "{}" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": ".prettierrc", "content": "{}" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "ruff.toml", "content": "ignore = [\"E501\"]" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": ".golangci.yml", "content": "linters: {}" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "src/a.ts", "content": "x" }, { "path": ".rubocop.yml", "content": "" }] }
+  ],
+  "should_allow": [
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "src/app.ts", "content": "x" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "tsconfig.json", "content": "{}" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": ".stylelintrc.json", "content": "{}" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "docs/eslint-rules.md", "content": "x" }] },
+    { "cwd": "hooks/protect-lint-config/fixtures", "files": [{ "path": "pyproject.toml", "content": "[tool.ruff]" }] }
+  ]
+}

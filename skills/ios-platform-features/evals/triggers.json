@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add an on-device summary of the user's notes with Apple's Foundation Models framework, with a fallback when Apple Intelligence is off",
+    "We rebuilt with the iOS 26 SDK, how do we adopt Liquid Glass in our custom toolbar and keep iOS 17 working?",
+    "Replace our AppIcon asset catalog with an Icon Composer .icon file that has dark and tinted variants",
+    "Use @Generable guided generation to extract event details from an email on device",
+    "Wrap glassEffect and GlassEffectContainer in availability checks so the app still builds for iOS 18"
+  ],
+  "should_not_trigger": [
+    "Migrate our Swift package to the Swift 6 language mode and fix Sendable warnings",
+    "Our SwiftUI view keeps resetting its state when the parent redraws",
+    "Call the Claude API from our iOS app's backend to answer support questions",
+    "Write Swift Testing tests for our actor-based cache",
+    "Make our iOS app's icon buttons readable by VoiceOver and fix focus order"
+  ]
+}

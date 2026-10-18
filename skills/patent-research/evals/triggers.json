@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Before we file, search Espacenet and Google Patents for prior art on our self-cleaning water bottle cap",
+    "We launch a smart thermostat in the US and Germany next year, find patents in force that could block it",
+    "Summarise what claim 1 of US patent 10,123,456 actually covers and when it expires",
+    "Map which competitors are filing patents in CPC class H01M 10 for battery cooling",
+    "Screen the brand name Lumora for conflicting trademarks in class 9 and 42 before we adopt it"
+  ],
+  "should_not_trigger": [
+    "Draft an NDA to share our invention with a manufacturer",
+    "Add an open source licence and NOTICE file to our repository",
+    "Check our npm dependencies for licences that conflict with commercial use",
+    "Write the brand voice guidelines for our new product line",
+    "Classify our products with HS codes for export to Canada"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We can't agree whether to launch the new pricing on Monday or wait a month. Get me a few independent perspectives and a recommendation",
+    "Should we build our own auth or buy Auth0? I want a panel of viewpoints, including a devil's advocate",
+    "Ask two different models separately whether we should sunset the legacy API this quarter, then reconcile their answers",
+    "Give me a go/no-go call on the Ghana market expansion with the dissenting view recorded",
+    "Convene a council: rewrite the billing service in Go, or keep patching the Rails one?"
+  ],
+  "should_not_trigger": [
+    "Write an ADR recording that we chose Postgres over MongoDB last week",
+    "Have two reviewers check my pull request until both approve it",
+    "Compare three monolith versus microservice architectures for our new platform and design the module boundaries",
+    "Estimate how long the payments migration will take and break it into tasks",
+    "Score these model outputs with an LLM judge and give me a pass rate"
+  ]
+}

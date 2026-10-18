@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our Node backend should fill a Google Docs contract template with customer details and export it as a PDF",
+    "Append each new order as a row in a Google Sheet from our Python service using a service account",
+    "Service account upload to Drive fails with storageQuotaExceeded even though the folder is shared with it",
+    "Which OAuth scopes do we need to read files a user picks from their Google Drive without asking for full drive access?",
+    "Generate a weekly Google Slides report deck from a template and swap the chart placeholders for images",
+    "Our Sheets sync keeps getting 429 Too many requests, how should we batch and back off?"
+  ],
+  "should_not_trigger": [
+    "Grant a Cloud Run service account the right IAM role to read from Cloud Storage",
+    "Build a pivot table and VLOOKUP formulas in this Excel workbook",
+    "Write the Apps Script for a custom menu inside our spreadsheet",
+    "Our password reset emails sent through Amazon SES land in spam",
+    "Triage my Gmail inbox and draft replies for the important threads"
+  ]
+}

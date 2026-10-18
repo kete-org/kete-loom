@@ -1,0 +1,15 @@
+{
+  "should_block": [
+    { "files": [{ "path": "package.json", "content": "{}" }] },
+    { "files": [{ "path": "README.md", "content": "x" }] },
+    { "files": [{ "path": "bin/kete-loom.js", "content": "x" }] },
+    { "files": [{ "path": "scripts/lib/lint.js", "content": "x" }] },
+    { "files": [{ "path": "brand-new-file.ts", "content": "x" }, { "path": "AGENTS.md", "content": "x" }] }
+  ],
+  "should_allow": [
+    { "files": [{ "path": "src/does-not-exist-yet.ts", "content": "x" }] },
+    { "files": [{ "path": "notes/new-plan.md", "content": "x" }] },
+    { "files": [{ "path": "package.json", "content": "{}" }] },
+    { "files": [{ "path": "README.md", "content": "y" }] }
+  ]
+}

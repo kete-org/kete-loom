@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "I've been off for a week. Go through my email and tell me what actually needs me today, with draft replies",
+    "Triage the last two days of the #support and #sales Slack channels and list anything waiting on me",
+    "Here's an export of 150 unread emails. Sort them by urgency and pull out every deadline",
+    "Read my inbox and draft answers to anything from customers, but don't send or archive anything",
+    "What follow-ups did I promise people in these email threads, and which have I not done yet?"
+  ],
+  "should_not_trigger": [
+    "Build a Slack bot with Bolt that summarises a channel every morning",
+    "Our order confirmation emails bounce for some customers, check the Postmark bounce webhook handler",
+    "Write a five-step cold email sequence to finance leads at retailers",
+    "Set up a Gmail filter rule in our Google Workspace via the API for all new hires",
+    "Score these 40 target companies against our ideal customer profile"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our 50-character username limit cuts Bengali names in half and leaves a broken vowel sign",
+    "Searching for a Hindi word misses results because some rows store the nukta letter differently",
+    "Split Thai product descriptions into words for our search index, there are no spaces",
+    "Sort a list of Bengali and Arabic customer names correctly instead of by code point",
+    "Detect whether each support message is written in Devanagari, Arabic or Latin script",
+    "An Arabic name inside an English sentence flips the punctuation around in our notification text"
+  ],
+  "should_not_trigger": [
+    "Translate the checkout screen into Hindi and Bengali and add the message catalogs",
+    "Format prices and dates for Japanese users in the dashboard",
+    "Review this UI diff for hard-coded strings before it ships in other languages",
+    "OCR these scanned Bengali land records into searchable PDFs",
+    "Write a style guide for our Arabic marketing copy"
+  ]
+}

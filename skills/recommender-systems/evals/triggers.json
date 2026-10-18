@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Build a 'you may also like' carousel for our product pages from the order history",
+    "Our home feed keeps recommending the same 20 popular items to everyone, how do we fix that?",
+    "Design a two-tower retrieval model with a FAISS index for our job recommendations",
+    "The new ranking model beat the old one on NDCG offline but lost the A/B test. What went wrong?",
+    "New sellers' listings never get recommended; we need a cold start strategy"
+  ],
+  "should_not_trigger": [
+    "Build a chat-over-our-docs feature that answers questions with citations",
+    "Track our model training runs and hyperparameters so results are reproducible",
+    "Design a dashboard showing weekly active users and conversion for the product team",
+    "Forecast next quarter's inventory demand per warehouse",
+    "Write a PyTorch training loop with mixed precision for our image classifier"
+  ]
+}

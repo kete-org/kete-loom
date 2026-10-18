@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Make the notification toasts slide in and fade out when dismissed using motion/react",
+    "Our accordion animates height and it janks on mobile, make it smooth",
+    "Add a shared-element transition so the product thumbnail grows into the detail page image",
+    "Let users swipe cards left or right to dismiss them, with a spring back if they don't swipe far enough",
+    "How do I make all our Framer Motion animations respect prefers-reduced-motion?",
+    "Define duration and easing tokens so every hover and modal transition in the app feels consistent"
+  ],
+  "should_not_trigger": [
+    "Render a 30 second promo MP4 from React components with spring animations",
+    "Animate a visual proof of the chain rule for a maths video",
+    "Pick a colour palette and type scale so the admin panel stops looking generic",
+    "The product grid re-renders on every filter change, profile and fix it",
+    "Check that our modal traps focus and is announced by screen readers",
+    "Write Playwright tests for the drag-and-drop kanban board"
+  ]
+}

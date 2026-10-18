@@ -1,0 +1,31 @@
+{
+  "should_block": [
+    "npm run dev",
+    "pnpm dev",
+    "yarn start",
+    "bun run dev --port 3001",
+    "cd web && npx next dev",
+    "npx vite",
+    "ng serve --open",
+    "rails server -p 4000",
+    "python -m http.server 8000",
+    "uvicorn app.main:app --reload",
+    "docker compose up",
+    "npx tsc --watch",
+    "npx vitest --watch"
+  ],
+  "should_allow": [
+    "npm run build",
+    "npm test",
+    "npx vite build",
+    "npm run dev > .dev-server.log 2>&1 &",
+    "nohup python -m http.server 8000 > http.log 2>&1 &",
+    "docker compose up -d",
+    "docker compose up --detach db",
+    "timeout 20 npm start",
+    "tmux new -d -s web 'npm run dev'",
+    "npm run start:prod -- --help",
+    "grep -r 'npm run dev' README.md",
+    "npx vitest run"
+  ]
+}

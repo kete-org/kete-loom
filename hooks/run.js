@@ -7,10 +7,13 @@
 // dependencies.
 //
 // Events: pre-shell { command, cwd }, pre-edit { files: [{ path, content }], cwd },
-// post-edit { files: [{ path }], cwd }, session-start { cwd }.
+// post-edit { files: [{ path }], cwd }, session-start { cwd }, stop and stop-gate { cwd, again } when
+// the agent finishes its turn. Every event also carries `session` when the host sends a session id.
 //
 // Blocking (pre-*): exit 2 with the reason on stderr works on every host; Cursor and Copilot also get
-// their JSON verdict. Internal errors fail OPEN (exit 0): Copilot and Kete Code deny on a crashed hook,
+// their JSON verdict. stop-gate blocks by making the agent continue with the reason as its next
+// prompt (exit 2 on Claude Code, Codex and Gemini CLI; JSON on Cursor and Copilot); `again` is true
+// when this turn was itself continued by a stop hook, so a gate can let it end instead of looping. Internal errors fail OPEN (exit 0): Copilot and Kete Code deny on a crashed hook,
 // so a runner bug must never block every tool call. post-edit and session-start never block.
 
 const fs = require('fs');
@@ -59,20 +62,22 @@ function normalize(host, event, j) {
   const cwd = pick(j, 'cwd') || (Array.isArray(j.workspace_roots) && j.workspace_roots[0]) || process.env.CURSOR_PROJECT_DIR || process.cwd();
   const tool = j.tool || j.toolName || j.tool_name;
   const toolArgs = () => (host === 'copilot' ? parseMaybe(j.toolArgs) : j.tool_input || j.args || {});
-  if (event === 'session-start') return { cwd };
+  const session = pick(j, 'session_id', 'sessionId', 'conversation_id');
+  if (event === 'session-start') return { cwd, session };
+  if (event === 'stop' || event === 'stop-gate') return { cwd, session, again: j.stop_hook_active === true || j.loop_count > 0 };
   if (SHELL_TOOLS[host] && event === 'pre-shell' && tool && !SHELL_TOOLS[host].includes(tool)) return null;
   if (EDIT_TOOLS[host] && event !== 'pre-shell' && tool && !EDIT_TOOLS[host].includes(tool)) return null;
 
   if (event === 'pre-shell') {
     const command = host === 'cursor' ? j.command : pick(toolArgs(), 'command');
-    return typeof command === 'string' ? { command, cwd } : null;
+    return typeof command === 'string' ? { command, cwd, session, background: toolArgs().run_in_background === true } : null;
   }
   let files;
   if (host === 'codex') files = parsePatch(pick(j.tool_input, 'command', 'input', 'patch'));
   else if (host === 'cursor') files = j.file_path ? [{ path: j.file_path, content: '' }] : [];
   else if (host === 'claude' || host === 'gemini') files = claudeFiles(j.tool_input);
   else files = looseFiles(toolArgs());
-  return files.length ? { files, cwd } : null;
+  return files.length ? { files, cwd, session } : null;
 }
 
 const SESSION_JSON = {
@@ -89,7 +94,13 @@ const DENY_JSON = {
   copilot: (reason) => ({ permissionDecision: 'deny', permissionDecisionReason: reason }),
 };
 
-const EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start'];
+// How each host is told to keep going instead of ending the turn.
+const CONTINUE_JSON = {
+  cursor: (reason) => ({ followup_message: reason }),
+  copilot: (reason) => ({ decision: 'block', reason }),
+};
+
+const EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start', 'stop', 'stop-gate'];
 const allow = (host, event) => ({ code: 0, stdout: event.startsWith('pre-') && ALLOW_JSON[host] ? JSON.stringify(ALLOW_JSON[host]) : '', stderr: '' });
 
 // Returns { code, stdout, stderr } so tests can drive it without a process.
@@ -109,6 +120,11 @@ function respond(host, hookName, input, hooksDir = __dirname, event = 'pre-shell
   }
   if (event === 'session-start') {
     return verdict.context && SESSION_JSON[host] ? { code: 0, stdout: JSON.stringify(SESSION_JSON[host](String(verdict.context))), stderr: '' } : allow(host, event);
+  }
+  if (event === 'stop-gate' && verdict.block) {
+    const reason = String(verdict.reason || `Continue: kete-loom hook ${hookName} asked for more work`);
+    if (CONTINUE_JSON[host]) return { code: 0, stdout: JSON.stringify(CONTINUE_JSON[host](reason)), stderr: '' };
+    return { code: 2, stdout: '', stderr: `${reason}\n` };
   }
   if (!event.startsWith('pre-') || !verdict.block) return allow(host, event);
   const reason = String(verdict.reason || `Blocked by kete-loom hook ${hookName}`);

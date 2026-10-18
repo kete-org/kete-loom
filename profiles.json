@@ -66,6 +66,18 @@
       "guard-secrets"
     ]
   },
+  "strict": {
+    "description": "Developer plus the opt-in guardrails: read files before editing them, don't weaken lint configs, keep dev servers in the background, and pass lint and type-check before finishing.",
+    "extends": [
+      "developer"
+    ],
+    "hooks": [
+      "read-before-edit",
+      "protect-lint-config",
+      "block-foreground-servers",
+      "verify-before-stop"
+    ]
+  },
   "security": {
     "description": "Security and compliance: every security and compliance item, the essentials, and the four safety hooks.",
     "extends": [
@@ -120,16 +132,18 @@
     ]
   },
   "full": {
-    "description": "Everything in Kete Loom, including every hook.",
+    "description": "Everything in Kete Loom, with every hook that isn't opt-in (add those with --hook or the strict profile).",
     "all": true
   },
   "mcp-web": {
-    "description": "MCP pack for web work: Playwright and Chrome DevTools browsers, Context7 library docs and Fetch.",
+    "description": "MCP pack for web work: Playwright and Chrome DevTools browsers, Context7 library docs, Fetch, Exa web search and Firecrawl scraping.",
     "mcp": [
       "playwright",
       "chrome-devtools",
       "context7",
-      "fetch"
+      "fetch",
+      "exa",
+      "firecrawl"
     ]
   },
   "mcp-code": {
@@ -149,11 +163,12 @@
     ]
   },
   "mcp-cloud": {
-    "description": "MCP pack for cloud and payments: Cloudflare, Supabase (read-only) and Stripe.",
+    "description": "MCP pack for cloud and payments: Cloudflare, Vercel, Supabase (read-only) and Stripe.",
     "mcp": [
       "cloudflare",
       "supabase",
-      "stripe"
+      "stripe",
+      "vercel"
     ]
   },
   "mcp-design": {

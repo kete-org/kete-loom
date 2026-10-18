@@ -77,6 +77,15 @@ const TARGETS = {
     detect: { user: ['.copilot'], project: ['.github'] },
     hooks: true,
   },
+  // Kiro reads skills only from its own folders, agents as Markdown, prompts (slash commands) and steering files.
+  kiro: {
+    label: 'Kiro (IDE and CLI)',
+    user: { skills: ['.kiro', 'skills'], agents: ['.kiro', 'agents'], commands: ['.kiro', 'prompts'], rules: ['.kiro', 'steering'] },
+    project: { skills: ['.kiro', 'skills'], agents: ['.kiro', 'agents'], commands: ['.kiro', 'prompts'], rules: ['.kiro', 'steering'] },
+    detect: { user: ['.kiro'], project: ['.kiro'] },
+    auto: true,
+    ownSkills: true,
+  },
 };
 
 const KINDS = ['skills', 'agents', 'commands', 'rules'];
@@ -90,6 +99,7 @@ const HOST_READS = {
   'Gemini CLI': ['agents', 'gemini'],
   'GitHub Copilot': ['agents', 'claude', 'copilot'],
   'Kete Code': ['agents', 'claude', 'kete'],
+  Kiro: ['kiro'],
 };
 
 function baseDir({ scope = 'user', home = os.homedir(), cwd = process.cwd() } = {}) {

@@ -1,0 +1,11 @@
+{
+  "name": "exa",
+  "description": "Exa's remote MCP server: web search, page contents and code search for the model. Free and rate-limited without a key; no sign-in needed.",
+  "version": "0.1.0",
+  "category": "docs",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.exa.ai/mcp",
+  "auth": "none",
+  "homepage": "https://exa.ai/docs/reference/exa-mcp"
+}

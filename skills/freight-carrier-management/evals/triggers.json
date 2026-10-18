@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "A new trucking company wants our Dallas to Atlanta dry van loads, check their FMCSA authority, safety record and insurance before we book",
+    "Build a monthly carrier scorecard with tender acceptance, on-time delivery and claims ratio for our top 15 truckload carriers",
+    "We're running our annual freight bid for 40 lanes next month, help me put together the RFP package and award logic",
+    "Our contract reefer rates on the Fresno to Chicago lane look high, benchmark them and plan the negotiation with the carrier",
+    "Set up a routing guide with primary and backup carriers per lane and rules for tender rejections"
+  ],
+  "should_not_trigger": [
+    "A pallet of our goods arrived crushed at the customer, help me file the freight claim and tell the customer",
+    "Work out the import duty and landed cost for parts we bring in from Mexico by truck",
+    "Plan safety stock for SKUs that ship to our regional warehouses weekly",
+    "Design the return authorisation and refurbishment flow for products customers send back",
+    "Draft a master services agreement with a software vendor from our template"
+  ]
+}

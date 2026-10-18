@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Build me a list of 50 mid-size logistics companies in Kenya that fit our ICP, scored and with sources",
+    "Define our ideal customer profile from these ten customers and score this list of target accounts against it",
+    "Who in my LinkedIn connections export or our investor list could introduce me to people at these 20 target companies?",
+    "Enrich this account list with company size, recent funding and hiring signals before our sales team starts outreach",
+    "Find the economic buyer and technical evaluator at each of these fintechs using public sources only"
+  ],
+  "should_not_trigger": [
+    "Write a four-step cold email sequence to the heads of operations on our prospect list",
+    "Size the market for fleet management software in East Africa with TAM, SAM and SOM",
+    "Our outbound emails are going to spam since we started a new sending domain, fix our DMARC",
+    "Plan our launch campaign channels, calendar and budget for next quarter",
+    "Triage my inbox this morning and draft replies to the urgent ones"
+  ]
+}

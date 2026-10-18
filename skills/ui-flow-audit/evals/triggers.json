@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "When I change the sort order and then the filter, the sort snaps back to default; trace what every control on the search page actually does",
+    "Each button on the cart screen works on its own but combinations leave the wrong total, audit how the handlers and effects interact",
+    "Map every click handler, effect and store update on the booking form and find where they fight each other",
+    "The dark mode toggle flips back after a second, follow the state through the context, the effect and localStorage to see why",
+    "Before release, audit the kanban board's interactions for races, double submits and stale state between actions"
+  ],
+  "should_not_trigger": [
+    "Click through the staging build and write up any bugs you find before the demo",
+    "Review my React pull request for missing useEffect dependencies",
+    "Should this modal's open state live in the URL or in component state?",
+    "Write React Testing Library tests for the cart total component",
+    "Draw the user journey for onboarding as a flowchart for the product team",
+    "Our dashboard renders slowly when filters change, profile it"
+  ]
+}

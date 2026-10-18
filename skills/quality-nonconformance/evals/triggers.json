@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Incoming inspection rejected 300 molded housings for a wall thickness out of tolerance, write the NCR and the containment plan",
+    "Our automotive customer wants an 8D for cracked brackets they found at their assembly line, help me run it",
+    "The FDA inspector flagged our CAPAs for closing without effectiveness checks, rewrite our CAPA procedure for the new QMSR",
+    "We keep getting the same burr defect even after three corrective actions, help me do a proper root cause with a fishbone",
+    "Should these out-of-spec catheter lots be reworked, scrapped or used as is, and who has to approve it?"
+  ],
+  "should_not_trigger": [
+    "Reschedule tomorrow's production after the CNC machine broke down",
+    "A customer wants to return a defective blender, set up the RMA and refund flow",
+    "Make our patient records system meet HIPAA audit logging requirements",
+    "Draft a mutual NDA with a new contract manufacturer from our standard template",
+    "Write unit tests for the function that calculates tolerance limits"
+  ]
+}

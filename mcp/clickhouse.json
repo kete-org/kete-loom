@@ -1,0 +1,11 @@
+{
+  "name": "clickhouse",
+  "description": "ClickHouse Cloud's remote MCP server: list databases and tables and run read-only SQL on services you enable it for, signed in with ClickHouse Cloud OAuth.",
+  "version": "0.1.0",
+  "category": "data",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.clickhouse.cloud/mcp",
+  "auth": "oauth",
+  "homepage": "https://clickhouse.com/docs/cloud/features/ai-ml/remote-mcp"
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our support agent will reply to customer emails on its own. What rules should it follow before anything gets sent?",
+    "The bot keeps using @channel in our Slack workspace. Set up a policy for when it may mention people or broadcast",
+    "Make sure the agent never sends a customer anything from our internal Jira threads, and that a human approves every external reply",
+    "We want the assistant to message vendors in a shared Slack Connect channel. How should it classify the audience and log sends?",
+    "Before the agent posts release notes to our public forum and X account, what approval flow should it use?"
+  ],
+  "should_not_trigger": [
+    "Build a Slack app with slash commands and an events endpoint using Bolt",
+    "Schedule posts to LinkedIn and Instagram through their APIs with token refresh",
+    "Write a five-email cold outreach sequence for fintech CTOs",
+    "Fix SPF, DKIM and DMARC so our newsletters stop landing in spam",
+    "Write the company all-hands update about Q3 results in our usual format"
+  ]
+}

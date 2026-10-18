@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My ArkUI list doesn't refresh when I change a field inside an item object, I'm using @State",
+    "Migrate this HarmonyOS component from @Component with @Link to @ComponentV2 with @Param and @Event",
+    "hvigorw assembleHap fails with arkts-no-untyped-obj-literals errors after upgrading the SDK",
+    "Where should I load the first page and release timers in a HarmonyOS UIAbility?",
+    "Set up a CI job that runs ohpm install and builds a signed HAP for our HarmonyOS NEXT app"
+  ],
+  "should_not_trigger": [
+    "Build an Android screen in Jetpack Compose with a ViewModel and StateFlow",
+    "Our Flutter app needs to call native Android code through a platform channel",
+    "Convert this TypeScript React component to use hooks instead of a class",
+    "Share business logic between Android and iOS with Kotlin Multiplatform",
+    "Translate our mobile app into Simplified Chinese with plural rules"
+  ]
+}

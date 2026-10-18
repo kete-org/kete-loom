@@ -13,3 +13,4 @@ site/
 !.agents/
 .agents/*
 !.agents/plugins/
+!hooks/protect-lint-config/fixtures/.*

@@ -47,6 +47,7 @@
     "./agents/go-reviewer/AGENT.md",
     "./agents/healthcare-reviewer/AGENT.md",
     "./agents/i18n-reviewer/AGENT.md",
+    "./agents/inbox-triager/AGENT.md",
     "./agents/infra-reviewer/AGENT.md",
     "./agents/java-build-resolver/AGENT.md",
     "./agents/java-reviewer/AGENT.md",

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The mobile team and the backend team keep disagreeing about payload shapes. Set us up so both build from one OpenAPI spec with a mock server.",
+    "Add a CI check that fails the PR if someone makes a breaking change to our protobuf files",
+    "A provider deploy broke the checkout frontend again. Set up Pact consumer tests and can-i-deploy before releases.",
+    "Our openapi.yaml has drifted from what the Go service actually returns. Generate the server interfaces from the spec so they can't diverge.",
+    "We're about to start a new order-events topic. Agree the AsyncAPI contract first so both services can start in parallel."
+  ],
+  "should_not_trigger": [
+    "Design the REST endpoints and status codes for our new invoicing API",
+    "Write a typed client for the Shopify Admin API with retries and pagination",
+    "Write Playwright end-to-end tests for the signup flow",
+    "Which packages in our monorepo depend on the shared validation library?",
+    "Add a migration that renames the orders.total column"
+  ]
+}

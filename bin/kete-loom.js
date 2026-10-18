@@ -51,6 +51,7 @@ function parseArgs(argv) {
     else if (a === '--dry-run' || a === '-n') opts.dryRun = true;
     else if (a === '--force' || a === '-f') opts.force = true;
     else if (a === '--link') opts.link = true;
+    else if (a === '--fix') opts.fix = true;
     else if (a === '--json') opts.json = true;
     else if (a === '--help' || a === '-h') opts._.unshift('help');
     else if (a === '--version' || a === '-v') opts._.unshift('version');
@@ -75,6 +76,7 @@ Usage
   kete-loom list      [--json]    List available skills, agents, commands and hooks
   kete-loom profiles  [--json]    List install profiles
   kete-loom doctor    [options]   Show what is installed where, and which hosts can see it
+                                  (--fix repairs the hook runtime and stale registrations)
 
 Options
   -t, --target <a,b>   Targets: ${Object.keys(TARGETS).join(', ')}
@@ -95,7 +97,8 @@ Options
                        all skills, agents, commands and rules are installed)
       --mcp <a,b>      Also register these MCP servers (see "kete-loom list"). Remote
                        servers sign in with OAuth; none need a token in a config file.
-      --hooks          Also install every hook. Hooks run before each shell command and are
+      --hooks          Also install every hook not marked opt-in (name those with --hook, or
+                       use --profile strict). Hooks run around the agent's tool calls and are
                        registered in each host's config, including Claude Code's and Gemini
                        CLI's settings.json (backed up first). User scope only.
   -P, --profile <a,b>  Install a preset: minimal, core, developer, security, ai, data,
@@ -162,10 +165,11 @@ function selectItems(opts) {
     if (opts.categories) items = items.filter((i) => opts.categories.includes(i.category));
     chosen[kind] = items;
   }
-  // Hooks are opt-in: only with --hooks or when named with --hook.
+  // Hooks are opt-in: only with --hooks or when named with --hook. --hooks leaves out the hooks marked
+  // kete-loom/opt-in (they change how the agent works, not just what it may do).
   const unknownHooks = (opts.hookNames || []).filter((n) => !all.hooks.some((h) => h.dir === n));
   if (unknownHooks.length) throw new Error(`unknown hook(s): ${unknownHooks.join(', ')}. Run "kete-loom list".`);
-  chosen.hooks = opts.hookNames ? all.hooks.filter((h) => opts.hookNames.includes(h.dir)) : opts.withHooks ? all.hooks : [];
+  chosen.hooks = opts.hookNames ? all.hooks.filter((h) => opts.hookNames.includes(h.dir)) : opts.withHooks ? all.hooks.filter((h) => !h.optIn) : [];
   if (opts.categories) chosen.hooks = chosen.hooks.filter((h) => opts.categories.includes(h.category));
   // MCP servers are opt-in too: only with --mcp or a profile that names them.
   const unknownMcp = (opts.mcp || []).filter((n) => !all.mcp.some((m) => m.dir === n));
@@ -183,7 +187,7 @@ function destinations(opts) {
         .filter((t) => TARGETS[t].default || detected(t, where))
         // Detected hosts read skills from .agents already; they only need their own agents, commands and
         // rules (Cursor and Copilot read agents from .claude too, so they only need rules).
-        .map((t) => ({ target: t, kinds: TARGETS[t].default ? KINDS : TARGETS[t].auto ? ['agents', 'commands', 'rules'] : ['rules'] }));
+        .map((t) => ({ target: t, kinds: TARGETS[t].default ? KINDS : TARGETS[t].auto ? [...(TARGETS[t].ownSkills ? ['skills'] : []), 'agents', 'commands', 'rules'] : ['rules'] }));
   return picks.flatMap(({ target, kinds }) =>
     kinds.map((kind) => ({ target, kind, dir: resolveTarget(target, { ...where, kind }) })).filter((d) => d.dir)
   );
@@ -577,6 +581,33 @@ function profiles(opts) {
   console.log('Install one with: npx @ketecode/loom install --profile <name>');
 }
 
+// What doctor --fix repairs: the hook runtime (missing or older than this package's copy), hooks
+// registered with a host but no longer in the catalog, and temp files left by an interrupted write.
+function hookProblems(home, hooks, hookRows) {
+  const problems = [];
+  const dir = Hooks.runtimeDir(home);
+  const same = (a, b) => fs.existsSync(a) && fs.existsSync(b) && fs.readFileSync(a).equals(fs.readFileSync(b));
+  const used = new Set(hookRows.flatMap((r) => r.hooks));
+  const stale = hooks.filter((h) => used.has(h.dir) && !same(path.join(h.path, 'hook.js'), path.join(dir, h.dir, 'hook.js')));
+  const runnerStale = used.size && !same(path.join(HOOKS_DIR, 'run.js'), path.join(dir, 'run.js'));
+  if (stale.length || runnerStale) {
+    const names = [...(runnerStale ? ['run.js'] : []), ...stale.map((h) => h.dir)];
+    problems.push({ what: `hook runtime in ${dir.replace(os.homedir(), '~')} is missing or out of date: ${names.join(', ')}`, fix: () => Hooks.installRuntime(stale, { home, sourceDir: HOOKS_DIR }) });
+  }
+  const known = new Set(hooks.map((h) => h.dir));
+  for (const host of Hooks.HOOK_HOSTS) {
+    // Shared config files name every hook we registered, so one dropped from the catalog shows up here.
+    // shortcut: Copilot and OpenCode keep one file per hook, found only by known names, so they're skipped.
+    if (Hooks.HOSTS[host].own) continue;
+    for (const name of Hooks.registered(host, { home }).filter((n) => !known.has(n))) {
+      problems.push({ what: `${host} runs hook "${name}", which this version of kete-loom no longer has`, fix: () => Hooks.unregister(host, name, { home }) });
+    }
+    const tmp = `${Hooks.HOSTS[host].file(home, 'x')}.kete-loom-tmp`;
+    if (fs.existsSync(tmp)) problems.push({ what: `leftover temp file ${tmp.replace(os.homedir(), '~')}`, fix: () => fs.rmSync(tmp) });
+  }
+  return problems;
+}
+
 function doctor(opts) {
   const home = opts.home || os.homedir();
   const rows = [];
@@ -604,12 +635,21 @@ function doctor(opts) {
     console.log('\nRules loaded through instructions files:');
     for (const r of linked) console.log(`  ${r.target.padEnd(9)} ${r.rules.join(', ')}`);
   }
-  const hookNames = listHooks().map((h) => h.dir);
+  const hooks = listHooks();
+  const hookNames = hooks.map((h) => h.dir);
   const hookRows = Hooks.HOOK_HOSTS.map((t) => ({ target: t, hooks: Hooks.registered(t, { home, names: hookNames }) })).filter((r) => r.hooks.length);
   if (hookRows.length) {
     console.log('\nHooks:');
     for (const r of hookRows) console.log(`  ${r.target.padEnd(9)} ${r.hooks.join(', ')}`);
-    if (!fs.existsSync(path.join(Hooks.runtimeDir(home), 'run.js'))) console.log(`  ! the hook runtime is missing from ${Hooks.runtimeDir(home)}; run install --hooks again`);
+  }
+  const problems = hookProblems(home, hooks, hookRows);
+  if (problems.length) {
+    console.log(opts.fix ? '\nRepaired:' : '\nProblems:');
+    for (const p of problems) {
+      if (opts.fix && !opts.dryRun) p.fix();
+      console.log(`  ${opts.fix ? '✓' : '!'} ${p.what}`);
+    }
+    if (!opts.fix) console.log('  Run "kete-loom doctor --fix" to repair these.');
   }
   console.log('\nSkills visible to each host:');
   for (const [host, reads] of Object.entries(HOST_READS)) {

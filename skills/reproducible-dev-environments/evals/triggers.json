@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "New hires spend a whole day installing tools. Give us one command that sets up Node, Python and terraform at the right versions.",
+    "Add a devcontainer.json so the repo opens in Codespaces with Postgres running alongside",
+    "CI runs Node 20 but half the team is on Node 22; pin it once and make CI read the same file",
+    "Write a flake.nix dev shell with a locked nixpkgs so macOS and Linux devs get the same protoc and openssl",
+    "Pin pnpm with the packageManager field and make sure everyone uses that exact version"
+  ],
+  "should_not_trigger": [
+    "Write a multi-stage Dockerfile for our production API image",
+    "Set up a GitHub Actions workflow with a matrix over three operating systems and caching",
+    "Upgrade our npm dependencies and check them for known vulnerabilities",
+    "Package our Python CLI as a standalone Windows executable for customers",
+    "Explain idiomatic Python dataclasses versus pydantic models"
+  ]
+}

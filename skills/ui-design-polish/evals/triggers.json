@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Our settings page works but looks amateur, tighten the spacing, type and colours so it feels professional",
+    "This dashboard looks like every other AI-generated template, give it a distinct visual direction",
+    "Go through the codebase and tell me how many different greys, font sizes and button styles we actually use, then propose a token set",
+    "The projects list has no empty state, loading state or error state, design all three",
+    "Polish the buttons: hover, pressed, disabled and loading states all look like browser defaults",
+    "The icons and labels in the sidebar look slightly misaligned, fix the optical alignment and spacing"
+  ],
+  "should_not_trigger": [
+    "Introduce cascade layers so the vendor CSS stops overriding our component styles",
+    "Audit the signup form against WCAG 2.2 AA and fix the screen reader problems",
+    "Add a spring animation when the modal opens and a fade when it closes",
+    "Write a brand voice guide for our marketing emails",
+    "Our homepage LCP is 4 seconds, make it load faster",
+    "Build a slide deck for Friday's product review"
+  ]
+}

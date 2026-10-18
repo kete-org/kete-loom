@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We're launching a new fintech startup and haven't decided who we're really for or how we're different. Can you interview us and write a brand brief?",
+    "Help me work out our brand positioning statement against the big banks and mobile money apps",
+    "We're rebranding our bakery chain. Walk us through purpose, values and personality before we hire a designer.",
+    "My co-founder and I disagree on what our brand stands for. Run a structured brand workshop with us.",
+    "Write a naming brief for our new product line so an agency can start generating names"
+  ],
+  "should_not_trigger": [
+    "Create a voice and tone guide with do and don't rewrites for our support team",
+    "Size the market for our school management software in Nigeria with TAM, SAM and SOM",
+    "Plan the four-week launch campaign for our new app with a budget split",
+    "Design a logo and a colour palette for our coffee shop",
+    "Does this homepage copy sound like our brand? Here is the style guide."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "vercel",
+  "description": "Vercel's remote MCP server: search the docs, manage projects and deployments, read deployment logs and query Web Analytics, signed in with Vercel OAuth.",
+  "version": "0.1.0",
+  "category": "devops",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.vercel.com",
+  "auth": "oauth",
+  "homepage": "https://vercel.com/docs/agent-resources/vercel-mcp"
+}

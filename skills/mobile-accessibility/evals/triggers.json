@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "VoiceOver reads our SwiftUI product card as five separate items, make it one element with a sensible label",
+    "TalkBack just says 'unlabelled button' on all the icon buttons in our Compose toolbar",
+    "At the largest Dynamic Type size our UIKit settings screen clips text, fix it so it scales",
+    "Add automated accessibility audits to our XCUITest and Espresso suites so regressions fail CI",
+    "Accessibility Scanner flags touch target too small and low contrast on our Android login screen"
+  ],
+  "should_not_trigger": [
+    "Make our React web checkout pass WCAG 2.2 AA with keyboard navigation and axe",
+    "Our Compose LazyColumn janks when scrolling, reduce recomposition",
+    "Migrate this SwiftUI screen from ObservableObject to @Observable",
+    "Write XCTest unit tests for the login view model with a fake network client",
+    "Translate the Android app strings into Arabic and support right-to-left layouts"
+  ]
+}

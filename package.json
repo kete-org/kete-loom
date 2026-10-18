@@ -1,7 +1,7 @@
 {
   "name": "@ketecode/loom",
   "version": "0.1.0",
-  "description": "Kete Loom: curated, tested, portable Agent Skills, subagents, commands, rules, hooks and MCP configs. One source, installable in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.",
+  "description": "Kete Loom: curated, tested, portable Agent Skills, subagents, commands, rules, hooks and MCP configs. One source, installable in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code and Kiro.",
   "license": "MIT",
   "author": "Kete-org <support@ketecode.ai>",
   "homepage": "https://ketecode.ai",
@@ -19,7 +19,8 @@
     "cursor",
     "gemini-cli",
     "copilot",
-    "kete-code"
+    "kete-code",
+    "kiro"
   ],
   "bin": {
     "kete-loom": "bin/kete-loom.js"

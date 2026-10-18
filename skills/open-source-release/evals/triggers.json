@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "We want to open-source our internal CLI tool. What do we need to do before making the repo public?",
+    "Make sure there are no old API keys or internal hostnames anywhere in the git history before we flip this GitHub repo to public",
+    "Prepare this company project for its first public release under an open licence, with SECURITY.md and a code of conduct",
+    "Use git filter-repo to strip the customer data that was committed three years ago, then check we can publish the repo"
+  ],
+  "should_not_trigger": [
+    "Cut version 2.3.0 and write the release notes from the merged PRs",
+    "Scan the current change for vulnerabilities and leaked secrets before I push",
+    "Audit our npm dependencies for known CVEs and typosquatted packages",
+    "Rewrite the README so new users can get started faster",
+    "Squash my last five commits into one before I open the pull request"
+  ]
+}

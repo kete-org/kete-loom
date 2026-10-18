@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Design the network for our new three-floor office and two branches: addressing, VLANs, routing and redundancy",
+    "We acquired a company whose 10.0.0.0/16 overlaps ours, plan how to merge the two networks",
+    "Should our 40 retail sites use MPLS, IPsec over broadband, or SD-WAN? Lay out the trade-offs",
+    "Write a staged migration plan with rollback for moving our flat /16 network to segmented VLANs and VRFs",
+    "Plan the OSPF area layout and the BGP edge to two ISPs for our campus and data centre"
+  ],
+  "should_not_trigger": [
+    "Our BGP session with the ISP keeps flapping between Active and Idle, why?",
+    "Give me the IOS commands to configure a trunk port on a Catalyst 9300",
+    "Write an Ansible playbook to push NTP config to 200 switches",
+    "Set up VLANs for IoT devices on my home lab with a Pi-hole",
+    "Users at the branch can't reach the file server, it times out"
+  ]
+}

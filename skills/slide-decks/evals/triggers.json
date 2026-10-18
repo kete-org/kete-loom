@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Turn these meeting notes into a 10-slide reveal.js presentation with speaker notes",
+    "Make a PowerPoint deck from our corporate template.pptx for the quarterly engineering review",
+    "I have a 45 minute conference talk on Postgres indexing, help me structure the slides so each one makes one point",
+    "Convert this HTML slide deck into an editable .pptx my manager can open",
+    "Export my reveal.js slides to a PDF without every fragment becoming its own page",
+    "Generate a training deck with python-pptx that pulls the charts from our CSV results"
+  ],
+  "should_not_trigger": [
+    "Outline our seed round pitch deck and the metrics investors will expect",
+    "Write a README and getting-started guide for our CLI",
+    "Make a 20-second animated product video from React components",
+    "Extract the tables from this PDF invoice into a spreadsheet",
+    "Write the monthly progress update email to our investors",
+    "Pick a type scale and colour tokens for our web app's settings screens"
+  ]
+}

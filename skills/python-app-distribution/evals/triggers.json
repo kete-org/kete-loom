@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Turn our PySide6 desktop tool into a signed Windows installer our customers can download",
+    "The PyInstaller build works on my machine but the exe can't find its icons and config file",
+    "macOS says our Python app is damaged and can't be opened; set up codesign and notarization",
+    "Publish our library to PyPI from GitHub Actions without storing an API token",
+    "Compile our Python CLI with Nuitka into a single binary for Linux and macOS"
+  ],
+  "should_not_trigger": [
+    "Set up ruff, mypy and a pyproject.toml for our new Python service",
+    "Decide the next semantic version and write release notes for this sprint's changes",
+    "Pin the Python interpreter version so every developer and CI use the same one",
+    "Write a Dockerfile that runs our Python API in production",
+    "Write pytest fixtures for the billing module"
+  ]
+}

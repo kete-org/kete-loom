@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Write React Testing Library tests for the LoginForm component, typing into the fields with user-event",
+    "My component test keeps warning 'An update to TodoList inside a test was not wrapped in act(...)', how do I fix it?",
+    "Replace the Enzyme shallow tests for the CartDrawer with tests that don't break on every refactor",
+    "Mock the /api/orders call with MSW so the OrdersTable test can cover the empty and error states",
+    "How do I test my useDebouncedSearch hook that needs the QueryClientProvider?",
+    "getByText can't find the Save button in my Vitest component test even though it renders"
+  ],
+  "should_not_trigger": [
+    "Write Vitest unit tests for the date formatting utilities in src/lib",
+    "Write Playwright tests that log in and complete checkout in a real browser",
+    "Review this React pull request for hook dependency bugs before I merge it",
+    "Should the selected-tab state live in the URL or in component state?",
+    "Click through the staging site and file bugs for anything broken before the demo",
+    "The settings page re-renders on every keystroke, profile it and fix it"
+  ]
+}

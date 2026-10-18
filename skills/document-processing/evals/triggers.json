@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Pull the transaction tables out of these 200 bank statement PDFs into one CSV",
+    "Make this folder of scanned contracts searchable with OCR, some are in French",
+    "Fill this PDF application form for each of the 50 rows in our spreadsheet",
+    "Redact every name and account number from this PDF and prove the text can't be copied back out",
+    "Translate this German PDF brochure into English but keep the layout of each page",
+    "The text I extract from this PDF comes out as (cid:34) gibberish, how do I get real text"
+  ],
+  "should_not_trigger": [
+    "Create a Word document report with a table of contents and page numbers",
+    "Translate the app's UI strings into French and German with message catalogs",
+    "Write the user guide for our CLI tool",
+    "Build a RAG pipeline that chunks and embeds our product manuals",
+    "Normalise the Bengali text in our search index so the same word always matches"
+  ]
+}

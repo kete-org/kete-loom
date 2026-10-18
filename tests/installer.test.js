@@ -138,3 +138,19 @@ test('profile hooks are skipped with a note at project scope', () => {
 test('unknown profiles are a clear error', () => {
   assert.throws(() => run(['install', '--home', tmp(), '--profile', 'nope']), /unknown profile "nope"/);
 });
+
+test('kiro target: skills, Markdown agents, prompts, steering rules and MCP in its own folders', () => {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'kl-kiro-'));
+  const cli = (args) => execFileSync(process.execPath, [path.join(__dirname, '..', 'bin', 'kete-loom.js'), ...args], { encoding: 'utf8' });
+  cli(['install', '--home', home, '--target', 'kiro', '--skill', 'tdd-workflow', '--agent', 'code-reviewer', '--command', 'review', '--rule', 'typescript', '--mcp', 'context7']);
+  const kiro = path.join(home, '.kiro');
+  assert.ok(fs.existsSync(path.join(kiro, 'skills', 'tdd-workflow', 'SKILL.md')));
+  assert.match(fs.readFileSync(path.join(kiro, 'agents', 'code-reviewer.md'), 'utf8'), /tools: \["read", "glob", "grep", "shell"\]/);
+  assert.match(fs.readFileSync(path.join(kiro, 'prompts', 'review.md'), 'utf8'), /^<!-- kete-loom review@/);
+  assert.match(fs.readFileSync(path.join(kiro, 'steering', 'typescript.md'), 'utf8'), /^---\n# kete-loom typescript@[^\n]+\ninclusion: "fileMatch"\nfileMatchPattern: \[/);
+  assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(kiro, 'settings', 'mcp.json'), 'utf8')).mcpServers.context7, { url: 'https://mcp.context7.com/mcp' });
+  fs.writeFileSync(path.join(kiro, 'steering', 'mine.md'), '# my own steering\n');
+  cli(['uninstall', '--home', home, '--target', 'kiro']);
+  assert.deepStrictEqual(fs.readdirSync(path.join(kiro, 'steering')), ['mine.md']);
+  assert.ok(!fs.existsSync(path.join(kiro, 'settings', 'mcp.json')));
+});

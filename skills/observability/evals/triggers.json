@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Add OpenTelemetry tracing to our Python and Go services and send it to a Collector",
+    "Our traces stop at the Kafka consumer, the span context isn't carried across the queue. Fix the propagation.",
+    "Define an availability SLO for the checkout API and write multi-window burn-rate alerts in Prometheus",
+    "Build the Grafana board on-call should open first when the payments service pages",
+    "Our log lines can't be matched to a request; add trace_id and span_id to the JSON logs",
+    "We get paged for CPU spikes nobody cares about, replace them with error budget alerts"
+  ],
+  "should_not_trigger": [
+    "Design a KPI dashboard for the sales team showing monthly recurring revenue and churn",
+    "Write a runbook for the HighErrorRate alert with diagnosis steps and escalation contacts",
+    "Write a blameless postmortem for yesterday's database outage",
+    "Plan a canary rollout with automatic rollback for the new pricing service",
+    "Set up a Helm chart and liveness probes for our API on Kubernetes"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Use our MSA template and this term sheet to draft the agreement with Acme Logistics, and flag anything that differs from our standard",
+    "Draft a mutual NDA for talks with a potential acquirer using the clause library in legal/templates",
+    "The customer sent back our SOW with their changes, compare it to our playbook and write a redline summary for legal",
+    "We need a data processing agreement with our new email vendor based on our DPA template, fill in the processing details",
+    "Build a deviation register for this services agreement showing every change from our standard liability and indemnity clauses"
+  ],
+  "should_not_trigger": [
+    "Map the personal data our signup flow collects and set retention periods for each field",
+    "Check whether our invention is novel before we spend money on a patent application",
+    "Generate invoices with the right VAT fields for our customers in Germany",
+    "Explain in two sentences the difference between an MSA and a SOW",
+    "Negotiate better rates with our truckload carriers on the Midwest lanes"
+  ]
+}

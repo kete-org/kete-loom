@@ -33,6 +33,7 @@ function loadDoc(file, extra) {
     tools: meta['kete-loom/tools'] === undefined ? null : csv(meta['kete-loom/tools']),
     argumentHint: meta['kete-loom/argument-hint'],
     event: meta['kete-loom/event'],
+    optIn: meta['kete-loom/opt-in'] === 'true',
     paths: csv(meta['kete-loom/paths']),
     ...extra,
   };

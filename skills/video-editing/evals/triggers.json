@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "I have three hours of interview footage and B-roll, cut it into a 4-minute documentary short",
+    "Tighten this rough cut: remove the ums, fix the pacing and add J and L cuts between speakers",
+    "Make my edit feel like this reference video, same rhythm of cuts and same music level",
+    "Build a DaVinci Resolve timeline from my selects list with a Python script and queue the render",
+    "Before we deliver, fix the audio levels to -14 LUFS, colour match the two cameras and add subtitles to the final cut"
+  ],
+  "should_not_trigger": [
+    "Convert this MKV to an MP4 that plays on an iPhone",
+    "Record a walkthrough video of our web app's onboarding flow using Playwright",
+    "Animate a title card sequence in React and render it to MP4",
+    "Generate a 10-second product clip from a text prompt with a video model",
+    "Repurpose our webinar recording into a LinkedIn post and a thread"
+  ]
+}

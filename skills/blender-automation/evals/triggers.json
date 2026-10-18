@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My Mixamo animation retargeted onto our character in Blender has twisted arms and the feet slide",
+    "Write a bpy script that sets roughness on every material across 40 .blend files and saves copies",
+    "Render frames 1 to 240 of this .blend headless on the Linux render box with the GPU",
+    "Imported FBX rig is at 0.01 scale and lying on its side, and the action does nothing in Blender 4.4",
+    "Dump every bone, its roll and its vertex group from this armature so I can see why the mesh tears"
+  ],
+  "should_not_trigger": [
+    "Animate a 3D rotating cube proof with Manim for my maths lecture",
+    "Build a three.js scene that loads a glTF model in the browser",
+    "Turn this PNG image sequence into an MP4 at 24 fps",
+    "Generate a 3D product render from a text prompt with an image model",
+    "Edit the drone footage into a 90-second travel video with music"
+  ]
+}

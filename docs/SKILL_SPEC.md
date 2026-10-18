@@ -1,6 +1,6 @@
 # Kete Loom spec: skills, agents and commands
 
-Every skill in this repo must install and load unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code. To guarantee that, Kete Loom uses the **strictest common subset** of the Agent Skills format, and `npm run lint` enforces it.
+Every skill in this repo must install and load unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code and Kiro. To guarantee that, Kete Loom uses the **strictest common subset** of the Agent Skills format, and `npm run lint` enforces it.
 
 ## Folder layout
 
@@ -121,15 +121,20 @@ hooks/<name>/
 | `name`, `license`, `metadata` | as for skills (`kete-loom/version`, `kete-loom/category`, `kete-loom/risk` required) | |
 | `description` | one line, 20 to 300 chars | Shown in the catalog and `kete-loom list` |
 | `metadata.kete-loom/event` | one of the events below | Decides where and when each host runs it |
+| `metadata.kete-loom/opt-in` | optional, `"true"` | Leaves the hook out of `--hooks` and the `full` profile. Use it for hooks that change how the agent works rather than what it may do |
 
 | Event | `check` gets | Returns | Hosts |
 |---|---|---|---|
-| `pre-shell` | `{ command, cwd }` before a shell command | `{ block, reason }` | all seven |
+| `pre-shell` | `{ command, cwd }` before a shell command | `{ block, reason }` | all seven hook hosts |
 | `pre-edit` | `{ files: [{ path, content }], cwd }` before a file is written; `content` is the new text (for patches, the added lines) | `{ block, reason }` | all but Cursor (no documented pre-edit hook) |
-| `post-edit` | `{ files: [{ path }], cwd }` after files were written | nothing; it can't block | all seven |
+| `post-edit` | `{ files: [{ path }], cwd }` after files were written | nothing; it can't block | all seven hook hosts |
 | `session-start` | `{ cwd }` when a session starts | `{ context }`, short text added to the agent's context | all but OpenCode (no way to add context) |
+| `stop` | `{ cwd, again }` when the agent ends its turn | nothing; it can't block | all but OpenCode |
+| `stop-gate` | `{ cwd, again }` when the agent ends its turn; `again` is true when this turn was itself continued by a stop hook | `{ block, reason }`: the agent keeps working with `reason` as its next prompt. Return no block when `again` is true, or it can loop | Claude Code, Codex, Gemini CLI, Cursor, Copilot (Kete Code's and OpenCode's stop hooks can't continue the agent) |
 
-`hook.js` must be fast and dependency-free, and never use the network. `pre-*` hooks must be pure: no writes, no child processes. `post-edit` and `session-start` hooks may run local tools the project already uses (a formatter, `git`), with short timeouts, and must swallow their errors. The runner treats any error as allow, so a broken hook never blocks every call. A `pre-*` hook's `cases.json` holds at least 3 `should_block` and 3 `should_allow` cases (a command string, or an event object such as `{ "files": [{ "path": ".env", "content": "" }] }`); `npm run lint` runs every one, so add a case for each rule and for each false positive you fix. Other hooks are covered by tests in `tests/hooks.test.js`. Write fake secrets in cases as `{{repeat:c:n}}` (for example `sk_live_{{repeat:a:40}}`); lint expands them, so the repository never holds a key-shaped string that GitHub push protection or a scanner would flag.
+Every event also carries `session`, the host's session id, when the host sends one.
+
+`hook.js` must be fast and dependency-free, and never use the network. `pre-*` hooks must be pure: no child processes, and no writes except a small state file under `$KETE_LOOM_STATE_DIR` (default `~/.kete-loom/state/`; lint points it at a fresh temporary folder for each run). `post-edit`, `session-start`, `stop` and `stop-gate` hooks may run local tools the project already uses (a formatter, `git`), with short timeouts, and must swallow their errors. The runner treats any error as allow, so a broken hook never blocks every call. A `pre-*` hook's `cases.json` holds at least 3 `should_block` and 3 `should_allow` cases (a command string, or an event object such as `{ "files": [{ "path": ".env", "content": "" }] }`); `npm run lint` runs every one, so add a case for each rule and for each false positive you fix. A case may set `cwd` (relative to the repository root) to run against fixture files kept beside the hook. Other hooks are covered by tests in `tests/hooks.test.js`. Write fake secrets in cases as `{{repeat:c:n}}` (for example `sk_live_{{repeat:a:40}}`); lint expands them, so the repository never holds a key-shaped string that GitHub push protection or a scanner would flag.
 
 A hook is a seatbelt, not a security boundary: it reads the command text, which unusual quoting can get past.
 

@@ -102,6 +102,6 @@ test('project scope writes the shared project files, and MCP packs install throu
   const repo = tmp();
   run(['install', '--project', '--profile', 'mcp-web'], { cwd: repo });
   const servers = readJson(repo, '.mcp.json').mcpServers;
-  assert.deepStrictEqual(Object.keys(servers).sort(), ['chrome-devtools', 'context7', 'fetch', 'playwright']);
+  assert.deepStrictEqual(Object.keys(servers).sort(), ['chrome-devtools', 'context7', 'exa', 'fetch', 'firecrawl', 'playwright']);
   assert.ok(!fs.existsSync(path.join(repo, '.claude', 'skills')), 'an MCP pack installs only its servers');
 });

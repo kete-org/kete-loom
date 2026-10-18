@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Record a 60-second demo video of our signup and first project flow for the landing page",
+    "Our product walkthrough video is out of date after the redesign, script it so we can re-record it every release",
+    "Make a Playwright script that records the dashboard demo with a visible cursor and click highlights",
+    "Turn the recorded WebM of our app tour into an MP4 and a small GIF for the release notes",
+    "Capture a screencast of the checkout feature with fake demo data and captions explaining each step"
+  ],
+  "should_not_trigger": [
+    "Write Playwright tests that check the checkout flow still works after each deploy",
+    "Our Playwright suite fails in CI on the login test, find out why",
+    "Cut my interview footage into a three-minute story with B-roll",
+    "Build an animated explainer video in React with spring animations",
+    "Click through the staging app and look for bugs in the settings page"
+  ]
+}
