@@ -5,9 +5,12 @@
 <h1 align="center">Kete Loom</h1>
 
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
-مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code.</p>
+مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code وKiro.</p>
 
-<!-- translated from README.md, source 3eb8b3837837 -->
+<!-- translated from README.md, source ac3a3c3f2b95 -->
+
+<!-- counts:start -->
+<!-- counts:end -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -17,10 +20,10 @@
 
 ---
 
-Kete Loom هي مكتبة المهارات التي تقف خلف [Kete Code](https://ketecode.ai). وهي توفّر ثلاثة أنواع من العناصر: **المهارات (skills)**، وهي مجلدات يحمّلها الوكيل عند الحاجة إليها؛ و**الوكلاء (agents)**، وهم وكلاء فرعيون (subagents) يفوّض إليهم المهام؛ و**الأوامر (commands)**، وهي أوامر شرطة مائلة (slash commands) تكتبها بنفسك. والمكتبة تضع الجودة أولًا: عناصر أقل، وكل واحد منها
+Kete Loom هي مكتبة المهارات التي تقف خلف [Kete Code](https://ketecode.ai). وهي توفّر **المهارات (skills)**، وهي مجلدات يحمّلها الوكيل عند الحاجة إليها؛ و**الوكلاء (agents)**، وهم وكلاء فرعيون (subagents) يفوّض إليهم المهام؛ و**الأوامر (commands)**، وهي أوامر شرطة مائلة (slash commands) تكتبها بنفسك؛ و**القواعد (rules)**، وهي إرشادات قصيرة مفعّلة دائمًا؛ و**الخطافات (hooks)**، وهي فحوصات تعمل حول استدعاءات الوكيل للأدوات وعند انتهائه؛ و**إعدادات خوادم MCP**. والمكتبة تضع الجودة أولًا: عناصر أقل، وكل واحد منها
 
 - **قابل للنقل**: يستخدم أكثر المجموعات الفرعية المشتركة صرامةً من صيغة [Agent Skills](https://agentskills.io)، فلا ترفضه أي بيئة مضيفة (host)؛
-- **مُختبَر**: تأتي المهارات والوكلاء مع اختبارات تقييم للتفعيل (trigger evals) تتحقق من أنها تُحمَّل للطلبات الصحيحة ولا تتدخل في الطلبات غير المناسبة؛
+- **مُختبَر**: تأتي المهارات والوكلاء مع اختبارات تقييم للتفعيل (trigger evals) تتحقق من أنها تُحمَّل للطلبات الصحيحة ولا تتدخل في الطلبات غير المناسبة، وتضيف مهارات الانضباط اختبارات تقييم للسلوك (behaviour evals) تتحقق من أن الوكيل يتبعها فعلًا تحت الضغط، مقارنةً بتشغيل دون المهارة؛
 - **قصير**: أقل من 300 سطر، مع نقل التفاصيل إلى `references/` التي لا يقرؤها الوكيل إلا عند الحاجة؛
 - **مُرقَّم الإصدار ومُصنَّف**: يحمل في بياناته الوصفية (metadata) رقم إصدار وفق semver، وفئة، ومستوى خطورة (`read-only`، `writes-files`، `runs-commands`، `network`)؛
 - **مدعوم بسكربتات** حيثما كان العمل حتميًا.
@@ -37,7 +40,7 @@ npx @ketecode/loom install
 
 </div>
 
-يثبّت هذا الأمر كل المهارات في `~/.agents/skills` (التي يقرؤها Codex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code) وفي `~/.claude/skills` (لـ Claude Code). أما الوكلاء والأوامر فتُثبَّت في `~/.claude/agents` و`~/.claude/commands` (التي يقرؤها Claude Code، ويقرأ Cursor وVS Code Copilot منها الوكلاء أيضًا)، وكذلك في المجلدات الخاصة بكلٍّ من Codex وOpenCode وGemini CLI وKete Code إذا كانت هذه البيئات مثبّتة. ويُحوَّل كل وكيل وأمر إلى الصيغة التي تتوقعها بيئته المضيفة. أعد تشغيل وكيلك بعد ذلك.
+يثبّت هذا الأمر كل المهارات في `~/.agents/skills` (التي يقرؤها Codex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code) وفي `~/.claude/skills` (لـ Claude Code). أما الوكلاء والأوامر فتُثبَّت في `~/.claude/agents` و`~/.claude/commands` (التي يقرؤها Claude Code، ويقرأ Cursor وVS Code Copilot منها الوكلاء أيضًا)، وكذلك في المجلدات الخاصة بكلٍّ من Codex وOpenCode وGemini CLI وKete Code وKiro إذا كانت هذه البيئات مثبّتة (ويحصل Kiro أيضًا على نسخته الخاصة من المهارات). ويُحوَّل كل وكيل وأمر إلى الصيغة التي تتوقعها بيئته المضيفة. أعد تشغيل وكيلك بعد ذلك.
 
 أو اختر ملفًا تعريفيًا (profile) بدلًا من تثبيت كل شيء:
 
@@ -46,10 +49,12 @@ npx @ketecode/loom install
 | `minimal` | العمل بأسلوب الاختبار أولًا، والتحقق، والمراجعة الأمنية، ومراجعة الشيفرة |
 | `core` | الأساسيات، والتخطيط، وgit، والتهيئة للمشروع، وتسليم الجلسة، **إضافةً إلى حزم اللغات وأطر العمل التي يستخدمها مشروعك** (تُكتشف من `package.json` و`go.mod` و`pyproject.toml` و`Cargo.toml` و`Dockerfile` وغيرها) |
 | `developer` | `core` إضافةً إلى خطافات الأمان (hooks) الأربعة |
+| `strict` | `developer` إضافةً إلى الضوابط الاختيارية: القراءة قبل التعديل، وحماية إعدادات الفحص (lint)، وتشغيل خوادم التطوير في الخلفية، والفحص والتحقق من الأنواع قبل الانتهاء |
+| `method` | منهجية تطوير كاملة: التصميم قبل الشيفرة، وخطط مفصّلة، ووكيل فرعي جديد لكل مهمة مع مراجعة للمواصفات وللجودة، وتصحيح منهجي للأخطاء، والرد على المراجعات، وworktrees، وإنهاء نظيف |
 | `security` | كل عناصر الأمان والامتثال، إضافةً إلى خطافات الأمان |
 | `ai`، `data` | `core` إضافةً إلى كل عناصر الذكاء الاصطناعي أو البيانات |
 | `business` | مهارات التسويق، والبحث، والمستثمرين، والكتابة، ووثائق متطلبات المنتج (PRD)، والعمليات |
-| `full` | كل شيء، بما في ذلك كل الخطافات |
+| `full` | كل شيء، مع كل خطاف غير اختياري |
 
 <div dir="ltr">
 
@@ -103,6 +108,22 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 تُحدَّث الإضافات المثبّتة عبر مدير الإضافات الخاص بالبيئة المضيفة. استخدم لكل بيئة مضيفة إما التثبيت كإضافة أو مثبّت `npx`، لا الاثنين معًا، وإلا فقد تعرض البيئة كل مهارة مرتين.
 
+## منهجية للتطوير
+
+ثبّت `--profile method` لتحصل على طريقة عمل كاملة، من الفكرة حتى دمج الفرع، مع بوابة مراجعة في كل خطوة:
+
+| الخطوة | ما تستخدمه | ما يحدث |
+|---|---|---|
+| 1. التصميم | `/brainstorm` (`design-brainstorming`) | سؤال واحد في كل مرة، ونهجان أو ثلاثة مع موازنة بين مزايا كلٍّ منها وعيوبه، وموافقتك قسمًا قسمًا، ونماذج HTML أولية للخيارات المرئية، ثم وثيقة تصميم في المستودع. |
+| 2. العزل | `git-worktrees` | worktree منفصلة ومُتجاهَلة في git، مع تثبيت الاعتماديات وتشغيل أساسي للاختبارات، لتكون الإخفاقات الموجودة مسبقًا معروفة. |
+| 3. التخطيط | `/plan-feature` (`implementation-plans`) | مهام تستغرق كلٌّ منها بضع دقائق، مع الملفات المحددة، والاختبار الفاشل الذي يُكتب أولًا، والأمر الذي يُشغَّل ومخرجاته المتوقعة، وإيداع (commit) لكل مهمة. |
+| 4. البناء | `subagent-driven-development` مع الوكيل `task-implementer` | يعمل وكيل فرعي جديد على كل مهمة بأسلوب الاختبار أولًا ويُبلغ عن حالتها. يتحقق `spec-reviewer` منها مقابل المهمة، ثم يتحقق `code-reviewer` من جودتها، ويتكرر ذلك حتى تجتاز المراجعتين. |
+| 5. تصحيح الأخطاء | `/debug` (`systematic-debugging`) | السبب الجذري قبل أي إصلاح: أعد إنتاج المشكلة، وتتبّع القيمة الخاطئة حتى مصدرها، وفرضية واحدة في كل مرة. وبعد ثلاثة إصلاحات فاشلة يتوقف ويعيد النظر في التصميم. |
+| 6. المراجعة | `responding-to-code-review` | يتحقق من كل تعليق مقابل الشيفرة، ويعترض بالأدلة حين يكون الاقتراح خاطئًا، ويرد في سلسلة المراجعة. |
+| 7. الإنهاء | `/finish-branch` (`finishing-a-branch`) | الاختبارات أولًا، ثم الدمج محليًا، أو فتح طلب سحب (pull request)، أو الإبقاء على الفرع، أو التخلص منه (فقط بعد أن تكتب تأكيدًا). |
+
+يشغّل `/feature-dev` التسلسل كله مع توقف لأخذ موافقتك بين المراحل، وتجعل القاعدة `use-skills` الوكيل يلجأ إلى هذه المهارات بدلًا من العمل اعتمادًا على ذاكرته.
+
 ## المهارات (Skills)
 
 القائمة الكاملة موجودة في ملف README الإنجليزي: [Skills](../../README.md#skills)، وفي `catalog.json`.
@@ -136,19 +157,19 @@ npx @ketecode/loom install --profile core      # common rules plus the ones for 
 
 ## الخطافات (Hooks)
 
-فحوصات تعمل تلقائيًا عند نقاط محددة في حلقة عمل الوكيل: قبل تنفيذ أمر صدفة أو تعديل ملف (ويمكنها منعه مع ذكر سبب يراه الوكيل)، أو بعد التعديل، أو عند بدء الجلسة. الخطافات اختيارية: لا يضيفها `install` أبدًا ما لم تطلبها.
+فحوصات تعمل تلقائيًا عند نقاط محددة في حلقة عمل الوكيل: قبل تنفيذ أمر صدفة أو تعديل ملف (ويمكنها منعه مع ذكر سبب يراه الوكيل)، أو بعد التعديل، أو عند بدء الجلسة، أو عندما ينهي الوكيل دوره (ويمكنها إعادته إلى العمل). الخطافات اختيارية: لا يضيفها `install` أبدًا ما لم تطلبها. والخطافات الموسومة بأنها اختيارية (opt-in) تغيّر طريقة عمل الوكيل، لذا يستثنيها `--hooks`؛ سمّها بأسمائها، أو استخدم `--profile strict`.
 
 <div dir="ltr">
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
-npx @ketecode/loom install --hooks                           # everything, plus every hook
+npx @ketecode/loom install --hooks                           # everything, plus every hook not marked opt-in
 npx @ketecode/loom uninstall --hook block-dangerous-commands
 ```
 
 </div>
 
-يسجّل المثبّت كل خطاف في Claude Code وفي كل بيئة مضيفة أخرى يجدها: في `settings.json` لكلٍّ من Claude Code وGemini CLI، وفي `kete.json` لـ Kete Code، وفي `hooks.json` لكلٍّ من Codex وCursor، وفي `~/.copilot/hooks/` لـ Copilot CLI، وكإضافة (plugin) في OpenCode. وهو يضيف ويزيل مدخلاته الخاصة فقط، وينسخ الملف احتياطيًا إلى `<file>.kete-loom-backup` قبل تغييره، ولا يعيد أبدًا كتابة ملف يحتوي على تعليقات (بل يطبع المقتطف لتلصقه بنفسك). لا يشغّل Codex خطافًا جديدًا إلا بعد أن تمنحه الثقة عبر `/hooks`. تُثبَّت الخطافات لمستخدمك فقط، لا لكل مشروع على حدة. ليس في Cursor خطاف يعمل قبل التعديل، وليس في OpenCode خطاف يضيف سياقًا عند بدء الجلسة، لذا تتجاوزهما الخطافات المعنية.
+يسجّل المثبّت كل خطاف في Claude Code وفي كل بيئة مضيفة أخرى يجدها: في `settings.json` لكلٍّ من Claude Code وGemini CLI، وفي `kete.json` لـ Kete Code، وفي `hooks.json` لكلٍّ من Codex وCursor، وفي `~/.copilot/hooks/` لـ Copilot CLI، وكإضافة (plugin) في OpenCode. وهو يضيف ويزيل مدخلاته الخاصة فقط، وينسخ الملف احتياطيًا إلى `<file>.kete-loom-backup` قبل تغييره، ولا يعيد أبدًا كتابة ملف يحتوي على تعليقات (بل يطبع المقتطف لتلصقه بنفسك). لا يشغّل Codex خطافًا جديدًا إلا بعد أن تمنحه الثقة عبر `/hooks`. تُثبَّت الخطافات لمستخدمك فقط، لا لكل مشروع على حدة. ليس في Cursor خطاف يعمل قبل التعديل، وليس في OpenCode خطاف يضيف سياقًا عند بدء الجلسة، لذا تتجاوزهما الخطافات المعنية؛ أما الخطافات التي تعيد الوكيل إلى العمل عند انتهائه فتتجاوز Kete Code وOpenCode، لأن خطافات التوقف فيهما لا تستطيع ذلك. وخطافات Kiro جزء من إعدادات وكلائه، فلا تُثبَّت.
 
 القائمة الكاملة موجودة في ملف README الإنجليزي: [Hooks](../../README.md#hooks)، وفي `catalog.json`.
 
@@ -160,7 +181,7 @@ npx @ketecode/loom uninstall --hook block-dangerous-commands
 
 ```bash
 npx @ketecode/loom install --mcp github,playwright          # chosen servers
-npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch
+npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch, exa, firecrawl
 npx @ketecode/loom uninstall --mcp github
 ```
 
@@ -180,6 +201,7 @@ npx @ketecode/loom outdated           # installed items older than the latest Ke
 npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
 npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
 npx @ketecode/loom doctor             # what is installed where
+npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale hook registrations
 ```
 
 </div>
@@ -203,6 +225,7 @@ npx @ketecode/loom doctor             # what is installed where
 | Gemini CLI فقط | `~/.gemini/skills` | `.gemini/skills` |
 | GitHub Copilot فقط | `~/.copilot/skills` | `.github/skills` |
 | Kete Code فقط | `~/.config/kete/skills` | `.kete/skills` |
+| Kiro | `~/.kiro/skills` | `.kiro/skills` |
 
 </div>
 
@@ -219,10 +242,11 @@ npx @ketecode/loom doctor             # what is installed where
 | Kete Code | `~/.config/kete/agents` | `~/.config/kete/commands` | عند وجود `~/.config/kete` |
 | Gemini CLI | `~/.gemini/agents` | `~/.gemini/commands` (TOML) | عند وجود `~/.gemini` |
 | Copilot CLI | `~/.copilot/agents` (`.agent.md`) | غير مدعومة | مع `--target copilot` |
+| Kiro | `~/.kiro/agents` | `~/.kiro/prompts` | عند وجود `~/.kiro` |
 
 </div>
 
-تستخدم عمليات التثبيت على مستوى المشروع (`--project`) المجلدات نفسها داخل المستودع (`.github/agents` لـ Copilot، و`.kete/` لـ Kete Code).
+تستخدم عمليات التثبيت على مستوى المشروع (`--project`) المجلدات نفسها داخل المستودع (`.github/agents` لـ Copilot، و`.kete/` لـ Kete Code، و`.kiro/` لـ Kiro). وتصبح قواعد Kiro ملفات توجيه (steering files) في `~/.kiro/steering`، محصورة النطاق عبر `fileMatch`.
 
 ## المساهمة
 
@@ -233,7 +257,21 @@ npx @ketecode/loom doctor             # what is installed where
 ```bash
 npm run lint      # frontmatter, length, references, evals, manifest versions
 npm test          # installer and linter tests
-npm run eval      # eval file checks (CI also runs live routing evals)
+npm run eval      # trigger and behaviour eval file checks (CI also runs them live)
+```
+
+</div>
+
+نوعان من اختبارات التقييم يحافظان على مصداقية العناصر:
+
+- **اختبارات تقييم التفعيل (trigger evals)** (`evals/triggers.json`): يوجّه نموذجٌ موجّهاتٍ (prompts) واقعية وحالاتٍ قريبة من الحد كما تفعل البيئات المضيفة، ويجب أن يُختار كل عنصر لموجّهاته هو، ولها فقط.
+- **اختبارات تقييم السلوك (behaviour evals)** (`evals/behavior.json`): سيناريوهات تضغط على الوكيل ليتخطى انضباط العنصر («رقّعها فحسب، سنطلق الإصدار خلال عشر دقائق»). يُشغَّل كلٌّ منها مع العنصر ودونه، ويقيّم نموذجٌ حَكَم كل رد، ويُظهر التقرير ما يضيفه العنصر. ويشغّلها `--host claude` كجلسات Claude Code حقيقية دون واجهة (headless).
+
+<div dir="ltr">
+
+```bash
+npm run eval:live -- --skill my-skill                     # routing
+npm run eval:behavior -- --live --skill my-skill          # behaviour, with and without the skill
 ```
 
 </div>

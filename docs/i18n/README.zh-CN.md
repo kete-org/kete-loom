@@ -5,9 +5,11 @@
 <h1 align="center">Kete Loom</h1>
 
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
-一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot 和 Kete Code。</p>
+一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source 3eb8b3837837 -->
+<!-- translated from README.md, source ac3a3c3f2b95 -->
+
+<!-- counts:start --><!-- counts:end -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -15,10 +17,10 @@
 
 ---
 
-Kete Loom 是 [Kete Code](https://ketecode.ai) 背后的 skill 库。它提供三类内容：**skill**（技能，agent 在相关时加载的文件夹）、**agent**（可被委派任务的 subagent，即子代理）和 **命令**（你输入的斜杠命令）。它坚持质量优先：条目宁少勿滥，而且每一项都满足以下要求：
+Kete Loom 是 [Kete Code](https://ketecode.ai) 背后的 skill 库。它提供 **skill**（技能，agent 在相关时加载的文件夹）、**agent**（可被委派任务的 subagent，即子代理）、**命令**（你输入的斜杠命令）、**规则**（简短、始终生效的指导）、**hook**（在 agent 调用工具前后以及它完成工作时运行的检查）和 **MCP 服务器配置**。它坚持质量优先：条目宁少勿滥，而且每一项都满足以下要求：
 
 - **可移植**：采用 [Agent Skills](https://agentskills.io) 格式中最严格的通用子集，任何宿主都不会拒绝加载；
-- **经过测试**：skill 和 agent 都附带触发评测（trigger eval），确保它们在该出现的请求中被加载，在无关请求中不会干扰；
+- **经过测试**：skill 和 agent 都附带触发评测（trigger eval），确保它们在该出现的请求中被加载，在无关请求中不会干扰；纪律类 skill 还附带行为评测（behaviour eval），与不使用该 skill 的运行对比，检查 agent 在压力下是否真正遵循它们；
 - **简短**：不超过 300 行，细节移到 `references/` 中，agent 只在需要时才读取；
 - **有版本、有标签**：元数据中包含语义化版本号（semver）、分类和风险等级（`read-only`、`writes-files`、`runs-commands`、`network`）；
 - **有脚本支撑**：凡是结果确定的工作，都交由脚本完成。
@@ -31,7 +33,7 @@ Kete Loom 是 [Kete Code](https://ketecode.ai) 背后的 skill 库。它提供�
 npx @ketecode/loom install
 ```
 
-该命令会把所有 skill 安装到 `~/.agents/skills`（Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot 和 Kete Code 会读取该目录）以及 `~/.claude/skills`（Claude Code）。agent 和命令会安装到 `~/.claude/agents` 和 `~/.claude/commands`（由 Claude Code 读取；其中 agent 也会被 Cursor 和 VS Code Copilot 读取）；如果本机装有 Codex、OpenCode、Gemini CLI 或 Kete Code，也会安装到它们各自的目录中。每个 agent 和命令都会被转换为对应宿主所需的格式。安装完成后请重启你的 agent。
+该命令会把所有 skill 安装到 `~/.agents/skills`（Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot 和 Kete Code 会读取该目录）以及 `~/.claude/skills`（Claude Code）。agent 和命令会安装到 `~/.claude/agents` 和 `~/.claude/commands`（由 Claude Code 读取；其中 agent 也会被 Cursor 和 VS Code Copilot 读取）；如果本机装有 Codex、OpenCode、Gemini CLI、Kete Code 或 Kiro，也会安装到它们各自的目录中（Kiro 还会获得一份单独的 skill 副本）。每个 agent 和命令都会被转换为对应宿主所需的格式。安装完成后请重启你的 agent。
 
 也可以选择一个配置档（profile），而不是全部安装：
 
@@ -40,10 +42,12 @@ npx @ketecode/loom install
 | `minimal` | 测试先行开发、结果验证、安全审查、代码审查 |
 | `core` | 基础必备项、规划、git、项目上手与会话交接，**以及你的项目所用语言和框架的扩展包**（根据 `package.json`、`go.mod`、`pyproject.toml`、`Cargo.toml`、`Dockerfile` 等文件自动检测） |
 | `developer` | `core` 加上四个安全 hook |
+| `strict` | `developer` 加上需主动启用的防护：先读后改、保护 lint 配置、在后台运行开发服务器、完成前运行 lint 和类型检查 |
+| `method` | 一套完整的开发方法：先设计后编码、细粒度计划、每个任务使用一个全新的 subagent 并进行规格与质量审查、系统化调试、回应审查意见、worktree 以及干净的收尾 |
 | `security` | 所有安全与合规相关条目，以及安全 hook |
 | `ai`、`data` | `core` 加上所有 AI 或数据相关条目 |
 | `business` | 市场营销、调研、投资者、写作、PRD 和运营类 skill |
-| `full` | 全部内容，包括所有 hook |
+| `full` | 全部内容，以及所有非主动启用的 hook |
 
 ```bash
 npx @ketecode/loom install --profile developer     # run it inside your project so detection sees it
@@ -85,6 +89,22 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 通过插件安装的内容由宿主自身的插件管理器负责更新。对同一个宿主，请只选择插件安装或 `npx` 安装器中的一种，不要同时使用，否则宿主可能会把每个 skill 列出两次。
 
+## 一套开发方法
+
+安装 `--profile method`，即可获得一套从想法到分支合并的完整工作方式，每一步都设有审查关口：
+
+| 步骤 | 使用 | 过程 |
+|---|---|---|
+| 1. 设计 | `/brainstorm`（`design-brainstorming`） | 一次只问一个问题，给出两到三种方案及其取舍，逐节征得你的同意，对视觉选择提供 HTML 原型，最后在仓库中写出一份设计文档。 |
+| 2. 隔离 | `git-worktrees` | 一个独立且被 git 忽略的 worktree，已安装依赖并运行过一次基线测试，从而明确已有的失败。 |
+| 3. 计划 | `/plan-feature`（`implementation-plans`） | 每个任务只需几分钟，写明确切的文件、需要先写的失败测试、要运行的命令及其预期输出，并且每个任务一次提交。 |
+| 4. 构建 | `subagent-driven-development` 配合 `task-implementer` agent | 每个任务由一个全新的 subagent 以测试先行的方式完成，并报告状态。`spec-reviewer` 对照任务检查它，随后 `code-reviewer` 检查其质量，循环往复，直到两者都通过。 |
+| 5. 调试 | `/debug`（`systematic-debugging`） | 先找根因再修复：复现问题，把错误的值追溯到源头，一次只验证一个假设。三次修复失败后，它会停下来质疑设计本身。 |
+| 6. 审查 | `responding-to-code-review` | 对照代码检查每条评论，在建议有误时用证据反驳，并在审查讨论串中回复。 |
+| 7. 收尾 | `/finish-branch`（`finishing-a-branch`） | 先运行测试，然后在本地合并、发起 pull request、保留分支或丢弃分支（丢弃需要你输入确认后才会执行）。 |
+
+`/feature-dev` 会运行整个流程，并在各阶段之间停下来等待你的批准；`use-skills` 规则则让 agent 始终调用这些 skill，而不是凭记忆工作。
+
 ## Skills
 
 完整列表见英文版 README：[Skills](../../README.md#skills)，也可查阅 [catalog.json](../../catalog.json)。
@@ -114,15 +134,15 @@ npx @ketecode/loom install --profile core      # common rules plus the ones for 
 
 ## Hooks
 
-在 agent 循环的特定节点自动运行的检查（hook，钩子）：在执行 shell 命令或编辑文件之前（可以阻止该操作，并给出 agent 能看到的原因）、在编辑之后，或在会话开始时。hook 需要主动启用：除非你明确要求，`install` 不会添加任何 hook。
+在 agent 循环的特定节点自动运行的检查（hook，钩子）：在执行 shell 命令或编辑文件之前（可以阻止该操作，并给出 agent 能看到的原因）、在编辑之后、在会话开始时，或在 agent 结束本轮时（可以让它返回继续工作）。hook 需要主动启用：除非你明确要求，`install` 不会添加任何 hook。标记为需主动启用（opt-in）的 hook 会改变 agent 的工作方式，因此 `--hooks` 不会包含它们；请指名安装，或使用 `--profile strict`。
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
-npx @ketecode/loom install --hooks                           # everything, plus every hook
+npx @ketecode/loom install --hooks                           # everything, plus every hook not marked opt-in
 npx @ketecode/loom uninstall --hook block-dangerous-commands
 ```
 
-安装器会把每个 hook 注册到 Claude Code 以及它找到的所有其他宿主：Claude Code 和 Gemini CLI 写入各自的 `settings.json`，Kete Code 写入 `kete.json`，Codex 和 Cursor 写入各自的 `hooks.json`，Copilot CLI 写入 `~/.copilot/hooks/`，OpenCode 则以插件形式注册。安装器只增删自己的条目，修改文件前会先备份为 `<file>.kete-loom-backup`，并且绝不改写带有注释的文件（而是打印出需要你手动粘贴的片段）。Codex 只有在你通过 `/hooks` 信任新 hook 之后才会运行它。hook 只安装到当前用户，不按项目安装。Cursor 没有编辑前的 hook，OpenCode 没有在会话开始时注入上下文的 hook，因此相应的 hook 会跳过这两个宿主。
+安装器会把每个 hook 注册到 Claude Code 以及它找到的所有其他宿主：Claude Code 和 Gemini CLI 写入各自的 `settings.json`，Kete Code 写入 `kete.json`，Codex 和 Cursor 写入各自的 `hooks.json`，Copilot CLI 写入 `~/.copilot/hooks/`，OpenCode 则以插件形式注册。安装器只增删自己的条目，修改文件前会先备份为 `<file>.kete-loom-backup`，并且绝不改写带有注释的文件（而是打印出需要你手动粘贴的片段）。Codex 只有在你通过 `/hooks` 信任新 hook 之后才会运行它。hook 只安装到当前用户，不按项目安装。Cursor 没有编辑前的 hook，OpenCode 没有在会话开始时注入上下文的 hook，因此相应的 hook 会跳过这两个宿主；在 agent 完成时让它返回工作的 hook 会跳过 Kete Code 和 OpenCode，因为它们的停止 hook 做不到这一点。Kiro 的 hook 属于其 agent 配置，因此不会安装。
 
 完整列表见英文版 README：[Hooks](../../README.md#hooks)，也可查阅 [catalog.json](../../catalog.json)。
 
@@ -132,7 +152,7 @@ npx @ketecode/loom uninstall --hook block-dangerous-commands
 
 ```bash
 npx @ketecode/loom install --mcp github,playwright          # chosen servers
-npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch
+npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch, exa, firecrawl
 npx @ketecode/loom uninstall --mcp github
 ```
 
@@ -148,6 +168,7 @@ npx @ketecode/loom outdated           # installed items older than the latest Ke
 npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
 npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
 npx @ketecode/loom doctor             # what is installed where
+npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale hook registrations
 ```
 
 `audit` 会检查那些让 agent 在仓库中良好工作的要素：agent 指令（`AGENTS.md`/`CLAUDE.md`）、与它检测到的技术栈对应的 Kete Loom 配置包、测试和 lint 命令、CI、安全 hook，以及 `.env` 文件是否已被忽略且未被提交。只要有一项检查失败，它就会以非零状态码退出，因此可以在 CI 中运行。
@@ -167,6 +188,7 @@ npx @ketecode/loom doctor             # what is installed where
 | 仅 Gemini CLI | `~/.gemini/skills` | `.gemini/skills` |
 | 仅 GitHub Copilot | `~/.copilot/skills` | `.github/skills` |
 | 仅 Kete Code | `~/.config/kete/skills` | `.kete/skills` |
+| Kiro | `~/.kiro/skills` | `.kiro/skills` |
 
 ### Agents 与命令
 
@@ -179,8 +201,9 @@ npx @ketecode/loom doctor             # what is installed where
 | Kete Code | `~/.config/kete/agents` | `~/.config/kete/commands` | 当 `~/.config/kete` 存在时 |
 | Gemini CLI | `~/.gemini/agents` | `~/.gemini/commands`（TOML） | 当 `~/.gemini` 存在时 |
 | Copilot CLI | `~/.copilot/agents`（`.agent.md`） | 不支持 | 使用 `--target copilot` 时 |
+| Kiro | `~/.kiro/agents` | `~/.kiro/prompts` | 当 `~/.kiro` 存在时 |
 
-项目级安装（`--project`）使用仓库内的相同目录（Copilot 使用 `.github/agents`，Kete Code 使用 `.kete/`）。
+项目级安装（`--project`）使用仓库内的相同目录（Copilot 使用 `.github/agents`，Kete Code 使用 `.kete/`，Kiro 使用 `.kiro/`）。Kiro 的规则会变成 `~/.kiro/steering` 中的 steering 文件，并通过 `fileMatch` 限定作用范围。
 
 ## 参与贡献
 
@@ -189,7 +212,17 @@ npx @ketecode/loom doctor             # what is installed where
 ```bash
 npm run lint      # frontmatter, length, references, evals, manifest versions
 npm test          # installer and linter tests
-npm run eval      # eval file checks (CI also runs live routing evals)
+npm run eval      # trigger and behaviour eval file checks (CI also runs them live)
+```
+
+有两类评测确保各条目名副其实：
+
+- **触发评测**（`evals/triggers.json`）：由一个模型像宿主那样对真实提示词和近似但不该匹配的提示词进行路由，每个条目必须在属于自己的提示词中被选中，而且只在这些提示词中被选中。
+- **行为评测**（`evals/behavior.json`）：用场景向 agent 施压，促使它跳过该条目所要求的纪律（“just patch it, we ship in ten minutes”）。每个场景分别在使用和不使用该条目的情况下运行，由一个评审模型为每条回复打分，报告会展示该条目带来的改进。`--host claude` 会以真实的无头 Claude Code 会话运行这些评测。
+
+```bash
+npm run eval:live -- --skill my-skill                     # routing
+npm run eval:behavior -- --live --skill my-skill          # behaviour, with and without the skill
 ```
 
 `skill-authoring` 这个 skill 会引导你的 agent 按照此标准编写新的 skill。

@@ -5,9 +5,11 @@
 <h1 align="center">Kete Loom</h1>
 
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
-Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot na Kete Code.</p>
+Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source 3eb8b3837837 -->
+<!-- translated from README.md, source ac3a3c3f2b95 -->
+
+<!-- counts:start --><!-- counts:end -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -15,10 +17,10 @@ Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode,
 
 ---
 
-Kete Loom ni maktaba ya skills inayotumiwa na [Kete Code](https://ketecode.ai). Inatoa aina tatu za vipengele: **skills** (folda ambazo agent huzipakia zinapohitajika), **agents** (subagents ambao agent hukabidhi kazi kwao) na **commands** (slash commands unazoandika mwenyewe). Inatanguliza ubora: vipengele vichache, na kila kimoja ni
+Kete Loom ni maktaba ya skills inayotumiwa na [Kete Code](https://ketecode.ai). Inatoa **skills** (folda ambazo agent huzipakia zinapohitajika), **agents** (subagents ambao agent hukabidhi kazi kwao), **commands** (slash commands unazoandika mwenyewe), **rules** (maelekezo mafupi yanayofanya kazi muda wote), **hooks** (ukaguzi unaoendeshwa kuzunguka tool calls za agent na anapomaliza) na **configs za MCP servers**. Inatanguliza ubora: vipengele vichache, na kila kimoja ni
 
 - **kinachohamishika (portable)**: kinatumia sehemu ndogo kabisa ya pamoja na yenye masharti makali zaidi ya muundo wa [Agent Skills](https://agentskills.io), kwa hivyo hakuna host inayokikataa;
-- **kilichojaribiwa**: skills na agents huja na trigger evals zinazohakikisha zinapakiwa kwa maombi sahihi na hazijiingizi kwenye maombi yasiyo yao;
+- **kilichojaribiwa**: skills na agents huja na trigger evals zinazohakikisha zinapakiwa kwa maombi sahihi na hazijiingizi kwenye maombi yasiyo yao, na skills za nidhamu (discipline skills) huongeza behaviour evals zinazohakikisha agent anazifuata kweli anapobanwa, ikilinganishwa na mzunguko usio na skill hiyo;
 - **kifupi**: chini ya mistari 300, na maelezo ya kina yamehamishiwa `references/` ambayo agent huisoma tu inapohitajika;
 - **chenye toleo na lebo**: semver, kategoria na kiwango cha hatari (`read-only`, `writes-files`, `runs-commands`, `network`) katika metadata yake;
 - **kinachotegemea scripts** pale ambapo kazi ni deterministic (matokeo yanatabirika).
@@ -31,7 +33,7 @@ Kete Loom ni maktaba ya skills inayotumiwa na [Kete Code](https://ketecode.ai). 
 npx @ketecode/loom install
 ```
 
-Hii husakinisha kila skill ndani ya `~/.agents/skills` (inayosomwa na Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot na Kete Code) na `~/.claude/skills` (Claude Code). Agents na commands huwekwa ndani ya `~/.claude/agents` na `~/.claude/commands` (zinazosomwa na Claude Code, na kwa agents pia Cursor na VS Code Copilot), pamoja na folda za Codex, OpenCode, Gemini CLI na Kete Code zenyewe pale hosts hizo zimesakinishwa. Kila agent na command hubadilishwa kuwa muundo ambao host yake inatarajia. Anzisha upya agent yako baadaye.
+Hii husakinisha kila skill ndani ya `~/.agents/skills` (inayosomwa na Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot na Kete Code) na `~/.claude/skills` (Claude Code). Agents na commands huwekwa ndani ya `~/.claude/agents` na `~/.claude/commands` (zinazosomwa na Claude Code, na kwa agents pia Cursor na VS Code Copilot), pamoja na folda za Codex, OpenCode, Gemini CLI, Kete Code na Kiro zenyewe pale hosts hizo zimesakinishwa (Kiro pia hupata nakala yake ya skills). Kila agent na command hubadilishwa kuwa muundo ambao host yake inatarajia. Anzisha upya agent yako baadaye.
 
 Au chagua profile badala ya kusakinisha kila kitu:
 
@@ -40,10 +42,12 @@ Au chagua profile badala ya kusakinisha kila kitu:
 | `minimal` | Kazi ya test-first, uthibitishaji, ukaguzi wa usalama, code review |
 | `core` | Mambo muhimu, upangaji, git, onboarding na makabidhiano ya session, **pamoja na language na framework packs ambazo mradi wako unatumia** (zinatambuliwa kutoka `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` na kadhalika) |
 | `developer` | `core` pamoja na hooks nne za usalama |
+| `strict` | `developer` pamoja na kinga za hiari (opt-in guardrails): soma kabla ya kuhariri, lint configs zinazolindwa, dev servers zinazoendeshwa nyuma (background), lint na type-check kabla ya kumaliza |
+| `method` | Mbinu kamili ya uundaji: design kabla ya code, mipango ya kina, subagent mpya kwa kila kazi pamoja na ukaguzi wa spec na ubora, debugging ya kimfumo, kujibu review, worktrees na umaliziaji safi |
 | `security` | Kila kipengele cha usalama na compliance, pamoja na hooks za usalama |
 | `ai`, `data` | `core` pamoja na kila kipengele cha AI au data |
 | `business` | Skills za marketing, utafiti, wawekezaji, uandishi, PRD na operations |
-| `full` | Kila kitu, ikiwemo kila hook |
+| `full` | Kila kitu, pamoja na kila hook isiyo ya hiari (opt-in) |
 
 ```bash
 npx @ketecode/loom install --profile developer     # run it inside your project so detection sees it
@@ -85,6 +89,22 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 Usakinishaji wa plugin husasishwa kupitia plugin manager ya host yenyewe. Kwa host moja, tumia ama usakinishaji wa plugin ama installer ya `npx`, si zote mbili, la sivyo host inaweza kuonyesha kila skill mara mbili.
 
+## Mbinu ya uundaji
+
+Sakinisha `--profile method` kwa njia kamili ya kufanya kazi, kuanzia wazo hadi branch iliyounganishwa (merged), pamoja na kizuizi cha review katika kila hatua:
+
+| Hatua | Tumia | Kinachotokea |
+|---|---|---|
+| 1. Design | `/brainstorm` (`design-brainstorming`) | Swali moja kwa wakati, mbinu mbili au tatu pamoja na faida na hasara zake, idhini yako sehemu kwa sehemu, HTML mockups kwa machaguo ya kuona, kisha design doc ndani ya repo. |
+| 2. Tenga | `git-worktrees` | Worktree tofauti, iliyopuuzwa na git, yenye dependencies zilizosakinishwa na mzunguko wa msingi (baseline) wa tests, ili kushindwa kulikopo kujulikane. |
+| 3. Panga | `/plan-feature` (`implementation-plans`) | Kazi za dakika chache kila moja, zenye faili halisi, test inayoshindwa ya kuandika kwanza, command ya kuendesha na matokeo yake yanayotarajiwa, na commit kwa kila kazi. |
+| 4. Jenga | `subagent-driven-development` pamoja na agent `task-implementer` | Subagent mpya kwa kila kazi hufanya kazi test-first na kuripoti hali. `spec-reviewer` huikagua dhidi ya kazi, kisha `code-reviewer` hukagua ubora wake, ikirudiwa hadi zote mbili zipite. |
+| 5. Debug | `/debug` (`systematic-debugging`) | Chanzo cha tatizo kabla ya marekebisho yoyote: litokeze tena, fuatilia thamani mbaya hadi chanzo chake, dhana moja kwa wakati. Baada ya marekebisho matatu yaliyoshindwa husimama na kuhoji design. |
+| 6. Review | `responding-to-code-review` | Hukagua kila comment dhidi ya code, hupinga kwa ushahidi pendekezo linapokuwa si sahihi, na hujibu ndani ya thread ya review. |
+| 7. Maliza | `/finish-branch` (`finishing-a-branch`) | Tests kwanza, kisha merge kwa ndani (locally), fungua pull request, hifadhi branch, au iitupe (tu baada ya wewe kuandika uthibitisho). |
+
+`/feature-dev` huendesha mfuatano wote ikisimama ili upate kuidhinisha kati ya hatua, na rule ya `use-skills` humfanya agent aendelee kutumia skills hizi badala ya kufanya kazi kutoka kwenye kumbukumbu.
+
 ## Skills
 
 Orodha kamili iko kwenye README ya Kiingereza: [Skills](../../README.md#skills), na pia ndani ya `catalog.json`.
@@ -114,15 +134,15 @@ Orodha kamili iko kwenye README ya Kiingereza: [Rules](../../README.md#rules), n
 
 ## Hooks
 
-Ukaguzi unaoendeshwa kiotomatiki katika hatua fulani za mzunguko wa agent: kabla ya shell command au kuhariri faili (na ukaguzi huo unaweza kuizuia, huku ukitoa sababu ambayo agent huiona), baada ya kuhariri, au session inapoanza. Hooks ni za hiari: `install` haiziongezi kamwe usipoziomba.
+Ukaguzi unaoendeshwa kiotomatiki katika hatua fulani za mzunguko wa agent: kabla ya shell command au kuhariri faili (na ukaguzi huo unaweza kuizuia, huku ukitoa sababu ambayo agent huiona), baada ya kuhariri, session inapoanza, au agent anapomaliza zamu yake (na ukaguzi huo unaweza kumrudisha kazini). Hooks ni za hiari: `install` haiziongezi kamwe usipoziomba. Hooks zilizowekewa alama ya opt-in hubadilisha jinsi agent anavyofanya kazi, kwa hivyo `--hooks` huziacha; zitaje kwa majina, au tumia `--profile strict`.
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
-npx @ketecode/loom install --hooks                           # everything, plus every hook
+npx @ketecode/loom install --hooks                           # everything, plus every hook not marked opt-in
 npx @ketecode/loom uninstall --hook block-dangerous-commands
 ```
 
-Installer husajili kila hook kwa Claude Code na kila host nyingine inayoipata: Claude Code na Gemini CLI ndani ya `settings.json` zao, Kete Code ndani ya `kete.json`, Codex na Cursor ndani ya `hooks.json` zao, Copilot CLI ndani ya `~/.copilot/hooks/` na OpenCode kama plugin. Huongeza na kuondoa entries zake tu, huhifadhi nakala ya faili kama `<file>.kete-loom-backup` kabla ya kulibadilisha, na kamwe haiandiki upya faili lenye comments (badala yake huchapisha kipande cha kubandika). Codex huendesha hook mpya tu baada ya wewe kuiamini kwa `/hooks`. Hooks husakinishwa kwa mtumiaji wako pekee, si kwa kila mradi. Cursor haina hook ya kabla ya kuhariri na OpenCode haina inayoongeza context mwanzoni mwa session, kwa hivyo hooks hizo huruka hosts hizo.
+Installer husajili kila hook kwa Claude Code na kila host nyingine inayoipata: Claude Code na Gemini CLI ndani ya `settings.json` zao, Kete Code ndani ya `kete.json`, Codex na Cursor ndani ya `hooks.json` zao, Copilot CLI ndani ya `~/.copilot/hooks/` na OpenCode kama plugin. Huongeza na kuondoa entries zake tu, huhifadhi nakala ya faili kama `<file>.kete-loom-backup` kabla ya kulibadilisha, na kamwe haiandiki upya faili lenye comments (badala yake huchapisha kipande cha kubandika). Codex huendesha hook mpya tu baada ya wewe kuiamini kwa `/hooks`. Hooks husakinishwa kwa mtumiaji wako pekee, si kwa kila mradi. Cursor haina hook ya kabla ya kuhariri na OpenCode haina inayoongeza context mwanzoni mwa session, kwa hivyo hooks hizo huruka hosts hizo; hooks zinazomrudisha agent kazini anapomaliza huruka Kete Code na OpenCode, ambazo stop hooks zake haziwezi kufanya hivyo. Hooks za Kiro ni sehemu ya agent configs zake na hazisakinishwi.
 
 Orodha kamili iko kwenye README ya Kiingereza: [Hooks](../../README.md#hooks), na pia ndani ya `catalog.json`.
 
@@ -132,7 +152,7 @@ Configs za MCP servers zilizochaguliwa kwa makini, zinazosajiliwa kwa kila host 
 
 ```bash
 npx @ketecode/loom install --mcp github,playwright          # chosen servers
-npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch
+npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch, exa, firecrawl
 npx @ketecode/loom uninstall --mcp github
 ```
 
@@ -148,6 +168,7 @@ npx @ketecode/loom outdated           # installed items older than the latest Ke
 npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
 npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
 npx @ketecode/loom doctor             # what is installed where
+npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale hook registrations
 ```
 
 `audit` hukagua mambo yanayowawezesha agents kufanya kazi vizuri ndani ya repository: maelekezo ya agent (`AGENTS.md`/`CLAUDE.md`), packs za Kete Loom kwa ajili ya stack inayoitambua, commands za test na lint, CI, hooks za usalama, na kwamba faili za `.env` zimepuuzwa (ignored) na hazijafanyiwa commit. Hutoka na msimbo usio sifuri (non-zero) ukaguzi wowote unaposhindwa, kwa hivyo inaweza kuendeshwa ndani ya CI.
@@ -167,6 +188,7 @@ Ndani ya agent wako, `/loom` hupata vipengele sahihi kwa kazi fulani, `/checkpoi
 | Gemini CLI pekee | `~/.gemini/skills` | `.gemini/skills` |
 | GitHub Copilot pekee | `~/.copilot/skills` | `.github/skills` |
 | Kete Code pekee | `~/.config/kete/skills` | `.kete/skills` |
+| Kiro | `~/.kiro/skills` | `.kiro/skills` |
 
 ### Agents na commands
 
@@ -179,8 +201,9 @@ Ndani ya agent wako, `/loom` hupata vipengele sahihi kwa kazi fulani, `/checkpoi
 | Kete Code | `~/.config/kete/agents` | `~/.config/kete/commands` | pale `~/.config/kete` ipo |
 | Gemini CLI | `~/.gemini/agents` | `~/.gemini/commands` (TOML) | pale `~/.gemini` ipo |
 | Copilot CLI | `~/.copilot/agents` (`.agent.md`) | hazitumiki | kwa `--target copilot` |
+| Kiro | `~/.kiro/agents` | `~/.kiro/prompts` | pale `~/.kiro` ipo |
 
-Usakinishaji wa mradi (`--project`) hutumia folda zilezile ndani ya repo (`.github/agents` kwa Copilot, `.kete/` kwa Kete Code).
+Usakinishaji wa mradi (`--project`) hutumia folda zilezile ndani ya repo (`.github/agents` kwa Copilot, `.kete/` kwa Kete Code, `.kiro/` kwa Kiro). Rules za Kiro huwa steering files ndani ya `~/.kiro/steering`, zikiwekewa mipaka kwa `fileMatch`.
 
 ## Kuchangia
 
@@ -189,7 +212,17 @@ Soma [`docs/SKILL_SPEC.md`](../../docs/SKILL_SPEC.md) (skills, agents na command
 ```bash
 npm run lint      # frontmatter, length, references, evals, manifest versions
 npm test          # installer and linter tests
-npm run eval      # eval file checks (CI also runs live routing evals)
+npm run eval      # trigger and behaviour eval file checks (CI also runs them live)
+```
+
+Aina mbili za evals huweka vipengele katika uaminifu:
+
+- **Trigger evals** (`evals/triggers.json`): model huelekeza (route) prompts halisi na zinazokaribia kufanana (near misses) jinsi hosts zinavyofanya, na kila kipengele lazima kichaguliwe kwa prompts zake chenyewe na hizo tu.
+- **Behaviour evals** (`evals/behavior.json`): matukio yanayombana agent aruke nidhamu ya kipengele ("just patch it, we ship in ten minutes"). Kila moja huendeshwa pamoja na kipengele na bila kipengele hicho, judge model hupima kila jibu, na ripoti huonyesha kile kipengele kinachoongeza. `--host claude` huziendesha kama sessions halisi za Claude Code zisizo na kiolesura (headless).
+
+```bash
+npm run eval:live -- --skill my-skill                     # routing
+npm run eval:behavior -- --live --skill my-skill          # behaviour, with and without the skill
 ```
 
 Skill ya `skill-authoring` humwongoza agent wako hatua kwa hatua kuandika skill mpya inayofikia kiwango hiki.

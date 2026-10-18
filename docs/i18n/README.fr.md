@@ -5,9 +5,11 @@
 <h1 align="center">Kete Loom</h1>
 
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
-Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot et Kete Code.</p>
+Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source 3eb8b3837837 -->
+<!-- translated from README.md, source ac3a3c3f2b95 -->
+
+<!-- counts:start --><!-- counts:end -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -15,10 +17,10 @@ Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor,
 
 ---
 
-Kete Loom est la bibliothèque de skills sur laquelle repose [Kete Code](https://ketecode.ai). Elle fournit trois types d'éléments : des **skills** (des dossiers que l'agent charge quand ils sont pertinents), des **agents** (des sous-agents auxquels il délègue du travail) et des **commandes** (des commandes slash que vous tapez). Elle privilégie la qualité : moins d'éléments, mais chacun d'eux est
+Kete Loom est la bibliothèque de skills sur laquelle repose [Kete Code](https://ketecode.ai). Elle fournit des **skills** (des dossiers que l'agent charge quand ils sont pertinents), des **agents** (des sous-agents auxquels il délègue du travail), des **commandes** (des commandes slash que vous tapez), des **règles** (de courtes consignes toujours actives), des **hooks** (des vérifications qui s'exécutent autour des appels d'outils de l'agent et lorsqu'il termine) et des **configurations de serveurs MCP**. Elle privilégie la qualité : moins d'éléments, mais chacun d'eux est
 
 - **portable** : il s'en tient au sous-ensemble commun le plus strict du format [Agent Skills](https://agentskills.io), si bien qu'aucun hôte ne le rejette ;
-- **testé** : les skills et les agents sont livrés avec des evals de déclenchement qui vérifient qu'ils se chargent pour les bonnes requêtes et restent à l'écart des autres ;
+- **testé** : les skills et les agents sont livrés avec des evals de déclenchement qui vérifient qu'ils se chargent pour les bonnes requêtes et restent à l'écart des autres, et les skills de discipline y ajoutent des evals de comportement qui vérifient que l'agent les suit réellement sous pression, en comparaison avec une exécution sans le skill ;
 - **court** : moins de 300 lignes, les détails étant déplacés dans `references/`, que l'agent ne lit qu'en cas de besoin ;
 - **versionné et étiqueté** : un numéro semver, une catégorie et un niveau de risque (`read-only`, `writes-files`, `runs-commands`, `network`) dans ses métadonnées ;
 - **appuyé sur des scripts** lorsque le travail est déterministe.
@@ -31,7 +33,7 @@ Kete Loom est la bibliothèque de skills sur laquelle repose [Kete Code](https:/
 npx @ketecode/loom install
 ```
 
-Cette commande installe chaque skill dans `~/.agents/skills` (lu par Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot et Kete Code) et dans `~/.claude/skills` (Claude Code). Les agents et les commandes vont dans `~/.claude/agents` et `~/.claude/commands` (lus par Claude Code, ainsi que par Cursor et VS Code Copilot pour les agents), et dans les dossiers propres à Codex, OpenCode, Gemini CLI et Kete Code lorsque ces hôtes sont installés. Chaque agent et chaque commande est converti au format attendu par son hôte. Redémarrez ensuite votre agent.
+Cette commande installe chaque skill dans `~/.agents/skills` (lu par Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot et Kete Code) et dans `~/.claude/skills` (Claude Code). Les agents et les commandes vont dans `~/.claude/agents` et `~/.claude/commands` (lus par Claude Code, ainsi que par Cursor et VS Code Copilot pour les agents), et dans les dossiers propres à Codex, OpenCode, Gemini CLI, Kete Code et Kiro lorsque ces hôtes sont installés (Kiro reçoit aussi sa propre copie des skills). Chaque agent et chaque commande est converti au format attendu par son hôte. Redémarrez ensuite votre agent.
 
 Vous pouvez aussi choisir un profil au lieu de tout installer :
 
@@ -40,10 +42,12 @@ Vous pouvez aussi choisir un profil au lieu de tout installer :
 | `minimal` | Développement piloté par les tests, vérification, revue de sécurité, revue de code |
 | `core` | L'essentiel, la planification, git, la prise en main d'un projet et le passage de relais entre sessions, **plus les packs de langages et de frameworks utilisés par votre projet** (détectés à partir de `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile`, etc.) |
 | `developer` | `core` plus les quatre hooks de sécurité |
+| `strict` | `developer` plus les garde-fous optionnels : lire avant de modifier, configurations de lint protégées, serveurs de développement en arrière-plan, lint et vérification des types avant de terminer |
+| `method` | Une méthode de développement complète : la conception avant le code, des plans détaillés, un sous-agent neuf par tâche avec revue de conformité à la spécification et de qualité, un débogage méthodique, la réponse aux revues, des worktrees et une fin de branche propre |
 | `security` | Tous les éléments de sécurité et de conformité, plus les hooks de sécurité |
 | `ai`, `data` | `core` plus tous les éléments IA ou données |
 | `business` | Skills de marketing, de recherche, de relations investisseurs, de rédaction, de PRD et d'opérations |
-| `full` | Tout, y compris chaque hook |
+| `full` | Tout, avec chaque hook qui n'est pas optionnel |
 
 ```bash
 npx @ketecode/loom install --profile developer     # run it inside your project so detection sees it
@@ -85,6 +89,22 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 Les installations par plugin se mettent à jour via le gestionnaire de plugins de l'hôte. Pour un hôte donné, utilisez soit l'installation par plugin, soit l'installateur `npx`, mais pas les deux : sinon l'hôte risque d'afficher chaque skill en double.
 
+## Une méthode de développement
+
+Installez `--profile method` pour une façon de travailler complète, de l'idée à la branche fusionnée, avec un point de contrôle de revue à chaque étape :
+
+| Étape | Outil | Ce qui se passe |
+|---|---|---|
+| 1. Concevoir | `/brainstorm` (`design-brainstorming`) | Une question à la fois, deux ou trois approches avec leurs compromis, votre validation section par section, des maquettes HTML pour les choix visuels, puis un document de conception dans le dépôt. |
+| 2. Isoler | `git-worktrees` | Un worktree séparé, ignoré par git, avec les dépendances installées et une exécution de référence des tests, afin de connaître les échecs existants. |
+| 3. Planifier | `/plan-feature` (`implementation-plans`) | Des tâches de quelques minutes chacune, avec les fichiers exacts, le test en échec à écrire d'abord, la commande à exécuter et sa sortie attendue, et un commit par tâche. |
+| 4. Construire | `subagent-driven-development` avec l'agent `task-implementer` | Un sous-agent neuf par tâche travaille en commençant par les tests et rend compte d'un statut. Le `spec-reviewer` le vérifie par rapport à la tâche, puis `code-reviewer` en vérifie la qualité, en boucle jusqu'à ce que les deux soient satisfaits. |
+| 5. Déboguer | `/debug` (`systematic-debugging`) | La cause racine avant tout correctif : reproduire, remonter la valeur erronée jusqu'à sa source, une hypothèse à la fois. Après trois correctifs ratés, il s'arrête et remet en question la conception. |
+| 6. Revue | `responding-to-code-review` | Vérifie chaque commentaire par rapport au code, conteste avec des preuves lorsqu'une suggestion est erronée, et répond dans le fil de la revue. |
+| 7. Terminer | `/finish-branch` (`finishing-a-branch`) | Les tests d'abord, puis fusionner en local, ouvrir une pull request, conserver la branche ou la supprimer (seulement après que vous avez tapé une confirmation). |
+
+`/feature-dev` exécute toute la séquence en s'arrêtant pour attendre votre validation entre les étapes, et la règle `use-skills` pousse l'agent à recourir à ces skills au lieu de travailler de mémoire.
+
 ## Skills
 
 La liste complète se trouve dans le README en anglais : [Skills](../../README.md#skills), ainsi que dans `catalog.json`.
@@ -114,15 +134,15 @@ La liste complète se trouve dans le README en anglais : [Rules](../../README.md
 
 ## Hooks
 
-Des vérifications qui s'exécutent automatiquement à certains moments de la boucle de l'agent : avant une commande shell ou la modification d'un fichier (avec la possibilité de la bloquer, en donnant une raison que l'agent voit), après une modification, ou au démarrage d'une session. Les hooks sont optionnels : `install` ne les ajoute jamais sauf si vous le demandez.
+Des vérifications qui s'exécutent automatiquement à certains moments de la boucle de l'agent : avant une commande shell ou la modification d'un fichier (avec la possibilité de la bloquer, en donnant une raison que l'agent voit), après une modification, au démarrage d'une session, ou lorsque l'agent termine son tour (avec la possibilité de le renvoyer au travail). Les hooks sont optionnels : `install` ne les ajoute jamais sauf si vous le demandez. Les hooks marqués comme optionnels changent la façon dont l'agent travaille ; `--hooks` les laisse donc de côté : nommez-les, ou utilisez `--profile strict`.
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
-npx @ketecode/loom install --hooks                           # everything, plus every hook
+npx @ketecode/loom install --hooks                           # everything, plus every hook not marked opt-in
 npx @ketecode/loom uninstall --hook block-dangerous-commands
 ```
 
-L'installateur enregistre chaque hook auprès de Claude Code et de tous les autres hôtes qu'il trouve : Claude Code et Gemini CLI dans leur `settings.json`, Kete Code dans `kete.json`, Codex et Cursor dans leur `hooks.json`, Copilot CLI dans `~/.copilot/hooks/` et OpenCode sous forme de plugin. Il n'ajoute et ne supprime que ses propres entrées, sauvegarde un fichier dans `<file>.kete-loom-backup` avant de le modifier, et ne réécrit jamais un fichier qui contient des commentaires (il affiche alors l'extrait à coller vous-même). Codex n'exécute un nouveau hook qu'une fois que vous lui avez accordé votre confiance avec `/hooks`. Les hooks s'installent uniquement pour votre compte utilisateur, pas par projet. Cursor n'a pas de hook avant modification et OpenCode n'en a aucun qui ajoute du contexte au démarrage de session ; les hooks concernés ignorent donc ces hôtes.
+L'installateur enregistre chaque hook auprès de Claude Code et de tous les autres hôtes qu'il trouve : Claude Code et Gemini CLI dans leur `settings.json`, Kete Code dans `kete.json`, Codex et Cursor dans leur `hooks.json`, Copilot CLI dans `~/.copilot/hooks/` et OpenCode sous forme de plugin. Il n'ajoute et ne supprime que ses propres entrées, sauvegarde un fichier dans `<file>.kete-loom-backup` avant de le modifier, et ne réécrit jamais un fichier qui contient des commentaires (il affiche alors l'extrait à coller vous-même). Codex n'exécute un nouveau hook qu'une fois que vous lui avez accordé votre confiance avec `/hooks`. Les hooks s'installent uniquement pour votre compte utilisateur, pas par projet. Cursor n'a pas de hook avant modification et OpenCode n'en a aucun qui ajoute du contexte au démarrage de session ; les hooks concernés ignorent donc ces hôtes ; les hooks qui renvoient l'agent au travail lorsqu'il termine ignorent Kete Code et OpenCode, dont les hooks d'arrêt n'en sont pas capables. Les hooks de Kiro font partie de ses configurations d'agents et ne sont pas installés.
 
 La liste complète se trouve dans le README en anglais : [Hooks](../../README.md#hooks), ainsi que dans `catalog.json`.
 
@@ -132,7 +152,7 @@ Des configurations de serveurs MCP sélectionnées, enregistrées auprès de cha
 
 ```bash
 npx @ketecode/loom install --mcp github,playwright          # chosen servers
-npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch
+npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch, exa, firecrawl
 npx @ketecode/loom uninstall --mcp github
 ```
 
@@ -148,6 +168,7 @@ npx @ketecode/loom outdated           # installed items older than the latest Ke
 npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
 npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
 npx @ketecode/loom doctor             # what is installed where
+npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale hook registrations
 ```
 
 `audit` vérifie ce qui permet aux agents de bien fonctionner dans un dépôt : les instructions pour les agents (`AGENTS.md`/`CLAUDE.md`), les packs Kete Loom correspondant à la stack qu'il détecte, les commandes de test et de lint, la CI, les hooks de sécurité, et le fait que les fichiers `.env` sont ignorés et non commités. Il se termine avec un code non nul lorsqu'une vérification échoue, ce qui permet de l'exécuter en CI.
@@ -167,6 +188,7 @@ Dans votre agent, `/loom` trouve les éléments adaptés à une tâche, `/checkp
 | Gemini CLI uniquement | `~/.gemini/skills` | `.gemini/skills` |
 | GitHub Copilot uniquement | `~/.copilot/skills` | `.github/skills` |
 | Kete Code uniquement | `~/.config/kete/skills` | `.kete/skills` |
+| Kiro | `~/.kiro/skills` | `.kiro/skills` |
 
 ### Agents et commandes
 
@@ -179,8 +201,9 @@ Dans votre agent, `/loom` trouve les éléments adaptés à une tâche, `/checkp
 | Kete Code | `~/.config/kete/agents` | `~/.config/kete/commands` | si `~/.config/kete` existe |
 | Gemini CLI | `~/.gemini/agents` | `~/.gemini/commands` (TOML) | si `~/.gemini` existe |
 | Copilot CLI | `~/.copilot/agents` (`.agent.md`) | non prises en charge | avec `--target copilot` |
+| Kiro | `~/.kiro/agents` | `~/.kiro/prompts` | si `~/.kiro` existe |
 
-Les installations au niveau du projet (`--project`) utilisent les mêmes dossiers, à l'intérieur du dépôt (`.github/agents` pour Copilot, `.kete/` pour Kete Code).
+Les installations au niveau du projet (`--project`) utilisent les mêmes dossiers, à l'intérieur du dépôt (`.github/agents` pour Copilot, `.kete/` pour Kete Code, `.kiro/` pour Kiro). Les règles de Kiro deviennent des fichiers de steering dans `~/.kiro/steering`, limités avec `fileMatch`.
 
 ## Contribuer
 
@@ -189,7 +212,17 @@ Lisez [`docs/SKILL_SPEC.md`](../../docs/SKILL_SPEC.md) (skills, agents et comman
 ```bash
 npm run lint      # frontmatter, length, references, evals, manifest versions
 npm test          # installer and linter tests
-npm run eval      # eval file checks (CI also runs live routing evals)
+npm run eval      # trigger and behaviour eval file checks (CI also runs them live)
+```
+
+Deux types d'evals garantissent la fiabilité des éléments :
+
+- **Evals de déclenchement** (`evals/triggers.json`) : un modèle aiguille des prompts réalistes et des quasi-correspondances comme le font les hôtes, et chaque élément doit être choisi pour ses propres prompts, et uniquement pour ceux-là.
+- **Evals de comportement** (`evals/behavior.json`) : des scénarios qui poussent l'agent à contourner la discipline de l'élément (« corrige-le vite fait, on livre dans dix minutes »). Chacun s'exécute avec l'élément et sans lui, un modèle juge note chaque réponse, et le rapport montre ce que l'élément apporte. `--host claude` les exécute sous forme de véritables sessions Claude Code headless.
+
+```bash
+npm run eval:live -- --skill my-skill                     # routing
+npm run eval:behavior -- --live --skill my-skill          # behaviour, with and without the skill
 ```
 
 Le skill `skill-authoring` guide votre agent dans la rédaction d'un nouveau skill conforme à ce standard.
