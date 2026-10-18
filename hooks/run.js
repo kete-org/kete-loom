@@ -6,14 +6,18 @@
 // one normalized event, calls the hook's check(), and answers in the host's own dialect. Zero
 // dependencies.
 //
-// Events: pre-shell { command, cwd }, pre-edit { files: [{ path, content }], cwd },
+// Events: pre-shell { command, cwd }, pre-edit { files: [{ path, content, whole }], cwd } (`whole`
+// when the tool replaces the entire file rather than editing part of it),
 // post-edit { files: [{ path }], cwd }, session-start { cwd }, stop and stop-gate { cwd, again } when
 // the agent finishes its turn. Every event also carries `session` when the host sends a session id.
 //
 // Blocking (pre-*): exit 2 with the reason on stderr works on every host; Cursor and Copilot also get
 // their JSON verdict. stop-gate blocks by making the agent continue with the reason as its next
 // prompt (exit 2 on Claude Code, Codex and Gemini CLI; JSON on Cursor and Copilot); `again` is true
-// when this turn was itself continued by a stop hook, so a gate can let it end instead of looping. Internal errors fail OPEN (exit 0): Copilot and Kete Code deny on a crashed hook,
+// when this turn was itself continued by a stop hook, so a gate can let it end instead of looping.
+// post-read { source: 'file' | 'web', target, content, cwd } after the agent reads a file or fetches
+// or searches the web, and post-tool { tool, transcript, cwd } after any tool call; both can return
+// { context }, a note added after the tool's result, and never block. Internal errors fail OPEN (exit 0): Copilot and Kete Code deny on a crashed hook,
 // so a runner bug must never block every tool call. post-edit and session-start never block.
 
 const fs = require('fs');
@@ -33,7 +37,7 @@ function parsePatch(text) {
   for (const line of String(text || '').split('\n')) {
     const header = /^\*\*\* (?:Add|Update) File: (.+)$/.exec(line) || /^\*\*\* Move to: (.+)$/.exec(line) || /^\+\+\+ (?:b\/)?(.+)$/.exec(line);
     if (header && header[1] !== '/dev/null') {
-      current = { path: header[1].trim(), content: '' };
+      current = { path: header[1].trim(), content: '', ...(/^\*\*\* Add File:/.test(line) ? { added: true } : {}) };
       files.push(current);
     } else if (current && line.startsWith('+') && !line.startsWith('+++')) current.content += `${line.slice(1)}\n`;
   }
@@ -54,6 +58,10 @@ const looseFiles = (args) => {
 };
 
 const SHELL_TOOLS = { kete: ['shell'], copilot: ['bash', 'powershell', 'shell'], opencode: ['bash'] };
+// Tools that replace a whole file, per host (the rest edit part of one).
+const WHOLE_FILE_TOOLS = ['Write', 'write_file', 'write', 'create'];
+const READ_TOOLS = { kete: ['read', 'webfetch', 'websearch'] };
+const asText = (v) => (typeof v === 'string' ? v : v === undefined || v === null ? '' : JSON.stringify(v));
 const EDIT_TOOLS = { kete: ['edit', 'write', 'patch'], copilot: ['edit', 'create', 'str_replace_editor', 'apply_patch'], opencode: ['edit', 'write', 'apply_patch'] };
 
 // Each host's payload -> the normalized event, or null when the call isn't one this event handles.
@@ -65,6 +73,14 @@ function normalize(host, event, j) {
   const session = pick(j, 'session_id', 'sessionId', 'conversation_id');
   if (event === 'session-start') return { cwd, session };
   if (event === 'stop' || event === 'stop-gate') return { cwd, session, again: j.stop_hook_active === true || j.loop_count > 0 };
+  if (event === 'post-tool') return { cwd, session, tool, transcript: pick(j, 'transcript_path') };
+  if (event === 'post-read') {
+    if (READ_TOOLS[host] && tool && !READ_TOOLS[host].includes(tool)) return null;
+    const input = j.tool_input || {};
+    const content = asText(j.tool_response !== undefined ? j.tool_response : j.tool_result && (j.tool_result.output !== undefined ? j.tool_result.output : j.tool_result.error));
+    if (!content) return null;
+    return { cwd, session, tool, source: /fetch|search|web/i.test(tool || '') ? 'web' : 'file', target: pick(input, 'file_path', 'path', 'filePath', 'absolute_path', 'url', 'query') || '', content };
+  }
   if (SHELL_TOOLS[host] && event === 'pre-shell' && tool && !SHELL_TOOLS[host].includes(tool)) return null;
   if (EDIT_TOOLS[host] && event !== 'pre-shell' && tool && !EDIT_TOOLS[host].includes(tool)) return null;
 
@@ -77,6 +93,8 @@ function normalize(host, event, j) {
   else if (host === 'cursor') files = j.file_path ? [{ path: j.file_path, content: '' }] : [];
   else if (host === 'claude' || host === 'gemini') files = claudeFiles(j.tool_input);
   else files = looseFiles(toolArgs());
+  if (WHOLE_FILE_TOOLS.includes(tool)) files = files.map((f) => ({ ...f, whole: true }));
+  else if (host === 'codex') files = files.map((f) => ({ ...f, whole: f.added === true }));
   return files.length ? { files, cwd, session } : null;
 }
 
@@ -100,7 +118,14 @@ const CONTINUE_JSON = {
   copilot: (reason) => ({ decision: 'block', reason }),
 };
 
-const EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start', 'stop', 'stop-gate'];
+const EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start', 'stop', 'stop-gate', 'post-read', 'post-tool'];
+// How each host takes a note added after a tool's result.
+const AFTER_TOOL_JSON = {
+  claude: (c) => ({ hookSpecificOutput: { hookEventName: 'PostToolUse', additionalContext: c } }),
+  codex: (c) => ({ hookSpecificOutput: { hookEventName: 'PostToolUse', additionalContext: c } }),
+  gemini: (c) => ({ hookSpecificOutput: { hookEventName: 'AfterTool', additionalContext: c } }),
+  kete: (c) => ({ context: c }),
+};
 const allow = (host, event) => ({ code: 0, stdout: event.startsWith('pre-') && ALLOW_JSON[host] ? JSON.stringify(ALLOW_JSON[host]) : '', stderr: '' });
 
 // Returns { code, stdout, stderr } so tests can drive it without a process.
@@ -120,6 +145,9 @@ function respond(host, hookName, input, hooksDir = __dirname, event = 'pre-shell
   }
   if (event === 'session-start') {
     return verdict.context && SESSION_JSON[host] ? { code: 0, stdout: JSON.stringify(SESSION_JSON[host](String(verdict.context))), stderr: '' } : allow(host, event);
+  }
+  if (event === 'post-read' || event === 'post-tool') {
+    return verdict.context && AFTER_TOOL_JSON[host] ? { code: 0, stdout: JSON.stringify(AFTER_TOOL_JSON[host](String(verdict.context))), stderr: '' } : allow(host, event);
   }
   if (event === 'stop-gate' && verdict.block) {
     const reason = String(verdict.reason || `Continue: kete-loom hook ${hookName} asked for more work`);

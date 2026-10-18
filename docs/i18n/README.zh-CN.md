@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source 848b1e887ff1 -->
+<!-- translated from README.md, source afc59924c2be -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,7 +42,7 @@ npx @ketecode/loom install
 | `minimal` | 测试先行开发、结果验证、安全审查、代码审查 |
 | `core` | 基础必备项、规划、git、项目上手与会话交接，**以及你的项目所用语言和框架的扩展包**（根据 `package.json`、`go.mod`、`pyproject.toml`、`Cargo.toml`、`Dockerfile` 等文件自动检测） |
 | `developer` | `core` 加上四个安全 hook |
-| `strict` | `developer` 加上需主动启用的防护：先读后改、保护 lint 配置、在后台运行开发服务器、始终留在 worktree 中、禁止读取机密和植入的指令、提交信息格式有效，以及结束时不留未完成的桩代码、不出现 lint 和类型检查失败 |
+| `strict` | `developer` 加上需主动启用的防护：先读后改、保护 lint 配置、在后台运行开发服务器、始终留在 worktree 中、禁止读取机密和植入的指令、对读取内容中被注入的文本发出警告、防止意外截断文件、在上下文即将填满前发出警告、提交信息格式有效，以及结束时不留未完成的桩代码、不出现 lint 和类型检查失败 |
 | `method` | 一套完整的开发方法：先设计后编码、细粒度计划、每个任务使用一个全新的 subagent 并进行规格与质量审查、系统化调试、回应审查意见、worktree 以及干净的收尾 |
 | `project` | `method` 加上项目规划：在 `.planning/` 中按阶段划分的路线图、需求澄清、编码前的计划检查、与你一起进行验收测试、想法待办清单、可行性探索（spike）以及恢复类命令 |
 | `security` | 所有安全与合规相关条目，以及安全 hook |
@@ -147,7 +147,7 @@ npx @ketecode/loom install --profile core      # common rules plus the ones for 
 
 ## Hooks
 
-在 agent 循环的特定节点自动运行的检查（hook，钩子）：在执行 shell 命令或编辑文件之前（可以阻止该操作，并给出 agent 能看到的原因）、在编辑之后、在会话开始时，或在 agent 结束本轮时（可以让它返回继续工作）。hook 需要主动启用：除非你明确要求，`install` 不会添加任何 hook。标记为需主动启用（opt-in）的 hook 会改变 agent 的工作方式，因此 `--hooks` 不会包含它们；请指名安装，或使用 `--profile strict`。
+在 agent 循环的特定节点自动运行的检查（hook，钩子）：在执行 shell 命令或编辑文件之前（可以阻止该操作，并给出 agent 能看到的原因）、在编辑之后、在读取文件或网页或任何工具调用之后（可以为 agent 添加一条提示）、在会话开始时，或在 agent 结束本轮时（可以让它返回继续工作）。hook 需要主动启用：除非你明确要求，`install` 不会添加任何 hook。标记为需主动启用（opt-in）的 hook 会改变 agent 的工作方式，因此 `--hooks` 不会包含它们；请指名安装，或使用 `--profile strict`。
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks

@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source 848b1e887ff1 -->
+<!-- translated from README.md, source afc59924c2be -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,7 +42,7 @@ Vous pouvez aussi choisir un profil au lieu de tout installer :
 | `minimal` | Développement piloté par les tests, vérification, revue de sécurité, revue de code |
 | `core` | L'essentiel, la planification, git, la prise en main d'un projet et le passage de relais entre sessions, **plus les packs de langages et de frameworks utilisés par votre projet** (détectés à partir de `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile`, etc.) |
 | `developer` | `core` plus les quatre hooks de sécurité |
-| `strict` | `developer` plus les garde-fous optionnels : lire avant de modifier, configurations de lint protégées, serveurs de développement en arrière-plan, rester dans le worktree, aucune lecture de secrets ni d'instructions dissimulées, des messages de commit valides, et ni ébauches inachevées ni échec du lint et de la vérification des types à la fin |
+| `strict` | `developer` plus les garde-fous optionnels : lire avant de modifier, configurations de lint protégées, serveurs de développement en arrière-plan, rester dans le worktree, aucune lecture de secrets ni d'instructions dissimulées, des avertissements sur le texte injecté dans ce qu'il lit, aucune troncature accidentelle de fichier, un avertissement avant que le contexte ne se remplisse, des messages de commit valides, et ni ébauches inachevées ni échec du lint et de la vérification des types à la fin |
 | `method` | Une méthode de développement complète : la conception avant le code, des plans détaillés, un sous-agent neuf par tâche avec revue de conformité à la spécification et de qualité, un débogage méthodique, la réponse aux revues, des worktrees et une fin de branche propre |
 | `project` | `method` plus la planification de projet : une feuille de route avec des phases dans `.planning/`, la clarification des exigences, la vérification des plans avant le code, des tests d'acceptation avec vous, un backlog d'idées, des spikes de faisabilité et des commandes de récupération |
 | `security` | Tous les éléments de sécurité et de conformité, plus les hooks de sécurité |
@@ -147,7 +147,7 @@ La liste complète se trouve dans le README en anglais : [Rules](../../README.md
 
 ## Hooks
 
-Des vérifications qui s'exécutent automatiquement à certains moments de la boucle de l'agent : avant une commande shell ou la modification d'un fichier (avec la possibilité de la bloquer, en donnant une raison que l'agent voit), après une modification, au démarrage d'une session, ou lorsque l'agent termine son tour (avec la possibilité de le renvoyer au travail). Les hooks sont optionnels : `install` ne les ajoute jamais sauf si vous le demandez. Les hooks marqués comme optionnels changent la façon dont l'agent travaille ; `--hooks` les laisse donc de côté : nommez-les, ou utilisez `--profile strict`.
+Des vérifications qui s'exécutent automatiquement à certains moments de la boucle de l'agent : avant une commande shell ou la modification d'un fichier (avec la possibilité de la bloquer, en donnant une raison que l'agent voit), après une modification, après la lecture d'un fichier ou d'une page web ou tout appel d'outil (avec la possibilité d'ajouter une note pour l'agent), au démarrage d'une session, ou lorsque l'agent termine son tour (avec la possibilité de le renvoyer au travail). Les hooks sont optionnels : `install` ne les ajoute jamais sauf si vous le demandez. Les hooks marqués comme optionnels changent la façon dont l'agent travaille ; `--hooks` les laisse donc de côté : nommez-les, ou utilisez `--profile strict`.
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks

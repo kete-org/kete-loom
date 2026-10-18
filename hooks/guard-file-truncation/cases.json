@@ -1,0 +1,15 @@
+{
+  "should_block": [
+    { "files": [{ "path": "README.md", "content": "# Kete Loom\n\nShort.\n", "whole": true }] },
+    { "files": [{ "path": "bin/kete-loom.js", "content": "#!/usr/bin/env node\nconsole.log('hi')\n", "whole": true }] },
+    { "files": [{ "path": "docs/SKILL_SPEC.md", "content": "# Spec\n", "whole": true }] },
+    { "files": [{ "path": "new-file.txt", "content": "x", "whole": true }, { "path": "CONTRIBUTING.md", "content": "# Contributing\n", "whole": true }] }
+  ],
+  "should_allow": [
+    { "files": [{ "path": "README.md", "content": "# Kete Loom\n\nShort.\n", "whole": true }] },
+    { "files": [{ "path": "AGENTS.md", "content": "one line", "whole": false }] },
+    { "files": [{ "path": "AGENTS.md", "content": "one line" }] },
+    { "files": [{ "path": "brand-new/file.md", "content": "x", "whole": true }] },
+    { "files": [{ "path": "LICENSE", "content": "MIT License\n", "whole": true }] }
+  ]
+}

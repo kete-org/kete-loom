@@ -17,7 +17,7 @@ const CATEGORIES = ['coding', 'testing', 'security', 'integrations', 'devops', '
 const RISKS = ['read-only', 'writes-files', 'runs-commands', 'network'];
 const MAX_LINES = 300;
 const MIN_EVALS = 3;
-const HOOK_EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start', 'stop', 'stop-gate'];
+const HOOK_EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start', 'stop', 'stop-gate', 'post-read', 'post-tool'];
 const MAX_RULE_LINES = 80;
 // Tool names that only exist in one host. Skills should describe the action instead.
 const HOST_SPECIFIC = /\b(Bash tool|Read tool|Edit tool|Write tool|Grep tool|Glob tool|TodoWrite|apply_patch|str_replace_editor)\b/;

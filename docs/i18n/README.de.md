@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source 848b1e887ff1 -->
+<!-- translated from README.md, source afc59924c2be -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,7 +42,7 @@ Statt alles zu installieren, kannst du auch ein Profil wählen:
 | `minimal` | Test-first-Arbeit, Verifikation, Security-Review, Code-Review |
 | `core` | Das Wesentliche, Planung, Git, Onboarding und Session-Übergabe, **plus die Sprach- und Framework-Pakete, die dein Projekt nutzt** (erkannt anhand von `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` usw.) |
 | `developer` | `core` plus die vier Sicherheits-Hooks |
-| `strict` | `developer` plus die Opt-in-Leitplanken: Lesen vor dem Bearbeiten, geschützte Lint-Konfigurationen, Dev-Server im Hintergrund, Verbleib im Worktree, kein Lesen von Secrets und keine eingeschleusten Anweisungen, gültige Commit-Messages und am Ende keine unfertigen Stubs und keine fehlschlagende Lint- oder Typprüfung |
+| `strict` | `developer` plus die Opt-in-Leitplanken: Lesen vor dem Bearbeiten, geschützte Lint-Konfigurationen, Dev-Server im Hintergrund, Verbleib im Worktree, kein Lesen von Secrets und keine eingeschleusten Anweisungen, Warnungen vor eingeschleustem Text in dem, was er liest, kein versehentliches Kürzen von Dateien, eine Warnung, bevor sich der Kontext füllt, gültige Commit-Messages und am Ende keine unfertigen Stubs und keine fehlschlagende Lint- oder Typprüfung |
 | `method` | Eine vollständige Entwicklungsmethode: Design vor Code, kleinteilige Pläne, ein frischer Subagent pro Aufgabe mit Spec- und Qualitäts-Review, systematisches Debugging, Umgang mit Reviews, Worktrees und ein sauberer Abschluss |
 | `project` | `method` plus Projektplanung: eine Roadmap mit Phasen in `.planning/`, Klärung der Anforderungen, Planprüfungen vor dem Code, Abnahmetests gemeinsam mit dir, ein Ideen-Backlog, Machbarkeits-Spikes und Recovery-Commands |
 | `security` | Alle Bausteine zu Sicherheit und Compliance, plus die Sicherheits-Hooks |
@@ -147,7 +147,7 @@ Die vollständige Liste findest du im englischen README: [Rules](../../README.md
 
 ## Hooks
 
-Prüfungen, die an bestimmten Punkten der Agent-Schleife automatisch laufen: vor einem Shell-Befehl oder einer Dateiänderung (wobei sie diese blockieren können, mit einer Begründung, die der Agent sieht), nach einer Änderung, beim Start einer Session oder wenn der Agent seinen Zug beendet (wobei sie ihn zurück an die Arbeit schicken können). Hooks sind Opt-in: `install` fügt sie nur hinzu, wenn du das ausdrücklich verlangst. Als Opt-in markierte Hooks verändern die Arbeitsweise des Agents, daher lässt `--hooks` sie weg; gib sie namentlich an oder nutze `--profile strict`.
+Prüfungen, die an bestimmten Punkten der Agent-Schleife automatisch laufen: vor einem Shell-Befehl oder einer Dateiänderung (wobei sie diese blockieren können, mit einer Begründung, die der Agent sieht), nach einer Änderung, nach dem Lesen einer Datei oder Webseite oder nach jedem Tool-Aufruf (wobei sie eine Notiz für den Agent hinzufügen können), beim Start einer Session oder wenn der Agent seinen Zug beendet (wobei sie ihn zurück an die Arbeit schicken können). Hooks sind Opt-in: `install` fügt sie nur hinzu, wenn du das ausdrücklich verlangst. Als Opt-in markierte Hooks verändern die Arbeitsweise des Agents, daher lässt `--hooks` sie weg; gib sie namentlich an oder nutze `--profile strict`.
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks

@@ -67,7 +67,7 @@
     ]
   },
   "strict": {
-    "description": "Developer plus the opt-in guardrails: read files before editing them, don't weaken lint configs, keep dev servers in the background, stay inside the worktree, keep secrets and planted instructions out, valid commit messages, and no unfinished stubs or failing lint and type-check at the end.",
+    "description": "Developer plus the opt-in guardrails: read files before editing them, don't weaken lint configs, keep dev servers in the background, stay inside the worktree, keep secrets and planted instructions out, flag injected text in what it reads, no accidental truncation of files, a warning before the context fills up, valid commit messages, and no unfinished stubs or failing lint and type-check at the end.",
     "extends": [
       "developer"
     ],
@@ -80,7 +80,10 @@
       "block-secret-reads",
       "stay-in-worktree",
       "validate-commit-message",
-      "block-unfinished-stubs"
+      "block-unfinished-stubs",
+      "scan-read-injection",
+      "guard-file-truncation",
+      "context-monitor"
     ]
   },
   "method": {
@@ -166,7 +169,8 @@
       "protect-files",
       "guard-secrets",
       "guard-prompt-injection",
-      "block-secret-reads"
+      "block-secret-reads",
+      "scan-read-injection"
     ]
   },
   "ai": {

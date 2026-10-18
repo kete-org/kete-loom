@@ -13,7 +13,7 @@ const path = require('path');
 
 const RUNNER_RE = /\.kete-loom[\\/]hooks[\\/]run\.js"?\s+([a-z]+)\s+([a-z0-9-]+)(?:\s+([a-z-]+))?\s*$/;
 // Seconds. A formatter run after an edit gets longer than a check before one.
-const TIMEOUT_S = { 'pre-shell': 10, 'pre-edit': 10, 'post-edit': 60, 'session-start': 10, stop: 10, 'stop-gate': 180 };
+const TIMEOUT_S = { 'pre-shell': 10, 'pre-edit': 10, 'post-edit': 60, 'session-start': 10, stop: 10, 'stop-gate': 180, 'post-read': 10, 'post-tool': 10 };
 
 const runtimeDir = (home) => path.join(home, '.kete-loom', 'hooks');
 const command = (home, host, hook, event = 'pre-shell', node = process.execPath) =>
@@ -27,12 +27,14 @@ function ours(cmd, hook) {
 // Host event name and tool matcher for each kete-loom event; a missing entry means the host can't
 // run that event (Cursor has no documented pre-edit hook; OpenCode can't add context at session start).
 // stop-gate needs a stop hook that can make the agent continue: Kete Code's Stop can only notify, and
-// OpenCode's session.idle can't do either from a command.
+// OpenCode's session.idle can't do either from a command. post-read needs a host that reports what a
+// file or web read returned and can add a note after it; post-tool also needs a transcript with
+// token usage, which only Claude Code and Codex write.
 const EVENTS = {
-  claude: { 'pre-shell': ['PreToolUse', 'Bash'], 'pre-edit': ['PreToolUse', 'Edit|Write|NotebookEdit'], 'post-edit': ['PostToolUse', 'Edit|Write|NotebookEdit'], 'session-start': ['SessionStart'], stop: ['Stop'], 'stop-gate': ['Stop'] },
-  codex: { 'pre-shell': ['PreToolUse', 'Bash'], 'pre-edit': ['PreToolUse', 'apply_patch'], 'post-edit': ['PostToolUse', 'apply_patch'], 'session-start': ['SessionStart'], stop: ['Stop'], 'stop-gate': ['Stop'] },
-  gemini: { 'pre-shell': ['BeforeTool', 'run_shell_command'], 'pre-edit': ['BeforeTool', 'write_file|replace'], 'post-edit': ['AfterTool', 'write_file|replace'], 'session-start': ['SessionStart'], stop: ['AfterAgent'], 'stop-gate': ['AfterAgent'] },
-  kete: { 'pre-shell': ['PreToolUse', 'shell'], 'pre-edit': ['PreToolUse', 'edit|write|patch'], 'post-edit': ['PostToolUse', 'edit|write|patch'], 'session-start': ['SessionStart'], stop: ['Stop'] },
+  claude: { 'pre-shell': ['PreToolUse', 'Bash'], 'pre-edit': ['PreToolUse', 'Edit|Write|NotebookEdit'], 'post-edit': ['PostToolUse', 'Edit|Write|NotebookEdit'], 'session-start': ['SessionStart'], stop: ['Stop'], 'stop-gate': ['Stop'], 'post-read': ['PostToolUse', 'Read|WebFetch|WebSearch'], 'post-tool': ['PostToolUse'] },
+  codex: { 'pre-shell': ['PreToolUse', 'Bash'], 'pre-edit': ['PreToolUse', 'apply_patch'], 'post-edit': ['PostToolUse', 'apply_patch'], 'session-start': ['SessionStart'], stop: ['Stop'], 'stop-gate': ['Stop'], 'post-tool': ['PostToolUse'] },
+  gemini: { 'pre-shell': ['BeforeTool', 'run_shell_command'], 'pre-edit': ['BeforeTool', 'write_file|replace'], 'post-edit': ['AfterTool', 'write_file|replace'], 'session-start': ['SessionStart'], stop: ['AfterAgent'], 'stop-gate': ['AfterAgent'], 'post-read': ['AfterTool', 'read_file|read_many_files|web_fetch|google_web_search'] },
+  kete: { 'pre-shell': ['PreToolUse', 'shell'], 'pre-edit': ['PreToolUse', 'edit|write|patch'], 'post-edit': ['PostToolUse', 'edit|write|patch'], 'session-start': ['SessionStart'], stop: ['Stop'], 'post-read': ['PostToolUse', 'read|webfetch|websearch'] },
   cursor: { 'pre-shell': ['beforeShellExecution'], 'post-edit': ['afterFileEdit'], 'session-start': ['sessionStart'], stop: ['stop'], 'stop-gate': ['stop'] },
   copilot: { 'pre-shell': ['preToolUse'], 'pre-edit': ['preToolUse'], 'post-edit': ['postToolUse'], 'session-start': ['sessionStart'], stop: ['agentStop'], 'stop-gate': ['agentStop'] },
   opencode: { 'pre-shell': ['tool.execute.before'], 'pre-edit': ['tool.execute.before'], 'post-edit': ['tool.execute.after'] },

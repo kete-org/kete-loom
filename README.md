@@ -8,7 +8,7 @@
 One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code and Kiro.</p>
 
 <!-- counts:start -->
-<p align="center">216 skills · 62 agents · 54 commands · 19 rules · 17 hooks · 20 MCP servers</p>
+<p align="center">216 skills · 62 agents · 54 commands · 19 rules · 20 hooks · 20 MCP servers</p>
 <!-- counts:end -->
 
 <!-- languages:start -->
@@ -42,7 +42,7 @@ Or pick a profile instead of installing everything:
 | `minimal` | Test-first work, verification, security review, code review |
 | `core` | The essentials, planning, git, onboarding and session handoff, **plus the language and framework packs your project uses** (detected from `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` and so on) |
 | `developer` | `core` plus the four safety hooks |
-| `strict` | `developer` plus the opt-in guardrails: read before edit, protected lint configs, background dev servers, staying in the worktree, no secret reads or planted instructions, valid commit messages, and no unfinished stubs or failing lint and type-check at the end |
+| `strict` | `developer` plus the opt-in guardrails: read before edit, protected lint configs, background dev servers, staying in the worktree, no secret reads or planted instructions, warnings about injected text in what it reads, no accidental file truncation, a warning before the context fills up, valid commit messages, and no unfinished stubs or failing lint and type-check at the end |
 | `method` | A full development method: design before code, granular plans, a fresh subagent per task with spec and quality review, systematic debugging, responding to review, worktrees and a clean finish |
 | `project` | `method` plus project planning: a roadmap with phases in `.planning/`, requirement clarification, plan checks before code, acceptance testing with you, an idea backlog, feasibility spikes and recovery commands |
 | `security` | Every security and compliance item, plus the safety hooks |
@@ -510,7 +510,7 @@ npx @ketecode/loom install --profile core      # common rules plus the ones for 
 
 ## Hooks
 
-Checks that run automatically at points in the agent loop: before a shell command or a file edit (and can block it, with a reason the agent sees), after an edit, when a session starts, or when the agent finishes its turn (and can send it back to work). Hooks are opt-in: `install` never adds them unless you ask. Hooks marked opt-in change how the agent works, so `--hooks` leaves them out; name them, or use `--profile strict`.
+Checks that run automatically at points in the agent loop: before a shell command or a file edit (and can block it, with a reason the agent sees), after an edit, after a file or web read or any tool call (and can add a note for the agent), when a session starts, or when the agent finishes its turn (and can send it back to work). Hooks are opt-in: `install` never adds them unless you ask. Hooks marked opt-in change how the agent works, so `--hooks` leaves them out; name them, or use `--profile strict`.
 
 ```bash
 npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
@@ -529,7 +529,9 @@ The installer registers each hook with Claude Code and every other host it finds
 | [`block-secret-reads`](hooks/block-secret-reads/HOOK.md) | security | read-only | Stops the agent from printing or copying secrets files into the conversation through shell commands, such as cat .env, git show HEAD:.env or reading SSH keys and cloud credentials, while still letting it load them with source or --env-file. |
 | [`block-unfinished-stubs`](hooks/block-unfinished-stubs/HOOK.md) | testing | runs-commands | When the agent says it is done, checks the lines its uncommitted changes add to code and sends it back once if they leave TODOs, "not implemented" stubs, or focused (.only) or skipped tests behind. |
 | [`capture-lessons`](hooks/capture-lessons/HOOK.md) | meta | writes-files | Once per session, when the agent finishes with changes in the repository, asks it to propose up to three reusable lessons from the session for /learn, saving nothing unless you approve. |
+| [`context-monitor`](hooks/context-monitor/HOOK.md) | meta | writes-files | Watches how full the agent's context window is after each tool call and warns the agent itself, once at 70% and again at 85%, to save its progress in a handoff note before compaction loses the details. |
 | [`format-on-edit`](hooks/format-on-edit/HOOK.md) | coding | runs-commands | After the agent edits a file, formats it with the formatter the project already uses (Biome or Prettier, Ruff or Black, gofmt, rustfmt), so agent changes match the project's style. |
+| [`guard-file-truncation`](hooks/guard-file-truncation/HOOK.md) | coding | writes-files | Stops the first whole-file write that would cut an existing file of 40 or more lines to under half its length, which usually means the agent read only part of it, and lets a deliberate rewrite through on the second try. |
 | [`guard-prompt-injection`](hooks/guard-prompt-injection/HOOK.md) | security | read-only | Stops the agent from writing planted instructions, such as "ignore previous instructions", hidden Unicode or "don't tell the user", into AGENTS.md, rules, skills, agent files or .planning/, where every later session would obey them. |
 | [`guard-secrets`](hooks/guard-secrets/HOOK.md) | security | read-only | Stops the agent from writing API keys, tokens, passwords, connection strings or private keys into files, using the same rules as the security-review secret scanner. |
 | [`load-session-context`](hooks/load-session-context/HOOK.md) | meta | runs-commands | At the start of each session, tells the agent the current branch, how many uncommitted changes there are, and the latest session handoff note, so it picks up where the last session stopped. |
@@ -537,6 +539,7 @@ The installer registers each hook with Claude Code and every other host it finds
 | [`protect-files`](hooks/protect-files/HOOK.md) | security | read-only | Stops the agent from editing files that should never be hand-edited, such as .env files with secrets, package lockfiles, anything inside .git, and private keys. |
 | [`protect-lint-config`](hooks/protect-lint-config/HOOK.md) | coding | read-only | Stops the agent from editing existing linter, formatter and type-checker configs, so it fixes the code that breaks a rule instead of weakening or switching off the rule. |
 | [`read-before-edit`](hooks/read-before-edit/HOOK.md) | coding | writes-files | Stops the first edit of each existing file in a session and tells the agent to read the file and search for its callers first, so changes are grounded in the real code rather than a guess. |
+| [`scan-read-injection`](hooks/scan-read-injection/HOOK.md) | security | read-only | After the agent reads a file, fetches a web page or runs a web search, warns it when the content contains text aimed at an AI, such as "ignore previous instructions", fake system prompts or hidden Unicode, so it treats the content as data rather than orders. |
 | [`stay-in-worktree`](hooks/stay-in-worktree/HOOK.md) | coding | read-only | When the agent works in a linked git worktree, stops it from editing files outside that worktree, such as the main checkout or another worktree reached through an absolute path or ../, so parallel branches don't leak into each other. |
 | [`validate-commit-message`](hooks/validate-commit-message/HOOK.md) | devops | read-only | In repositories that enforce Conventional Commits with commitlint or commitizen, stops the agent from committing with a message like "updated stuff" and has it rewrite the subject as type(scope): subject first. |
 | [`verify-before-stop`](hooks/verify-before-stop/HOOK.md) | testing | runs-commands | When the agent says it is done, runs the project's own lint and type-check commands if files changed, and sends it back to fix any failure instead of letting it finish with broken code. |
