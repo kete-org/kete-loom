@@ -1,0 +1,185 @@
+<p align="center">
+  <img src="../../assets/brand/kete-loom.svg" alt="Kete Loom" width="96" />
+</p>
+
+<h1 align="center">Kete Loom</h1>
+
+<p align="center"><strong>Agent Skills, subagents e comandos selecionados e testados para agentes de programação.</strong><br/>
+Uma única fonte. Instala sem alterações no Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot e Kete Code.</p>
+
+<!-- translated from README.md, source 11b4fb1ab2a5 -->
+
+<!-- languages:start -->
+<p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a></p>
+<!-- languages:end -->
+
+---
+
+O Kete Loom é a biblioteca de skills por trás do [Kete Code](https://ketecode.ai). Ele traz três tipos de item: **skills** (pastas que o agente carrega quando são relevantes), **agents** (subagents para os quais ele delega tarefas) e **commands** (slash commands que você digita). A prioridade é a qualidade: menos itens, e cada um deles é
+
+- **portável**: usa o subconjunto comum mais restrito do formato [Agent Skills](https://agentskills.io), para que nenhum host o rejeite;
+- **testado**: skills e agents vêm com evals de acionamento que verificam se eles são carregados nas solicitações certas e não são acionados nas erradas;
+- **curto**: menos de 300 linhas, com os detalhes movidos para `references/`, que o agente lê só quando precisa;
+- **versionado e rotulado**: semver, categoria e nível de risco (`read-only`, `writes-files`, `runs-commands`, `network`) nos metadados;
+- **apoiado por scripts** quando o trabalho é determinístico.
+
+## Instalação
+
+### Qualquer agente (recomendado)
+
+```bash
+npx @ketecode/loom install
+```
+
+Isso instala todas as skills em `~/.agents/skills` (lido por Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot e Kete Code) e em `~/.claude/skills` (Claude Code). Agents e commands vão para `~/.claude/agents` e `~/.claude/commands` (lidos pelo Claude Code e, no caso dos agents, também pelo Cursor e pelo VS Code Copilot), e para as pastas próprias do Codex, OpenCode, Gemini CLI e Kete Code quando esses hosts estão instalados. Cada agent e command é convertido para o formato que o host espera. Depois, reinicie o seu agente.
+
+Ou escolha um perfil em vez de instalar tudo:
+
+| Perfil | O que instala |
+|---|---|
+| `minimal` | Desenvolvimento orientado a testes, verificação, revisão de segurança, revisão de código |
+| `core` | O essencial, planejamento, git, onboarding e passagem de sessão, **além dos pacotes de linguagem e framework que o seu projeto usa** (detectados a partir de `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` etc.) |
+| `developer` | `core` mais os quatro hooks de segurança |
+| `security` | Todos os itens de segurança e compliance, mais os hooks de segurança |
+| `ai`, `data` | `core` mais todos os itens de IA ou de dados |
+| `business` | Skills de marketing, pesquisa, investidores, redação, PRD e operações |
+| `full` | Tudo, incluindo todos os hooks |
+
+```bash
+npx @ketecode/loom install --profile developer     # run it inside your project so detection sees it
+npx @ketecode/loom profiles                        # what each profile would install here
+```
+
+Os perfis podem ser combinados com `--skill`, `--agent`, `--command` e `--hook`, e `uninstall --profile <name>` remove apenas os itens daquele perfil.
+
+Opções comuns:
+
+```bash
+npx @ketecode/loom install --project                       # into this repo (.agents/ and .claude/), commit it for your team
+npx @ketecode/loom install --skill tdd-workflow,security-review
+npx @ketecode/loom install --agent code-reviewer --command verify
+npx @ketecode/loom install --target claude                  # one host only
+npx @ketecode/loom install --dir ~/.some-agent/skills       # any other agent
+npx @ketecode/loom doctor                                   # what's installed, and which hosts can see it
+npx @ketecode/loom uninstall                                # removes only items kete-loom installed
+```
+
+Não tem Node? Use os instaladores de shell, que recorrem a uma cópia simples das skills (agents e commands precisam do instalador Node):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.sh | bash
+```
+
+```powershell
+irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
+```
+
+### Instalação como plugin nativo
+
+| Host | Comando |
+|---|---|
+| Claude Code | `/plugin marketplace add Kete-org/kete-loom` e depois `/plugin install kete-loom@kete-loom` |
+| Codex | `codex plugin marketplace add Kete-org/kete-loom` e depois `codex plugin add kete-loom@kete-loom` |
+| Gemini CLI | Use o instalador `npx` (o Gemini lê `~/.agents/skills`). Um `gemini-extension.json` está incluído para `gemini extensions install https://github.com/Kete-org/kete-loom` (experimental) |
+| Qualquer CLI de skills | `npx skills add Kete-org/kete-loom` |
+
+Instalações via plugin são atualizadas pelo próprio gerenciador de plugins do host. Para um mesmo host, use a instalação via plugin ou o instalador `npx`, não os dois; caso contrário, o host pode listar cada skill duas vezes.
+
+## Skills
+
+A lista completa está no README em inglês: [Skills](../../README.md#skills), e em [`catalog.json`](../../catalog.json).
+
+## Agents
+
+Subagents para os quais o seu agente pode delegar tarefas. Cada um roda em seu próprio contexto e devolve um resultado.
+
+A lista completa está no README em inglês: [Agents](../../README.md#agents), e em [`catalog.json`](../../catalog.json).
+
+## Commands
+
+Slash commands que você digita, por exemplo `/verify`. Suportados no Claude Code, OpenCode, Gemini CLI e Kete Code; os outros hosts estão incorporando os commands às skills, então use a skill correspondente neles.
+
+A lista completa está no README em inglês: [Commands](../../README.md#commands), e em [`catalog.json`](../../catalog.json).
+
+## Rules
+
+Convenções curtas e sempre ativas que o agente segue sem que seja preciso pedir, como "nunca monte SQL a partir de strings" ou "rode go vet". As rules de linguagem valem apenas para os arquivos daquela linguagem nos hosts que permitem isso (Claude Code, Copilot, Cursor). Kete Code, Gemini CLI, OpenCode e Codex não conseguem restringir rules por caminho, então recebem só as rules que você escolher, por meio de um bloco marcado no arquivo de instruções.
+
+```bash
+npx @ketecode/loom install --rule common,security,python
+npx @ketecode/loom install --profile core      # common rules plus the ones for your project's languages
+```
+
+A lista completa está no README em inglês: [Rules](../../README.md#rules), e em [`catalog.json`](../../catalog.json).
+
+## Hooks
+
+Verificações que rodam automaticamente em pontos do loop do agente: antes de um comando de shell ou da edição de um arquivo (podendo bloqueá-los, com um motivo que o agente vê), depois de uma edição ou quando uma sessão começa. Os hooks são opcionais (opt-in): o `install` nunca os adiciona, a menos que você peça.
+
+```bash
+npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
+npx @ketecode/loom install --hooks                           # everything, plus every hook
+npx @ketecode/loom uninstall --hook block-dangerous-commands
+```
+
+O instalador registra cada hook no Claude Code e em todos os outros hosts que encontrar: Claude Code e Gemini CLI no `settings.json` de cada um, Kete Code no `kete.json`, Codex e Cursor no `hooks.json` de cada um, Copilot CLI em `~/.copilot/hooks/` e OpenCode como plugin. Ele só adiciona e remove as próprias entradas, faz backup do arquivo em `<file>.kete-loom-backup` antes de alterá-lo e nunca reescreve um arquivo que tenha comentários (nesse caso, imprime o trecho para você colar). O Codex só executa um hook novo depois que você confia nele com `/hooks`. Os hooks são instalados apenas para o seu usuário, não por projeto. O Cursor não tem hook antes de uma edição e o OpenCode não tem nenhum que adicione contexto no início da sessão, então esses hooks não se aplicam a eles.
+
+A lista completa está no README em inglês: [Hooks](../../README.md#hooks), e em [`catalog.json`](../../catalog.json).
+
+## Servidores MCP
+
+Configurações selecionadas de servidores MCP, registradas em cada host que você usa, no formato próprio daquele host. Nenhuma delas coloca um token em arquivo de configuração: servidores remotos fazem login com OAuth pelo host (`/mcp` no Claude Code, `codex mcp login`, `kete mcp auth`…), e servidores locais não precisam de segredos. Os servidores MCP são opcionais (opt-in): o `install` nunca os adiciona, a menos que você os indique pelo nome.
+
+```bash
+npx @ketecode/loom install --mcp github,playwright          # chosen servers
+npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch
+npx @ketecode/loom uninstall --mcp github
+```
+
+Pacotes: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase somente leitura, Stripe), `mcp-design` (Figma). Os servidores do Claude Code são adicionados com `claude mcp add-json --scope user` (ou em `.mcp.json` com `--project`); o Codex os recebe em um bloco marcado do `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode e Kete Code, nos respectivos arquivos de configuração MCP. Um servidor que você já configurou com o mesmo nome nunca é substituído. O Copilot CLI recebe apenas servidores locais, porque não tem uma forma documentada de fazer login nos remotos.
+
+A lista completa está no README em inglês: [Servidores MCP](../../README.md#mcp-servers), e em [`catalog.json`](../../catalog.json).
+
+## Onde os hosts procuram
+
+### Skills
+
+| Host | Pasta do usuário | Pasta do projeto |
+|---|---|---|
+| Codex, OpenCode, Cursor, Gemini CLI, Copilot, Kete Code | `~/.agents/skills` | `.agents/skills` |
+| Claude Code | `~/.claude/skills` | `.claude/skills` |
+| Somente OpenCode | `~/.config/opencode/skills` | `.opencode/skills` |
+| Somente Cursor | `~/.cursor/skills` | `.cursor/skills` |
+| Somente Gemini CLI | `~/.gemini/skills` | `.gemini/skills` |
+| Somente GitHub Copilot | `~/.copilot/skills` | `.github/skills` |
+| Somente Kete Code | `~/.config/kete/skills` | `.kete/skills` |
+
+### Agents e commands
+
+| Host | Agents | Commands | Instalado por padrão |
+|---|---|---|---|
+| Claude Code | `~/.claude/agents` | `~/.claude/commands` | sim |
+| Cursor, VS Code Copilot | leem `~/.claude/agents` | não instalado (os do Cursor estão em beta; o VS Code usa arquivos de prompt do projeto) | sim, pela pasta do Claude |
+| Codex | `~/.codex/agents` (TOML) | descontinuado pelo Codex | quando `~/.codex` existe |
+| OpenCode | `~/.config/opencode/agents` | `~/.config/opencode/commands` | quando `~/.config/opencode` existe |
+| Kete Code | `~/.config/kete/agents` | `~/.config/kete/commands` | quando `~/.config/kete` existe |
+| Gemini CLI | `~/.gemini/agents` | `~/.gemini/commands` (TOML) | quando `~/.gemini` existe |
+| Copilot CLI | `~/.copilot/agents` (`.agent.md`) | não suportado | com `--target copilot` |
+
+Instalações de projeto (`--project`) usam as mesmas pastas dentro do repositório (`.github/agents` para o Copilot, `.kete/` para o Kete Code).
+
+## Como contribuir
+
+Leia [`docs/SKILL_SPEC.md`](../../docs/SKILL_SPEC.md) (skills, agents e commands) e [`CONTRIBUTING.md`](../../CONTRIBUTING.md). Todo pull request precisa passar em:
+
+```bash
+npm run lint      # frontmatter, length, references, evals, manifest versions
+npm test          # installer and linter tests
+npm run eval      # eval file checks (CI also runs live routing evals)
+```
+
+A skill `skill-authoring` orienta o seu agente na escrita de uma nova skill seguindo este padrão.
+
+## Licença
+
+MIT © Kete-org. Veja [LICENSE](../../LICENSE).
