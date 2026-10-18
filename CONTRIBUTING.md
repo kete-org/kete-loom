@@ -26,14 +26,22 @@ Or ask your agent to use the `skill-authoring` skill.
 - Each skill has its own `kete-loom/version`: patch for wording, minor for new steps, major when behaviour changes.
 - The package version covers the installer and the collection; it's bumped on release in `package.json` and every plugin manifest at once (the linter checks they match).
 
-## Live evals locally
+## Live evals
+
+Live evals ask a model to route every trigger prompt the way a host does, and check that the right skill or agent is picked (and the near misses aren't). Prompts are routed in batches of 25 against the full catalog, which is sent as a cached block, so a full run of all skills and agents is under 100 calls.
 
 ```bash
-export KETE_LOOM_EVAL_BASE_URL=https://api.openai.com/v1   # any OpenAI-compatible endpoint
-export KETE_LOOM_EVAL_API_KEY=...
-export KETE_LOOM_EVAL_MODEL=...
-npm run eval:live -- --skill my-skill
+npm install                                   # live evals use the Anthropic SDK (a dev dependency only)
+export ANTHROPIC_API_KEY=...
+npm run eval:estimate                         # calls and tokens a run would use; makes no API calls
+npm run eval:live -- --skill my-skill         # one item
+npm run eval:live -- --changed                # only items changed since origin/main
+npm run eval:live -- --report live-evals.json # everything, with every miss in the report
 ```
+
+The default model is `claude-opus-5-5`; set `KETE_LOOM_EVAL_MODEL` to use another. To use any OpenAI-compatible endpoint instead (Kete Gateway, OpenRouter, a local server), set `KETE_LOOM_EVAL_PROVIDER=openai` with `KETE_LOOM_EVAL_BASE_URL`, `KETE_LOOM_EVAL_API_KEY` and `KETE_LOOM_EVAL_MODEL`. A run fails when the overall pass rate is under 90% or any item is under 75% (`--min-pass`, `--item-min`); `--max-calls` (default 300) stops a run that would cost more than you expect.
+
+In CI, `.github/workflows/live-evals.yml` runs the changed items on pull requests and everything weekly, once the `ANTHROPIC_API_KEY` repository secret is set.
 
 ## Commits
 

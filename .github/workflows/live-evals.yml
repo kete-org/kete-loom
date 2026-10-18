@@ -1,0 +1,56 @@
+name: Live routing evals
+
+# Routes every trigger-eval prompt through a model, the way hosts pick skills and agents.
+# Pull requests test only the items they change; the weekly run tests everything.
+# Needs the ANTHROPIC_API_KEY secret (or KETE_LOOM_EVAL_PROVIDER=openai with its variables);
+# without one, the job skips with a notice instead of failing.
+
+on:
+  pull_request:
+    paths: ['skills/**', 'agents/**']
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: live-evals-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  route:
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      KETE_LOOM_EVAL_PROVIDER: ${{ vars.KETE_LOOM_EVAL_PROVIDER }}
+      KETE_LOOM_EVAL_MODEL: ${{ vars.KETE_LOOM_EVAL_MODEL }}
+      KETE_LOOM_EVAL_BASE_URL: ${{ vars.KETE_LOOM_EVAL_BASE_URL }}
+      KETE_LOOM_EVAL_API_KEY: ${{ secrets.KETE_LOOM_EVAL_API_KEY }}
+    steps:
+      - name: Skip without a key
+        if: env.ANTHROPIC_API_KEY == '' && env.KETE_LOOM_EVAL_API_KEY == ''
+        run: echo "::notice::Live evals skipped: add the ANTHROPIC_API_KEY secret to run them."
+      - uses: actions/checkout@v4
+        if: env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != ''
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        if: env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != ''
+        with:
+          node-version: 22
+      - if: env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != ''
+        run: npm ci
+      - name: Route changed items (pull request)
+        if: github.event_name == 'pull_request' && (env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != '')
+        run: node scripts/run-evals.js --live --changed origin/${{ github.base_ref }} --report live-evals.json
+      - name: Route everything (weekly or manual)
+        if: github.event_name != 'pull_request' && (env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != '')
+        run: node scripts/run-evals.js --live --report live-evals.json
+      - uses: actions/upload-artifact@v4
+        if: always() && (env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != '')
+        with:
+          name: live-evals
+          path: live-evals.json
+          if-no-files-found: ignore

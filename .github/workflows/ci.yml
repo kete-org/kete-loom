@@ -29,20 +29,3 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: |
           HOME="$(mktemp -d)" bash install.sh install --target agents --dry-run
-
-  live-evals:
-    # Routing evals against a real model. Runs when the secrets are configured.
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    env:
-      KETE_LOOM_EVAL_BASE_URL: ${{ secrets.KETE_LOOM_EVAL_BASE_URL }}
-      KETE_LOOM_EVAL_API_KEY: ${{ secrets.KETE_LOOM_EVAL_API_KEY }}
-      KETE_LOOM_EVAL_MODEL: ${{ vars.KETE_LOOM_EVAL_MODEL }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Live trigger evals
-        if: env.KETE_LOOM_EVAL_API_KEY != ''
-        run: npm run eval:live
