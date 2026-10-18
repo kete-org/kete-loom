@@ -289,4 +289,4 @@ function installRuntime(hooks, { home, dryRun = false, sourceDir }) {
   }
 }
 
-module.exports = { HOSTS, HOOK_HOSTS, EVENTS, supports, register, unregister, registered, installRuntime, runtimeDir, command, ours };
+module.exports = { HOSTS, HOOK_HOSTS, EVENTS, supports, register, unregister, registered, installRuntime, runtimeDir, command, ours, readJson, writeAtomic, CommentedFileError };

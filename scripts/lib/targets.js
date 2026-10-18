@@ -21,8 +21,9 @@ const TARGETS = {
   },
   claude: {
     label: 'Claude Code (its agents are also read by Cursor and VS Code Copilot)',
-    user: { skills: ['.claude', 'skills'], agents: ['.claude', 'agents'], commands: ['.claude', 'commands'] },
-    project: { skills: ['.claude', 'skills'], agents: ['.claude', 'agents'], commands: ['.claude', 'commands'] },
+    // Rules go in a kete-loom subfolder (Claude Code scans .claude/rules recursively), so ours stay apart.
+    user: { skills: ['.claude', 'skills'], agents: ['.claude', 'agents'], commands: ['.claude', 'commands'], rules: ['.claude', 'rules', 'kete-loom'] },
+    project: { skills: ['.claude', 'skills'], agents: ['.claude', 'agents'], commands: ['.claude', 'commands'], rules: ['.claude', 'rules', 'kete-loom'] },
     default: true,
     hooks: true,
   },
@@ -55,7 +56,8 @@ const TARGETS = {
   cursor: {
     label: 'Cursor only',
     user: { skills: ['.cursor', 'skills'], agents: ['.cursor', 'agents'] },
-    project: { skills: ['.cursor', 'skills'], agents: ['.cursor', 'agents'] },
+    // Cursor reads rule files only per project (user rules live in its settings UI).
+    project: { skills: ['.cursor', 'skills'], agents: ['.cursor', 'agents'], rules: ['.cursor', 'rules', 'kete-loom'] },
     // Detected only for hooks: Cursor already reads agents from .claude.
     detect: { user: ['.cursor'], project: ['.cursor'] },
     hooks: true,
@@ -70,14 +72,14 @@ const TARGETS = {
   },
   copilot: {
     label: 'GitHub Copilot only',
-    user: { skills: ['.copilot', 'skills'], agents: ['.copilot', 'agents'] },
-    project: { skills: ['.github', 'skills'], agents: ['.github', 'agents'] },
+    user: { skills: ['.copilot', 'skills'], agents: ['.copilot', 'agents'], rules: ['.copilot', 'instructions', 'kete-loom'] },
+    project: { skills: ['.github', 'skills'], agents: ['.github', 'agents'], rules: ['.github', 'instructions', 'kete-loom'] },
     detect: { user: ['.copilot'], project: ['.github'] },
     hooks: true,
   },
 };
 
-const KINDS = ['skills', 'agents', 'commands'];
+const KINDS = ['skills', 'agents', 'commands', 'rules'];
 
 // Which folders each host reads skills from, used by `doctor` to show where a skill is visible.
 const HOST_READS = {

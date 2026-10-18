@@ -348,6 +348,38 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 | [`/verify`](commands/verify.md) | testing | runs-commands | Verify the current changes by running the project's build, lint, type-check and tests, then report pass or fail. |
 <!-- commands:end -->
 
+## Rules
+
+Short, always-on conventions the agent follows without being asked, such as "never build SQL from strings" or "run go vet". Language rules apply only to that language's files where the host supports it (Claude Code, Copilot, Cursor). Kete Code, Gemini CLI, OpenCode and Codex can't limit rules to paths, so they only get the rules you choose, through a marked block in their instructions file.
+
+```bash
+npx @ketecode/loom install --rule common,security,python
+npx @ketecode/loom install --profile core      # common rules plus the ones for your project's languages
+```
+
+<!-- rules:start -->
+| Name | Category | Risk | What it does |
+|---|---|---|---|
+| [`common`](rules/common.md) | coding | read-only | Always-on engineering rules for any project, covering scope, verification, honesty about results, safe changes and secrets. |
+| [`cpp`](rules/cpp.md) | coding | read-only | Always-on rules for modern C++ code, covering ownership and RAII, undefined behaviour, bounds and lifetimes, concurrency, headers, and sanitizer-backed build and test checks. |
+| [`csharp`](rules/csharp.md) | coding | read-only | Always-on rules for C# and .NET code, covering nullable reference types, async and await, disposal, exceptions, data access safety, and build and test checks. |
+| [`dart`](rules/dart.md) | coding | read-only | Always-on rules for Dart and Flutter code, covering null safety, async, widget lifecycle, analysis, formatting and tests. |
+| [`fsharp`](rules/fsharp.md) | coding | read-only | Always-on rules for F# code, covering immutability, discriminated unions and exhaustive matching, Option and Result, async and task code, .NET interop, and checks. |
+| [`git`](rules/git.md) | devops | read-only | Always-on git hygiene rules for agents, covering small focused commits, Conventional Commits messages, keeping secrets and generated files out, safe pushing and never rewriting shared history. |
+| [`go`](rules/go.md) | coding | read-only | Always-on rules for Go files, covering formatting, vet, error handling, context, goroutine and resource lifetimes, and concurrency safety. |
+| [`java`](rules/java.md) | coding | read-only | Always-on rules for Java files, covering build tooling, null handling, exceptions, resources, concurrency and injection safety. |
+| [`kotlin`](rules/kotlin.md) | coding | read-only | Always-on rules for Kotlin code, covering null safety, sealed types, coroutines and structured concurrency, Java interop, and build and test checks. |
+| [`perl`](rules/perl.md) | coding | read-only | Always-on rules for modern Perl 5 code, covering strict and warnings, lexical scope, safe open and system calls, untrusted input, SQL, encoding and tests. |
+| [`php`](rules/php.md) | coding | read-only | Always-on rules for modern PHP 8 code, covering strict types, typed signatures, input handling, SQL, errors, Composer and tests. |
+| [`python`](rules/python.md) | coding | read-only | Always-on rules for Python 3 files, covering environments, type hints, exceptions, resource handling, untrusted input and the project's own tooling. |
+| [`ruby`](rules/ruby.md) | coding | read-only | Always-on rules for Ruby code, covering style, nil handling, exceptions, unsafe input, Bundler, Rails safety and tests. |
+| [`rust`](rules/rust.md) | coding | read-only | Always-on rules for Rust files, covering cargo tooling, error handling, panics, unsafe code, async and dependency hygiene. |
+| [`security`](rules/security.md) | security | read-only | Always-on secure coding rules for any language, covering input validation, injection, authorization, least privilege, deserialisation, dependencies and keeping secrets and personal data out of logs. |
+| [`swift`](rules/swift.md) | coding | read-only | Always-on rules for Swift code, covering optionals, value types, error handling, Swift concurrency and actors, memory and retain cycles, and build and test checks. |
+| [`testing`](rules/testing.md) | testing | read-only | Always-on rules for writing and running tests in any language, covering behaviour-focused tests, failing tests first for bugs, determinism, isolation, speed and running the suite before finishing. |
+| [`typescript`](rules/typescript.md) | coding | read-only | Always-on rules for TypeScript and JavaScript files, covering type safety, untrusted input, async errors, modules and the project's own tooling. |
+<!-- rules:end -->
+
 ## Hooks
 
 Checks that run automatically at points in the agent loop: before a shell command or a file edit (and can block it, with a reason the agent sees), after an edit, or when a session starts. Hooks are opt-in: `install` never adds them unless you ask.

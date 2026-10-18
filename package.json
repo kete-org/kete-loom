@@ -31,6 +31,7 @@
     "agents/",
     "commands/",
     "hooks/",
+    "rules/",
     "profiles.json",
     "schemas/",
     "README.md",

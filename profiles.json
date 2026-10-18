@@ -1,44 +1,123 @@
 {
   "minimal": {
     "description": "The essentials: test-first work, verification before merge, security review and code review.",
-    "skills": ["tdd-workflow", "verification-loop", "security-review"],
-    "agents": ["code-reviewer"],
-    "commands": ["review", "verify"]
+    "skills": [
+      "tdd-workflow",
+      "verification-loop",
+      "security-review"
+    ],
+    "agents": [
+      "code-reviewer"
+    ],
+    "commands": [
+      "review",
+      "verify"
+    ],
+    "rules": [
+      "common",
+      "security"
+    ]
   },
   "core": {
     "description": "Everyday development: the essentials, planning, git, onboarding and session handoff, plus the language and framework packs this project uses.",
-    "extends": ["minimal"],
-    "skills": ["search-first", "git-workflow", "conventional-commits", "codebase-onboarding", "session-handoff", "error-handling-patterns", "refactoring-safely"],
-    "agents": ["planner", "security-reviewer", "refactor-cleaner"],
-    "commands": ["build-fix", "plan-feature", "commit", "pr-describe", "tdd", "explain", "save-session", "resume-session", "test-coverage"],
+    "extends": [
+      "minimal"
+    ],
+    "skills": [
+      "search-first",
+      "git-workflow",
+      "conventional-commits",
+      "codebase-onboarding",
+      "session-handoff",
+      "error-handling-patterns",
+      "refactoring-safely"
+    ],
+    "agents": [
+      "planner",
+      "security-reviewer",
+      "refactor-cleaner"
+    ],
+    "commands": [
+      "build-fix",
+      "plan-feature",
+      "commit",
+      "pr-describe",
+      "tdd",
+      "explain",
+      "save-session",
+      "resume-session",
+      "test-coverage"
+    ],
+    "rules": [
+      "testing",
+      "git"
+    ],
     "detect": true
   },
   "developer": {
     "description": "Core plus the safety hooks: block dangerous commands, --no-verify, edits to protected files and secrets in code.",
-    "extends": ["core"],
-    "hooks": ["block-dangerous-commands", "block-no-verify", "protect-files", "guard-secrets"]
+    "extends": [
+      "core"
+    ],
+    "hooks": [
+      "block-dangerous-commands",
+      "block-no-verify",
+      "protect-files",
+      "guard-secrets"
+    ]
   },
   "security": {
     "description": "Security and compliance: every security and compliance item, the essentials, and the four safety hooks.",
-    "extends": ["minimal"],
-    "categories": ["security", "compliance"],
-    "commands": ["security-scan", "threat-model", "deps-audit"],
-    "hooks": ["block-dangerous-commands", "block-no-verify", "protect-files", "guard-secrets"]
+    "extends": [
+      "minimal"
+    ],
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "commands": [
+      "security-scan",
+      "threat-model",
+      "deps-audit"
+    ],
+    "rules": [
+      "security"
+    ],
+    "hooks": [
+      "block-dangerous-commands",
+      "block-no-verify",
+      "protect-files",
+      "guard-secrets"
+    ]
   },
   "ai": {
     "description": "Building AI features: LLM apps, prompts, evals, RAG, MCP servers, agents and ML, on top of core.",
-    "extends": ["core"],
-    "categories": ["ai"]
+    "extends": [
+      "core"
+    ],
+    "categories": [
+      "ai"
+    ]
   },
   "data": {
     "description": "Data work: databases, pipelines, dbt, scraping, dashboards and analysis, on top of core.",
-    "extends": ["core"],
-    "categories": ["data"]
+    "extends": [
+      "core"
+    ],
+    "categories": [
+      "data"
+    ]
   },
   "business": {
     "description": "Founders and product teams: marketing, SEO, research, investor materials, writing, PRDs and operations.",
-    "categories": ["business", "docs"],
-    "commands": ["prd", "postmortem"]
+    "categories": [
+      "business",
+      "docs"
+    ],
+    "commands": [
+      "prd",
+      "postmortem"
+    ]
   },
   "full": {
     "description": "Everything in Kete Loom, including every hook.",

@@ -7,13 +7,14 @@
 
 const fs = require('fs');
 const path = require('path');
-const { REPO_ROOT, SKILLS_DIR, listSkills, listAgents, listCommands, listHooks } = require('./lib/skills');
+const { REPO_ROOT, SKILLS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('./lib/skills');
 const { pluginAgents } = require('./lint-skills');
 
 const skills = listSkills(SKILLS_DIR);
 const agents = listAgents();
 const commands = listCommands();
 const hooks = listHooks();
+const rules = listRules();
 const version = require(path.join(REPO_ROOT, 'package.json')).version;
 
 const entry = (s, rel) => ({
@@ -24,6 +25,7 @@ const entry = (s, rel) => ({
   requires: s.requires,
   ...(s.tools ? { tools: s.tools } : {}),
   ...(s.event ? { event: s.event } : {}),
+  ...(s.kind === 'rule' ? { paths: s.paths } : {}),
   description: s.description,
   path: rel,
 });
@@ -34,6 +36,7 @@ const catalog = {
   skills: skills.map((s) => entry(s, `skills/${s.dir}`)),
   agents: agents.map((a) => entry(a, `agents/${a.dir}`)),
   commands: commands.map((c) => entry(c, `commands/${c.dir}.md`)),
+  rules: rules.map((r) => entry(r, `rules/${r.dir}.md`)),
   hooks: hooks.map((h) => entry(h, `hooks/${h.dir}`)),
 };
 fs.writeFileSync(path.join(REPO_ROOT, 'catalog.json'), JSON.stringify(catalog, null, 2) + '\n');
@@ -50,6 +53,7 @@ const sections = {
   catalog: table(skills, (s) => `skills/${s.dir}/SKILL.md`, (s) => s.dir),
   agents: table(agents, (a) => `agents/${a.dir}/AGENT.md`, (a) => a.dir),
   commands: table(commands, (c) => `commands/${c.dir}.md`, (c) => `/${c.dir}`),
+  rules: table(rules, (r) => `rules/${r.dir}.md`, (r) => r.dir),
   hooks: table(hooks, (h) => `hooks/${h.dir}/HOOK.md`, (h) => h.dir),
 };
 
@@ -67,4 +71,4 @@ const plugin = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
 plugin.agents = pluginAgents();
 fs.writeFileSync(pluginPath, JSON.stringify(plugin, null, 2) + '\n');
 
-console.log(`catalog.json, README tables and Claude plugin agents updated (${skills.length} skills, ${agents.length} agents, ${commands.length} commands, ${hooks.length} hooks)`);
+console.log(`catalog.json, README tables and Claude plugin agents updated (${skills.length} skills, ${agents.length} agents, ${commands.length} commands, ${rules.length} rules, ${hooks.length} hooks)`);

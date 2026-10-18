@@ -132,3 +132,31 @@ hooks/<name>/
 `hook.js` must be fast and dependency-free, and never use the network. `pre-*` hooks must be pure: no writes, no child processes. `post-edit` and `session-start` hooks may run local tools the project already uses (a formatter, `git`), with short timeouts, and must swallow their errors. The runner treats any error as allow, so a broken hook never blocks every call. A `pre-*` hook's `cases.json` holds at least 3 `should_block` and 3 `should_allow` cases (a command string, or an event object such as `{ "files": [{ "path": ".env", "content": "" }] }`); `npm run lint` runs every one, so add a case for each rule and for each false positive you fix. Other hooks are covered by tests in `tests/hooks.test.js`.
 
 A hook is a seatbelt, not a security boundary: it reads the command text, which unusual quoting can get past.
+
+# Rules
+
+A rule is short, always-on guidance that the host loads into context by itself, for every file that matches its paths (or always, when it has none). Because it is paid for on every turn, a rule holds only firm conventions, and points to the matching skill for depth.
+
+```
+rules/<name>.md           # Under 80 lines. The body is the rules, as short imperative bullets.
+```
+
+| Key | Rule | Why |
+|---|---|---|
+| `name` | same pattern as skills, equals the file name | |
+| `description` | one line, 20 to 300 chars | Shown in the catalog |
+| `license`, `metadata` | as for skills (`kete-loom/version`, `kete-loom/category`, `kete-loom/risk` required) | |
+| `metadata.kete-loom/paths` | optional comma-separated relative globs, e.g. `"**/*.py, **/*.pyi"` | Leave it out for rules that apply everywhere |
+
+How hosts load them:
+
+| Host | Where | Scoped to paths? |
+|---|---|---|
+| Claude Code (also read by VS Code Copilot) | `.claude/rules/kete-loom/<name>.md` with `paths:` | yes |
+| GitHub Copilot | `.copilot/instructions/kete-loom/` (user) or `.github/instructions/kete-loom/` (project), `<name>.instructions.md` with `applyTo:` | yes |
+| Cursor | `.cursor/rules/kete-loom/<name>.mdc` with `globs:` and `alwaysApply:`, project only | yes |
+| Kete Code, Gemini CLI | `@` imports in a marked block of `~/.config/kete/AGENTS.md` / `~/.gemini/GEMINI.md` | no |
+| OpenCode | one entry in `instructions` in `~/.config/opencode/opencode.json` | no |
+| Codex | the text inline in a marked block of `~/.codex/AGENTS.md`, within its 32 KiB limit | no |
+
+Hosts that can't scope to paths load every rule they have on every turn, so they only get rules chosen with `--rule` or a profile. Their files are only changed between kete-loom's markers, backed up first, and never at project scope.

@@ -2844,6 +2844,245 @@
       "path": "commands/verify.md"
     }
   ],
+  "rules": [
+    {
+      "name": "common",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [],
+      "description": "Always-on engineering rules for any project, covering scope, verification, honesty about results, safe changes and secrets.",
+      "path": "rules/common.md"
+    },
+    {
+      "name": "cpp",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.cpp",
+        "**/*.cc",
+        "**/*.cxx",
+        "**/*.c++",
+        "**/*.hpp",
+        "**/*.hh",
+        "**/*.hxx",
+        "**/*.h",
+        "**/*.ipp",
+        "**/*.ixx",
+        "**/*.cppm"
+      ],
+      "description": "Always-on rules for modern C++ code, covering ownership and RAII, undefined behaviour, bounds and lifetimes, concurrency, headers, and sanitizer-backed build and test checks.",
+      "path": "rules/cpp.md"
+    },
+    {
+      "name": "csharp",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.cs"
+      ],
+      "description": "Always-on rules for C# and .NET code, covering nullable reference types, async and await, disposal, exceptions, data access safety, and build and test checks.",
+      "path": "rules/csharp.md"
+    },
+    {
+      "name": "dart",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.dart"
+      ],
+      "description": "Always-on rules for Dart and Flutter code, covering null safety, async, widget lifecycle, analysis, formatting and tests.",
+      "path": "rules/dart.md"
+    },
+    {
+      "name": "fsharp",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.fs",
+        "**/*.fsi",
+        "**/*.fsx"
+      ],
+      "description": "Always-on rules for F# code, covering immutability, discriminated unions and exhaustive matching, Option and Result, async and task code, .NET interop, and checks.",
+      "path": "rules/fsharp.md"
+    },
+    {
+      "name": "git",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [],
+      "description": "Always-on git hygiene rules for agents, covering small focused commits, Conventional Commits messages, keeping secrets and generated files out, safe pushing and never rewriting shared history.",
+      "path": "rules/git.md"
+    },
+    {
+      "name": "go",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.go"
+      ],
+      "description": "Always-on rules for Go files, covering formatting, vet, error handling, context, goroutine and resource lifetimes, and concurrency safety.",
+      "path": "rules/go.md"
+    },
+    {
+      "name": "java",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.java"
+      ],
+      "description": "Always-on rules for Java files, covering build tooling, null handling, exceptions, resources, concurrency and injection safety.",
+      "path": "rules/java.md"
+    },
+    {
+      "name": "kotlin",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.kt",
+        "**/*.kts"
+      ],
+      "description": "Always-on rules for Kotlin code, covering null safety, sealed types, coroutines and structured concurrency, Java interop, and build and test checks.",
+      "path": "rules/kotlin.md"
+    },
+    {
+      "name": "perl",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.pl",
+        "**/*.pm",
+        "**/*.t",
+        "**/*.psgi"
+      ],
+      "description": "Always-on rules for modern Perl 5 code, covering strict and warnings, lexical scope, safe open and system calls, untrusted input, SQL, encoding and tests.",
+      "path": "rules/perl.md"
+    },
+    {
+      "name": "php",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.php"
+      ],
+      "description": "Always-on rules for modern PHP 8 code, covering strict types, typed signatures, input handling, SQL, errors, Composer and tests.",
+      "path": "rules/php.md"
+    },
+    {
+      "name": "python",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.py",
+        "**/*.pyi"
+      ],
+      "description": "Always-on rules for Python 3 files, covering environments, type hints, exceptions, resource handling, untrusted input and the project's own tooling.",
+      "path": "rules/python.md"
+    },
+    {
+      "name": "ruby",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.rb",
+        "**/*.rake",
+        "**/*.erb",
+        "**/*.gemspec",
+        "**/Gemfile",
+        "**/Rakefile"
+      ],
+      "description": "Always-on rules for Ruby code, covering style, nil handling, exceptions, unsafe input, Bundler, Rails safety and tests.",
+      "path": "rules/ruby.md"
+    },
+    {
+      "name": "rust",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.rs"
+      ],
+      "description": "Always-on rules for Rust files, covering cargo tooling, error handling, panics, unsafe code, async and dependency hygiene.",
+      "path": "rules/rust.md"
+    },
+    {
+      "name": "security",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [],
+      "description": "Always-on secure coding rules for any language, covering input validation, injection, authorization, least privilege, deserialisation, dependencies and keeping secrets and personal data out of logs.",
+      "path": "rules/security.md"
+    },
+    {
+      "name": "swift",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.swift"
+      ],
+      "description": "Always-on rules for Swift code, covering optionals, value types, error handling, Swift concurrency and actors, memory and retain cycles, and build and test checks.",
+      "path": "rules/swift.md"
+    },
+    {
+      "name": "testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [],
+      "description": "Always-on rules for writing and running tests in any language, covering behaviour-focused tests, failing tests first for bugs, determinism, isolation, speed and running the suite before finishing.",
+      "path": "rules/testing.md"
+    },
+    {
+      "name": "typescript",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mts",
+        "**/*.cts",
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.mjs",
+        "**/*.cjs"
+      ],
+      "description": "Always-on rules for TypeScript and JavaScript files, covering type safety, untrusted input, async errors, modules and the project's own tooling.",
+      "path": "rules/typescript.md"
+    }
+  ],
   "hooks": [
     {
       "name": "block-dangerous-commands",

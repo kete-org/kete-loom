@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks } = require('./lib/skills');
+const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('./lib/skills');
 const { TOOLS } = require('./lib/render');
 const { loadProfiles, DETECT } = require('./lib/profiles');
 
@@ -17,6 +17,7 @@ const RISKS = ['read-only', 'writes-files', 'runs-commands', 'network'];
 const MAX_LINES = 300;
 const MIN_EVALS = 3;
 const HOOK_EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start'];
+const MAX_RULE_LINES = 80;
 // Tool names that only exist in one host. Skills should describe the action instead.
 const HOST_SPECIFIC = /\b(Bash tool|Read tool|Edit tool|Write tool|Grep tool|Glob tool|TodoWrite|apply_patch|str_replace_editor)\b/;
 
@@ -45,7 +46,7 @@ function lintItem(item) {
   }
 
   if (!d.description) errors.push('missing "description"');
-  else if (item.kind === 'command' || item.kind === 'hook') {
+  else if (item.kind === 'command' || item.kind === 'hook' || item.kind === 'rule') {
     // Commands are picked by name and hooks run on events; the description is one line for menus and the catalog.
     const len = d.description.length;
     if (len < 20 || len > 300) errors.push(`description is ${len} chars; must be 20-300`);
@@ -94,9 +95,12 @@ function lintItem(item) {
   }
 
   if (item.kind === 'hook') errors.push(...lintHook(item));
+  // Rules load into every matching session, so they stay short: the always-on cost is paid on every turn.
+  if (item.kind === 'rule' && lines > MAX_RULE_LINES) errors.push(`rule is ${lines} lines; rules are loaded into context automatically, keep them under ${MAX_RULE_LINES}`);
+  if (item.kind === 'rule' && item.paths.some((p) => /\s/.test(p) || p.startsWith('/'))) errors.push('kete-loom/paths must be relative globs without spaces, comma separated (e.g. "**/*.py, **/*.pyi")');
 
   // Hosts route to skills and agents by description, so both need trigger evals. Commands and hooks aren't routed.
-  const evalFile = item.kind === 'command' || item.kind === 'hook' ? null : path.join(item.path, 'evals', 'triggers.json');
+  const evalFile = ['command', 'hook', 'rule'].includes(item.kind) ? null : path.join(item.path, 'evals', 'triggers.json');
   if (evalFile && !fs.existsSync(evalFile)) errors.push('missing evals/triggers.json');
   else if (evalFile) {
     try {
@@ -161,20 +165,20 @@ function lintProfiles(items) {
   } catch (e) {
     return [`profiles.json: ${e.message}`];
   }
-  const KEYS = new Set(['description', 'extends', 'skills', 'agents', 'commands', 'hooks', 'categories', 'detect', 'all']);
+  const KEYS = new Set(['description', 'extends', 'skills', 'agents', 'commands', 'rules', 'hooks', 'categories', 'detect', 'all']);
   for (const [name, p] of Object.entries(profiles)) {
     if (!NAME_RE.test(name)) errors.push(`profiles.json: profile name "${name}" must match ${NAME_RE}`);
     for (const k of Object.keys(p)) if (!KEYS.has(k)) errors.push(`profiles.json: ${name} has unknown key "${k}"`);
     if (typeof p.description !== 'string' || p.description.length < 20) errors.push(`profiles.json: ${name} needs a description of at least 20 characters`);
     for (const parent of p.extends || []) if (!profiles[parent]) errors.push(`profiles.json: ${name} extends unknown profile "${parent}"`);
     for (const c of p.categories || []) if (!CATEGORIES.includes(c)) errors.push(`profiles.json: ${name} has unknown category "${c}"`);
-    for (const k of ['skills', 'agents', 'commands', 'hooks']) {
+    for (const k of ['skills', 'agents', 'commands', 'rules', 'hooks']) {
       for (const n of p[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profiles.json: ${name} lists unknown ${k.slice(0, -1)} "${n}"`);
     }
   }
   // Every item project detection can add must exist.
   for (const d of DETECT) {
-    for (const k of ['skills', 'agents']) for (const n of d[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profile detection (${d.what}) names unknown ${k.slice(0, -1)} "${n}"`);
+    for (const k of ['skills', 'agents', 'rules']) for (const n of d[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profile detection (${d.what}) names unknown ${k.slice(0, -1)} "${n}"`);
   }
   return errors;
 }
@@ -236,16 +240,17 @@ function main() {
   const agents = listAgents();
   const commands = listCommands();
   const hooks = listHooks();
+  const rules = listRules();
   let errorCount = 0;
   let warnCount = 0;
   const error = (msg) => (console.log(`✗ ${msg}`), errorCount++);
   const warn = (msg) => (console.log(`! ${msg}`), warnCount++);
 
   for (const e of lintManifests()) error(`manifest  ${e}`);
-  for (const e of lintProfiles({ skills, agents, commands, hooks })) error(e);
+  for (const e of lintProfiles({ skills, agents, commands, rules, hooks })) error(e);
   for (const e of [...strayFolders(SKILLS_DIR, 'SKILL.md'), ...strayFolders(AGENTS_DIR, 'AGENT.md'), ...strayFolders(HOOKS_DIR, 'HOOK.md')]) error(e);
 
-  for (const item of [...skills, ...agents, ...commands, ...hooks]) {
+  for (const item of [...skills, ...agents, ...commands, ...rules, ...hooks]) {
     const { errors, warnings } = lintItem(item);
     if (!errors.length && !warnings.length) console.log(`✓ ${item.kind.padEnd(7)} ${item.dir}`);
     for (const e of errors) error(`${item.kind.padEnd(7)} ${item.dir}  ${e}`);
@@ -257,7 +262,7 @@ function main() {
   // Claude Code serves commands and skills from one namespace.
   for (const c of commands) if (skills.some((s) => s.dir === c.dir)) error(`command ${c.dir}  has the same name as a skill`);
 
-  console.log(`\n${skills.length} skill(s), ${agents.length} agent(s), ${commands.length} command(s), ${hooks.length} hook(s), ${errorCount} error(s), ${warnCount} warning(s)`);
+  console.log(`\n${skills.length} skill(s), ${agents.length} agent(s), ${commands.length} command(s), ${rules.length} rule(s), ${hooks.length} hook(s), ${errorCount} error(s), ${warnCount} warning(s)`);
   return errorCount ? 1 : 0;
 }
 

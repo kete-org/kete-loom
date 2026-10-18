@@ -7,6 +7,7 @@ This repo is a library of Agent Skills, subagents and slash commands, plus the t
 - `skills/<name>/`: one skill per folder. `SKILL.md`, `evals/triggers.json`, optional `references/` and `scripts/`.
 - `agents/<name>/`: one subagent per folder. `AGENT.md` and `evals/triggers.json`. The installer renders it per host.
 - `commands/<name>.md`: one slash command per file.
+- `rules/<name>.md`: one rule per file (short, always-on guidance, optional `kete-loom/paths`).
 - `hooks/<name>/`: one hook per folder. `HOOK.md`, `hook.js` (exports `check`) and `cases.json`. `hooks/run.js` is the shared runner installed with them.
 - `bin/kete-loom.js`: the installer CLI (`npx @ketecode/loom`).
 - `scripts/lib/`: shared code (frontmatter parser, item loader, host target paths, per-host renderer).

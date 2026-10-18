@@ -9,6 +9,7 @@ const SKILLS_DIR = path.join(REPO_ROOT, 'skills');
 const AGENTS_DIR = path.join(REPO_ROOT, 'agents');
 const COMMANDS_DIR = path.join(REPO_ROOT, 'commands');
 const HOOKS_DIR = path.join(REPO_ROOT, 'hooks');
+const RULES_DIR = path.join(REPO_ROOT, 'rules');
 
 const csv = (s) => (s || '').split(',').map((x) => x.trim()).filter(Boolean);
 
@@ -32,6 +33,7 @@ function loadDoc(file, extra) {
     tools: meta['kete-loom/tools'] === undefined ? null : csv(meta['kete-loom/tools']),
     argumentHint: meta['kete-loom/argument-hint'],
     event: meta['kete-loom/event'],
+    paths: csv(meta['kete-loom/paths']),
     ...extra,
   };
 }
@@ -61,17 +63,24 @@ function loadCommand(file) {
   return loadDoc(file, { kind: 'command', dir: path.basename(file, '.md'), path: file });
 }
 
+function loadRule(file) {
+  return loadDoc(file, { kind: 'rule', dir: path.basename(file, '.md'), path: file });
+}
+
 const listSkills = (root = SKILLS_DIR) => listFolders(root, 'SKILL.md', loadSkill);
 const listAgents = (root = AGENTS_DIR) => listFolders(root, 'AGENT.md', loadAgent);
 const listHooks = (root = HOOKS_DIR) => listFolders(root, 'HOOK.md', loadHook);
 
-function listCommands(root = COMMANDS_DIR) {
+function listFiles(root, load) {
   if (!fs.existsSync(root)) return [];
   return fs
     .readdirSync(root)
     .filter((f) => f.endsWith('.md'))
-    .map((f) => loadCommand(path.join(root, f)))
+    .map((f) => load(path.join(root, f)))
     .sort((a, b) => a.dir.localeCompare(b.dir));
 }
 
-module.exports = { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, COMMANDS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, loadSkill, loadAgent, loadCommand, loadHook };
+const listCommands = (root = COMMANDS_DIR) => listFiles(root, loadCommand);
+const listRules = (root = RULES_DIR) => listFiles(root, loadRule);
+
+module.exports = { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, COMMANDS_DIR, HOOKS_DIR, RULES_DIR, listSkills, listAgents, listCommands, listHooks, listRules, loadSkill, loadAgent, loadCommand, loadHook, loadRule };

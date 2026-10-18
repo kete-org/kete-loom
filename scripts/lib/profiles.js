@@ -8,12 +8,12 @@ const fs = require('fs');
 const path = require('path');
 
 const PROFILES_FILE = path.join(__dirname, '..', '..', 'profiles.json');
-const KINDS = ['skills', 'agents', 'commands', 'hooks'];
+const KINDS = ['skills', 'agents', 'commands', 'rules', 'hooks'];
 
 const loadProfiles = (file = PROFILES_FILE) => JSON.parse(fs.readFileSync(file, 'utf8'));
 
 // What a project uses -> the items that help with it. `when` gets helpers over the project folder.
-const lang = (name) => ({ skills: [`${name}-patterns`, `${name}-testing`], agents: [`${name}-reviewer`, `${name}-build-resolver`] });
+const lang = (name) => ({ skills: [`${name}-patterns`, `${name}-testing`], agents: [`${name}-reviewer`, `${name}-build-resolver`], rules: [name] });
 const DETECT = [
   { what: 'TypeScript/JavaScript', when: (p) => p.has('package.json') || p.has('tsconfig.json'), ...lang('typescript') },
   { what: 'Python', when: (p) => p.has('pyproject.toml') || p.has('requirements.txt') || p.has('setup.py') || p.has('Pipfile'), ...lang('python') },
@@ -115,7 +115,7 @@ function resolveProfiles(names, { catalog, cwd = process.cwd(), profiles = loadP
     if (p.detect) {
       for (const d of detect(cwd)) {
         out.detected.push(d.what);
-        for (const k of ['skills', 'agents']) for (const n of d[k] || []) out[k].add(n);
+        for (const k of ['skills', 'agents', 'rules']) for (const n of d[k] || []) out[k].add(n);
       }
     }
   };

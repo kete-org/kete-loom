@@ -5,7 +5,8 @@
 // which is how install and uninstall recognise files kete-loom wrote.
 
 const TOOLS = ['read', 'search', 'shell', 'edit', 'web'];
-const MARKER_RE = /^# kete-loom [a-z0-9-]+@/m;
+// `# kete-loom name@version` inside YAML/TOML, or `<!-- kete-loom name@version -->` in plain Markdown.
+const MARKER_RE = /^(?:# |<!-- )kete-loom [a-z0-9-]+@/m;
 
 const CLAUDE_TOOLS = { read: ['Read'], search: ['Grep', 'Glob'], shell: ['Bash'], edit: ['Edit', 'Write'], web: ['WebFetch', 'WebSearch'] };
 const COPILOT_TOOLS = { read: 'read', search: 'search', shell: 'execute', edit: 'edit', web: 'web' };
@@ -66,7 +67,18 @@ const COMMAND = {
   gemini: (c) => ({ file: `${c.dir}.toml`, content: toml(c, { description: c.description, prompt: body(c).replace(/\$ARGUMENTS/g, '{{args}}') }) }),
 };
 
+// Rules: path-scoped where the host supports it (Claude Code, Copilot, Cursor). Hosts that can't scope
+// get plain Markdown that says which files it is about (scripts/lib/rules-install.js).
+const appliesTo = (r) => (r.paths.length ? `Applies when working on files matching: ${r.paths.join(', ')}.\n\n` : '');
+const RULE = {
+  claude: (r) => ({ file: `${r.dir}.md`, content: markdown(r, { paths: r.paths.length ? r.paths : undefined }) }),
+  copilot: (r) => ({ file: `${r.dir}.instructions.md`, content: markdown(r, { applyTo: r.paths.length ? r.paths.join(',') : '**' }) }),
+  cursor: (r) => ({ file: `${r.dir}.mdc`, content: markdown(r, { description: r.description, globs: r.paths.length ? r.paths.join(', ') : undefined, alwaysApply: !r.paths.length }) }),
+  plain: (r) => ({ file: `${r.dir}.md`, content: `<!-- ${marker(r).slice(2)} -->\n# ${r.dir} rules\n\n${appliesTo(r)}${body(r)}` }),
+};
+
 function render(item, target) {
+  if (item.kind === 'rule') return RULE[target] ? RULE[target](item) : null;
   const table = item.kind === 'agent' ? AGENT : COMMAND;
   return table[target] ? table[target](item) : null;
 }

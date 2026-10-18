@@ -8,11 +8,12 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { SKILLS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks } = require('../scripts/lib/skills');
+const { SKILLS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('../scripts/lib/skills');
 const { TARGETS, KINDS, HOST_READS, resolveTarget, detected } = require('../scripts/lib/targets');
 const { MARKER_RE, render } = require('../scripts/lib/render');
 const Hooks = require('../scripts/lib/hooks-install');
 const { loadProfiles, resolveProfiles } = require('../scripts/lib/profiles');
+const Rules = require('../scripts/lib/rules-install');
 
 const MARKER = '.kete-loom.json';
 const pkg = require('../package.json');
@@ -33,6 +34,7 @@ function parseArgs(argv) {
     else if (a === '--agent' || a === '-a') opts.agents = csv(next());
     else if (a === '--command') opts.commands = csv(next());
     else if (a === '--hook') opts.hookNames = csv(next());
+    else if (a === '--rule' || a === '-r') opts.rules = csv(next());
     else if (a === '--hooks') opts.withHooks = true;
     else if (a === '--profile' || a === '-P') opts.profiles = csv(next());
     else if (a === '--category' || a === '-c') opts.categories = csv(next());
@@ -79,9 +81,10 @@ Options
   -s, --skill <a,b>    Only these skills
   -a, --agent <a,b>    Only these agents
       --command <a,b>  Only these commands
+  -r, --rule <a,b>     Only these rules
       --hook <a,b>     Only these hooks
-                       (--skill, --agent, --command and --hook combine; with none, all
-                       skills, agents and commands are installed)
+                       (--skill, --agent, --command, --rule and --hook combine; with none,
+                       all skills, agents, commands and rules are installed)
       --hooks          Also install every hook. Hooks run before each shell command and are
                        registered in each host's config, including Claude Code's and Gemini
                        CLI's settings.json (backed up first). User scope only.
@@ -106,7 +109,7 @@ Examples
 }
 
 function catalog(opts) {
-  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands(), hooks: listHooks() };
+  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands(), rules: listRules(), hooks: listHooks() };
 }
 
 // Folds --profile into the explicit --skill/--agent/--command/--hook lists (or "everything" for full).
@@ -123,6 +126,7 @@ function applyProfiles(opts, all) {
   merge('skills', r.skills);
   merge('agents', r.agents);
   merge('commands', r.commands);
+  merge('rules', r.rules);
   if (r.hooks.size && opts.scope === 'project') opts.droppedHooks = [...r.hooks];
   else merge('hookNames', r.hooks);
   // A profile names its items, so an empty kind means "none of these", not "all of them".
@@ -160,9 +164,10 @@ function destinations(opts) {
   const picks = opts.targets
     ? opts.targets.map((t) => ({ target: t, kinds: KINDS }))
     : Object.keys(TARGETS)
-        .filter((t) => TARGETS[t].default || (TARGETS[t].auto && detected(t, where)))
-        // Auto targets read skills from .agents already; they only need their own agents and commands.
-        .map((t) => ({ target: t, kinds: TARGETS[t].default ? KINDS : ['agents', 'commands'] }));
+        .filter((t) => TARGETS[t].default || detected(t, where))
+        // Detected hosts read skills from .agents already; they only need their own agents, commands and
+        // rules (Cursor and Copilot read agents from .claude too, so they only need rules).
+        .map((t) => ({ target: t, kinds: TARGETS[t].default ? KINDS : TARGETS[t].auto ? ['agents', 'commands', 'rules'] : ['rules'] }));
   return picks.flatMap(({ target, kinds }) =>
     kinds.map((kind) => ({ target, kind, dir: resolveTarget(target, { ...where, kind }) })).filter((d) => d.dir)
   );
@@ -209,6 +214,13 @@ function uninstallHooks(opts, named) {
     }
   }
   return results;
+}
+
+// Hosts that can't scope rules to paths get them through their instructions file (rules-install.js).
+function linkedRuleHosts(opts) {
+  if (opts.dir || opts.scope === 'project') return [];
+  const where = { scope: 'user', home: opts.home || os.homedir(), cwd: process.cwd() };
+  return Rules.RULE_HOSTS.filter((t) => (opts.targets ? opts.targets.includes(t) : detected(t, where)));
 }
 
 function readMarker(dir) {
@@ -320,6 +332,9 @@ function install(opts) {
       if (r) results.push({ target, kind: item.kind, name: item.dir, ...r });
     }
   }
+  // Hosts that can't scope by path load every rule they get on every turn, so they only get rules that
+  // were chosen (--rule or a profile), never the whole library.
+  if (selected.rules.length && opts.rules) for (const host of linkedRuleHosts(opts)) results.push(...Rules.installRules(host, selected.rules, { home: opts.home || os.homedir(), dryRun: opts.dryRun }));
   results.push(...installHooks(selected.hooks, opts));
   report(results, opts);
   if (!opts.json && opts.detected && opts.detected.length) console.log(`\nDetected in this project: ${opts.detected.join(', ')}.`);
@@ -335,8 +350,8 @@ function install(opts) {
   return results;
 }
 
-// `code-reviewer.agent.md` -> `code-reviewer`
-const itemName = (entry) => entry.replace(/(\.agent)?\.(md|toml)$/, '');
+// `code-reviewer.agent.md` -> `code-reviewer`, `python.instructions.md` -> `python`, `python.mdc` -> `python`
+const itemName = (entry) => entry.replace(/(?:\.agent|\.instructions)?\.(?:md|mdc|toml)$/, '');
 
 function uninstall(opts) {
   applyProfiles(opts, catalog(opts)); // `uninstall --profile x` removes only that profile's items
@@ -354,6 +369,7 @@ function uninstall(opts) {
       results.push({ target, kind: kind.slice(0, -1), name, action: 'removed', dest: p });
     }
   }
+  if (!named || opts.rules) for (const host of linkedRuleHosts(opts)) results.push(...Rules.uninstallRules(host, named ? opts.rules : null, { home: opts.home || os.homedir(), dryRun: opts.dryRun }));
   results.push(...uninstallHooks(opts, named));
   report(results, opts);
   return results;
@@ -433,6 +449,11 @@ function doctor(opts) {
     console.log(`  [${r.scope}] ${r.target.padEnd(9)} ${r.kind.padEnd(9)} ${r.dir.replace(os.homedir(), '~')}  (${r.items.length})`);
   }
   if (!rows.some((r) => r.items.length)) console.log('  none yet. Run: npx @ketecode/loom install');
+  const linked = Rules.RULE_HOSTS.map((t) => ({ target: t, rules: Rules.installedNames(Rules.HOSTS[t].dir(home)) })).filter((r) => r.rules.length);
+  if (linked.length) {
+    console.log('\nRules loaded through instructions files:');
+    for (const r of linked) console.log(`  ${r.target.padEnd(9)} ${r.rules.join(', ')}`);
+  }
   const hookNames = listHooks().map((h) => h.dir);
   const hookRows = Hooks.HOOK_HOSTS.map((t) => ({ target: t, hooks: Hooks.registered(t, { home, names: hookNames }) })).filter((r) => r.hooks.length);
   if (hookRows.length) {
