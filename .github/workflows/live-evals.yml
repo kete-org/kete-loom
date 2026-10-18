@@ -31,7 +31,8 @@ jobs:
     steps:
       - name: Skip without a key
         if: env.ANTHROPIC_API_KEY == '' && env.KETE_LOOM_EVAL_API_KEY == ''
-        run: echo "::notice::Live evals skipped: add the ANTHROPIC_API_KEY secret to run them."
+        run: |
+          echo "::notice::Live evals skipped: add the ANTHROPIC_API_KEY secret to run them."
       - uses: actions/checkout@v4
         if: env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != ''
         with:
