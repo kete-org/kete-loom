@@ -1,15 +1,15 @@
 {
   "name": "@ketecode/loom",
   "version": "0.1.0",
-  "description": "Kete Loom: a curated, tested, portable Agent Skills library. One source, installable in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.",
+  "description": "Kete Loom: curated, tested, portable Agent Skills, subagents, commands, rules, hooks and MCP configs. One source, installable in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.",
   "license": "MIT",
   "author": "Kete-org <support@ketecode.ai>",
   "homepage": "https://ketecode.ai",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kete-org/kete-loom.git"
+    "url": "git+https://github.com/kete-org/kete-loom.git"
   },
-  "bugs": "https://github.com/Kete-org/kete-loom/issues",
+  "bugs": "https://github.com/kete-org/kete-loom/issues",
   "keywords": [
     "agent-skills",
     "skills",
@@ -41,6 +41,9 @@
   "engines": {
     "node": ">=18"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "lint": "node scripts/lint-skills.js",
     "eval": "node scripts/run-evals.js",
@@ -49,7 +52,8 @@
     "test": "node --test",
     "check": "npm run lint && npm test && npm run eval",
     "catalog": "node scripts/build-catalog.js",
-    "site": "node scripts/build-site.js"
+    "site": "node scripts/build-site.js",
+    "prepublishOnly": "npm run check"
   },
   "devDependencies": {
     "@anthropic-ai/sdk": "^0.135.0"

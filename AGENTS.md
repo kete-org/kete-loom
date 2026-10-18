@@ -22,7 +22,7 @@ This repo is a library of Agent Skills, subagents and slash commands, plus the t
 - Follow `docs/SKILL_SPEC.md` for every skill, agent and command. Only `name`, `description`, `license`, `compatibility` and `metadata` at the top level; metadata values are strings.
 - Keep each `SKILL.md`, `AGENT.md` and command file under 300 lines. Long material goes in `references/`.
 - Every skill, agent or command change bumps its `kete-loom/version`.
-- A release bumps the version in `package.json` and all five plugin manifests together.
+- A release bumps the version in `package.json` and all five plugin manifests together; follow `docs/RELEASING.md` (a `vX.Y.Z` tag publishes to npm).
 - After adding, renaming or editing an item's description, run `npm run catalog` and commit `catalog.json`, `README.md` and `.claude-plugin/plugin.json`.
 - No new npm dependencies in `bin/` or `scripts/lib/`; the installer must stay zero-dependency.
 
