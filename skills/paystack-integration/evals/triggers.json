@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Add Paystack checkout to our Next.js shop so Ghanaian customers can pay",
+    "My Paystack webhook says invalid signature every time, can you fix it?",
+    "Let users pay with MTN MoMo through Paystack in the mobile app",
+    "Customers are getting their orders twice when Paystack retries the webhook"
+  ],
+  "should_not_trigger": [
+    "Integrate Stripe subscriptions into the billing page",
+    "Review my last commit for security vulnerabilities",
+    "Write a blog post about mobile money adoption in West Africa",
+    "Build an invoice PDF generator for the accounting module"
+  ]
+}

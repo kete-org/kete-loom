@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ketecode.ai/schemas/kete-loom/skill-frontmatter.schema.json",
+  "title": "Kete Loom SKILL.md frontmatter",
+  "description": "The strictest common subset of the Agent Skills spec (agentskills.io) as read by Claude Code, Codex, OpenCode, Cursor, Gemini CLI and GitHub Copilot, plus Kete Loom's metadata keys. Extra keys live under `metadata` as strings, because OpenCode requires metadata to be a string-to-string map.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "description", "license", "metadata"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "Must equal the skill's folder name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 80,
+      "maxLength": 1024,
+      "description": "Single line. Says what the skill does AND when to use it (contains 'Use when')."
+    },
+    "license": { "type": "string" },
+    "compatibility": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Plain-language environment requirements (tools, network, OS)."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "required": ["kete-loom/version", "kete-loom/category", "kete-loom/risk"],
+      "properties": {
+        "kete-loom/version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "kete-loom/category": {
+          "type": "string",
+          "enum": ["coding", "testing", "security", "integrations", "devops", "docs", "meta"]
+        },
+        "kete-loom/risk": {
+          "type": "string",
+          "enum": ["read-only", "writes-files", "runs-commands", "network"],
+          "description": "Highest-impact action the skill instructs the agent to take."
+        },
+        "kete-loom/requires": {
+          "type": "string",
+          "description": "Comma-separated CLIs or runtimes the skill expects, e.g. 'git, node'."
+        },
+        "kete-loom/owner": { "type": "string" }
+      }
+    }
+  }
+}

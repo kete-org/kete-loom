@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Kete Loom">
+  <rect width="96" height="96" rx="20" fill="#7C3AED"/>
+  <g stroke="#FFFFFF" stroke-width="6" stroke-linecap="round">
+    <path d="M26 22v52M42 22v52M58 22v52M74 22v52" opacity="0.45"/>
+    <path d="M20 32h56M20 48h56M20 64h56"/>
+  </g>
+</svg>

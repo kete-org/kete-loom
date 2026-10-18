@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Run all the checks on my branch before I open a pull request",
+    "Is this ready to merge? Make sure lint, types and tests all pass",
+    "Verify my changes compile and the test suite is green before I push",
+    "Do a final pre-ship check of the repo"
+  ],
+  "should_not_trigger": [
+    "Add a discount-code field to the checkout service, test first please",
+    "Set up GitHub Actions CI for this new repository",
+    "Why does this single unit test fail intermittently on Windows?",
+    "Write release notes for version 2.3"
+  ]
+}

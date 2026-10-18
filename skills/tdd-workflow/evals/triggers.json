@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Add a discount-code field to the checkout service, test first please",
+    "There's a bug where negative quantities are accepted in the cart. Reproduce it with a failing test and fix it.",
+    "Refactor the invoice calculator but keep behaviour identical, write tests before you touch it",
+    "Implement the parseDuration helper using red-green-refactor"
+  ],
+  "should_not_trigger": [
+    "Explain what test-driven development is in two sentences",
+    "Run all the checks on my branch before I open a pull request",
+    "Review my last commit for security vulnerabilities",
+    "Write a README section describing how to install the project"
+  ]
+}

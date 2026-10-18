@@ -1,0 +1,59 @@
+{
+  "name": "kete-loom",
+  "version": "0.1.0",
+  "skills": [
+    {
+      "name": "paystack-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Builds and reviews Paystack payment integrations, including transaction initialisation, server-side verification, webhooks with HMAC-SHA512 signature checks, idempotent fulfilment, and Ghana mobile money (MTN, Telecel, AT) charges. Use when adding Paystack checkout, card or mobile money payments, handling Paystack webhooks, or debugging a Paystack payment flow.",
+      "path": "skills/paystack-integration"
+    },
+    {
+      "name": "security-review",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [
+        "git",
+        "node"
+      ],
+      "description": "Security review of a code change or module covering secrets, injection, authentication and authorization, input validation, data exposure, dependencies and unsafe configuration, with findings ranked by severity and concrete fixes. Use when the user asks for a security review, audit or vulnerability check, or before shipping code that handles auth, payments, user input, files or personal data.",
+      "path": "skills/security-review"
+    },
+    {
+      "name": "skill-authoring",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Creates or improves an Agent Skill (a SKILL.md folder) so it loads reliably and works unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code, including portable frontmatter, a tight trigger description, short instructions, helper scripts and trigger evals. Use when the user wants to write a new skill, turn a repeated workflow into a skill, or fix a skill that triggers at the wrong time.",
+      "path": "skills/skill-authoring"
+    },
+    {
+      "name": "tdd-workflow",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Test-first development loop that writes a failing test, makes it pass with the smallest change, then refactors with the suite green. Use when adding a feature, fixing a reproducible bug, or refactoring code in a project that has (or should have) automated tests.",
+      "path": "skills/tdd-workflow"
+    },
+    {
+      "name": "verification-loop",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "node"
+      ],
+      "description": "Pre-merge verification that detects the project's build, lint, type-check and test commands, runs them in order, fixes what it safely can and reports a pass/fail verdict. Use when the user asks to verify, check or validate changes before committing, opening a pull request, merging or shipping.",
+      "path": "skills/verification-loop"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "kete-loom",
+  "version": "0.1.0",
+  "description": "Kete Loom: curated, tested Agent Skills for coding agents (TDD, verification, security review, Paystack, skill authoring).",
+  "author": {
+    "name": "Kete-org",
+    "email": "support@ketecode.ai",
+    "url": "https://ketecode.ai"
+  },
+  "homepage": "https://ketecode.ai",
+  "repository": "https://github.com/Kete-org/kete-loom",
+  "license": "MIT",
+  "keywords": ["skills", "agent-skills", "tdd", "verification", "security", "paystack", "kete-code"],
+  "skills": ["./skills/"]
+}

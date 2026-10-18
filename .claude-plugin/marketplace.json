@@ -1,0 +1,28 @@
+{
+  "name": "kete-loom",
+  "owner": {
+    "name": "Kete-org",
+    "email": "support@ketecode.ai"
+  },
+  "metadata": {
+    "description": "Kete Loom: curated, tested, portable Agent Skills"
+  },
+  "plugins": [
+    {
+      "name": "kete-loom",
+      "source": "./",
+      "description": "Curated, tested Agent Skills for coding agents. Every skill is short, versioned, linted and ships trigger evals.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Kete-org",
+        "email": "support@ketecode.ai"
+      },
+      "homepage": "https://ketecode.ai",
+      "repository": "https://github.com/Kete-org/kete-loom",
+      "license": "MIT",
+      "keywords": ["skills", "tdd", "verification", "security", "paystack"],
+      "category": "development",
+      "strict": false
+    }
+  ]
+}

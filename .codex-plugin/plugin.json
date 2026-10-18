@@ -1,0 +1,30 @@
+{
+  "name": "kete-loom",
+  "version": "0.1.0",
+  "description": "Kete Loom: curated, tested Agent Skills for coding agents (TDD, verification, security review, Paystack, skill authoring).",
+  "author": {
+    "name": "Kete-org",
+    "email": "support@ketecode.ai",
+    "url": "https://ketecode.ai"
+  },
+  "homepage": "https://ketecode.ai",
+  "repository": "https://github.com/Kete-org/kete-loom",
+  "license": "MIT",
+  "keywords": ["codex", "skills", "tdd", "verification", "security", "paystack"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Kete Loom",
+    "shortDescription": "Curated, tested Agent Skills for coding agents.",
+    "longDescription": "Kete Loom is a quality-first Agent Skills library from Kete Code. Every skill is short, versioned, linted and ships trigger evals, and the same skills install unchanged in Codex, Claude Code, OpenCode, Cursor, Gemini CLI and GitHub Copilot.",
+    "developerName": "Kete-org",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://ketecode.ai",
+    "brandColor": "#7C3AED",
+    "defaultPrompt": [
+      "Use the tdd-workflow skill to add this feature test-first.",
+      "Use the verification-loop skill before I open a PR.",
+      "Use the security-review skill on my last change."
+    ]
+  }
+}

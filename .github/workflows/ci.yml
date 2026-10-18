@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [18, 22]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm run lint
+      - run: npm test
+      - run: npm run eval
+      - name: Catalog is up to date
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 22
+        run: |
+          npm run catalog
+          git diff --exit-code -- catalog.json README.md || (echo "Run 'npm run catalog' and commit the result" && exit 1)
+      - name: Shell installer works without Node CLI options
+        if: matrix.os != 'windows-latest'
+        run: |
+          HOME="$(mktemp -d)" bash install.sh install --target agents --dry-run
+
+  live-evals:
+    # Routing evals against a real model. Runs when the secrets are configured.
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      KETE_LOOM_EVAL_BASE_URL: ${{ secrets.KETE_LOOM_EVAL_BASE_URL }}
+      KETE_LOOM_EVAL_API_KEY: ${{ secrets.KETE_LOOM_EVAL_API_KEY }}
+      KETE_LOOM_EVAL_MODEL: ${{ vars.KETE_LOOM_EVAL_MODEL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Live trigger evals
+        if: env.KETE_LOOM_EVAL_API_KEY != ''
+        run: npm run eval:live

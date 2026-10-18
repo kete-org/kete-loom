@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Review my last commit for security vulnerabilities",
+    "Audit the login and password reset handlers before we go live",
+    "Did I accidentally commit any API keys or secrets in this branch?",
+    "Check this file upload endpoint for injection or path traversal issues"
+  ],
+  "should_not_trigger": [
+    "Run all the checks on my branch before I open a pull request",
+    "Explain the difference between authentication and authorization",
+    "Speed up this slow database query",
+    "Add a password strength meter to the signup form UI"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "@ketecode/loom",
+  "version": "0.1.0",
+  "description": "Kete Loom: a curated, tested, portable Agent Skills library. One source, installable in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.",
+  "license": "MIT",
+  "author": "Kete-org <support@ketecode.ai>",
+  "homepage": "https://ketecode.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kete-org/kete-loom.git"
+  },
+  "bugs": "https://github.com/Kete-org/kete-loom/issues",
+  "keywords": [
+    "agent-skills",
+    "skills",
+    "claude-code",
+    "codex",
+    "opencode",
+    "cursor",
+    "gemini-cli",
+    "copilot",
+    "kete-code"
+  ],
+  "bin": {
+    "kete-loom": "bin/kete-loom.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/lib/",
+    "skills/",
+    "schemas/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "lint": "node scripts/lint-skills.js",
+    "eval": "node scripts/run-evals.js",
+    "eval:live": "node scripts/run-evals.js --live",
+    "test": "node --test",
+    "check": "npm run lint && npm test && npm run eval",
+    "catalog": "node scripts/build-catalog.js"
+  }
+}
