@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We removed a deprecated endpoint and added CSV export, what should the next version be? Then cut the release",
+    "Prepare release 1.4.0: update CHANGELOG.md, bump the version and tag it",
+    "Customers on 2.3.x need a security fix but main has unreleased features, how do we ship 2.3.5?",
+    "Set up release-please so merging to main produces versioned releases and a changelog",
+    "Publish a 3.0.0 release candidate to npm without making it the default install"
+  ],
+  "should_not_trigger": [
+    "Write a commit message for this fix that follows the feat/fix convention",
+    "Rebase my feature branch onto main and push it safely",
+    "Plan a blue-green deployment for the API so we can roll back quickly",
+    "Write a GitHub Actions workflow that builds and tests the project",
+    "Update the README to document the new configuration options"
+  ]
+}

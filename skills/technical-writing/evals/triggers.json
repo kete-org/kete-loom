@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Rewrite our README so someone new can install the CLI and run their first command in five minutes",
+    "Write a how-to guide for rotating API keys in our service",
+    "Our API reference is a mess, restructure the docs for the REST endpoints with examples for each",
+    "Nobody reads our getting-started docs. Can you make them task-first with runnable code samples?"
+  ],
+  "should_not_trigger": [
+    "I renamed the --verbose flag to --debug in this commit, sync the docs and changelog with that change",
+    "Walk me through this unfamiliar repo so I know how to build and run it",
+    "Create a file-by-file tour of the auth flow for new contributors",
+    "Write a blog post announcing our product launch for the marketing site"
+  ]
+}

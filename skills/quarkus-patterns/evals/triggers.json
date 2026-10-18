@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Build a Quarkus REST endpoint backed by Panache and make it compile to a native image",
+    "Quarkus logs 'You have attempted to perform a blocking operation on an IO thread' in my Uni endpoint",
+    "How do Dev Services in Quarkus start Postgres for tests, and why did it stop after I set a JDBC url?",
+    "Set up %dev and %prod profiles with @ConfigMapping in our Quarkus microservice",
+    "My Quarkus native executable fails at runtime with a ClassNotFoundException for a Jackson DTO",
+    "Use @InjectMock in a @QuarkusTest to replace the payment client bean"
+  ],
+  "should_not_trigger": [
+    "Add a new REST endpoint to our Spring Boot order service with request validation and proper 404 responses",
+    "Write a Ktor route for uploading files with coroutines",
+    "Add a Flyway migration that adds a NOT NULL column to the orders table without downtime",
+    "Write the Dockerfile and Kubernetes deployment for our Java service",
+    "Explain idiomatic Java records and sealed interfaces for our domain model",
+    "Our Gradle build fails with a dependency resolution conflict in the Java module"
+  ]
+}

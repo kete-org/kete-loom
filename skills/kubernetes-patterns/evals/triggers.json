@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our api pods keep going into CrashLoopBackOff after the deploy, help me find out why",
+    "Write a Deployment and Service manifest for the web app with readiness and liveness probes",
+    "The new release is broken, how do I roll the checkout deployment back to the last revision?",
+    "Set up a HorizontalPodAutoscaler for the worker so it scales on CPU",
+    "Pods are stuck in Pending and kubectl describe mentions insufficient memory"
+  ],
+  "should_not_trigger": [
+    "Make our Dockerfile smaller and stop it running as root",
+    "Provision an EKS cluster and its node groups with Terraform",
+    "Audit our k8s manifests and Terraform for security misconfigurations and report findings",
+    "Plan a blue-green release process for the mobile backend",
+    "Our docker compose app container can't reach the database on localhost"
+  ]
+}

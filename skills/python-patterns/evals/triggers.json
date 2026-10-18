@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Should this config object be a dataclass or a pydantic model? It's loaded from a YAML file users edit.",
+    "Set up a new Python package with pyproject.toml, uv, ruff and mypy strict",
+    "Modernise this Python 3.7-era module: add type hints, replace the dict soup with proper types",
+    "My asyncio service freezes whenever it calls the old requests-based client, how should I restructure it?",
+    "Design an exception hierarchy for our Python billing library so callers can catch the right errors"
+  ],
+  "should_not_trigger": [
+    "Write pytest tests with fixtures and parametrize for the invoice module",
+    "Review this Python pull request for bugs before I merge it",
+    "mypy says 'Cannot find implementation or library stub for module named yaml', fix it",
+    "Add a FastAPI endpoint that creates a user and returns 201",
+    "Write idiomatic Go error handling for this HTTP handler"
+  ]
+}

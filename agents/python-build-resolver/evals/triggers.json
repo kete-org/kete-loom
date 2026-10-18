@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "ModuleNotFoundError: No module named 'acme_billing' when I run pytest, but the package is right there in src/",
+    "uv sync fails with 'No solution found when resolving dependencies', please fix it",
+    "mypy is throwing 14 errors after I upgraded sqlalchemy, get the type check passing again",
+    "pyright says reportMissingImports for httpx even though the app runs, sort out my environment",
+    "python -m build fails on our pyproject.toml, can you get the wheel building?"
+  ],
+  "should_not_trigger": [
+    "Review this Python diff for exception swallowing and async misuse",
+    "Set up a brand new Python project with uv, ruff and mypy",
+    "Write pytest fixtures for the database session",
+    "cargo build fails with a borrow checker error, fix it",
+    "tsc reports type errors after upgrading TypeScript, fix the build"
+  ]
+}

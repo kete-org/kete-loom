@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a Go benchmark comparing the old and new JSON decoder and tell me if the new one is actually faster",
+    "My JMH numbers swing 30% between runs, how do I get results I can trust?",
+    "Is my refactor of the tokenizer a performance regression? Measure it properly before and after",
+    "Set up BenchmarkDotNet for our hashing code with allocation stats",
+    "Someone claims the Rust rewrite is 3x faster, check whether their benchmark is valid"
+  ],
+  "should_not_trigger": [
+    "Profile the API and fix whatever is making the orders endpoint slow",
+    "Our Lighthouse score dropped, improve the page load time",
+    "Raise the unit test coverage of the parser package to 80%",
+    "Write Playwright tests for the search page",
+    "Run the test suite and lint before I push"
+  ]
+}

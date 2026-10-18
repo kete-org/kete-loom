@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My Vue component stops updating after I destructure the reactive state object, why?",
+    "Write a useDebouncedSearch composable in Vue 3 that cancels stale requests",
+    "Convert this Vue child component to defineModel instead of mutating the prop",
+    "Set up a Pinia setup store for the cart and use it from a script setup component",
+    "Add Vue Test Utils tests for the dropdown component's select event"
+  ],
+  "should_not_trigger": [
+    "My Nuxt page shows a hydration mismatch warning after useFetch",
+    "Review this Vue pull request for watcher leaks and prop mutation",
+    "Migrate this Svelte 4 store to Svelte 5 runes",
+    "Convert this Angular component to signals and standalone",
+    "Write a React custom hook that debounces search input"
+  ]
+}

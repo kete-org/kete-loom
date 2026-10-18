@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "flutter analyze is failing with 30 errors after I bumped dependencies, get it green",
+    "pub get says version solving failed because of intl and flutter_localizations, fix it",
+    "build_runner keeps failing on my freezed models, can you sort it out",
+    "dart compile exe errors out with 'The argument type String? can't be assigned', fix the build",
+    "CI is red on dart analyze --fatal-infos, please make it pass with minimal changes"
+  ],
+  "should_not_trigger": [
+    "Review my Flutter pull request for stream leaks and missing mounted checks",
+    "Teach me how records and destructuring work in Dart 3",
+    "Write a fake_async test for my Dart retry timer",
+    "cargo build fails with a borrow checker error, fix it",
+    "tsc fails with Cannot find module after moving files, fix the build",
+    "Set up a GitHub Actions workflow that runs flutter test on every push"
+  ]
+}

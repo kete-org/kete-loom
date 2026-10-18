@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "This Django list view runs 300 queries, help me fix it with select_related or prefetch_related",
+    "Add a non-null column to the Order model in Django without breaking the live deploy",
+    "Set up a Celery task in our Django app that emails the receipt after checkout",
+    "Split our Django settings.py into dev and prod and fix what manage.py check --deploy complains about",
+    "Create a ModelForm with cross-field validation for the booking app"
+  ],
+  "should_not_trigger": [
+    "Review my Django pull request for N+1 queries and missing permission checks",
+    "Build a FastAPI router with Pydantic request models",
+    "Create a Flask application factory with blueprints",
+    "Write pytest fixtures for a plain Python utility module",
+    "Tune this PostgreSQL index for a slow query outside of any ORM"
+  ]
+}

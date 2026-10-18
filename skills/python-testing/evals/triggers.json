@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write pytest tests for the parse_invoice function, use parametrize for the edge cases",
+    "How do I mock the httpx call inside my service when testing it with pytest?",
+    "test_sync_orders passes on my machine but fails randomly in CI with pytest-xdist",
+    "Add tests for this async def fetch_rates coroutine, we use pytest-asyncio",
+    "Convert these unittest.TestCase classes to plain pytest functions with fixtures"
+  ],
+  "should_not_trigger": [
+    "Should I use a dataclass or pydantic for this Python settings object?",
+    "Review my Python diff for mutable default arguments and swallowed exceptions",
+    "pip install fails with ResolutionImpossible on our Python project, sort it out",
+    "Write Jest tests for this TypeScript reducer",
+    "Write a Playwright end-to-end test for the login page"
+  ]
+}

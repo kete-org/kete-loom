@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review the migrations in this PR before we run them against the 300M-row events table",
+    "Is this Alembic migration going to lock the users table in production?",
+    "Check my branch for N+1 queries and missing indexes in the new order history endpoint",
+    "Can you audit the schema changes in db/migrate for anything that could lose data?",
+    "Look over the new checkout repository code for transaction races before I merge"
+  ],
+  "should_not_trigger": [
+    "Write a migration that renames customers.phone to phone_number without downtime",
+    "Why is this Postgres query doing a sequential scan? Here's the EXPLAIN output",
+    "Our MySQL table stores emoji as question marks, how do I fix the charset",
+    "Review my React component diff for bugs before I commit",
+    "Design a Prisma schema for a multi-tenant invoicing app"
+  ]
+}

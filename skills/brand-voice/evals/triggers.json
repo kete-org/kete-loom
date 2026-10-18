@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Create a voice and tone guide for our fintech app, with do and don't examples",
+    "Does this onboarding email sound like us? Here's our style guide and the draft.",
+    "Our website, support macros and app error messages all sound different. Help us define one consistent brand voice.",
+    "Rewrite these push notifications so they match our playful-but-clear brand personality",
+    "Make a list of words our copywriters should use and avoid, plus how tone changes for incident messages"
+  ],
+  "should_not_trigger": [
+    "Write a 2000-word article about the history of mobile money in Ghana",
+    "Design a logo and colour palette for our new brand",
+    "Plan our product launch campaign with channels and a budget",
+    "Check our landing page meta titles and structured data for SEO problems",
+    "Draft the one-pager we send to angel investors"
+  ]
+}

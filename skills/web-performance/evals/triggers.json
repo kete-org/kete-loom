@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "PageSpeed Insights says our INP is poor on mobile, what is blocking the main thread?",
+    "The product page jumps around while loading, fix the layout shift",
+    "Our Lighthouse performance score dropped from 92 to 61 after the last release",
+    "Set long-lived cache headers for our hashed JS bundles and check the fonts aren't render-blocking",
+    "Search Console flags 300 URLs with poor Core Web Vitals, where do we start?"
+  ],
+  "should_not_trigger": [
+    "Benchmark these two JSON parsers in Node and tell me which is faster",
+    "Optimise this slow SQL query that powers the dashboard",
+    "Our page fails colour contrast and keyboard navigation checks",
+    "Reorganise our CSS with cascade layers so we can stop using !important",
+    "Reduce re-renders in this React list using memo and useCallback"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "We want our own styled card form on checkout, how do we do that without pulling our servers into PCI scope?",
+    "I found full card numbers in our application logs, what do we do and how do we stop it?",
+    "Which PCI self-assessment questionnaire do we likely need if we use Stripe Elements?",
+    "Is it okay to save the CVV in the database so returning customers don't have to type it again?",
+    "Our mobile app posts card details to our API and then we call the processor, is that a PCI problem?",
+    "Hosted payment page or iframe fields: which keeps us at SAQ A?"
+  ],
+  "should_not_trigger": [
+    "Integrate Stripe subscriptions with trial periods and proration into our SaaS billing",
+    "My Paystack webhook signature check keeps failing, can you fix it?",
+    "We store patient insurance ids, do we need a BAA with our cloud provider?",
+    "Build a consent banner and data export for GDPR subject access requests",
+    "Review our payment service code for double charging and missing idempotency keys",
+    "Run a dependency audit on our checkout service and flag vulnerable npm packages"
+  ]
+}

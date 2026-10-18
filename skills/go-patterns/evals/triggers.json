@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "How should I lay out the packages for a new Go HTTP service with a CLI and a worker?",
+    "Write a Go function that fetches 200 URLs concurrently, at most 10 at a time, and stops on the first error",
+    "Should I wrap this error with %w or %v, and how do callers check for ErrNotFound in Go?",
+    "Design a small interface in my Go code so the billing package doesn't depend on the postgres store",
+    "Set up golangci-lint for our Go repo and fix the idiomatic issues it finds in the new package",
+    "Where should context.Context go in these Go function signatures, and should I keep it on the struct?"
+  ],
+  "should_not_trigger": [
+    "Write table-driven tests with subtests for my Go parser and run them with -race",
+    "Review this Go pull request for goroutine leaks and ignored errors",
+    "go build fails with 'missing go.sum entry for module providing package', fix it",
+    "Refactor this TypeScript service to use dependency injection",
+    "Explain Rust ownership and borrowing for a Go developer"
+  ]
+}

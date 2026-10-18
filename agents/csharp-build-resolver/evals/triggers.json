@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "dotnet build fails with NU1605 detected package downgrade, please fix it",
+    "dotnet restore fails with NU1101 unable to find package, fix the build",
+    "After bumping TargetFramework to net9.0 I get NETSDK1045 and a pile of CS0246 errors, get it compiling again",
+    "Our CI .NET build broke because CA2000 is treated as an error now, make it pass properly",
+    "Two NuGet packages want different versions of Microsoft.Extensions.Logging and restore gives NU1107"
+  ],
+  "should_not_trigger": [
+    "Review this C# diff for sync-over-async deadlocks before I merge",
+    "Write xUnit integration tests using WebApplicationFactory for the orders API",
+    "How do I enable nullable reference types and analyzers in a new .NET project?",
+    "cargo build fails with a borrow checker error in main.rs",
+    "Gradle sync fails with a Kotlin version conflict in the Android app",
+    "Set up a GitHub Actions workflow that builds and tests the solution"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Should this filter state live in the parent component, the URL, or a context?",
+    "I have a useEffect that copies props into state and it keeps getting out of sync, how should I restructure it?",
+    "Build a signup form component in React with validation errors shown under each field",
+    "Our dashboard crashes completely when one widget throws, add error boundaries properly",
+    "Is it worth adding Zustand or should I just use React context for the cart state?",
+    "Write a custom hook that subscribes to window resize and cleans up correctly"
+  ],
+  "should_not_trigger": [
+    "The product list re-renders 200 times when I type in the search box, profile it and speed it up",
+    "Should this Next.js page be a server component or a client component?",
+    "Review this React pull request for stale closures and hook violations",
+    "Set up revalidateTag caching for the blog posts in my App Router app",
+    "Write Playwright end-to-end tests for the checkout flow",
+    "Make my React Native FlatList scroll smoothly on Android"
+  ]
+}

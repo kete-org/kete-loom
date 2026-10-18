@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a Playwright test for the signup and onboarding flow",
+    "Our Playwright tests keep logging in through the UI before every test, make them reuse the session",
+    "Set up Playwright in this Next.js repo and add an e2e test for checkout, with a GitHub Actions job",
+    "Mock the exchange-rate API in my Playwright spec so I can test the error banner",
+    "Replace the waitForTimeout calls in our playwright specs with proper assertions"
+  ],
+  "should_not_trigger": [
+    "Click through the staging site and tell me what's broken before the demo",
+    "The nightly end-to-end run failed again, figure out whether it's the app or the tests and stabilise it",
+    "Look at the tests in this pull request and tell me which cases are missing",
+    "Write unit tests for the price formatting helper with Vitest",
+    "Our coverage is 41%, help me add tests where it actually matters"
+  ]
+}

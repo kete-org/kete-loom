@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Give our App Service a managed identity so it can read secrets from Key Vault without a client secret",
+    "Should we host these microservices on Azure Container Apps or AKS?",
+    "Lock down Azure SQL and the storage account with private endpoints and disable public access",
+    "Our Cosmos DB costs are huge, how do we cut the provisioned RU/s spend?",
+    "We still run Azure Functions on the Linux Consumption plan, what should we move to?"
+  ],
+  "should_not_trigger": [
+    "Use azure/login in a GitHub Actions workflow with a federated credential",
+    "Set up IAM roles and a VPC for an ECS service on AWS",
+    "Configure Entity Framework Core migrations for our ASP.NET Core app",
+    "Pick between Cloud Run and GKE for a new service on Google Cloud",
+    "Write a blue-green deployment plan for the billing API"
+  ]
+}

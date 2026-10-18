@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review my C++ branch before I merge it, especially the new threading code",
+    "Can you check this C++ diff for dangling string_views or use-after-move?",
+    "I changed a public header in our shared library, did I break ABI?",
+    "Look over the C++ pull request for leaks and undefined behaviour",
+    "Second pair of eyes on my lock-free queue changes in C++, I think there's a race"
+  ],
+  "should_not_trigger": [
+    "Fix the C++ link error: undefined reference to Parser::parse",
+    "Write Catch2 tests for the tokenizer module",
+    "Show me how to structure a new C++20 library with CMake and RAII wrappers",
+    "Review my Rust crate for unsafe blocks and lifetime issues",
+    "Review this Go change for goroutine leaks"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Here are 60 transcripts from our coding agent, grade them against rubric.md and tell me where it keeps failing",
+    "Score last night's batch of support-bot answers and group the failures by cause",
+    "Did the new system prompt make our research agent worse? Compare these two runs task by task",
+    "Run our agent on tasks.jsonl and give me an independent evaluation with examples of each failure"
+  ],
+  "should_not_trigger": [
+    "Design an eval suite with graders and a ship bar for our summariser",
+    "Rewrite the agent's system prompt so it stops looping on tool calls",
+    "Review my pull request for bugs before I merge",
+    "Check our RAG pipeline's chunking and retrieval code for problems",
+    "Add retries and structured output validation to the agent's model calls"
+  ]
+}

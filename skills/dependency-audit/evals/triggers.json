@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Dependabot flagged a critical vulnerability in a transitive dependency, how do I fix it safely?",
+    "Audit our Python and Rust dependencies for known vulnerabilities",
+    "Is this npm package safe to add? It has a postinstall script and only 200 weekly downloads",
+    "Set up a dependency update and pinning policy plus an SBOM for our releases",
+    "Check if we're exposed to any supply chain attacks through our lockfiles and CI installs"
+  ],
+  "should_not_trigger": [
+    "Upgrade our app from React 18 to React 19 and fix the breaking changes",
+    "The build fails with a module not found error after npm install",
+    "Scan the diff on this branch for hardcoded secrets and SQL injection",
+    "Set up a GitHub Actions workflow that runs tests on every pull request",
+    "Threat model how an attacker could tamper with our deployment pipeline"
+  ]
+}

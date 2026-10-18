@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Our Hibernate entities trigger hundreds of selects when loading the order list, fix the N+1",
+    "Getting LazyInitializationException: could not initialize proxy - no Session when mapping to DTO",
+    "Add @Version optimistic locking to the JPA Account entity and return 409 on conflicts",
+    "How should I map a one-to-many between Order and OrderLine in JPA with cascade and orphan removal?",
+    "Replace spring.jpa.hibernate.ddl-auto=update with Flyway migrations for our entities",
+    "MultipleBagFetchException when I join fetch two lists in a JPQL query"
+  ],
+  "should_not_trigger": [
+    "Add a new REST endpoint to our Spring Boot order service with request validation and proper 404 responses",
+    "Tune this slow PostgreSQL query plan and suggest indexes",
+    "Set up Prisma schema and migrations for our Node backend",
+    "Configure EF Core migrations and fix the tracking issue in our ASP.NET Core app",
+    "Plan a zero-downtime schema migration strategy for our Rails app",
+    "Write an Exposed DSL query in our Ktor service to list users"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Can you click through our staging site and find bugs before tomorrow's launch?",
+    "Do a QA pass on the signup and checkout pages at localhost:5173 and write up anything broken",
+    "Smoke test the new dashboard in the browser on mobile and desktop sizes",
+    "Go through the app like a real user and tell me if the forms handle bad input properly",
+    "Check the preview deploy for console errors and failed requests while you use it"
+  ],
+  "should_not_trigger": [
+    "Write Playwright specs for the login and checkout flows",
+    "Do a full WCAG 2.2 accessibility review of our component library",
+    "Our e2e suite is flaky on CI, find out why and fix it",
+    "Measure our Largest Contentful Paint and suggest how to bring it down",
+    "Review the tests added in PR 482 for weak assertions"
+  ]
+}

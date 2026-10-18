@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add unit tests for the tokenizer module in my Rust crate",
+    "How do I mock the HTTP client trait in Rust so my service tests don't hit the network?",
+    "My #[tokio::test] hangs forever when the retry backoff sleeps, how do I test it without waiting?",
+    "Where should integration tests go in a Rust library and how do I share helpers between them?",
+    "Write a proptest that checks my Rust serializer round-trips arbitrary input"
+  ],
+  "should_not_trigger": [
+    "Refactor this Rust module to return thiserror errors instead of String",
+    "My Rust tests don't compile anymore after bumping tokio, error E0277 future is not Send",
+    "Review my Rust diff for blocking calls inside async functions",
+    "Write pytest fixtures for the Django user model",
+    "Set up Playwright end-to-end tests for the checkout flow"
+  ]
+}

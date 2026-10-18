@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "npx tsc --noEmit shows 40 errors after the upgrade, get it compiling again",
+    "Vite build fails with Cannot find module '@/utils' but the editor resolves it fine",
+    "Getting ERR_REQUIRE_ESM when I run the compiled server, please fix the build",
+    "CI typecheck job is red on main with TS2345 errors, make it pass with minimal changes"
+  ],
+  "should_not_trigger": [
+    "Review my TypeScript diff for unsafe casts before merging",
+    "Write Vitest tests for the cart reducer",
+    "Help me design a strict tsconfig for a new library",
+    "cargo build fails with a borrow checker error in main.rs",
+    "The Gradle build fails with an unresolved Kotlin reference, fix it"
+  ]
+}

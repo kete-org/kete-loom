@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Research the current options for background job queues in Python and recommend one with sources",
+    "Compare Postgres logical replication tools for a zero-downtime migration and cite the docs you used",
+    "What's the current state of WebAuthn passkey support across browsers? I need an evidence-backed summary",
+    "Investigate which vector databases support hybrid search natively and write up a report with citations"
+  ],
+  "should_not_trigger": [
+    "Before I write a date formatting helper, check if the codebase already has one",
+    "Write a blog post about why our team switched to Rust",
+    "Do a market sizing and competitor analysis for our payments startup",
+    "Explain how this repository's authentication middleware works"
+  ]
+}

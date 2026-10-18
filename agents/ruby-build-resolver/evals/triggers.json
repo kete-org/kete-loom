@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "bundle install fails with Failed to build gem native extension for pg on macOS",
+    "CI says Your bundle only supports platforms arm64-darwin, how do I fix the lockfile?",
+    "After upgrading to Ruby 3.4 the app crashes with cannot load such file -- base64",
+    "Bundler could not find compatible versions for gem activesupport, please sort it out",
+    "Your Ruby version is 3.2.2, but your Gemfile specified 3.3.0 when I run bundle exec"
+  ],
+  "should_not_trigger": [
+    "Review my Ruby branch for N+1 queries and nil errors",
+    "My RSpec suite is flaky with random seeds, find the order dependency",
+    "Show me how to configure RuboCop for a new Ruby gem",
+    "Fix the cargo build error: unresolved import tokio::sync",
+    "pip install fails building psycopg2 wheel, fix the Python environment"
+  ]
+}

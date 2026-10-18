@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "We're building a telehealth app for US clinics, what HIPAA safeguards do we need in the backend?",
+    "Can we use Sentry and Twilio in our patient portal or do we need a BAA first?",
+    "Our logs are full of patient names and diagnoses, help me scrub PHI out of them",
+    "Design an audit log for who viewed or exported each patient record in our EHR",
+    "Is a hashed email plus visit date still PHI if we send it to our analytics vendor?",
+    "Review our pharmacy refill service for HIPAA minimum necessary and access control gaps"
+  ],
+  "should_not_trigger": [
+    "Our EU users want their data deleted under GDPR, build the erasure flow",
+    "Which SAQ do we need if we use Stripe Checkout for payments?",
+    "Write unit tests for the appointment booking service",
+    "Do a security review of our new password reset endpoint",
+    "Set up role-based access control with OAuth scopes in our NestJS API",
+    "Build a PyTorch model that predicts hospital readmission from tabular data"
+  ]
+}

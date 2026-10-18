@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Add a Redis cache in front of the product lookup and stop the stampede when the key expires",
+    "Our Redis instance keeps getting OOM command not allowed errors, what maxmemory-policy should we use?",
+    "Build a sliding window rate limiter for the login endpoint using Redis sorted sets",
+    "Is SET NX PX safe enough as a distributed lock for our cron jobs in Redis?",
+    "Should I use Redis Streams or pub/sub for order events that workers must not miss?",
+    "How should I name and expire keys in Valkey for per-user session data?"
+  ],
+  "should_not_trigger": [
+    "Design a MongoDB schema for orders with embedded line items",
+    "Our Postgres query on the orders table is slow, can you look at the plan?",
+    "Set up a ClickHouse table for page view events partitioned by month",
+    "Write a docker-compose file that runs our API and its database",
+    "Fix the N+1 queries in our Prisma resolvers",
+    "Deploy our cache cluster with a Kubernetes StatefulSet and Helm chart"
+  ]
+}

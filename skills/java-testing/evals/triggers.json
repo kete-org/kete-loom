@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write JUnit 5 tests with Mockito for the OrderService class",
+    "Replace H2 with Testcontainers PostgreSQL in our Java repository tests",
+    "This JUnit test passes on my laptop but fails randomly in the CI pipeline, help me find out why",
+    "Turn these five copy-pasted Java test methods into a parameterized test with AssertJ assertions",
+    "Mockito says UnnecessaryStubbingException in my CheckoutServiceTest, what's wrong?"
+  ],
+  "should_not_trigger": [
+    "Convert these Java DTO classes to records and use a sealed interface for the payment types",
+    "Gradle build fails: Could not resolve org.junit.jupiter:junit-jupiter after bumping versions",
+    "Write Playwright end-to-end tests for the checkout page",
+    "Add pytest fixtures and parametrize the tests for the billing module",
+    "Write Kotest specs with MockK for the Kotlin payment service"
+  ]
+}

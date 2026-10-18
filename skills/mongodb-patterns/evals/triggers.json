@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Should I embed comments inside the post document or put them in their own MongoDB collection?",
+    "This Mongo aggregation with $lookup and $group takes 8 seconds, help me speed it up",
+    "explain() shows COLLSCAN on our orders collection, what compound index do we need?",
+    "Add a $jsonSchema validator to the users collection without breaking existing documents",
+    "Do I need a transaction in Mongoose to move credits between two wallet documents?",
+    "Design the document model for a multi-tenant SaaS on MongoDB Atlas"
+  ],
+  "should_not_trigger": [
+    "Cache the user profile in Redis with a five minute TTL",
+    "Write a Prisma schema for users and posts on Postgres",
+    "Design a ClickHouse table for billions of analytics events",
+    "Normalise this Postgres schema and add foreign keys",
+    "Write a zero-downtime migration that renames a column in MySQL",
+    "Review this pull request for SQL injection and auth bugs"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My C++ build fails with undefined reference to vtable for Shape, can you fix it?",
+    "CMake says it could not find a package configuration file for fmt even though vcpkg installed it",
+    "Getting LNK2019 unresolved external symbol on Windows after adding a new library target",
+    "After upgrading Conan the C++ project no longer configures, get it building again",
+    "multiple definition of helper() errors when linking my C++ app"
+  ],
+  "should_not_trigger": [
+    "Review my C++ changes for data races before I merge",
+    "Write gMock mocks for the storage interface in the C++ tests",
+    "Explain when to use shared_ptr versus unique_ptr in modern C++",
+    "cargo build fails with a borrow checker error, fix it",
+    "The TypeScript compiler reports type errors after upgrading tsc, fix the build"
+  ]
+}

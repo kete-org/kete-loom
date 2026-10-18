@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write Vitest unit tests for the invoice calculator in src/billing",
+    "How do I mock the ./db module in Jest but keep the rest of its real exports?",
+    "This retry test uses setTimeout and takes 30 seconds, use fake timers instead",
+    "Our auth.test.ts passes locally but fails randomly in CI, find out why",
+    "Get coverage on the payments package above 80% with jest --coverage"
+  ],
+  "should_not_trigger": [
+    "Set up a strict tsconfig and decide between ESM and CommonJS for the new package",
+    "Write Playwright end-to-end tests for the signup flow in the browser",
+    "Review this TypeScript diff for type holes and async races",
+    "npm run build fails with ERR_REQUIRE_ESM after upgrading a dependency, fix it",
+    "Write pytest fixtures for the Django order views"
+  ]
+}

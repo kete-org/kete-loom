@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Add JWT authentication and StatusPages error handling to my Ktor server",
+    "Ktor says Serializer for class OrderDto is not found when I call call.respond",
+    "Write tests for our Ktor routes with testApplication and a fake repository",
+    "Set up the Ktor DI plugin or Koin to inject services into Ktor routing",
+    "Is it ok to call JDBC directly inside a Ktor route handler or should I switch dispatchers?",
+    "Split my giant Ktor Application.module into routing, security and serialization plugins"
+  ],
+  "should_not_trigger": [
+    "Build a Quarkus REST endpoint backed by Panache and make it compile to a native image",
+    "Bind the payments.* settings in application.yml to a typed config class in Spring Boot",
+    "Explain Kotlin sealed classes and Flow operators for our Android app",
+    "Share networking code between Android and iOS with Kotlin Multiplatform and the Ktor client",
+    "Review this Kotlin pull request for coroutine misuse",
+    "Write unit tests with MockK and kotest for our Kotlin pricing module"
+  ]
+}

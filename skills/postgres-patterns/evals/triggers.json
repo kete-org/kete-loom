@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "This Postgres query takes 4 seconds, here's the EXPLAIN ANALYZE, what index do I need?",
+    "Should I use a GIN index or an expression index for filtering on a JSONB column?",
+    "Design the PostgreSQL tables for subscriptions, invoices and payments with proper constraints",
+    "We keep getting deadlock detected errors in Postgres when two workers update balances",
+    "Set up PgBouncer for our Postgres database, the app keeps running out of connections",
+    "What's the right way to back up a production PostgreSQL database with point-in-time recovery?"
+  ],
+  "should_not_trigger": [
+    "Our MySQL InnoDB table has gap lock deadlocks on insert, how do we avoid them?",
+    "Plan a zero-downtime migration to change orders.id from int to bigint",
+    "Review this pull request's migrations for locking hazards and missing indexes",
+    "Write the Prisma schema and client queries for a blog with posts and comments",
+    "Add caching with Redis in front of the product lookup endpoint"
+  ]
+}

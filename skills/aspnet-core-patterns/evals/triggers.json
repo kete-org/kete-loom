@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "CORS preflight returns 401 in my ASP.NET Core API, is my middleware order wrong?",
+    "Should this new .NET 8 service use minimal APIs or controllers, and how do I group the routes?",
+    "Bind the Smtp section of appsettings to an options class in ASP.NET Core and fail at startup if it's missing",
+    "Make every unhandled exception in our ASP.NET Core API return RFC 7807 problem details",
+    "Add liveness and readiness health check endpoints to the ASP.NET Core orders service"
+  ],
+  "should_not_trigger": [
+    "Turn on nullable reference types across this C# class library and fix the warnings",
+    "Write an xUnit test with WebApplicationFactory for the orders endpoint",
+    "My EF Core query throws 'could not be translated', how do I rewrite it?",
+    "Add a dotnet ef migration for the new Invoice table",
+    "Write a Kubernetes deployment manifest with readiness probes for this container"
+  ]
+}

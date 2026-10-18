@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Write a guided tour of how a login request moves through this app, with file and line references for each stop",
+    "Create a walkthrough of the billing module for new contributors so they know what to read and in what order",
+    "Can you make a step-by-step code tour of the plugin loader for the docs folder?",
+    "Our new hire starts Monday. Put together a feature tour of the search indexing pipeline pinned to the current commit"
+  ],
+  "should_not_trigger": [
+    "I just cloned this project, help me figure out how to build it and where the entry points are",
+    "Write API reference docs for the public functions in the sdk package",
+    "Update the README and CHANGELOG to reflect the renamed config flag",
+    "Explain what this one regular expression in utils.py matches"
+  ]
+}

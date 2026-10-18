@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add a GitHub Actions workflow that runs our tests on Node 20 and 22 on every pull request",
+    "Our CI keeps reinstalling dependencies every run, add caching to the workflow",
+    "Replace the AWS_ACCESS_KEY_ID secret in our deploy workflow with OIDC",
+    "Why does this Actions job fail with Resource not accessible by integration?",
+    "Harden our workflows: pin third-party actions to SHAs and restrict GITHUB_TOKEN permissions"
+  ],
+  "should_not_trigger": [
+    "Plan how to roll out the new payments service gradually with a canary and rollback",
+    "Write conventional commit messages for these staged changes",
+    "Cut a release, bump the version and generate the changelog",
+    "Write a multi-stage Dockerfile for our Go service",
+    "Set up least-privilege IAM for an S3 bucket our app reads from"
+  ]
+}

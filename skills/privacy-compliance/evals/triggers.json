@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "We're launching our fintech app in Nigeria and Kenya, what do we need to build for the NDPA and the Kenya Data Protection Act?",
+    "Add a cookie consent banner that actually blocks Google Analytics until the user opts in",
+    "A user emailed asking for a copy of all the data we hold about them under GDPR, how do we export it?",
+    "Build an account deletion flow that removes the user from Postgres, S3, Mailchimp and our analytics",
+    "Map all the personal data our Django app stores and tell me what retention we should set for each table",
+    "Is it okay to store Ghanaian customers' data in an AWS region in Europe? What does the Data Protection Act 843 require?"
+  ],
+  "should_not_trigger": [
+    "Our telehealth app stores patient visit notes, what HIPAA safeguards and BAAs do we need?",
+    "How do we keep card numbers out of our servers so we only need SAQ A?",
+    "Review this login endpoint for SQL injection and broken access control",
+    "Draw a threat model for our new file upload service",
+    "Write a migration that adds a nullable phone_number column to the users table",
+    "Implement JWT refresh tokens with rotation in our Express API"
+  ]
+}

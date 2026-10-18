@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Split this 2000-line OrderService into smaller classes without breaking anything",
+    "I want to rename the User model's fields across the codebase safely",
+    "Plan how to replace our legacy billing module gradually instead of a big-bang rewrite",
+    "Add characterisation tests to this untested parser before I restructure it",
+    "Extract the pricing logic out of the controller and move it into its own module"
+  ],
+  "should_not_trigger": [
+    "Find and delete dead code and unused exports in this repo",
+    "Simplify the function I just wrote, it has too much nesting",
+    "Write a failing test first, then implement the discount feature",
+    "Fix the build error after upgrading the Go version",
+    "Review my pull request for correctness bugs",
+    "Should we adopt hexagonal architecture for the new service?"
+  ]
+}

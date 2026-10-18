@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Simplify the function I just wrote, it has too much nesting",
+    "Clean up my last commit, I think I over-engineered the factory classes",
+    "Make the code in my current diff more readable before I push",
+    "Tidy the new handlers I added today without changing what they do"
+  ],
+  "should_not_trigger": [
+    "Find and delete dead code and unused exports in this repo",
+    "Plan how to replace our legacy billing module gradually instead of a big-bang rewrite",
+    "Review the diff in this PR for bugs",
+    "Speed up the report export, it takes 40 seconds",
+    "Add a new endpoint for listing invoices"
+  ]
+}

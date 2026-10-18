@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "How do I rename a column in production without breaking the app instances still running old code?",
+    "Write a Django migration that adds a NOT NULL column to a table with 50 million rows",
+    "We need to backfill a new column across 80M rows without stalling replication",
+    "Plan the expand and contract steps to split the address fields into their own table",
+    "What's the rollback plan if this Flyway migration that changes a column type fails halfway?"
+  ],
+  "should_not_trigger": [
+    "Review the migrations in this pull request and tell me what's risky",
+    "Which Postgres index type should I use for full-text search on article bodies?",
+    "Our MySQL connection shows utf8mb3, how do I make the client use utf8mb4?",
+    "Set up a GitHub Actions workflow that runs the test suite on every push",
+    "Create a blue-green deployment strategy for our Kubernetes services"
+  ]
+}

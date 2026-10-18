@@ -39,7 +39,7 @@ metadata:
 | `compatibility` | optional, max 500 chars | Agent Skills spec field for environment needs |
 | `metadata` | string-to-string map only | OpenCode rejects nested or non-string metadata |
 | `metadata.kete-loom/version` | semver, required | Lets the runtime and catalog track changes |
-| `metadata.kete-loom/category` | coding, testing, security, integrations, devops, docs, meta | Catalog grouping |
+| `metadata.kete-loom/category` | coding, testing, security, integrations, devops, data, ai, docs, business, compliance, meta | Catalog grouping |
 | `metadata.kete-loom/risk` | read-only, writes-files, runs-commands, network | Lets Kete Code warn before loading risky skills |
 | `metadata.kete-loom/requires` | comma list of CLIs | `kete-loom doctor` checks them |
 

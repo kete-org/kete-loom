@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Set up a strict tsconfig for a new Node 20 library that ships ESM",
+    "How should I type this API response so the success and error cases can't get mixed up?",
+    "Our package mixes require and import and half the files are .mjs, what's the right way to structure ESM vs CommonJS here?",
+    "Refactor this user service to stop using any and use proper unions and narrowing",
+    "Configure ESLint flat config with typescript-eslint and Prettier for our monorepo"
+  ],
+  "should_not_trigger": [
+    "Write Vitest tests for the date formatting helpers and mock the clock",
+    "Review my TypeScript pull request for unhandled promises before I merge",
+    "tsc fails with TS2307 Cannot find module '@app/config', make the build pass",
+    "Add a useMemo to stop this React component re-rendering on every keystroke",
+    "Write idiomatic Python dataclasses for the order model"
+  ]
+}

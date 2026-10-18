@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We need to rename a column in production without downtime while the new code rolls out",
+    "Design a canary release for the new search service with automatic rollback on error rate",
+    "Blue-green or canary for our monolith that gets very little traffic?",
+    "Put the new pricing page behind a feature flag so we can deploy it dark and turn it on later",
+    "What should our readiness and liveness probes check, and how do we verify a deploy worked?"
+  ],
+  "should_not_trigger": [
+    "Write the Alembic migration that adds an index to the orders table",
+    "Add a matrix build to our GitHub Actions workflow",
+    "Tag version 2.4.0 and write the release notes",
+    "Choose between App Service and Container Apps on Azure",
+    "Our Kubernetes pods are stuck in CrashLoopBackOff, help me read the events"
+  ]
+}

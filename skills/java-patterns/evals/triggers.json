@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Convert these Java DTO classes to records and use a sealed interface for the payment types",
+    "What's the idiomatic way to handle a lookup that may return nothing in Java 21, Optional or null?",
+    "Our Spring service makes 200 blocking HTTP calls per request, should I use virtual threads?",
+    "Modernise this Java 8 code to Java 17: switch expressions, streams, immutable collections",
+    "Should this Java hierarchy be an enum, a record or a sealed interface?"
+  ],
+  "should_not_trigger": [
+    "Write JUnit 5 tests with Mockito for the OrderService class",
+    "Maven fails with 'package javax.annotation does not exist' after upgrading to JDK 21, fix the build",
+    "Review my Java pull request for resource leaks and equals/hashCode bugs",
+    "Convert this Java data class to an idiomatic Kotlin data class",
+    "Set up Spring Boot auto-configuration and a REST controller for orders",
+    "Map this JPA entity with a lazy OneToMany and fix the N+1 queries in the order list"
+  ]
+}

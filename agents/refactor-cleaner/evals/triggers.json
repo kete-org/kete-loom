@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Find and delete dead code and unused exports in this repo",
+    "We have a bunch of npm dependencies nobody uses anymore, clean them out",
+    "There are three copies of formatDate in utils folders, consolidate them",
+    "Prune unreferenced files and functions from the backend package",
+    "Run knip and remove whatever is really unused"
+  ],
+  "should_not_trigger": [
+    "Simplify the function I just wrote, it has too much nesting",
+    "Split this 2000-line OrderService into smaller classes without breaking anything",
+    "Audit our dependencies for known vulnerabilities and outdated licences",
+    "Find places where errors are swallowed in the sync worker",
+    "Upgrade React to the latest major version"
+  ]
+}

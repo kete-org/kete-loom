@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "I just inherited this repo and have no idea how it fits together, help me get oriented",
+    "Where do I even start with this codebase? Figure out how to build and run it",
+    "Map out the modules and how a request flows through this service before I change anything",
+    "New job, first day, cloned their monorepo. Give me a quick lay of the land for the payments package"
+  ],
+  "should_not_trigger": [
+    "Write a guided tour of the checkout feature for our new contributors, with file and line stops",
+    "Rewrite our README so a new user can install the CLI in five minutes",
+    "I changed the config loader, update the docs and changelog to match",
+    "Propose how we should split this monolith into separate services and write up the trade-offs"
+  ]
+}

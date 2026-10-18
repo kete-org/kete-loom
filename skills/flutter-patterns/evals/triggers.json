@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Should this Flutter app use Riverpod or Bloc for the cart and auth state?",
+    "Set up go_router with a login redirect and a product/:id route",
+    "My FutureBuilder keeps refetching every time the parent rebuilds, how do I structure this screen?",
+    "Call the Android battery API from my Flutter app using Pigeon",
+    "Break this 400-line Flutter build method into smaller widgets"
+  ],
+  "should_not_trigger": [
+    "Review this Flutter pull request for setState after await and leaked controllers",
+    "Convert these Dart enums and nullable fields into a sealed class hierarchy",
+    "Write widget tests and golden tests for the checkout screen",
+    "My React Native FlashList is janky on older Android phones",
+    "Build a Jetpack Compose list screen backed by a ViewModel"
+  ]
+}

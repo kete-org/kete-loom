@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "cargo build is broken: error[E0499] cannot borrow `self.items` as mutable more than once",
+    "After cargo update the project won't compile, two versions of the http crate conflict",
+    "Fix the compile error: the trait bound `MyType: Serialize` is not satisfied",
+    "rustc says unresolved import tokio::fs, can you get the build green again?",
+    "My Rust code doesn't compile, future cannot be sent between threads safely"
+  ],
+  "should_not_trigger": [
+    "Review this Rust PR for needless clones and panics",
+    "How should I design error types for a Rust library?",
+    "Add a proptest suite for the Rust date parser",
+    "TypeScript build fails with TS2322 type is not assignable",
+    "The Go build fails with undefined: grpc.NewServer after go mod tidy"
+  ]
+}

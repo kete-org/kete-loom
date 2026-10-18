@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write PHPUnit tests with a data provider for my PriceCalculator class",
+    "Convert our PHPUnit @dataProvider annotations to attributes so we can upgrade to PHPUnit 12",
+    "How do I mock the Guzzle client in a Pest test for my weather service?",
+    "My Laravel feature tests leave rows in the database between runs, how do I isolate them?",
+    "Add tests for the POST /orders endpoint in our Symfony app covering validation and auth failures"
+  ],
+  "should_not_trigger": [
+    "Write a PHP 8.3 enum for invoice statuses with a label method",
+    "Review my PHP changes for type juggling bugs and missing strict_types",
+    "PHPStan fails at level 8 after upgrading Composer packages, fix it",
+    "Write pytest fixtures for my Django models",
+    "Set up Playwright end-to-end tests for the checkout page"
+  ]
+}

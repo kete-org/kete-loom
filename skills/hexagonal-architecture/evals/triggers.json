@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "All our pricing logic lives inside the Django views, how do I pull it out so I can test it without a database?",
+    "Set up ports and adapters for the billing module so we can swap Stripe for Paystack later",
+    "Is clean architecture overkill for our small CRUD admin service?",
+    "Our domain classes import the ORM everywhere. Help me fix the dependency direction step by step",
+    "Carve the order placement use case out of this 2000-line legacy service without a rewrite"
+  ],
+  "should_not_trigger": [
+    "Design the REST endpoints and error format for the new orders API",
+    "Rename this long method and split it into smaller functions, keeping behaviour",
+    "Compare a monolith versus microservices for our new platform and recommend one",
+    "Write an ADR documenting that we adopted hexagonal architecture",
+    "Implement the Stripe webhook handler for subscription renewals",
+    "Delete the dead code and unused exports in the utils folder"
+  ]
+}

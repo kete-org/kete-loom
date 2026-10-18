@@ -34,7 +34,7 @@
         "kete-loom/version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
         "kete-loom/category": {
           "type": "string",
-          "enum": ["coding", "testing", "security", "integrations", "devops", "docs", "meta"]
+          "enum": ["coding", "testing", "security", "integrations", "devops", "data", "ai", "docs", "business", "compliance", "meta"]
         },
         "kete-loom/risk": {
           "type": "string",

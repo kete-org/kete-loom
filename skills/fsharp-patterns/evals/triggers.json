@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Model our order lifecycle in F# so you can't ship an order that hasn't been paid",
+    "This F# module throws exceptions everywhere, rewrite it to return Result instead",
+    "Write an F# function that loads a customer from EF Core inside a task computation expression and returns Result",
+    "How should I organise the modules and file order in my new F# web API project?",
+    "Wrap this C# library that returns nulls so my F# code only sees Option values"
+  ],
+  "should_not_trigger": [
+    "Write Expecto property tests with FsCheck for my F# parser",
+    "Review this F# pull request for incomplete pattern matches and mutable state",
+    "My F# project fails to build with FS0039 after I added a new file, fix it",
+    "Refactor this C# service to use records and pattern matching",
+    "Set up an EF Core migration for the new Orders table in our C# API"
+  ]
+}

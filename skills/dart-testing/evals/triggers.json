@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Write mocktail tests for my Dart UserRepository that wraps an http client",
+    "How do I test that this Dart stream emits loading, then data, then closes?",
+    "My flutter widget test times out on pumpAndSettle, how do I fix it?",
+    "Add a golden test for the PriceTag widget in our Flutter app",
+    "Test this retry logic with a 2 second delay in Dart without actually waiting",
+    "mocktail says I need registerFallbackValue for my custom type, what does that mean"
+  ],
+  "should_not_trigger": [
+    "Convert this Dart enum and switch into a sealed class hierarchy",
+    "Review my Flutter screen for stream subscription leaks and unawaited futures",
+    "dart run build_runner build fails with conflicting outputs, fix it",
+    "Write pytest fixtures for my FastAPI service",
+    "Set up Playwright end-to-end tests for our web checkout",
+    "Write Swift Testing tests with #expect for my iOS view model"
+  ]
+}

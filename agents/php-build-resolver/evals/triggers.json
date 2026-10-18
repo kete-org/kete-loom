@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "composer install fails with 'Your requirements could not be resolved to an installable set of packages'",
+    "After moving App\\Billing classes into a new folder I get Class not found everywhere, fix the autoloading",
+    "PHPStan went red in CI after I bumped phpstan to the latest release, get it passing",
+    "We upgraded the server to PHP 8.4 and now the app throws deprecation warnings and a fatal error, fix it",
+    "Psalm reports PossiblyNullArgument errors in my new code and the pipeline blocks the merge"
+  ],
+  "should_not_trigger": [
+    "Review my PHP diff for XSS and SQL injection",
+    "Write a PHP enum for subscription plans",
+    "Add PHPUnit tests for the invoice mailer",
+    "cargo build fails with a lifetime error in my Rust crate",
+    "npm install fails with ERESOLVE peer dependency conflict in my TypeScript project"
+  ]
+}

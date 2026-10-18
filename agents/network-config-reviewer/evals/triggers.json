@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Before I load this nftables.conf on the gateway, can you check it won't expose anything or lock me out?",
+    "Look over my OPNsense config.xml export and tell me what's reachable from the WAN",
+    "Is this OpenVPN server.conf using outdated ciphers?",
+    "Audit the wg0.conf files and unbound.conf in this repo for security problems",
+    "Second opinion on my MikroTik export, I think a port forward is too open"
+  ],
+  "should_not_trigger": [
+    "Write me a WireGuard config so I can connect to my home network from my laptop",
+    "I can't reach port 443 on my server from outside, help me find where it's blocked",
+    "Review the Terraform security groups and IAM policies in this pull request",
+    "Check this Kubernetes manifest for privileged containers and missing resource limits",
+    "Scan our Node app's dependencies for known CVEs",
+    "Plan VLANs and firewall zones for my new home lab"
+  ]
+}

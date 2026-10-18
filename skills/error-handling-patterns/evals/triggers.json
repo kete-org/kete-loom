@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Add retries with exponential backoff to our HTTP client for the shipping API",
+    "How should this service decide between crashing and recovering when the config file is missing?",
+    "Restructure the error handling in the order service so we stop leaking stack traces to API clients",
+    "Wrap these database errors with context so the logs tell us which customer failed",
+    "Our outbound calls hang forever sometimes, add timeouts and cancellation properly",
+    "Design the error types for this new payments module"
+  ],
+  "should_not_trigger": [
+    "Scan this module for empty catch blocks and swallowed errors and report them",
+    "Fix the TypeScript compile error in src/api/client.ts",
+    "Refactor this class into smaller functions without changing behaviour",
+    "Review my diff for bugs before I open the pull request",
+    "Integrate Paystack webhooks into our checkout flow",
+    "The checkout endpoint is slow, profile it and find the bottleneck"
+  ]
+}

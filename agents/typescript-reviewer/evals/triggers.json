@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my TypeScript changes for type holes and unhandled promises before I commit",
+    "Can you do a TS-focused review of this branch? Worried about the as casts and ! assertions",
+    "Look over this Node.js PR for async races and ESM/CJS import breakage",
+    "Check the diff in src/api for promises nobody awaits and any leaking into typed code"
+  ],
+  "should_not_trigger": [
+    "Fix the tsc errors so the CI type-check goes green",
+    "Write Jest tests for the new order service",
+    "Review this Python pull request for bugs",
+    "Review the React components in this PR for hook misuse and unnecessary re-renders",
+    "Explain the difference between unknown and any in TypeScript"
+  ]
+}

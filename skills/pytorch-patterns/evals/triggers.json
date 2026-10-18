@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My PyTorch training loss turns into NaN after about 300 steps, help me find out why",
+    "Add bf16 mixed precision and gradient clipping to this torch training loop",
+    "RuntimeError: mat1 and mat2 shapes cannot be multiplied (64x2048 and 512x10) in my nn.Module",
+    "Make my PyTorch checkpoints resumable, including optimizer and scheduler state",
+    "Two runs of the same torch script with seed 42 give different accuracy, make it deterministic"
+  ],
+  "should_not_trigger": [
+    "Set up a proper train/validation/test split and a baseline before we try the transformer",
+    "Review this training notebook for data leakage and wrong metrics before we publish the results",
+    "Write pytest unit tests for the Python utility module that parses CSV files",
+    "Build a retrieval pipeline that chunks our docs and stores embeddings in pgvector",
+    "Write an eval harness that scores our chatbot's answers against a golden set"
+  ]
+}

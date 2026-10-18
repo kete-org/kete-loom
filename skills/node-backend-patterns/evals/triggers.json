@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our Express API drops in-flight requests every time Kubernetes redeploys the pod",
+    "Add zod request validation and a single JSON error handler to this Express app",
+    "Set up a Fastify service with schema validation, helmet and rate limiting on login",
+    "Stream a large CSV export from Node without loading it all into memory",
+    "Replace console.log with structured pino logging and request ids in our Node server"
+  ],
+  "should_not_trigger": [
+    "Add a NestJS interceptor that maps every response into a data envelope",
+    "Write a Dockerfile with a multi-stage build for our Node service",
+    "Should we run our API on Bun instead of Node to speed up cold starts?",
+    "Design the versioning scheme and error format for our public REST API",
+    "Write Playwright tests for the checkout page"
+  ]
+}

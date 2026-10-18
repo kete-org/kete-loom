@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Build a chat-over-our-docs feature that answers from our Confluence export with citations",
+    "Our RAG bot keeps citing the wrong section of the handbook, how do I fix retrieval?",
+    "Add hybrid BM25 plus vector search with a reranker to our pgvector document index",
+    "What chunk size and overlap should I use for embedding these PDF manuals?",
+    "Deleted documents still show up in our semantic search answers, fix the re-indexing job",
+    "How do I measure recall@k for our retrieval step separately from answer quality?"
+  ],
+  "should_not_trigger": [
+    "Review our RAG pipeline code and config and list its weaknesses without changing anything",
+    "Write a Model Context Protocol server that exposes our docs search as a tool",
+    "Design the tool set and permission model for our coding agent",
+    "Set up an eval harness that scores our chatbot's prompts against a golden set",
+    "Tune this Postgres query that joins orders and customers, it is slow",
+    "Fine-tune a PyTorch model on our labelled support tickets"
+  ]
+}

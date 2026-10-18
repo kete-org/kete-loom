@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Maven fails with 'package javax.annotation does not exist' after upgrading to JDK 21, fix the build",
+    "Gradle build fails: Could not resolve org.junit.jupiter:junit-jupiter after bumping versions",
+    "Our tests throw NoSuchMethodError from Jackson at runtime, I think two versions are on the classpath",
+    "mvn compile can't find the Lombok getters any more since we moved to Java 21",
+    "Build says release version 21 not supported, can you get it compiling again?"
+  ],
+  "should_not_trigger": [
+    "Review my Java pull request for resource leaks and equals/hashCode bugs",
+    "Write JUnit 5 tests with Mockito for the OrderService class",
+    "cargo build fails with a borrow checker error in main.rs",
+    "Gradle build for the Kotlin multiplatform module fails with an unresolved expect declaration",
+    "Set up a GitHub Actions workflow that runs mvn verify on every push"
+  ]
+}

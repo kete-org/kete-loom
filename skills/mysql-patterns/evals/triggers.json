@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Emoji are being saved as ???? in our MySQL database, what charset settings do I need?",
+    "EXPLAIN shows type ALL and Using filesort on this MySQL query, how should I index it?",
+    "We get Deadlock found when trying to get lock (1213) on InnoDB during concurrent inserts",
+    "Users don't see their own updates right after saving because we read from a MySQL replica",
+    "Design the InnoDB tables for a MariaDB-backed booking system, what primary keys should I use?"
+  ],
+  "should_not_trigger": [
+    "Tune this PostgreSQL query, the EXPLAIN ANALYZE shows a nested loop with millions of rows",
+    "Write a Rails migration that drops a column safely across two deploys",
+    "Check this PR for N+1 queries and dangerous migrations before I merge",
+    "How do I configure PgBouncer transaction pooling for a Postgres cluster?",
+    "Set up a Redis cache with expiry for session data"
+  ]
+}

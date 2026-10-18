@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Review this C# PR for async void handlers and .Result calls that could deadlock",
+    "Can you check my .NET branch for undisposed streams and DbContext lifetime problems before I merge?",
+    "Look over the EF Core query changes in this diff for N+1 problems and client-side evaluation",
+    "Our ASP.NET service started throwing NullReferenceException after yesterday's commit, review what changed",
+    "Second pair of eyes on my C# changes: am I enumerating any IEnumerable twice?"
+  ],
+  "should_not_trigger": [
+    "dotnet build fails with CS0246 type or namespace could not be found after upgrading to net9.0",
+    "Write xUnit tests with Moq for the PaymentService class",
+    "How should I structure records and pattern matching in a new C# library?",
+    "Review my Kotlin coroutine changes for leaked scopes",
+    "Review the database schema migration for missing indexes",
+    "Do a security review of the login flow for OWASP issues"
+  ]
+}

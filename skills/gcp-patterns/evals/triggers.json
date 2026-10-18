@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Deploy this container to Cloud Run and give it a dedicated service account with minimal roles",
+    "How should our Cloud Run service connect to Cloud SQL Postgres on a private IP?",
+    "A teammate wants to download a JSON key for a GCP service account, is there a better way?",
+    "Cloud Run, GKE Autopilot or Cloud Run functions for a Pub/Sub event processor?",
+    "Our Google Cloud invoice is dominated by Cloud Logging ingestion and BigQuery scans"
+  ],
+  "should_not_trigger": [
+    "Let our GitHub Actions workflow authenticate to Google Cloud with workload identity federation",
+    "Choose between Lambda and ECS Fargate for our API on AWS",
+    "Make our Azure Functions app read secrets from Key Vault with a managed identity",
+    "Write a BigQuery SQL query that finds the top ten customers by revenue",
+    "Tune the Helm chart values for our ingress controller"
+  ]
+}

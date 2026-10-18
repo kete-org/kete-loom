@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review this FastAPI PR for blocking calls in async def endpoints",
+    "Check my FastAPI branch: did I leak database sessions or skip the auth dependency anywhere?",
+    "Look over the diff to our FastAPI users router and tell me if any response exposes password_hash",
+    "Before I merge, audit these new FastAPI routes for validation gaps"
+  ],
+  "should_not_trigger": [
+    "Add a FastAPI endpoint for uploading avatars with Pydantic validation",
+    "Write TestClient tests for my FastAPI orders router",
+    "Review my Django views for N+1 queries",
+    "Review the asyncio worker in this plain Python service for unawaited coroutines",
+    "Check this Flask blueprint for CSRF problems and fix them"
+  ]
+}

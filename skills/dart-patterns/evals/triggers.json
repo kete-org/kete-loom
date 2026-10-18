@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Refactor this Dart class hierarchy into a sealed class so the switch is exhaustive",
+    "How should I parse this JSON map in Dart 3 without casting everything to dynamic?",
+    "Return two values from this Dart function, should I use a record?",
+    "Set up analysis_options.yaml with stricter lints for our Dart server package",
+    "My Dart code is full of ! operators, help me restructure it so null safety actually works",
+    "Move this heavy JSON decoding off the main isolate in my Dart app"
+  ],
+  "should_not_trigger": [
+    "Write unit tests with mocktail for my Dart repository class",
+    "Review this Flutter widget for setState after dispose and other bugs",
+    "flutter analyze fails with 47 errors after I upgraded packages, fix it",
+    "Build a responsive Flutter layout with a bottom navigation bar and Riverpod state",
+    "Refactor this Kotlin sealed interface into idiomatic Kotlin",
+    "Add golden tests for my Flutter login screen"
+  ]
+}

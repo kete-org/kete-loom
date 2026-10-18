@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "My Next.js App Router page keeps showing old product prices after I update them in the admin",
+    "Where should I put 'use client' in this app/ layout so the header dropdown works?",
+    "Write a server action that creates a comment and revalidates the post page",
+    "We upgraded to Next 16 and now middleware.ts gives a deprecation warning, what do I change?",
+    "Add generateMetadata with Open Graph images to the app/blog/[slug] route",
+    "My NEXT_PUBLIC_API_URL is still the old value in the Docker deploy even though I changed the env var"
+  ],
+  "should_not_trigger": [
+    "Where should the selected-tab state live in my plain Vite React app?",
+    "Our Next.js bundle is huge, help me find which client components to code-split and measure with the Profiler",
+    "Review my Next.js pull request for server/client boundary leaks and hook bugs",
+    "Write a GitHub Actions workflow that builds and deploys our app",
+    "Set up a NestJS controller with validation pipes for the orders API",
+    "Configure Nuxt server routes and useFetch caching"
+  ]
+}

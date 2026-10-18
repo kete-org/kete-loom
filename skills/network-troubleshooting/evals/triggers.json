@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "My server can ping 8.8.8.8 but apt update says it can't resolve the mirror hostname",
+    "curl to our API on port 8443 just hangs and then times out, what's blocking it?",
+    "Users get 'unable to get local issuer certificate' when hitting our site from Python but Chrome is fine",
+    "Small web pages load over the VPN but large downloads and git clone stall forever",
+    "nc says connection refused on port 5432 from the app box, how do I figure out why",
+    "Why is the website slow only from the office, mtr shows loss at hop 6"
+  ],
+  "should_not_trigger": [
+    "Help me split my home network into VLANs for IoT, guests and my servers",
+    "Review this nftables ruleset and WireGuard config for anything exposed to the internet",
+    "Write a Kubernetes NetworkPolicy that only lets the frontend reach the API pods",
+    "Set up a GitHub Actions workflow that deploys to staging on every merge",
+    "Profile this Node.js endpoint, the database query inside it takes 3 seconds",
+    "Write Terraform for an AWS VPC with public and private subnets"
+  ]
+}

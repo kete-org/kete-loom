@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Vue component changes before I open the PR",
+    "Check this Nuxt branch for hydration mismatches and leaked watchers before merge",
+    "Can you look over the diff to our Pinia stores and composables for reactivity bugs?",
+    "Second opinion on this Vue 3 pull request, I'm worried a child mutates its props"
+  ],
+  "should_not_trigger": [
+    "Write a new Vue 3 composable that tracks window size",
+    "Set up useFetch with a reactive query in my Nuxt page",
+    "Review this React component diff for unnecessary re-renders",
+    "Review the Angular service for RxJS subscription leaks",
+    "Audit the Vue signup form for keyboard and screen reader accessibility"
+  ]
+}

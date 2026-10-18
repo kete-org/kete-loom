@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "dotnet build fails on my F# project with FS0039 Money is not defined after I added Money.fs",
+    "Getting error FS0030 value restriction in my F# code, make it compile",
+    "paket restore broke after bumping FSharp.Core, the F# solution won't build",
+    "Fix the F# compile errors: FS0072 lookup on object of indeterminate type in Handlers.fs"
+  ],
+  "should_not_trigger": [
+    "Review my F# changes for unsafe List.head calls before merging",
+    "Show me how to model invoices in F# with discriminated unions",
+    "Write FsCheck property tests for my F# serializer",
+    "My C# project fails with CS0246 type or namespace not found, fix the build",
+    "The Rust crate fails to compile with a borrow checker error"
+  ]
+}

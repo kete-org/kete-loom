@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Design a ClickHouse table for page view events, what ORDER BY and PARTITION BY should it have?",
+    "We get DB::Exception Too many parts when our services insert into ClickHouse",
+    "My ClickHouse materialized view doesn't include the rows that were already in the table",
+    "ReplacingMergeTree still shows duplicate rows, how do I query only the latest version?",
+    "This ClickHouse dashboard query reads 2 billion rows, help me make it faster",
+    "Build a daily rollup of events per tenant with AggregatingMergeTree and uniqState"
+  ],
+  "should_not_trigger": [
+    "Our Postgres reporting query is slow, should we add a BRIN index on created_at?",
+    "Write a MongoDB aggregation pipeline that groups orders by customer",
+    "Set up a Redis sorted set leaderboard for the game",
+    "Model order events in the Prisma schema and generate the client",
+    "Build a Grafana dashboard for our API latency metrics",
+    "Benchmark two implementations of our JSON parser fairly"
+  ]
+}

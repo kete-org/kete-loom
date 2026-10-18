@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Add Google sign-in to our Express app using OIDC with PKCE",
+    "Should I use JWTs or server sessions for my SPA's login?",
+    "How should we hash user passwords? We're on bcrypt cost 8 right now",
+    "Implement a forgot-password flow with reset links that expire",
+    "Add roles and per-resource permissions so members can only edit their own team's projects",
+    "Where should my React Native app store the access and refresh tokens?"
+  ],
+  "should_not_trigger": [
+    "Find the vulnerabilities in our existing login handler code",
+    "Threat model our new SSO integration with the customer's identity provider",
+    "Add a password strength meter to the signup form UI",
+    "Design REST endpoints and error formats for our public orders API",
+    "Write a HIPAA access control policy document for our clinic records system"
+  ]
+}

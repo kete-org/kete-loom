@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Gradle fails with 'Unresolved reference' after I upgraded Kotlin, fix the build",
+    "kaptDebugKotlin fails after adding Room, can you get it compiling again?",
+    "./gradlew assembleDebug says Inconsistent JVM-target compatibility detected, sort it out",
+    "My KSP plugin version doesn't match the Kotlin version and the build is broken",
+    "compileKotlin is red with a type mismatch on a Java library call, make it build with minimal changes"
+  ],
+  "should_not_trigger": [
+    "Review my Kotlin changes for coroutine scope leaks",
+    "Restructure this Kotlin module to use a sealed result type for errors",
+    "My Kotlin coroutine test is flaky, make it deterministic",
+    "cargo build fails with a borrow checker error, fix it",
+    "Set up a GitHub Actions workflow that runs the Gradle build on every push"
+  ]
+}

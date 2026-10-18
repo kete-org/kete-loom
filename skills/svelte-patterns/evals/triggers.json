@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Migrate this Svelte component from export let and $: to runes",
+    "My $effect keeps re-running forever when I update the counter",
+    "Add a SvelteKit form action for the newsletter signup with server validation",
+    "Should this SvelteKit load go in +page.ts or +page.server.ts? It reads the database",
+    "One user's cart is showing up for another user in our SvelteKit app"
+  ],
+  "should_not_trigger": [
+    "Add a Nuxt server route that returns the product list",
+    "Write a Vue 3 Pinia store for the shopping cart",
+    "Set up an Angular reactive form with typed controls",
+    "Write Playwright tests that click through the signup flow in the browser",
+    "Audit the signup page for screen reader accessibility"
+  ]
+}

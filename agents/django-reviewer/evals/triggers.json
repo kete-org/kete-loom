@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Django views and querysets on this branch for N+1 problems",
+    "Can you check this Django migration PR before we deploy? Worried it locks the orders table",
+    "Look over the DRF viewset changes for missing permission checks and raw SQL",
+    "Audit the diff to our Django prod settings for security misconfiguration"
+  ],
+  "should_not_trigger": [
+    "Add prefetch_related to the Django article list view so it runs fewer queries",
+    "Write a Django data migration that backfills the status column",
+    "Review this FastAPI PR for blocking calls inside async routes",
+    "Review my general Python script for mutable default arguments",
+    "Run a full security audit of our whole web application"
+  ]
+}

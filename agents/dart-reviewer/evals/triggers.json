@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Can you check this Dart diff for unawaited futures and stream subscriptions that never get cancelled?",
+    "Second pair of eyes on my Dart branch please, especially all the ! operators I added",
+    "Review the PR for our pure Dart server package for null safety and async bugs before merge",
+    "Look over my changes to the cart_bloc.dart and repository layer, I think a StreamController never gets closed",
+    "Audit the uncommitted changes in lib/src for late fields that could throw LateInitializationError"
+  ],
+  "should_not_trigger": [
+    "Our Flutter app's memory keeps growing after navigating back and forth, review the screens for rebuild problems",
+    "Fix the flutter analyze errors that appeared after upgrading to the latest Riverpod",
+    "Write widget tests with mocktail for the checkout page",
+    "Show me how to model API results with sealed classes and switch expressions in Dart",
+    "Review this Swift view controller for retain cycles",
+    "Review my Kotlin coroutine code for leaked jobs and unhandled exceptions"
+  ]
+}

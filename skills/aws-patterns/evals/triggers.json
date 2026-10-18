@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a least-privilege IAM policy so our Lambda can only read one S3 bucket and one secret",
+    "Should this background worker run on Lambda, ECS Fargate or plain EC2?",
+    "Our AWS bill doubled and most of it is NAT gateway data processing, what are we doing wrong?",
+    "Set up a VPC with private subnets for RDS Postgres and security groups that only let the app in",
+    "Where should our app's database password live on AWS instead of the task definition env vars?"
+  ],
+  "should_not_trigger": [
+    "Configure GitHub Actions to assume an AWS role with OIDC instead of access keys",
+    "Refactor our Terraform modules to use for_each instead of count",
+    "Deploy the service to Google Cloud Run with its own service account",
+    "Plan a canary rollout for the new checkout service with automatic rollback",
+    "Write a Kubernetes Deployment manifest with resource limits and probes"
+  ]
+}

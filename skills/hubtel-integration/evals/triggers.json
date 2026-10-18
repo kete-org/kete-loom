@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Integrate Hubtel online checkout for a Ghanaian school fees portal",
+    "Accept Telecel Cash payments through Hubtel in our Ghana app",
+    "Hubtel receive money returns 403 Forbidden from our server, why?",
+    "Send order confirmation SMS to customers with Hubtel",
+    "Hubtel never sent the callback for some payments, how do I check their status?"
+  ],
+  "should_not_trigger": [
+    "Let users pay with MTN MoMo through Paystack in the mobile app",
+    "Call the MTN MoMo Open API requesttopay endpoint directly",
+    "Accept Ghana mobile money with Flutterwave direct charge instead of the hosted page",
+    "Audit our payment webhook handlers for missing signature checks",
+    "Send transactional email receipts with SendGrid after checkout"
+  ]
+}

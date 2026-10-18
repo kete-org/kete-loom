@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our stylesheet is full of !important and nested selectors, restructure it so it is maintainable",
+    "Set up design tokens as CSS custom properties with a dark mode toggle that respects the OS setting",
+    "Should we use BEM, CSS Modules or Tailwind for this new project?",
+    "Make this card component change layout based on its container width instead of the viewport",
+    "Introduce cascade layers so third-party CSS stops overriding our component styles"
+  ],
+  "should_not_trigger": [
+    "Design a new landing page with a bold visual style for our coffee brand",
+    "The web fonts are causing layout shift and slowing down LCP",
+    "Check that our focus outlines and text colours meet WCAG contrast requirements",
+    "Convert this Vue options API component to the composition API",
+    "Build a responsive SwiftUI layout for iPad and iPhone"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Design the REST endpoints for a bookings service: create, list, cancel, reschedule",
+    "What should our error response body look like? Right now every endpoint returns something different",
+    "Our /transactions list endpoint times out with big accounts, how should we paginate it?",
+    "We need to rename the customer_name field in the public API without breaking the mobile app",
+    "Review this openapi.yaml before we publish it to partners",
+    "Should we build the partner API in GraphQL or REST?"
+  ],
+  "should_not_trigger": [
+    "Integrate Stripe checkout into our Node backend",
+    "Restructure the service so the domain logic doesn't import Express or the ORM",
+    "Write an ADR recording why we picked gRPC for internal services",
+    "Write the SQL migration that adds an index on orders.created_at",
+    "Add JWT authentication with refresh tokens to the login endpoint",
+    "Break the reporting feature into an ordered implementation plan"
+  ]
+}

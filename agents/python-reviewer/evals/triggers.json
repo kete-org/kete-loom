@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Python changes on this branch before I merge",
+    "Can you look over this diff to our Python background worker for async bugs and leaked connections?",
+    "Check the Python PR for swallowed exceptions, mutable defaults and missing type hints",
+    "Is this change to scheduler.py safe? I rewrote the retry loop with asyncio"
+  ],
+  "should_not_trigger": [
+    "mypy fails with 'Incompatible types in assignment' after my change, fix it",
+    "Write pytest tests for the retry loop in scheduler.py",
+    "Refactor this Python module to use dataclasses and type hints",
+    "Review this Go pull request for goroutine leaks",
+    "Review my Django views and querysets for N+1 queries"
+  ]
+}

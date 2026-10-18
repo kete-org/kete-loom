@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Convert my single-file Flask app into an application factory with blueprints",
+    "I get RuntimeError: Working outside of application context in my Flask CLI script",
+    "Add Flask-SQLAlchemy and Flask-Migrate to this Flask project",
+    "Write pytest tests for my Flask login view using the test client",
+    "How do I load Flask config from environment variables per environment?"
+  ],
+  "should_not_trigger": [
+    "Add a Django admin page for the orders model",
+    "Create FastAPI dependencies for the database session",
+    "Review my Django change for unsafe raw SQL",
+    "Write a Dockerfile to deploy my Python web app",
+    "Fix the pip dependency conflict that stops my Python package from installing"
+  ]
+}

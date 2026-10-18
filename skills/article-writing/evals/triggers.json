@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a 1500-word blog post on why we rebuilt our checkout around mobile money",
+    "Here's my messy draft about remote hiring. Can you restructure and tighten it into a proper article?",
+    "I want an opinion piece arguing that small startups should skip microservices. Give me an angle and outline first.",
+    "Turn these interview notes into a customer case study for our blog",
+    "Give me a few headline options and a meta description for this finished essay"
+  ],
+  "should_not_trigger": [
+    "Write the README and API reference for our Node SDK",
+    "Create a style guide describing our brand personality with do and don't examples",
+    "Write a short commit message for these staged changes",
+    "Plan the content calendar and paid budget for next quarter's campaign",
+    "Audit our blog for crawl and indexing problems"
+  ]
+}

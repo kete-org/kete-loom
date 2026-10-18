@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review this PHP pull request for SQL injection and XSS before I merge it",
+    "Check my Laravel controller changes for anything that lets user input reach the database unescaped",
+    "Can you audit the diff in src/Auth for loose == comparisons on tokens and other PHP type juggling bugs?",
+    "Look over my uncommitted PHP files and flag swallowed exceptions or unserialize calls on cookie data"
+  ],
+  "should_not_trigger": [
+    "Write a PHP 8.3 readonly value object for a postal address",
+    "Composer says my lock file is out of sync and the autoloader can't find App\\Kernel, fix it",
+    "Add Pest tests for the coupon service",
+    "Review this Django view for SQL injection",
+    "Do a full threat model of our PHP checkout system before launch"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Should this SwiftUI child view use @State, @Binding or @Bindable for the user model?",
+    "Migrate our view models from ObservableObject and @Published to the @Observable macro",
+    "Set up a NavigationStack with a path so I can pop to root after checkout",
+    "My SwiftUI form resets its text fields whenever the parent list refreshes",
+    "Wrap an MKMapView in UIViewRepresentable with a coordinator for the delegate"
+  ],
+  "should_not_trigger": [
+    "Make this Swift networking layer Sendable for Swift 6 strict concurrency",
+    "Write XCTest unit tests for the payment view model",
+    "My Jetpack Compose screen recomposes on every keystroke",
+    "Fix the swift build error about ambiguous use of init in the package",
+    "Share the login logic between Android and iOS with Kotlin Multiplatform"
+  ]
+}

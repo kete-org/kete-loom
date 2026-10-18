@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Migrate our Jest suite to bun test and get mock.module working",
+    "This package's postinstall never ran after bun install, the native binary is missing",
+    "Is it safe to run our production API on Bun? We use Datadog tracing",
+    "Our app works on Node but crashes under Bun with a crypto curve error",
+    "Make a single-file executable of our CLI with bun build --compile"
+  ],
+  "should_not_trigger": [
+    "Add graceful shutdown and rate limiting to our Express service running on Node",
+    "Configure Vite library mode to publish our component package",
+    "Set up Vitest for our TypeScript utilities package",
+    "Write a GitHub Actions workflow that runs npm ci and the tests",
+    "Fix the circular dependency between two NestJS modules"
+  ]
+}

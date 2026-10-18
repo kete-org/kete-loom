@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We're raising a $1.5M seed round. Help me outline the pitch deck.",
+    "Write our monthly update to investors: MRR is up 12%, we lost a big customer and runway is 14 months",
+    "Turn these notes into a one-page summary I can send to angel investors",
+    "Review my Series A deck and tell me what VCs will push back on",
+    "What metrics should a B2B SaaS startup put on the traction slide, and how do I phrase the ask?"
+  ],
+  "should_not_trigger": [
+    "Estimate TAM, SAM and SOM for a pharmacy inventory app in Nigeria with sources",
+    "Plan a launch campaign with a budget split across paid social and email",
+    "Write a long-form blog post on lessons from our first year as a startup",
+    "Define the voice and tone guidelines for our company's website copy",
+    "Prepare release notes for version 2.0 of our CLI"
+  ]
+}

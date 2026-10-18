@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Threat model the new document upload and sharing feature before we build it",
+    "Do a STRIDE analysis of our payment webhook architecture",
+    "What could an attacker do to this design? Here's the data flow for our multi-tenant reporting service",
+    "We're adding an LLM agent with tool access to our support portal, map the trust boundaries and threats",
+    "Before security sign-off, list the assets, threats and mitigations for the mobile login flow and rank them"
+  ],
+  "should_not_trigger": [
+    "Scan the code in this pull request for XSS and injection flaws",
+    "Check whether any of our npm packages have known CVEs",
+    "Implement role-based access control on the admin routes",
+    "Write an architecture decision record for moving from REST to gRPC",
+    "Break this feature into implementation tasks and a delivery plan"
+  ]
+}

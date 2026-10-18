@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "go build ./... fails with 'missing go.sum entry for module providing package', please fix it",
+    "After bumping github.com/acme/sdk to v1.9 our Go module won't compile: undefined: sdk.NewClientWithKey. Get it building again",
+    "CI says 'go: go.mod requires go >= 1.23 (running go 1.21)' and also complains about a replace directive pointing at ../shared",
+    "go vet is failing with lostcancel and copylocks errors in the worker package, make it pass",
+    "Fix this Go error: ambiguous import: found package github.com/foo/bar in multiple modules"
+  ],
+  "should_not_trigger": [
+    "Review my Go branch for goroutine leaks before I merge it",
+    "Write a fuzz test for the Go tokenizer",
+    "What's the idiomatic way to wrap errors in Go?",
+    "cargo build fails with a borrow checker error E0502, fix it",
+    "tsc reports TS2345 type errors after upgrading the SDK, fix the build"
+  ]
+}

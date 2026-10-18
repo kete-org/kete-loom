@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "I need a retry-with-backoff helper for our API client, do we already have something like that?",
+    "Before you write a new slugify function, check the repo and our dependencies for one",
+    "Is there an existing library for parsing ISO 8601 durations or should we write our own?",
+    "Add CSV export to the reports page but reuse whatever we already have instead of writing from scratch"
+  ],
+  "should_not_trigger": [
+    "Audit our dependencies for known vulnerabilities and outdated packages",
+    "Research and compare three managed message brokers for our architecture decision, with citations",
+    "Refactor the duplicated validation code in the checkout module without changing behaviour",
+    "Find where the session timeout is configured in this app"
+  ]
+}

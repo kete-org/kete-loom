@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Keep fixing the failing tests on your own until the whole suite is green, I'll check back tomorrow",
+    "Set up a headless agent run that works through the lint errors in src/ one file at a time overnight",
+    "Loop on this: try a fix, run the benchmark, keep it if it's faster, otherwise revert",
+    "What guardrails do I need before letting the agent run unattended on our backlog"
+  ],
+  "should_not_trigger": [
+    "Run every check on my branch once and tell me if it's ready for a pull request",
+    "Fan this refactor out to four subagents and merge their results",
+    "Run this cleanup command every morning at 9 using a cron job on the server",
+    "Write a failing test first, then implement the date parser"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Plan a launch campaign for our invoicing app, we have $5,000 and six weeks",
+    "We're running a Black Friday promotion for the online store. Help me put together the channels, calendar and budget.",
+    "I need a go-to-market campaign to get our first 500 paying users in Accra. Who do we target and how?",
+    "Make a campaign plan with success metrics for relaunching our newsletter product",
+    "How should I split a small marketing budget between Instagram ads, email and influencers for our product launch?"
+  ],
+  "should_not_trigger": [
+    "Run a technical SEO check on our marketing site and list the indexing problems",
+    "Define our brand's tone of voice and give do and don't examples for copywriters",
+    "Research our three main competitors and estimate the size of the payroll software market in Kenya",
+    "Write the blog post announcing our new feature, around 1200 words",
+    "Draft the monthly investor update with our MRR and burn"
+  ]
+}

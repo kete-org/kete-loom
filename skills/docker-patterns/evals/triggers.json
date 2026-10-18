@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a Dockerfile for our Express API that doesn't run as root",
+    "Our Docker image is 1.8GB, can you get it down with a multi-stage build?",
+    "Every docker build reinstalls all the npm packages even when I only change one source file",
+    "Set up a compose.yaml so I can run the app with Postgres and Redis locally",
+    "We pass the NPM_TOKEN as a build arg, how do we stop it ending up in the image?"
+  ],
+  "should_not_trigger": [
+    "Add liveness and readiness probes to our Kubernetes Deployment",
+    "Write a Terraform module for an ECR repository and an ECS service",
+    "Review this Dockerfile and the Helm chart for security problems before we ship",
+    "Create a GitHub Actions workflow that runs the tests on every pull request",
+    "Roll back the payments deployment in the cluster to the previous ReplicaSet"
+  ]
+}

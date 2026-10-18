@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The system prompt for our refund bot keeps answering in the wrong tone, rewrite it",
+    "Write a prompt that extracts invoice fields into JSON and handles missing totals",
+    "This 3000-word prompt is a mess, tighten it up without losing behaviour",
+    "Should I add few-shot examples to this classification prompt? Try it and show me the difference",
+    "Compare prompt v3 and v4 on these twenty sample tickets and tell me which to ship"
+  ],
+  "should_not_trigger": [
+    "Wrap the Anthropic API call in retries and a timeout",
+    "Set up a regression dashboard that scores every model release on our eval set",
+    "Grade our agent's last 100 transcripts against the rubric and summarise failures",
+    "Write the marketing copy for our launch email",
+    "Design how the planner and worker agents hand off tasks in our harness"
+  ]
+}

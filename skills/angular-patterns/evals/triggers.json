@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Convert this Angular NgModule feature to standalone components",
+    "My Angular component subscribes to valueChanges and never unsubscribes, fix the leak",
+    "Replace the @Input decorators in this Angular component with signal inputs",
+    "The Angular view doesn't refresh after the websocket callback sets a field, using OnPush",
+    "Write a TestBed test for the Angular user card component that sets a signal input"
+  ],
+  "should_not_trigger": [
+    "Fix the TypeScript strict null errors in our Express server",
+    "Write a Vue 3 composable that wraps a websocket connection",
+    "My Svelte 5 $effect runs in an infinite loop",
+    "Set up Playwright end-to-end tests for the checkout flow",
+    "Review this Nuxt change for hydration mismatches"
+  ]
+}

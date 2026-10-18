@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "swift build fails after switching to swift-tools-version 6.0, can you fix it?",
+    "Xcode says 'sending value of non-Sendable type risks causing data races' in 40 places, fix the build",
+    "SwiftPM can't resolve dependencies, Package.resolved conflicts with the new Alamofire version",
+    "Our iOS CI job broke on xcodebuild after the Xcode upgrade, get it compiling again"
+  ],
+  "should_not_trigger": [
+    "Review my Swift diff for retain cycles before merging",
+    "Write Swift Testing tests for the checkout view model",
+    "Explain when to use an actor versus a class in Swift",
+    "Fix the Gradle build for our Kotlin Android app",
+    "The build fails because the provisioning profile doesn't include the push entitlement, sort out signing"
+  ]
+}

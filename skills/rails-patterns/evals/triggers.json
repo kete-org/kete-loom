@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our Rails dashboard loads every project's owner one query at a time, use includes or preload to fix it",
+    "Write a Rails migration to add an index on orders.customer_id without locking the table in production",
+    "How should I store the Stripe secret key in Rails credentials for production?",
+    "The Rails form doesn't show validation errors after I switched to Turbo, what's wrong?",
+    "Add strong parameters to the Rails PostsController so users can't set their own role"
+  ],
+  "should_not_trigger": [
+    "Set up RuboCop and RBS signatures for my Ruby gem",
+    "Find which RSpec example leaks state and only fails with seed 4821",
+    "Fix the Eloquent N+1 on the Laravel users page",
+    "Design the REST endpoints and error format for our public orders API",
+    "Tune this PostgreSQL query plan that does a sequential scan on events"
+  ]
+}

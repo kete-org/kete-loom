@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Integrate Stripe subscriptions into the billing page",
+    "Stripe webhook keeps failing with No signatures found matching the expected signature",
+    "Add a Stripe customer portal so users can cancel or change their plan",
+    "How do I use Stripe test clocks to check what happens when a trial ends?",
+    "Handle 3D Secure when charging a saved card off-session with Payment Intents"
+  ],
+  "should_not_trigger": [
+    "Add Flutterwave checkout to our Nigerian e-commerce site",
+    "Add Paystack checkout to our Next.js shop so Ghanaian customers can pay",
+    "Review the payment module for secret keys leaked into front-end code",
+    "Work out which parts of our card checkout fall inside PCI DSS scope",
+    "Design the REST API for our invoicing service"
+  ]
+}

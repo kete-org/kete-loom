@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My Compose LazyColumn recomposes every row when one item is liked",
+    "Should I use LaunchedEffect or DisposableEffect to register this location listener in a composable?",
+    "Hoist the state out of this Compose text field so the ViewModel owns it",
+    "Switch our NavHost to type-safe @Serializable routes",
+    "collectAsState vs collectAsStateWithLifecycle for my ViewModel StateFlow"
+  ],
+  "should_not_trigger": [
+    "Use Compose Multiplatform so the same UI runs on iOS and Android",
+    "Write a coroutine Flow that debounces search queries in plain Kotlin",
+    "Fix this Gradle build failure: Unresolved reference in the Kotlin module",
+    "Build a SwiftUI list with lazy loading of images",
+    "Review this Kotlin pull request for unsafe !! and leaked coroutine scopes"
+  ]
+}

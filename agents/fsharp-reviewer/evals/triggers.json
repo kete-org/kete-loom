@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my F# branch before I merge, look for List.head and Option.get on user input",
+    "Check this F# pull request for exceptions that escape the Result pipeline",
+    "I added a new case to the PaymentStatus union in F#, can you review the diff for matches I missed?",
+    "Second opinion on these .fs changes: mutable state and nulls coming back from the C# SDK"
+  ],
+  "should_not_trigger": [
+    "Rewrite this F# module to use Result instead of exceptions",
+    "Fix the FS0030 value restriction error in my F# build",
+    "Add FsCheck properties for the F# money parser",
+    "Review my C# pull request for nullable reference warnings",
+    "Review the Kotlin changes in this branch for coroutine misuse"
+  ]
+}

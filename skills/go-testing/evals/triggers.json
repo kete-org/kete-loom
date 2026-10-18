@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Write table-driven tests with subtests for my Go ParseAmount function",
+    "This Go test is flaky under -race and uses time.Sleep, make it deterministic",
+    "Test my Go HTTP handler for POST /orders using httptest without a real server",
+    "Add a fuzz target for the Go URL normaliser and commit any crashing inputs",
+    "Benchmark these two Go JSON encoders properly and compare them with benchstat",
+    "Replace the gomock mocks in this _test.go file with a simple hand-written fake"
+  ],
+  "should_not_trigger": [
+    "How should I structure packages and interfaces in my new Go service?",
+    "Review this Go diff for data races and context misuse before I merge",
+    "go vet reports 'copylocks: call of foo copies lock value', fix the build",
+    "Write pytest fixtures and parametrized tests for my Flask app",
+    "Add Playwright end-to-end tests for the signup page"
+  ]
+}

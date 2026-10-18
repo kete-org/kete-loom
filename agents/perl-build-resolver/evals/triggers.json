@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "cpanm Net::SSLeay fails with 'openssl/ssl.h file not found' on my Mac",
+    "Can't locate JSON/XS.pm in @INC when the script runs from cron, works fine in my shell",
+    "carton install keeps failing on DBD::Pg, please get it building",
+    "perl Makefile.PL errors out with a missing prerequisite and make won't run, fix it"
+  ],
+  "should_not_trigger": [
+    "Which CPAN module should I use for HTTP requests in a new Perl project?",
+    "Review my Perl diff for two-arg open calls",
+    "Write a Test::More test for the module loader",
+    "cargo build fails with a linker error for openssl-sys",
+    "Can't find module 'express' when I run node server.js"
+  ]
+}

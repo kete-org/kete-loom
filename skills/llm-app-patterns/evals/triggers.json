@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our summarize endpoint calls the model and sometimes returns broken JSON, make it return a validated object every time",
+    "Add retries with backoff and a timeout around the OpenAI call in our ticket classifier",
+    "The chat feature is too expensive, help me restructure the prompt so prompt caching actually hits",
+    "Stream the assistant's reply to the browser over SSE and cancel the request if the user closes the tab",
+    "Users can upload PDFs that get sent to the LLM, how do we stop instructions inside those files from hijacking it?"
+  ],
+  "should_not_trigger": [
+    "Rewrite this system prompt so the model stops ignoring the tone guidelines",
+    "Build a test set of 50 cases and a grader to score our extraction feature",
+    "Chunk our docs and set up vector search for the support bot",
+    "Write an MCP server that exposes our inventory database as tools",
+    "Fine-tune a PyTorch model on our labelled images",
+    "Design the planner and executor loop and tool permissions for our coding agent harness"
+  ]
+}

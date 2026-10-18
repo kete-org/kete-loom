@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Set up a KMP shared module so our Android and iOS apps share the networking layer",
+    "How do I use expect/actual to read the device UUID on iOS and Android?",
+    "Swift can't collect the Flow exported from our Kotlin Multiplatform framework",
+    "Should we share the UI with Compose Multiplatform or keep SwiftUI on iOS?",
+    "commonMain keeps failing because it imports java.time, how should I restructure this?"
+  ],
+  "should_not_trigger": [
+    "Write a Kotlin data class with a sealed result type for this Android repository",
+    "Add a Jetpack Compose bottom sheet to the Android settings screen",
+    "Build a SwiftUI onboarding flow with a NavigationStack",
+    "Fix the Gradle error: Could not resolve com.squareup.okhttp3 in the Android app",
+    "Share business logic between iOS and Android using a Flutter plugin"
+  ]
+}

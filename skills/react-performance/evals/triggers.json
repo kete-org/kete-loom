@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Typing in the search box lags badly because the whole results table re-renders on every keystroke",
+    "Use the React Profiler to find out why my dashboard is slow when I toggle the sidebar",
+    "Our main JS chunk is 1.8 MB, help me code split the React app and find what's bloating it",
+    "Rendering 10,000 rows in this React table freezes the browser, should I virtualise it?",
+    "Is wrapping every component in React.memo and useCallback actually helping or hurting?",
+    "The page loads data in a staircase: user, then orders, then items. Fix the waterfall in our React app"
+  ],
+  "should_not_trigger": [
+    "Should the shopping cart state live in context or in Zustand?",
+    "How do I write a server action that updates a profile in Next.js App Router?",
+    "Benchmark these two sorting functions in Node and tell me which is faster",
+    "Improve the Lighthouse SEO score and meta tags on our marketing site",
+    "Review this React PR for hook rule violations and missing keys",
+    "Our Postgres queries are slow, add the right indexes"
+  ]
+}

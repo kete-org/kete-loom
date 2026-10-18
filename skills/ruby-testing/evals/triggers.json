@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Add RSpec tests for the PaymentGateway wrapper, stubbing the HTTP calls",
+    "This Minitest test passes locally but fails in CI with some seeds, help me find why",
+    "How do I freeze time in an RSpec spec that checks subscription renewal dates?",
+    "Our FactoryBot factories make the suite crawl, can you speed up the specs?",
+    "Replace allow_any_instance_of in these specs with something less brittle",
+    "Write Minitest tests for this Ruby class and keep them off the network with WebMock"
+  ],
+  "should_not_trigger": [
+    "Refactor this Ruby class to use Enumerable instead of manual loops",
+    "Review the changed .rb files on my branch for nil errors before merging",
+    "bundle exec rspec says cannot load such file -- csv after upgrading Ruby",
+    "Write pytest fixtures for the payment client",
+    "Set up Playwright end-to-end tests for the checkout flow",
+    "Raise the test coverage of this repo to 80 percent"
+  ]
+}

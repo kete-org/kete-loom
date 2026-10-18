@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review our payment code for float money arithmetic and unverified webhooks",
+    "Check our checkout code for client-trusted amounts and missing idempotency",
+    "Audit our payment webhook handlers for missing signature checks",
+    "Review the payment module for secret keys leaked into front-end code",
+    "Can someone fake a successful payment in our MoMo checkout? Please review it before we launch"
+  ],
+  "should_not_trigger": [
+    "Integrate Stripe subscriptions into the billing page",
+    "Implement Lipa na M-Pesa STK push for our Kenyan delivery app using Daraja",
+    "Review my last commit for security vulnerabilities in the login flow",
+    "Work out which parts of our card checkout fall inside PCI DSS scope",
+    "Can you review my changes to the user profile page before I commit them?"
+  ]
+}

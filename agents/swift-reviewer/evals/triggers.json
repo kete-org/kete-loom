@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Swift PR before I merge, I'm worried about force unwraps",
+    "Could this view controller change cause a retain cycle? Take a look at the diff",
+    "Check my actor and Sendable changes in the iOS app for data races",
+    "Second opinion on this Swift branch: are we updating UI off the main thread anywhere?"
+  ],
+  "should_not_trigger": [
+    "Fix the Xcode build, it fails with 'main actor-isolated property can not be referenced'",
+    "Write async tests for the SyncEngine actor using Swift Testing",
+    "Show me the idiomatic way to model loading states with a Swift enum",
+    "Review this Kotlin pull request for coroutine leaks",
+    "Review the Flutter widget changes in this branch"
+  ]
+}

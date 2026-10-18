@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Implement Lipa na M-Pesa STK push for our Kenyan delivery app using Daraja",
+    "Daraja keeps returning Wrong credentials for my STK push password, what's wrong?",
+    "Register C2B confirmation and validation URLs for our paybill number",
+    "Pay out refunds to customers' M-Pesa numbers with the B2C API",
+    "Our stkCallback never arrives in production, how do we still confirm the payment?"
+  ],
+  "should_not_trigger": [
+    "Charge a Kenyan customer's M-Pesa wallet through Flutterwave from our backend",
+    "Integrate MTN MoMo request to pay for Ugandan customers",
+    "Accept Telecel Cash payments through Hubtel in our Ghana app",
+    "Check our checkout code for client-trusted amounts and missing idempotency",
+    "Add Stripe Checkout for card payments in Kenya"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write unit tests for my Kotlin ViewModel using runTest and Turbine",
+    "How do I mock a suspend function with MockK? coEvery doesn't seem to work",
+    "My Kotest spec hangs forever when the repository uses delay()",
+    "This coroutine test passes on my laptop but fails randomly in CI, help me make it deterministic",
+    "Assert that my StateFlow emits Loading and then Success in a JUnit 5 test"
+  ],
+  "should_not_trigger": [
+    "Rewrite this Kotlin service to use structured concurrency instead of GlobalScope",
+    "Review my Kotlin diff for Flow collection bugs and !! usage",
+    "kaptDebugKotlin fails after adding Room, fix the build",
+    "Write pytest fixtures for my FastAPI endpoints",
+    "Write a Playwright end-to-end test for the login page"
+  ]
+}

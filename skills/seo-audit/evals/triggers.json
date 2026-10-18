@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our blog posts aren't showing up in Google at all, can you audit the site and tell me why?",
+    "Do an SEO health check on https://shop.example.com before we launch next week",
+    "We moved from WordPress to Next.js and organic traffic dropped 40%. Find the technical SEO problems.",
+    "Check our robots.txt, sitemap, canonicals and meta titles and give me a prioritised fix list",
+    "Search Console says 300 pages are 'Crawled - currently not indexed'. What should we fix first?"
+  ],
+  "should_not_trigger": [
+    "Our LCP is 5 seconds on the product page, profile the bundle and fix the slow hero image loading",
+    "Plan a three-month launch campaign for our new budgeting app across email and LinkedIn",
+    "Write a 1500-word blog post about how small shops can accept mobile money",
+    "Audit the checkout form for screen reader and keyboard accessibility problems",
+    "Size the market for accounting software for SMEs in West Africa"
+  ]
+}

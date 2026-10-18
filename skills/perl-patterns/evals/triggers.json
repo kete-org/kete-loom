@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Turn this old Perl script with global variables and no strict into modern Perl",
+    "Should I write this Perl class with Moo or Moose? It's a small CLI tool",
+    "How do I call an external command from Perl with a filename the user gave me, without shell injection?",
+    "Set up a cpanfile and Carton so our Perl app deploys the same module versions everywhere",
+    "What's the right way to catch exceptions in Perl 5.36, Try::Tiny or the try feature?",
+    "My nested Perl hash of arrays keeps autovivifying keys, how should I structure and access it?"
+  ],
+  "should_not_trigger": [
+    "Write Test::More tests for my Perl module and measure coverage with Devel::Cover",
+    "Review this Perl pull request for injection and two-arg open problems",
+    "cpanm fails building DBD::mysql with 'mysql_config not found', fix it",
+    "Can't locate My/Module.pm in @INC when I run the script from cron",
+    "Write idiomatic Ruby service objects for this Rails controller",
+    "Convert this Perl one-liner into a Python script"
+  ]
+}

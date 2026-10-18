@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The checkout endpoint is slow, profile it and find the bottleneck",
+    "Speed up the report export, it takes 40 seconds",
+    "Our nightly import job uses 6 GB of memory, figure out why and fix it",
+    "The dashboard API p95 latency jumped to 2 seconds, make it fast again",
+    "This Python script takes forever on large CSVs, optimise the hot loop"
+  ],
+  "should_not_trigger": [
+    "Set up a benchmark methodology for comparing two JSON parsers fairly",
+    "Improve our Lighthouse score and Core Web Vitals on the landing page",
+    "Simplify the function I just wrote, it has too much nesting",
+    "Add a Redis cache layer design for the product catalogue",
+    "Review the diff in this PR for bugs"
+  ]
+}

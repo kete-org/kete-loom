@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The Playwright suite failed on CI again, figure out if it's a real bug or flaky tests",
+    "Run our Cypress tests and fix the ones that fail randomly",
+    "checkout.spec.ts passes locally but fails about one in five runs in GitHub Actions, stabilise it",
+    "Triage the red e2e run from last night and tell me which failures are actual product regressions",
+    "Our end-to-end tests are flaky, run them a few times and fix what's timing related"
+  ],
+  "should_not_trigger": [
+    "Write a new Playwright test for the invite-a-teammate flow",
+    "Click through the staging build and file bug reports for anything broken",
+    "Review the tests in my pull request and tell me what's missing",
+    "The TypeScript build fails with type errors after the upgrade, fix it",
+    "Improve unit test coverage in the orders service"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "How big is the market for school fee payment software in Ghana? Give me TAM, SAM and SOM.",
+    "Build a competitor matrix for invoicing tools aimed at freelancers, with pricing and positioning",
+    "Is there a real market for a B2B logistics app for informal traders in Lagos? Research it with sources.",
+    "Who are the customer segments for a telehealth subscription in East Africa and which should we start with?",
+    "Compare the main players in the African payroll software space and tell me how confident you are in the numbers"
+  ],
+  "should_not_trigger": [
+    "Outline a 12-slide pitch deck for our seed raise",
+    "Plan the channels, calendar and budget for our app launch campaign next month",
+    "Our pages dropped out of Google's index, audit the site",
+    "Research the best Python library for parsing PDFs before I write my own",
+    "Write an article explaining why mobile money took off in Kenya"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Our Prisma resolvers fire a query per post to load the author, how do I fix this N+1?",
+    "We get P2024 timed out fetching a new connection from the pool on Vercel with Prisma",
+    "Add a status enum to the Order model in schema.prisma and create the migration",
+    "Is this $queryRawUnsafe call with a template string safe from SQL injection?",
+    "Should we run prisma migrate dev or migrate deploy in our GitHub Actions release job?",
+    "How do interactive transactions work in Prisma when transferring a balance between two accounts?"
+  ],
+  "should_not_trigger": [
+    "Tune this slow Postgres query and add the right index with EXPLAIN ANALYZE",
+    "Write an Entity Framework Core migration for the new Orders table",
+    "Model a one-to-many relationship in Hibernate with JPA annotations",
+    "Design the document schema and indexes for a MongoDB collection of orders",
+    "Set up Redis as a session store with TTLs",
+    "Plan a zero-downtime column rename across our Django and Rails services"
+  ]
+}

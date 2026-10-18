@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Should we split the notifications part of our monolith into its own service? Look at the code and advise",
+    "We expect 10x traffic next year. Will the current architecture hold up, and what should change?",
+    "Propose an architecture for a multi-tenant reporting module, with options and trade-offs",
+    "Postgres or MongoDB for the new catalogue service? Weigh it against what we already run",
+    "Evaluate whether introducing a message queue between checkout and fulfilment is worth it"
+  ],
+  "should_not_trigger": [
+    "Make a step-by-step plan with the files to change for adding CSV export to reports",
+    "Write up our decision to use Kafka as an ADR in docs/adr",
+    "Review my diff for bugs before I open the pull request",
+    "Design the JSON error format and pagination for the orders endpoints",
+    "Move the pricing logic out of the controllers into a use case with ports",
+    "Review our Terraform and Kubernetes manifests for misconfigurations"
+  ]
+}

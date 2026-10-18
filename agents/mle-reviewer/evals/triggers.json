@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Before I share these results, can you check my training notebook for data leakage?",
+    "Review the diff to our feature pipeline and eval script, I'm worried validation scores are inflated",
+    "Audit train.py: does evaluation run in eval mode and are the metrics computed correctly?",
+    "Our model scored 0.97 AUC offline but terrible in production. Look through the code for what's wrong",
+    "Check this PyTorch loss code for silent broadcasting or shape mistakes, don't change anything"
+  ],
+  "should_not_trigger": [
+    "Add mixed precision and checkpoint resume to my PyTorch training loop",
+    "Help me pick a metric and design the train/test split for a new demand forecasting model",
+    "Review my Django view changes for bugs before I merge",
+    "Evaluate how often our LLM agent completes the booking task correctly",
+    "Review our retrieval pipeline's chunking and reranking for recall problems"
+  ]
+}

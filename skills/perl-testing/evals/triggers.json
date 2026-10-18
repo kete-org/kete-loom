@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Write Test::More tests for lib/My/Invoice.pm including the error cases",
+    "How do I mock HTTP::Tiny in a Perl test so it doesn't hit the network?",
+    "Set up Devel::Cover for our Perl project and show me which branches aren't tested",
+    "Migrate our t/ directory from Test::More to Test2::V0",
+    "prove -lr t passes alone but fails with -j4, help me make these Perl tests independent"
+  ],
+  "should_not_trigger": [
+    "Refactor this Perl module to use Moo instead of hand-written bless",
+    "Review my Perl changes for missing strict and unsafe system calls",
+    "Test::More won't install, cpanm says the build failed on make test, fix the dependency",
+    "Write RSpec tests for this Ruby class",
+    "Write pytest fixtures for the invoice module",
+    "Add Playwright end-to-end tests for the checkout page"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "I renamed the --verbose flag to --debug in this commit, update the README and docs to match",
+    "Sync the documentation and changelog with the changes on this branch before I merge",
+    "We removed the /v1/export endpoint, find every doc that still mentions it and fix them",
+    "The defaults for the retry config changed in my last commit; make sure docstrings and the docs page reflect that"
+  ],
+  "should_not_trigger": [
+    "Write a brand new getting-started guide for our SDK from scratch",
+    "Create a guided tour of the request pipeline for new contributors",
+    "Help me understand how this repo is laid out and how to run it",
+    "Review my diff for bugs before I open the pull request"
+  ]
+}

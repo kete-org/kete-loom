@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add Swift Testing tests with #expect for the CartTotals struct",
+    "How do I test an actor method that's async in Swift?",
+    "Replace the real API client with a fake so my XCTest cases stop hitting the network",
+    "Convert our XCTestCase classes to the new @Test macro style",
+    "My iOS unit test is flaky because of a Task.sleep, how do I make it deterministic?"
+  ],
+  "should_not_trigger": [
+    "Refactor this Swift networking layer to use async/await and actors",
+    "Review my Swift changes for main-thread UI violations",
+    "swift test won't even compile, SwiftPM can't resolve the package graph",
+    "Write Playwright end-to-end tests for the web checkout flow",
+    "Write Kotlin unit tests with JUnit 5 and MockK for the Android repository"
+  ]
+}

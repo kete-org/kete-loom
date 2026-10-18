@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our coverage is stuck at 52% and CI wants 70, add tests where they actually matter",
+    "Which parts of the billing module have no tests? Fill the important gaps",
+    "Run mutation testing on the discount rules and tighten the tests that let mutants survive",
+    "We have 90% line coverage but bugs still slip through, make the tests mean something",
+    "Find the untested error-handling branches in src/payments and cover them"
+  ],
+  "should_not_trigger": [
+    "Implement the CSV export feature test-first",
+    "Look at the tests in this PR and list the cases that are missing for the changed code",
+    "Add a Playwright test for the password reset journey",
+    "Benchmark the new JSON parser against the old one",
+    "Run the build, lint and tests and tell me if my branch is green"
+  ]
+}

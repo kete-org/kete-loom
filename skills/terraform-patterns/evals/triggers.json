@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "I renamed a resource in our Terraform and now plan wants to destroy and recreate the database",
+    "Set up an S3 remote state backend with locking for our Terraform project",
+    "We created a bunch of buckets by hand in the console, how do I bring them under Terraform?",
+    "Restructure our tf code into reusable modules with separate dev and prod environments",
+    "terraform plan shows changes nobody made, how do I check for drift?"
+  ],
+  "should_not_trigger": [
+    "Should we use Cloud Run or GKE for this service on Google Cloud?",
+    "Write a Kubernetes Deployment with resource limits for the API",
+    "Review this terraform plan output and the k8s manifests for risky or destructive changes",
+    "Add a GitHub Actions job that builds and pushes our Docker image",
+    "Containerise the Python worker with a slim base image"
+  ]
+}

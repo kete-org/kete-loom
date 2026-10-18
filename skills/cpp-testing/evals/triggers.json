@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add GoogleTest unit tests for the RingBuffer class",
+    "How do I mock this NetworkClient dependency with gMock in my C++ tests?",
+    "Hook our Catch2 tests into CTest so ctest actually runs them",
+    "Our C++ test suite crashes randomly, run it under ASan and UBSan and find out why",
+    "Write a test fixture that sets up a temp directory for the config loader tests in C++"
+  ],
+  "should_not_trigger": [
+    "Convert this C++ class from raw pointers to unique_ptr ownership",
+    "CMake can't find the vcpkg package for fmt, fix the configure step",
+    "Review this C++ diff for lifetime bugs and ABI breaks",
+    "Write pytest fixtures for the database layer",
+    "Add table-driven tests with t.Run to this Go package"
+  ]
+}

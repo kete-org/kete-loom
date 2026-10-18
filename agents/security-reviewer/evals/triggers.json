@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Have a subagent do a security pass on my branch before I merge it",
+    "Check this PR for injection bugs or missing permission checks and report back without touching the code",
+    "Can someone abuse the new /api/invoices/:id endpoint I just added? Get an independent security look at it",
+    "Run a vulnerability review on my last three commits and rank what you find",
+    "Gate this change on security: secrets, IDOR, unvalidated input, anything that leaks data"
+  ],
+  "should_not_trigger": [
+    "Build a threat model for our new file-sharing feature before we write any code",
+    "Implement passkey login and refresh token rotation for our API",
+    "Run npm audit and tell me which vulnerable packages we need to upgrade",
+    "Review my diff for logic bugs and broken callers",
+    "Look over the Paystack webhook handler and payout flow for money-handling mistakes"
+  ]
+}

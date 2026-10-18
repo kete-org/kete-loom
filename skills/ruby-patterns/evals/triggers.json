@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "What's the idiomatic way to model this config hash as a Ruby object? Struct or Data?",
+    "Refactor this Ruby class: it's 400 lines and uses each with an accumulator everywhere",
+    "Set up RuboCop for our gem and tell me which cops to keep",
+    "Why is my Ruby script that dedupes a CSV so slow and eating memory?",
+    "Should I add RBS signatures or Sorbet to this Ruby library?",
+    "How should I design the error classes for my Ruby gem so callers can rescue them?"
+  ],
+  "should_not_trigger": [
+    "Write RSpec examples for the Invoice#total method",
+    "bundle install fails building the pg gem native extension on my Mac",
+    "Review my Ruby PR for N+1 queries and unpermitted params before merge",
+    "How do I structure a Rails app with service objects and concerns?",
+    "Show me the idiomatic way to handle errors in Python with custom exceptions",
+    "Write a Ruby on Rails migration that adds an index concurrently"
+  ]
+}

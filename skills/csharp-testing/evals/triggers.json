@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Write xUnit tests for OrderService and mock the repository with NSubstitute",
+    "Add an integration test that boots our ASP.NET Core API with WebApplicationFactory and checks the 404",
+    "Spin up Postgres with Testcontainers for our EF Core repository tests",
+    "This NUnit test passes locally but fails randomly in CI, help me find out why",
+    "Create a new .NET test project for MyApp and wire it into the solution"
+  ],
+  "should_not_trigger": [
+    "Review my C# pull request for async void and disposal leaks",
+    "Make this C# service use CancellationToken everywhere and stop blocking on .Result",
+    "Restore fails in CI with NU1102, the package version can't be found on our feed",
+    "Write pytest fixtures for the Django models",
+    "Add Playwright end-to-end tests for the checkout page",
+    "Raise test coverage on the whole repo to 80 percent"
+  ]
+}

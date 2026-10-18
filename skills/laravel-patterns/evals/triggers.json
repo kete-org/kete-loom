@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My Laravel posts index runs 200 queries, how do I fix the N+1 with Eloquent?",
+    "Add a form request and a policy so only the owner can update an invoice in our Laravel app",
+    "The welcome email job in Laravel sometimes runs before the user row is committed, how do I dispatch it safely?",
+    "env('STRIPE_KEY') returns null in production after php artisan config:cache, why?",
+    "Write Pest feature tests for the Laravel orders controller, including the forbidden case"
+  ],
+  "should_not_trigger": [
+    "Convert these PHPUnit docblock annotations to PHP 8 attributes in my plain Composer library",
+    "Make this PHP 8 value object readonly and use a backed enum for its status",
+    "My Rails index page has an N+1 on comments, fix it with includes",
+    "Review the Stripe webhook handler for idempotency and signature checks",
+    "Set up GitHub Actions to run our PHP tests on every pull request"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review my Go changes for goroutine leaks and ignored errors before I merge",
+    "Can you check this Go PR for data races? It adds a cache shared by the HTTP handlers",
+    "Look over the diff in internal/worker and tell me if I'm misusing context anywhere",
+    "Second pair of eyes on my Go branch please, I'm worried about nil pointer panics and slice aliasing",
+    "Audit the changed .go files on this branch for unchecked err values and shadowed errors"
+  ],
+  "should_not_trigger": [
+    "Fix the go build error: undefined: errgroup.WithContext",
+    "Write table-driven tests for the Go retry helper",
+    "Show me the idiomatic way to structure a worker pool in Go",
+    "Review this Rust PR for unsafe blocks and lifetime problems",
+    "Review my React component for unnecessary re-renders"
+  ]
+}

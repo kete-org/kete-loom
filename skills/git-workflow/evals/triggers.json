@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My feature branch is 40 commits behind main and the rebase stopped with conflicts in three files, help me get through it",
+    "I did git reset --hard by mistake and my last two commits are gone, can we get them back?",
+    "Squash the fixup commits on this branch into the commits they belong to before I ask for review",
+    "Should I rebase or merge main into my branch? Two of us have been pushing to it",
+    "I rewrote my branch history locally, how do I push it without clobbering my teammate's commits?"
+  ],
+  "should_not_trigger": [
+    "Write a commit message for these staged changes using feat/fix prefixes",
+    "Cut version 2.4.0, update the changelog and tag the release",
+    "Set up a GitHub Actions job that runs the tests on every pull request",
+    "Write a description for my pull request summarising the changes",
+    "Review the diff on this branch for bugs before I merge"
+  ]
+}

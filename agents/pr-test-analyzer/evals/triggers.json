@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Is PR 312 tested well enough to merge? Tell me what tests are missing",
+    "Check the tests on my branch: do they actually cover the new refund rules?",
+    "List the exact tests I should add for the changes in this pull request",
+    "Are the assertions in this PR's tests strong enough, or are they just mocking everything?",
+    "Analyse test quality for the diff against main before I ask for review"
+  ],
+  "should_not_trigger": [
+    "Review this PR for bugs and broken callers",
+    "Write the missing unit tests for the invoice module and get coverage above 80%",
+    "Our Playwright run in CI is red, find out why and fix the flaky ones",
+    "Write a description for my pull request",
+    "Set up Playwright for the admin dashboard"
+  ]
+}

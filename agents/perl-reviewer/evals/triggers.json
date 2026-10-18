@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Perl changes before I merge, especially the system() calls",
+    "Can you check this .pm diff for two-arg open and other Perl security problems?",
+    "Second pair of eyes on lib/Report.pm: I think there's a list vs scalar context bug somewhere",
+    "Look over this Perl CGI script change for injection holes before it goes live"
+  ],
+  "should_not_trigger": [
+    "Rewrite this Perl script to use Moo and modern signatures",
+    "Write Test2::V0 tests for the Perl report generator",
+    "Can't locate DateTime.pm in @INC when my Perl script starts, fix it",
+    "Review this Ruby on Rails pull request for N+1 queries",
+    "Do a full threat model of our payment service"
+  ]
+}

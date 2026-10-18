@@ -4,7 +4,7 @@ description: Creates or improves an Agent Skill (a SKILL.md folder) so it loads 
 license: MIT
 compatibility: Any Agent Skills host.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: meta
   kete-loom/risk: writes-files
   kete-loom/owner: "Kete-org"
@@ -37,7 +37,7 @@ license: MIT
 compatibility: <tools, network or OS it needs>
 metadata:
   kete-loom/version: "0.1.0"
-  kete-loom/category: coding     # coding | testing | security | integrations | devops | docs | meta
+  kete-loom/category: coding     # coding | testing | security | integrations | devops | data | ai | docs | business | compliance | meta
   kete-loom/risk: read-only      # read-only | writes-files | runs-commands | network
   kete-loom/requires: "git"      # optional, comma-separated CLIs
 ---

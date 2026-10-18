@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Make this custom dropdown work with the keyboard and screen readers",
+    "Our signup form errors aren't announced by VoiceOver, fix the markup so they are",
+    "Build an accessible modal dialog component that traps focus and returns it on close",
+    "The grey button text fails contrast, help me get this page to WCAG 2.2 AA",
+    "Add axe checks to our Playwright tests and fix whatever violations they find"
+  ],
+  "should_not_trigger": [
+    "Audit this pull request for accessibility problems and list findings, don't change anything",
+    "Our LCP is 4 seconds on mobile, find out why the hero image loads so late",
+    "Set up design tokens and dark mode theming for our stylesheet",
+    "Write Playwright end-to-end tests for the checkout flow",
+    "Review this React component for unnecessary re-renders"
+  ]
+}

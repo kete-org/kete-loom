@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review our Dockerfile, Helm chart and Terraform changes for security problems before we merge",
+    "Here's the terraform plan output, check it for anything that would destroy or replace prod resources",
+    "Audit the k8s manifests in deploy/ for missing resource limits, probes and root containers",
+    "Can you look over the infra changes in this PR and our GitHub Actions workflow for misconfigurations?"
+  ],
+  "should_not_trigger": [
+    "Write a multi-stage Dockerfile for the Go service",
+    "Fix the pods that are crashing with OOMKilled in staging",
+    "Move our Terraform state from local files to an S3 backend",
+    "Review this pull request's application code for logic bugs",
+    "Do a threat model of the new file upload feature"
+  ]
+}

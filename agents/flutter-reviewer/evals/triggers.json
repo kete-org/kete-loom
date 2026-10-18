@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Flutter PR before I merge it, especially the new checkout screen",
+    "Check this branch for setState or context used after await in our Flutter app",
+    "Our Flutter app's memory keeps growing after navigating back and forth, can you review the recent changes for leaks?",
+    "Give my uncommitted Flutter widget changes a second look for rebuild problems"
+  ],
+  "should_not_trigger": [
+    "Build a new Flutter profile screen with Riverpod and go_router",
+    "Review this pure Dart package for misuse of null safety and unawaited futures",
+    "Fix the failing flutter build: Gradle task assembleDebug failed",
+    "Review this React Native pull request for list performance issues",
+    "Write golden tests for the Flutter onboarding flow"
+  ]
+}

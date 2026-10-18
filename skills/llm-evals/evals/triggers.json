@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We want to swap to a cheaper model, set up evals so we know if quality drops",
+    "Build a test set and graders for our support-ticket classifier",
+    "How do I check that my LLM-as-judge scores actually agree with humans?",
+    "Add an eval step to CI that fails the build if the summariser's accuracy regresses",
+    "Our eval cases keep ending up in the few-shot examples, how do we keep the held-out set clean?"
+  ],
+  "should_not_trigger": [
+    "Make the extraction prompt handle missing dates better",
+    "Score these 40 agent transcripts against our rubric and tell me where it fails",
+    "Add a timeout and JSON schema validation to our model call",
+    "Benchmark the p99 latency of the search API under load",
+    "Increase unit test coverage for the billing module to 80 percent"
+  ]
+}

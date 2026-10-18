@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review this Kotlin pull request for coroutine leaks before I merge it",
+    "Can you check my Kotlin diff for !! abuse and Flow collection bugs?",
+    "Is it safe how this Android ViewModel launches coroutines? Look over my uncommitted changes",
+    "Second pair of eyes on my branch: the Kotlin code now calls a Java SDK that may return null",
+    "Look for blocking calls on the main thread in the Kotlin files I changed"
+  ],
+  "should_not_trigger": [
+    "Rewrite this Kotlin class to use sealed interfaces for its UI state",
+    "Write MockK tests for the payment repository",
+    "The Gradle build fails with a KSP error after updating Kotlin, fix it",
+    "Review my Java Spring service for transaction bugs",
+    "Review my Flutter widget tree for rebuild problems"
+  ]
+}

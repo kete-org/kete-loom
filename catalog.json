@@ -3,6 +3,715 @@
   "version": "0.1.0",
   "skills": [
     {
+      "name": "agent-harness-design",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Architecture for the loop around an LLM agent, covering which tools to give it, how to manage and compact its context window, plan-act-verify cycles, permission tiers and sandboxing, tracing and cost limits, and recovery when steps fail or the agent loops. Use when you are building or debugging the harness of a coding agent, task-automation agent or other tool-calling loop (not tuning your own session), or when the agent you built forgets earlier work, runs dangerous commands, or stops before the job is done.",
+      "path": "skills/agent-harness-design"
+    },
+    {
+      "name": "angular-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "ng"
+      ],
+      "description": "Modern Angular guidance for standalone components, signal state with input(), output(), model(), computed and effect, RxJS subscriptions that cannot leak, OnPush and zoneless change detection, inject()-based dependency injection, typed reactive or signal forms, and TestBed component tests. Use when writing, migrating or debugging an Angular application, such as moving NgModules to standalone, replacing decorators with signals, fixing a view that does not refresh, or stopping a subscription leak.",
+      "path": "skills/angular-patterns"
+    },
+    {
+      "name": "api-design",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "HTTP API contract design covering resource modelling, REST versus RPC-style endpoints, status codes and RFC 9457 problem details, cursor pagination, filtering, versioning and deprecation headers, Idempotency-Key retries, OpenAPI-first contracts, and when GraphQL is worth it. Use when designing a new HTTP or GraphQL API, adding endpoints to an existing one, reviewing an API contract or OpenAPI file before it ships, or planning a breaking change.",
+      "path": "skills/api-design"
+    },
+    {
+      "name": "architecture-decision-records",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Writes and maintains Architecture Decision Records (ADRs), deciding whether a choice deserves one, filling a short template (Nygard sections plus options considered) with context, the options weighed, the decision and its consequences, numbering and storing it next to the code, and superseding old records instead of rewriting them. Use when the user wants to record or document a technical decision, start an ADR log in a repo, or update the status of an earlier decision.",
+      "path": "skills/architecture-decision-records"
+    },
+    {
+      "name": "article-writing",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Long-form article and blog post writing, from choosing a sharp angle and outlining, through gathering evidence and drafting in plain prose, to a structured editing pass and a final headline, summary and meta description. Use when someone wants a blog post, essay, opinion piece, case study, newsletter feature or company announcement of roughly 800 words or more written, restructured or edited for clarity.",
+      "path": "skills/article-writing"
+    },
+    {
+      "name": "aspnet-core-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "description": "ASP.NET Core web API and app hosting decisions - choosing minimal APIs or controllers, ordering the middleware pipeline, picking singleton, scoped or transient lifetimes without captive dependencies, binding and validating settings with the options pattern, request validation, JWT or cookie authentication with policy-based authorization, RFC 7807 problem details for errors, and liveness and readiness health checks. Use when building or reviewing an ASP.NET Core service, wiring Program.cs, debugging a 401, 500 or middleware-order bug, or adding auth, validation or health endpoints to a .NET web app.",
+      "path": "skills/aspnet-core-patterns"
+    },
+    {
+      "name": "auth-patterns",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Implementing login, sessions and access control correctly on the server - password hashing with Argon2id or bcrypt, cookie sessions versus JWT access tokens, OAuth 2.1 and OpenID Connect authorization code flow with PKCE, TOTP and passkey MFA, role- and attribute-based permission checks, safe token storage in browsers and mobile apps, and password reset and account recovery. Use when building or changing sign-up, sign-in, logout, social login or SSO, adding roles and permissions, deciding where to keep tokens, wiring up an identity provider, or designing a forgot-password flow.",
+      "path": "skills/auth-patterns"
+    },
+    {
+      "name": "autonomous-loops",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Runs an agent unattended over many iterations without it drifting or doing damage. Defines a measurable goal and stop conditions up front, caps iterations, time and spend, verifies each iteration with a real check, commits checkpoints so any step can be rolled back, keeps a progress log, and stops to escalate on repeated failure or risky actions. Use when the user wants the agent to keep going on its own (\"loop until the tests pass\", \"work through this backlog overnight\", \"fix every lint error\"), or when designing a headless or scheduled agent run.",
+      "path": "skills/autonomous-loops"
+    },
+    {
+      "name": "aws-patterns",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "aws"
+      ],
+      "description": "Designs and reviews workloads on Amazon Web Services, covering least-privilege IAM roles and policies, picking Lambda versus ECS Fargate versus EC2, S3 bucket hardening, RDS and Aurora setup, VPC subnets and security groups, Secrets Manager and Parameter Store, and the bill surprises that come from NAT gateways, public IPv4 and idle resources. Use when building or changing something on AWS, writing an IAM policy, choosing an AWS compute service, or asking why an AWS account costs more than expected.",
+      "path": "skills/aws-patterns"
+    },
+    {
+      "name": "azure-patterns",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "az"
+      ],
+      "description": "Sets up and audits Microsoft Azure workloads with Entra ID and managed identities instead of stored credentials, Azure RBAC at resource scope, a reasoned choice among App Service, Container Apps, Azure Functions and AKS, Azure SQL and Cosmos DB configuration, Key Vault references, virtual networks with private endpoints and NSGs, and Azure spending pitfalls like idle App Service plans and over-provisioned RUs. Use when building on Azure, wiring a managed identity, deciding where an Azure app should run, or explaining an Azure invoice.",
+      "path": "skills/azure-patterns"
+    },
+    {
+      "name": "benchmark-methodology",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Designs and runs performance benchmarks whose numbers hold up, with warmup, enough iterations, medians and p95/p99 with spread, a quiet and pinned machine, interleaved before/after comparison with a significance check, and guards against dead-code elimination and other microbenchmark traps in Go, JMH, BenchmarkDotNet, Criterion, pytest-benchmark and JS. Use when measuring whether a change made code faster or slower, writing a microbenchmark, or judging a performance claim.",
+      "path": "skills/benchmark-methodology"
+    },
+    {
+      "name": "brand-voice",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Defines a company's written brand voice as three to five attributes with \"this, not that\" boundaries, paired do and don't rewrites, a preferred and banned vocabulary list and tone shifts by context, then checks or rewrites copy against that guide. Use when a team needs a voice and tone guide, wants marketing, product, support or social copy made consistent, or asks whether a piece of text sounds on-brand.",
+      "path": "skills/brand-voice"
+    },
+    {
+      "name": "browser-qa",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Exploratory, manual-style QA session on a running web app through a real browser, walking the critical user journeys, abusing forms and validation, spot-checking small screens, keyboard use and contrast, and watching the console and network panel, then filing reproducible bug reports. Use when someone wants a site or staging build clicked through and checked before a release, demo or handover, rather than automated tests written.",
+      "path": "skills/browser-qa"
+    },
+    {
+      "name": "bun-runtime",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "bun"
+      ],
+      "description": "Working with Bun as a JavaScript runtime, package manager, test runner and bundler, and knowing where it differs from Node and npm, including bun.lock and trustedDependencies, bunfig.toml, bun test with bun:test mocks, bun build and --compile, Bun.serve, automatic .env loading, Node API compatibility gaps, and when to stay on Node. Use when adopting or migrating to Bun, debugging something that works on Node but fails under Bun, setting up bun test or bun install in CI, or deciding whether Bun is a safe choice for a project.",
+      "path": "skills/bun-runtime"
+    },
+    {
+      "name": "clickhouse-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "clickhouse-client"
+      ],
+      "description": "ClickHouse table and query design for analytics, choosing a MergeTree family engine, ordering the sorting key for the filters that matter, keeping partitions coarse, building incremental and refreshable materialised views, batching or async-inserting writes to avoid too many parts, and reading EXPLAIN and system tables to make slow queries fast. Use when creating or changing ClickHouse tables, ingesting events into ClickHouse, a ClickHouse query scans too many rows, or deduplication and rollups give unexpected results.",
+      "path": "skills/clickhouse-patterns"
+    },
+    {
+      "name": "code-tour",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "Authors a step-by-step guided walkthrough of a codebase or a single feature as an ordered list of stops, each pinned to a file:line reference with a short explanation of what that code does and why it matters, written so a new contributor can follow it in one sitting. Use when asked to create a code walkthrough, a feature tour, a \"follow the request\" guide, or contributor-facing reading order for part of a project.",
+      "path": "skills/code-tour"
+    },
+    {
+      "name": "codebase-onboarding",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Gets you productive in an unfamiliar repository fast by locating its entry points, building and running it locally, mapping modules and the main data flow, reading the tests as a specification, and ending with a one-page orientation note. Use when someone has just cloned or inherited a project, asks \"how does this codebase work\", \"where do I start\", or needs to understand a repo before changing it.",
+      "path": "skills/codebase-onboarding"
+    },
+    {
+      "name": "context-budget",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Keeps a long agent task inside its context window by deciding what to read in full versus search for, reading files in slices, summarising findings into a running notes file, pushing bulky reads and log analysis to subagents that return short answers, and checkpointing before the window runs out. Use when a task spans many files or huge outputs (logs, lockfiles, generated code, large diffs), when earlier details start getting lost, or when the user warns the session is close to its context limit.",
+      "path": "skills/context-budget"
+    },
+    {
+      "name": "conventional-commits",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Writes and checks commit messages in the Conventional Commits 1.0.0 format - choosing the type and scope, marking breaking changes with \"!\" or a BREAKING CHANGE footer, writing a body that explains why the change was made, and adding issue footers - so changelog and semantic-version tooling can read the history. Use when composing a commit message, splitting staged work into well-labelled commits, fixing a message that commitlint rejected, or deciding whether a change counts as feat, fix or breaking.",
+      "path": "skills/conventional-commits"
+    },
+    {
+      "name": "cpp-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "cmake"
+      ],
+      "description": "Modern C++ (17/20/23) house rules for writing and restructuring code - RAII for every resource, unique_ptr/shared_ptr ownership, value semantics and the rule of zero, const-correctness, steering clear of undefined behaviour, concepts used sparingly, target-based CMake, plus sanitizer and clang-tidy setup. Use when writing new C++ code, modernising legacy C++98/03 code, deciding who owns an object, or setting up a CMake project with warnings, sanitizers and clang-tidy.",
+      "path": "skills/cpp-patterns"
+    },
+    {
+      "name": "cpp-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "cmake",
+        "ctest"
+      ],
+      "description": "Writes and runs C++ unit tests with GoogleTest or Catch2 - test fixtures, parameterised cases, gMock mocks behind interfaces, CTest registration via gtest_discover_tests or catch_discover_tests, and running the suite under AddressSanitizer and UBSan. Use when adding tests to a C++ codebase, wiring a test framework into CMake and CTest, mocking a C++ dependency, or chasing a flaky or crashing C++ test.",
+      "path": "skills/cpp-testing"
+    },
+    {
+      "name": "csharp-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "description": "Idiomatic modern C# on .NET 8 and later, covering nullable reference types, records, pattern matching, async/await with CancellationToken, LINQ deferred-execution traps, IDisposable and IAsyncDisposable, Microsoft.Extensions.DependencyInjection lifetimes, the dotnet CLI and Roslyn analyzers. Use when writing or restructuring C# application or library code, enabling nullable or analyzers in a .NET project, or choosing how a class, service or async API should be shaped.",
+      "path": "skills/csharp-patterns"
+    },
+    {
+      "name": "csharp-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "description": "Writes and fixes .NET tests in C# with xUnit (or the NUnit or MSTest framework already in the repo), FluentAssertions or built-in asserts, Moq or NSubstitute test doubles, WebApplicationFactory in-memory API tests and Testcontainers-backed database tests, all run through dotnet test. Use when adding unit or integration tests to a C# project, setting up a new .NET test project, mocking a dependency, or debugging a flaky or failing dotnet test run.",
+      "path": "skills/csharp-testing"
+    },
+    {
+      "name": "css-architecture",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Organises stylesheets so they stay maintainable as a codebase grows, using design tokens in CSS custom properties, cascade layers to control specificity, grid and flexbox for layout, container queries for component-level responsiveness, one consistent naming or utility-first convention, and token-driven theming including dark mode. Use when setting up or refactoring a project's CSS, introducing a design system or theme, fighting specificity wars and !important, or deciding between BEM, CSS Modules and Tailwind.",
+      "path": "skills/css-architecture"
+    },
+    {
+      "name": "dart-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "dart"
+      ],
+      "description": "Writes and refactors idiomatic Dart 3 code that keeps sound null safety intact, models data with records, pattern matching and sealed class hierarchies, handles async/await, Streams and isolates without leaks or dropped futures, and manages pub dependencies and analysis_options.yaml lint sets. Use when writing or restructuring plain Dart (CLI, server, package or the non-widget layers of a Flutter app), replacing nullable soup or enum switches with sealed types and patterns, or tightening analyzer rules for a Dart codebase.",
+      "path": "skills/dart-patterns"
+    },
+    {
+      "name": "dart-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "dart"
+      ],
+      "description": "Writes deterministic Dart and Flutter tests with package:test and flutter_test, fakes collaborators with mocktail, asserts on Futures and Streams with expectLater and stream matchers, controls time with fake_async, and sets up basic golden image tests. Use when adding or fixing unit, widget or golden tests in a Dart or Flutter project, mocking a repository or HTTP client with mocktail, or chasing a flaky async test that hangs, times out or passes only sometimes.",
+      "path": "skills/dart-testing"
+    },
+    {
+      "name": "database-migrations",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Plans and writes zero-downtime schema migrations with the expand-migrate-contract sequence, so columns, tables and indexes can be added, renamed, retyped or dropped while old and new app versions run side by side, with batched backfills, lock and statement timeouts, tested rollbacks, and the conventions of tools such as Flyway, Liquibase, Alembic, Django, Rails, Prisma and Knex. Use when writing a migration against a live database, renaming or dropping a column in production, backfilling a large table, adding a NOT NULL column or foreign key without locking writes, or planning how to roll a schema change back.",
+      "path": "skills/database-migrations"
+    },
+    {
+      "name": "deep-research",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "network",
+      "requires": [],
+      "description": "Investigates a technical question across many sources and produces a cited report. Breaks the question into sub-questions, goes to primary sources first (official docs, specs, changelogs, source code, standards), cross-checks every load-bearing claim against a second independent source, records a citation and access date for each, flags conflicts and gaps, and ends with a fixed report format. Use when the user asks to research, compare or evaluate libraries, vendors, APIs, protocols or approaches, asks \"what is the current state of X\", or needs a decision backed by evidence rather than recall.",
+      "path": "skills/deep-research"
+    },
+    {
+      "name": "dependency-audit",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "network",
+      "requires": [],
+      "description": "Software supply-chain audit of a project's third-party packages across npm, pnpm, Yarn, pip/uv, Cargo, Go modules and similar ecosystems. Runs the ecosystem's vulnerability scanner, checks that lockfiles exist and are enforced in CI, vets new or suspicious packages for typosquatting, install scripts and abandoned maintainers, and sets a pinning, update-cadence and SBOM policy. Use when a scanner or Dependabot reports a vulnerable package, before adding a new library, when asked whether the project's dependencies are safe, or when setting up dependency hygiene and an SBOM for a release.",
+      "path": "skills/dependency-audit"
+    },
+    {
+      "name": "deployment-strategies",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Plans and runs low-risk production releases with blue-green switches, progressive canary rollouts, feature flags that separate deploy from release, expand-and-contract database changes ordered so old and new code both work, readiness and liveness health checks, rollback triggered automatically by error and latency signals, and smoke tests after every deploy. Use when shipping a risky change to production, designing a rollout or rollback plan, deploying alongside a schema change, or deciding between blue-green, canary and flags.",
+      "path": "skills/deployment-strategies"
+    },
+    {
+      "name": "django-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "Django project conventions for building and changing apps, covering app layout, ORM query efficiency with select_related and prefetch_related, safe migrations, forms and model validation, auth and permission checks, per-environment settings, Celery tasks that run after commit, and production security settings. Use when adding a Django model, view, form or Celery task, fixing slow querysets, planning a schema migration, or hardening Django settings for deployment.",
+      "path": "skills/django-patterns"
+    },
+    {
+      "name": "docker-patterns",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "docker"
+      ],
+      "description": "Writes and fixes Dockerfiles and Docker Compose files that build small, cacheable, non-root images, using multi-stage builds, a tight .dockerignore, BuildKit cache and secret mounts, healthchecks, and a Compose setup for local development with dependent services. Use when containerising an app, shrinking a bloated or slow image build, removing secrets baked into image layers, or wiring a local stack of app, database and queue with Compose.",
+      "path": "skills/docker-patterns"
+    },
+    {
+      "name": "e2e-testing-playwright",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "node",
+        "npx"
+      ],
+      "description": "Writes and maintains Playwright Test end-to-end suites for web apps, using role-based locators, web-first assertions that auto-wait, saved storageState for login, page.route network mocks, isolated per-test data, traces for flaky runs and a sharded CI job. Use when adding or fixing browser end-to-end tests with Playwright, setting up playwright.config, or making an existing Playwright suite reliable in CI.",
+      "path": "skills/e2e-testing-playwright"
+    },
+    {
+      "name": "ef-core-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "description": "Entity Framework Core data-access rules for .NET - scoped DbContext lifetime, pooling and IDbContextFactory, AsNoTracking for read paths, LINQ that translates to SQL instead of throwing or evaluating on the client, projections, Include versus AsSplitQuery for N+1 and cartesian explosion, ExecuteUpdate and ExecuteDelete for bulk writes, safe dotnet ef migrations and idempotent scripts, and optimistic concurrency with row versions. Use when writing or reviewing EF Core queries or DbContext setup, fixing slow or untranslatable LINQ, adding or deploying an EF Core migration, or handling DbUpdateConcurrencyException.",
+      "path": "skills/ef-core-patterns"
+    },
+    {
+      "name": "error-handling-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Language-agnostic rules for designing how code fails, covering when to crash versus recover, typed and wrapped errors with context, retry with exponential backoff and jitter only for idempotent work, timeouts on every remote call, and separating what the user sees from what gets logged. Use when writing or restructuring try/catch, Result or error-return code, adding retries or timeouts to a network client, or deciding what an API should return on failure.",
+      "path": "skills/error-handling-patterns"
+    },
+    {
+      "name": "fastapi-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "FastAPI service construction with APIRouter modules, Pydantic models as the request and response contract, Depends-based injection for settings, database sessions and the current user, choosing async def versus def per endpoint, consistent error bodies, BackgroundTasks, lifespan startup, and tests through TestClient or httpx with dependency_overrides. Use when creating or extending a FastAPI app, wiring a database session or auth into routes, deciding whether an endpoint should be async, or writing tests for FastAPI endpoints.",
+      "path": "skills/fastapi-patterns"
+    },
+    {
+      "name": "flask-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "Flask application structure with a create_app factory, blueprints per feature, config loaded from objects and environment variables, extensions such as Flask-SQLAlchemy and Flask-Migrate initialised with init_app, application and request context pitfalls with current_app and g, security hardening, and pytest tests through the test client. Use when starting or restructuring a Flask app, adding a blueprint or extension, debugging \"working outside of application context\" errors, or testing Flask views.",
+      "path": "skills/flask-patterns"
+    },
+    {
+      "name": "flutter-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "flutter"
+      ],
+      "description": "Flutter app architecture from the widget tree up, covering small const widgets and composition over inheritance, choosing between Riverpod, Bloc and Provider for state, declarative routing with go_router or Navigator, FutureBuilder and StreamBuilder async UI with loading and error states, rebuild and jank performance, and Dart-to-native platform channels or Pigeon. Use when building or restructuring Flutter screens and widgets, picking or applying a state management approach, wiring navigation and deep links, chasing dropped frames, or calling iOS or Android code from a Flutter app.",
+      "path": "skills/flutter-patterns"
+    },
+    {
+      "name": "flutterwave-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Builds and reviews Flutterwave v3 payment integrations across African markets, covering Flutterwave Standard hosted checkout, direct charges for mobile money (Ghana, Kenya M-Pesa, Uganda, Francophone) and cards, server-side verification by transaction id, verif-hash webhook checks and fulfilment that runs once per tx_ref. Use when adding Flutterwave payments to an app, handling a Flutterwave webhook or redirect, charging a mobile money wallet through Flutterwave, or debugging why a Flutterwave order was marked paid wrongly or twice.",
+      "path": "skills/flutterwave-integration"
+    },
+    {
+      "name": "fsharp-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "dotnet"
+      ],
+      "description": "Idiomatic F# for writing and restructuring code - discriminated unions and records that make illegal states unrepresentable, Option and Result pipelines instead of exceptions and null, task/async/result computation expressions, compilation-order-aware module layout, and safe .NET interop. Use when writing new F# code, modelling a domain in F#, converting exception-heavy or C#-style F# to a functional style, or calling .NET libraries from F#.",
+      "path": "skills/fsharp-patterns"
+    },
+    {
+      "name": "fsharp-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "description": "Writes and fixes F# tests with Expecto or xUnit, FsCheck property-based tests for invariants, Unquote quotation assertions, and correct testing of task and async code without blocking. Use when adding tests to an F# project, turning example-based F# tests into properties, choosing between Expecto and xUnit for F#, or debugging flaky or hanging F# async tests.",
+      "path": "skills/fsharp-testing"
+    },
+    {
+      "name": "gcp-patterns",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "gcloud"
+      ],
+      "description": "Guides Google Cloud projects through service-account-based IAM without key files, choosing Cloud Run, GKE or Cloud Run functions, Cloud SQL connections through the Auth Proxy or connectors, Cloud Storage access control, Secret Manager, VPC and firewall basics, and the GCP billing gotchas such as idle GKE nodes, egress, and log ingestion. Use when deploying to or designing on Google Cloud, granting roles to a service account, picking a GCP runtime, or tracing an unexpected Google Cloud charge.",
+      "path": "skills/gcp-patterns"
+    },
+    {
+      "name": "git-workflow",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Everyday team git without an interactive editor - feature branches, choosing rebase or merge, resolving conflicts, tidying commits with fixup and autosquash, recovering lost commits through the reflog, and force-pushing with --force-with-lease so nobody's work is overwritten. Use when a branch has diverged, a rebase or merge hit conflicts, commits need squashing or rewording before review, work seems lost after a reset or bad rebase, or a rewritten branch must be pushed.",
+      "path": "skills/git-workflow"
+    },
+    {
+      "name": "github-actions-ci",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "gh"
+      ],
+      "description": "Writes, hardens and debugs GitHub Actions workflows under .github/workflows, including triggers and job structure, dependency caching, build matrices, reusable workflows and composite actions, keyless OIDC login to AWS, Google Cloud and Azure, least-privilege GITHUB_TOKEN permissions, SHA-pinned third-party actions, and diagnosing red runs from their logs. Use when creating or editing a GitHub Actions workflow YAML, speeding up a slow pipeline, removing stored cloud keys from CI, or figuring out why a GitHub Actions job failed.",
+      "path": "skills/github-actions-ci"
+    },
+    {
+      "name": "go-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "go"
+      ],
+      "description": "Idiomatic Go for writing and restructuring code, covering package layout, error wrapping with %w and errors.Is/As, small consumer-side interfaces, context.Context propagation, goroutine and channel patterns that do not leak or race, Go modules hygiene, and golangci-lint setup. Use when writing new Go code, designing a Go package or service, choosing between channels and mutexes, or asking how a Go project should be structured.",
+      "path": "skills/go-patterns"
+    },
+    {
+      "name": "go-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "go"
+      ],
+      "description": "Writes and fixes Go tests with the standard testing package, including table-driven tests with t.Run subtests, t.Helper and t.Cleanup, httptest servers and recorders, hand-written fakes instead of mock frameworks, the race detector, native fuzzing, benchmarks and golden files. Use when adding or repairing _test.go files, making flaky Go tests deterministic, testing an HTTP handler or client in Go, or writing a Go fuzz target or benchmark.",
+      "path": "skills/go-testing"
+    },
+    {
+      "name": "hexagonal-architecture",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Applies ports and adapters (hexagonal, clean or onion architecture) pragmatically, keeping domain rules and use cases free of framework, database and HTTP imports, pointing dependencies inward, and untangling an existing codebase one seam at a time. Use when business logic is mixed into controllers or ORM models, when a core module must be testable without a database, when deciding whether layering is worth it for a project, or when carving a use case out of legacy code.",
+      "path": "skills/hexagonal-architecture"
+    },
+    {
+      "name": "hipaa-compliance",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Engineering rules for US HIPAA work on protected health information (PHI and ePHI), covering whether HIPAA applies, Security Rule safeguards such as role-based access, audit trails, encryption and automatic logoff, business associate agreements with cloud, email, SMS and AI vendors, the minimum necessary standard, de-identification, PHI-free logging, and breach readiness, with a clear not-legal-advice line. Use when building or reviewing a health, telehealth, clinic, pharmacy or insurance system in the US, choosing a vendor that will touch patient data, or scrubbing PHI from logs and analytics.",
+      "path": "skills/hipaa-compliance"
+    },
+    {
+      "name": "homelab-network-setup",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Plans and builds a self-hosted home lab network from an address and VLAN plan through inter-VLAN firewall policy, local DNS filtering with Pi-hole or AdGuard Home, WireGuard remote access, configuration backups, and exposing a few services to the internet without opening the whole LAN. Use when someone is designing or rebuilding a home or small-office network, isolating IoT or guest devices, setting up a VPN to reach home from outside, or deciding how to publish a self-hosted app safely.",
+      "path": "skills/homelab-network-setup"
+    },
+    {
+      "name": "hubtel-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Guides Ghana-focused Hubtel merchant integrations end to end, from Online Checkout (redirect or onsite iframe) and Direct Receive Money prompts on MTN, Telecel and AirtelTigo wallets to callback handling, the mandatory Transaction Status Check, Basic auth with API ID and key, the 4-IP whitelist, and sending SMS through the Hubtel SMS API. Use when accepting payments into a Hubtel Merchant Account, wiring a Hubtel callback or status check, fixing a Hubtel 403 or 4000 response, or sending transactional SMS through Hubtel.",
+      "path": "skills/hubtel-integration"
+    },
+    {
+      "name": "investor-materials",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Drafts startup fundraising documents, namely a pitch deck outline, a one-page investor summary and the recurring investor update, built around a clear narrative, the few metrics investors judge a company on, a specific ask and use of funds. Use when a founder is preparing to raise a seed or Series A round, writing to existing investors about progress, or wants a deck or one-pager reviewed for gaps and common fundraising mistakes.",
+      "path": "skills/investor-materials"
+    },
+    {
+      "name": "java-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "java"
+      ],
+      "description": "Idiomatic modern Java (17 and 21 LTS and later) for writing and restructuring code with records, sealed interfaces, switch pattern matching, Optional, streams, checked versus unchecked exceptions, immutable collections, virtual threads and a standard Maven or Gradle layout. Use when writing new Java classes, modernising pre-17 Java code, choosing between a record, enum or sealed hierarchy, or deciding how to run blocking work concurrently on the JVM.",
+      "path": "skills/java-patterns"
+    },
+    {
+      "name": "java-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Writes and repairs JVM tests in Java with JUnit Jupiter, AssertJ assertions, Mockito mocks, parameterized cases, Testcontainers-backed integration tests and Spring Boot test slices, and tracks down flaky tests. Use when adding unit or integration tests to a Java project, choosing between a mock and a real database container, speeding up a slow Java test suite, or diagnosing a JUnit test that passes locally and fails in CI.",
+      "path": "skills/java-testing"
+    },
+    {
+      "name": "jetpack-compose-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Android Jetpack Compose UI work centred on hoisting state into stateless composables, understanding recomposition, stability and strong skipping, choosing the right side-effect API (LaunchedEffect, DisposableEffect, rememberUpdatedState, derivedStateOf, snapshotFlow), exposing ViewModel state with collectAsStateWithLifecycle, type-safe Navigation Compose routes, and lazy-list and baseline-profile performance. Use when writing or restructuring Compose screens on Android, debugging excessive recomposition or janky LazyColumn scrolling, wiring a ViewModel to a composable, or setting up Compose navigation.",
+      "path": "skills/jetpack-compose-patterns"
+    },
+    {
+      "name": "jpa-hibernate",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Jakarta Persistence and Hibernate ORM data-layer rules for entity and association mapping, LAZY-by-default fetch plans, finding and fixing N+1 selects with JOIN FETCH, entity graphs or batch fetching, transaction scope and LazyInitializationException, @Version optimistic locking, and evolving the schema through Flyway or Liquibase rather than ddl-auto. Use when mapping JPA entities, chasing slow or repeated SQL from Hibernate, fixing lazy loading or stale-update errors, or adding a database migration in a Java or Kotlin JVM project.",
+      "path": "skills/jpa-hibernate"
+    },
+    {
+      "name": "kotlin-multiplatform",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Sets up and evolves Kotlin Multiplatform (KMP) and Compose Multiplatform projects, covering the shared module and source-set layout (commonMain, androidMain, iosMain), expect/actual versus interfaces with injected platform implementations, choosing multiplatform-ready libraries, exporting a framework to Xcode, exposing suspend functions and Flows to Swift, and Gradle build setup for Android and iOS targets. Use when starting or restructuring a KMP shared module, deciding what code to share between Android and iOS, adding a platform-specific API behind expect/actual, wiring the shared framework into an Xcode project, or sharing UI with Compose Multiplatform.",
+      "path": "skills/kotlin-multiplatform"
+    },
+    {
+      "name": "kotlin-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Idiomatic Kotlin for JVM and Android code, covering null safety without !!, data and sealed classes with exhaustive when, restrained extension functions, structured concurrency with coroutine scopes and dispatchers, cold Flow versus StateFlow and SharedFlow, Result and exception handling, and Gradle Kotlin DSL build scripts with version catalogs. Use when writing or restructuring Kotlin code, modelling state with sealed hierarchies, choosing a coroutine scope or dispatcher, exposing data as a Flow, or editing build.gradle.kts files.",
+      "path": "skills/kotlin-patterns"
+    },
+    {
+      "name": "kotlin-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Writes and repairs Kotlin tests on JUnit 5 or Kotest, with MockK for coroutine-aware mocks, kotlinx-coroutines-test for runTest, virtual time and Dispatchers.setMain, and Turbine for asserting Flow and StateFlow emissions, plus a checklist for making flaky coroutine tests deterministic. Use when adding unit tests to Kotlin or Android code, testing suspend functions or ViewModels, asserting what a Flow emits, mocking with every and coEvery, or a Kotlin test passes locally but fails or hangs intermittently in CI.",
+      "path": "skills/kotlin-testing"
+    },
+    {
+      "name": "ktor-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Kotlin Ktor server guidance for Application modules, the routing DSL, installing ContentNegotiation with kotlinx.serialization, Authentication (JWT, bearer, sessions), StatusPages error mapping, structured coroutines and Dispatchers.IO for blocking work, wiring dependencies with Ktor DI or Koin, and in-process tests with testApplication. Use when writing or refactoring a Ktor backend, adding routes or plugins, fixing Ktor serialization or auth errors, or testing Ktor endpoints.",
+      "path": "skills/ktor-patterns"
+    },
+    {
+      "name": "kubernetes-patterns",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "kubectl"
+      ],
+      "description": "Kubernetes workload manifests and day-two operations with kubectl, covering Deployments, startup, readiness and liveness probes, CPU and memory requests and limits, ConfigMaps and Secrets, rolling updates and rollbacks, HorizontalPodAutoscaler, PodDisruptionBudgets and a step-by-step pod debugging routine. Use when writing or fixing Deployment, Service or HPA YAML, a rollout is stuck or needs undoing, or pods are in CrashLoopBackOff, Pending, OOMKilled or ImagePullBackOff.",
+      "path": "skills/kubernetes-patterns"
+    },
+    {
+      "name": "laravel-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "php",
+        "composer"
+      ],
+      "description": "Laravel application conventions for routes, controllers and Eloquent models, with N+1 detection through eager loading and preventLazyLoading, validation in Form Request classes, authorization through policies and gates, queued jobs that dispatch after commit, config caching and the env() trap, mass-assignment and other framework security defaults, and feature tests in Pest or PHPUnit using RefreshDatabase and fakes. Use when building or reviewing a Laravel app, fixing slow Eloquent pages, adding a policy, form request or queued job, or writing Laravel feature tests.",
+      "path": "skills/laravel-patterns"
+    },
+    {
+      "name": "llm-app-patterns",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Engineering patterns for shipping LLM-backed product features in application code, covering schema-validated structured output, timeouts and bounded retries, streaming responses, prompt caching and token budgets, choosing a model tier, defending against prompt injection from untrusted content, and logging each call so it can be evaluated later. Use when wiring a model API call into a backend or app, hardening an existing LLM feature for production, cutting its latency or cost, or handling tool output and user documents that reach the model.",
+      "path": "skills/llm-app-patterns"
+    },
+    {
+      "name": "llm-evals",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Builds and runs evaluation suites that measure whether an LLM feature is good enough to ship, from assembling a versioned case set and choosing graders (exact match, code checks, rubrics, a judge model) to tracking scores across prompt and model changes, keeping test cases out of prompts and training data, and deciding when people must review outputs. Use when a team needs a pass/fail bar for an AI feature, wants to catch regressions before a prompt or model upgrade, or doubts whether its LLM-as-judge scores can be trusted.",
+      "path": "skills/llm-evals"
+    },
+    {
+      "name": "market-research",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [],
+      "description": "Structured market and competitor analysis that sizes a market top-down and bottom-up (TAM, SAM, SOM), builds a competitor feature and pricing matrix, defines customer segments, and attaches a source and a confidence level to every figure. Use when someone needs to judge whether a market is worth entering, size an opportunity, compare competitors, or back a business plan or deck with researched numbers rather than guesses.",
+      "path": "skills/market-research"
+    },
+    {
+      "name": "marketing-campaign",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Builds a go-to-market or promotional campaign plan with one measurable objective, a defined audience, positioning and core message, a channel mix, a week-by-week calendar, a budget split and the metrics that decide success. Use when a founder or team is planning a product launch, a seasonal promotion, a user-acquisition push or any time-boxed marketing campaign and needs a plan they can execute and measure.",
+      "path": "skills/marketing-campaign"
+    },
+    {
+      "name": "mcp-server-patterns",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [
+        "node",
+        "npx"
+      ],
+      "description": "Model Context Protocol server construction, from naming tools and writing their JSON Schema inputs to returning isError results, structured output, tool annotations, OAuth-protected Streamable HTTP or local stdio transports, and testing with the MCP Inspector. Use when creating an MCP server, exposing an API or database to agents as MCP tools, or debugging why a client can't connect to, list or call a server's tools.",
+      "path": "skills/mcp-server-patterns"
+    },
+    {
+      "name": "ml-experiment-workflow",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [
+        "python",
+        "git"
+      ],
+      "description": "Plans and runs machine learning experiments so results can be trusted, from a dumb baseline and leakage-free train, validation and test splits, through tracked runs, metrics chosen to match the business goal, and ablations, to turning a notebook into a repeatable pipeline. Use when starting a new model, comparing approaches, deciding whether an improvement is real, or productionising notebook experiments.",
+      "path": "skills/ml-experiment-workflow"
+    },
+    {
+      "name": "mongodb-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "mongosh"
+      ],
+      "description": "MongoDB document modelling and query tuning, from embed-versus-reference decisions and unbounded-array traps to compound indexes ordered by the ESR rule, reading explain executionStats, aggregation pipelines, multi-document transactions on replica sets, and $jsonSchema collection validation. Use when designing or changing MongoDB collections, a MongoDB query or aggregation is slow, adding indexes or validators, or deciding whether a write needs a transaction, with the native driver, Mongoose or another ODM.",
+      "path": "skills/mongodb-patterns"
+    },
+    {
+      "name": "mpesa-daraja-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Implements and audits direct Safaricom M-Pesa integrations on the Daraja API in Kenya, including the OAuth client-credentials token, Lipa na M-Pesa Online (STK Push) with the base64 shortcode+passkey+timestamp password, stkCallback parsing, confirmation through the STK Push Query endpoint, C2B URL registration with validation and confirmation, B2C payouts with SecurityCredential, and the sandbox-to-production go-live path. Use when calling Daraja endpoints yourself rather than via Flutterwave or another aggregator, wiring an M-Pesa paybill or till into an app, or debugging Daraja errors such as invalid access token, wrong credentials or ResultCode 1032.",
+      "path": "skills/mpesa-daraja-integration"
+    },
+    {
       "name": "mtn-momo-integration",
       "version": "0.1.0",
       "category": "integrations",
@@ -14,6 +723,82 @@
       "path": "skills/mtn-momo-integration"
     },
     {
+      "name": "mysql-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "mysql"
+      ],
+      "description": "MySQL and MariaDB on InnoDB, covering clustered primary keys and secondary index design, reading EXPLAIN and EXPLAIN ANALYZE output, utf8mb4 character sets and collations, REPEATABLE READ with gap and next-key locks, deadlock diagnosis, online DDL algorithms, and stale reads from lagging replicas. Use when creating or tuning MySQL or MariaDB tables, a MySQL query is slow, emoji or accented text is mangled, InnoDB lock waits or deadlocks appear, or reads from a replica return outdated data.",
+      "path": "skills/mysql-patterns"
+    },
+    {
+      "name": "nestjs-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "NestJS application structure and conventions, covering feature modules, providers and dependency-injection scopes, ValidationPipe with class-validator DTOs, guards, interceptors, exception filters, ConfigModule, database modules (TypeORM, Prisma, Mongoose) and Test.createTestingModule unit and e2e tests. Use when building or restructuring a NestJS API, wiring a new module or provider, fixing a circular dependency or \"Nest can't resolve dependencies\" error, adding auth guards, or writing NestJS tests.",
+      "path": "skills/nestjs-patterns"
+    },
+    {
+      "name": "network-troubleshooting",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "ping",
+        "curl"
+      ],
+      "description": "Layer-by-layer diagnosis of network faults on Linux, macOS and Windows, working up from link and IP routing through DNS resolution, TCP/UDP port reachability and firewalls, TLS certificates and SNI, to latency, packet loss and MTU black holes, with the exact command for each check and how to read its output. Use when a host, site or service is unreachable, name resolution fails, a connection times out or is refused, a TLS handshake errors, or a link is slow or drops large transfers.",
+      "path": "skills/network-troubleshooting"
+    },
+    {
+      "name": "nextjs-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node"
+      ],
+      "description": "Next.js App Router conventions for the app/ directory - splitting Server and Client Components, async params and request APIs, fetch caching and revalidation (including Cache Components and \"use cache\"), Route Handlers, Server Actions with auth checks, the Metadata API, middleware/proxy, NEXT_PUBLIC_ environment variables and self-hosting or Vercel deployment traps. Use when adding routes, layouts or pages under app/, deciding where \"use client\" goes, fixing stale or over-cached data, writing a Server Action or route.ts, or upgrading a Next.js app across major versions.",
+      "path": "skills/nextjs-patterns"
+    },
+    {
+      "name": "node-backend-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "Production rules for Node.js HTTP services written directly on Express or Fastify, without a full framework, including app/server split, schema validation of request input, centralised error middleware, graceful SIGTERM shutdown, structured pino logging, streaming with pipeline, helmet security headers, CORS and rate limiting. Use when starting or hardening an Express or Fastify service, adding request validation or an error handler, fixing dropped requests on deploy, or streaming large uploads and downloads.",
+      "path": "skills/node-backend-patterns"
+    },
+    {
+      "name": "nuxt-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Nuxt 3 and 4 full-stack app guidance for choosing SSR, SPA, prerender or hybrid route rules, fetching data once with useFetch and useAsyncData instead of double-fetching with $fetch, writing Nitro server routes, wiring runtimeConfig secrets, setting SEO metadata, and tracking down hydration mismatches. Use when working in a Nuxt project on pages, server/api endpoints, nuxt.config, data loading, meta tags, or a server-versus-client rendering bug.",
+      "path": "skills/nuxt-patterns"
+    },
+    {
+      "name": "parallel-agent-orchestration",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Fans a large coding job out to several subagents at once and merges the results. Covers cutting the job into independent units with disjoint file ownership, writing a self-contained brief and return contract for each worker, isolating writers in separate git worktrees or branches, and checking every result before integrating it. Use when work splits naturally into pieces that can run side by side (many modules, many packages, a survey plus several fixes), or when the user asks to run agents in parallel or orchestrate a team of subagents.",
+      "path": "skills/parallel-agent-orchestration"
+    },
+    {
       "name": "paystack-integration",
       "version": "0.1.0",
       "category": "integrations",
@@ -21,6 +806,290 @@
       "requires": [],
       "description": "Builds and reviews Paystack payment integrations, including transaction initialisation, server-side verification, webhooks with HMAC-SHA512 signature checks, idempotent fulfilment, and Ghana mobile money (MTN, Telecel, AT) charges. Use when adding Paystack checkout, card or mobile money payments, handling Paystack webhooks, or debugging a Paystack payment flow.",
       "path": "skills/paystack-integration"
+    },
+    {
+      "name": "pci-dss-scope",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Shrinks PCI DSS scope by keeping cardholder data off your own systems, using processor-hosted payment pages, redirects or iframe hosted fields, provider tokens instead of card numbers, strict rules on what never to log or store (full PAN, CVV, track data, PIN), and a high-level guide to which self-assessment questionnaire (SAQ A, A-EP, D and others) the design points to, with a clear not-legal-advice and not-QSA line. Use when designing card checkout, deciding between hosted fields and a custom card form, finding card numbers in logs or databases, or estimating PCI effort for a merchant.",
+      "path": "skills/pci-dss-scope"
+    },
+    {
+      "name": "perl-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "perl"
+      ],
+      "description": "Modern Perl 5 conventions for writing and restructuring code - strict and warnings, lexical scope, references and nested data, Moo or Moose classes, try/catch error handling, cpanfile with cpanm or Carton, Perl::Critic policy and taint-safe system calls. Use when writing new Perl, modernising a legacy .pl or .pm script, choosing between Moo and Moose, or deciding how a Perl program should manage CPAN dependencies and shell out safely.",
+      "path": "skills/perl-patterns"
+    },
+    {
+      "name": "perl-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "perl",
+        "prove"
+      ],
+      "description": "Perl test suites with Test::More or Test2::V0, run through prove - writing .t files, subtests, exception and warning checks, mocking with Test::MockModule or Test2::Mock, temp-file fixtures, and coverage reports from Devel::Cover. Use when adding or fixing tests for a Perl module or script, setting up a t/ directory, making a flaky prove run deterministic, or finding which Perl code paths no test exercises.",
+      "path": "skills/perl-testing"
+    },
+    {
+      "name": "php-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "php",
+        "composer"
+      ],
+      "description": "Modern PHP 8 conventions for writing new code and restructuring old code, covering declare(strict_types=1), typed and readonly properties, backed enums, constructor promotion, exception hierarchies, PSR-4 autoloading through Composer, PSR-12 style, PHPStan or Psalm at a high level, and safe handling of SQL, output escaping, passwords and unserialize. Use when writing or modernising PHP 8.x classes, designing a Composer package or PHP service, or asking how idiomatic typed PHP should look.",
+      "path": "skills/php-patterns"
+    },
+    {
+      "name": "php-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "php",
+        "composer"
+      ],
+      "description": "Writing and fixing PHP test suites with PHPUnit or Pest, including attribute-based data providers and Pest datasets, test doubles via createMock/createStub or Mockery, database tests isolated by transactions, HTTP controller and client tests, and coverage with Xdebug or PCOV. Use when adding PHP unit or integration tests, converting PHPUnit annotations to attributes, deciding what to mock in PHP, or making a flaky PHP test deterministic.",
+      "path": "skills/php-testing"
+    },
+    {
+      "name": "postgres-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "psql"
+      ],
+      "description": "PostgreSQL schema, indexing and query-tuning guide covering data types and constraints, btree, partial, expression and GIN indexes, reading EXPLAIN (ANALYZE, BUFFERS) plans, isolation levels and lock conflicts, JSONB modelling, PgBouncer connection pooling, and pg_dump or point-in-time backups. Use when designing Postgres tables, a Postgres query is slow, you need to pick an index type, decode a lock wait or deadlock, store documents in JSONB, or set up pooling and backups for a PostgreSQL database.",
+      "path": "skills/postgres-patterns"
+    },
+    {
+      "name": "prisma-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "node",
+        "npx"
+      ],
+      "description": "Prisma ORM practice for TypeScript backends, detecting whether the project is on Prisma 6, 7 or the Prisma 8 contract-based release, then covering schema modelling, the migrate dev versus deploy workflow, include and select to kill N+1 queries, sequential and interactive transactions, pool sizing behind serverless functions and PgBouncer, and injection-safe raw SQL. Use when editing schema.prisma or a Prisma contract, creating or deploying Prisma migrations, debugging slow Prisma queries or connection pool timeouts, or writing $queryRaw.",
+      "path": "skills/prisma-patterns"
+    },
+    {
+      "name": "privacy-compliance",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Turns data protection law (EU/UK GDPR, Ghana Data Protection Act 2012, Nigeria Data Protection Act 2023, Kenya Data Protection Act 2019) into engineering work on personal data, covering data mapping, lawful basis and consent records, retention and deletion jobs, subject access and erasure requests, cross-border transfers to cloud vendors, and breach notice timelines. It is engineering guidance, not legal advice. Use when a feature collects or shares personal data, when adding consent banners or account deletion, when answering a data subject request, or when preparing for a privacy audit in Europe or Africa.",
+      "path": "skills/privacy-compliance"
+    },
+    {
+      "name": "prompt-engineering",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Writes, diagnoses and rewrites production prompts for language models, using clear task instructions with the context the model lacks, a few well-chosen examples, an explicit output format, splitting a hard job into chained steps, and proving each revision against a fixed set of test inputs before it ships. Use when drafting a system prompt for a new feature, fixing a prompt that gives inconsistent or off-format answers, shortening a bloated prompt, or comparing two prompt versions.",
+      "path": "skills/prompt-engineering"
+    },
+    {
+      "name": "python-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "Idiomatic modern Python 3 for writing and restructuring application code, covering type hints, dataclasses versus pydantic at trust boundaries, exception design, context managers, pyproject.toml packaging with uv, poetry or pip, ruff and mypy/pyright setup, and asyncio pitfalls. Use when writing new Python modules, modernising an older codebase, choosing how to model data or errors, or setting up a Python project's tooling.",
+      "path": "skills/python-patterns"
+    },
+    {
+      "name": "python-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "Writes and repairs pytest suites for Python code using fixtures and conftest.py, parametrize, monkeypatch and unittest.mock, tmp_path, pytest-asyncio for coroutines, coverage with pytest-cov, and a procedure for diagnosing flaky or order-dependent tests. Use when adding tests to a Python project, converting unittest-style tests to pytest, mocking an external call in a Python test, or chasing a pytest test that passes locally but fails in CI.",
+      "path": "skills/python-testing"
+    },
+    {
+      "name": "pytorch-patterns",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "description": "Writes and fixes PyTorch training code, covering nn.Module and training loop structure, device and dtype placement, DataLoader setup, torch.amp mixed precision, checkpoint save and resume, seeding for reproducibility, and tracking down NaN losses and tensor shape errors. Use when building or debugging a PyTorch model, a training or evaluation loop, or a checkpoint that will not load.",
+      "path": "skills/pytorch-patterns"
+    },
+    {
+      "name": "quarkus-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Quarkus service conventions for ArC CDI beans, Quarkus REST (formerly RESTEasy Reactive) endpoints, Hibernate ORM with Panache, @ConfigMapping and %dev/%test/%prod profiles, Dev Services containers, GraalVM native-image limits, and @QuarkusTest or @QuarkusIntegrationTest suites. Use when writing or debugging a Quarkus application, choosing blocking versus reactive endpoints, configuring a Quarkus extension, or getting a Quarkus build to work as a native executable.",
+      "path": "skills/quarkus-patterns"
+    },
+    {
+      "name": "rag-pipeline-patterns",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Retrieval-augmented generation pipeline design covering document chunking, embedding choice, hybrid keyword plus vector search with reranking, metadata and permission filters, grounded answers with citations, index freshness, and measuring retrieval quality apart from answer quality. Use when building or fixing a RAG system, a chat-over-your-docs feature, a semantic search index, or when answers cite the wrong passages or miss documents that exist.",
+      "path": "skills/rag-pipeline-patterns"
+    },
+    {
+      "name": "rails-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "ruby",
+        "bundle"
+      ],
+      "description": "Ruby on Rails application work that follows the framework's conventions - fat-enough models and thin controllers, Active Record queries without N+1 (includes, preload, strict_loading), strong parameters with params.expect or require/permit, Active Job enqueued after commit, zero-downtime migrations, encrypted credentials, Turbo Frames and Streams, and Rails tests for models, requests, jobs and system flows. Use when building or reviewing a Rails app, fixing slow Active Record pages, writing a migration for a busy table, adding a background job or Hotwire form, or storing secrets in Rails credentials.",
+      "path": "skills/rails-patterns"
+    },
+    {
+      "name": "react-native-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node",
+        "npx"
+      ],
+      "description": "React Native and Expo app guidance for picking a navigation library, keeping global state small, writing or wrapping native modules for the New Architecture, fixing slow lists and needless re-renders, handling iOS versus Android differences, and shipping over-the-air updates with EAS Update without breaking installed binaries. Use when building or restructuring screens in a React Native or Expo project, debugging jank in a FlatList or FlashList, adding a native dependency or config plugin, or planning a store release or OTA update.",
+      "path": "skills/react-native-patterns"
+    },
+    {
+      "name": "react-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "React component design rules for function components and hooks, covering where state should live, the Rules of Hooks, effects used only to synchronise with external systems, data fetching without race conditions, controlled and uncontrolled forms with React 19 actions, error boundaries, choosing context versus a state library, and accessible markup. Use when building or restructuring React components, deciding where a piece of state belongs, writing or removing a useEffect, wiring up a form, or picking between context, Zustand, Redux or a query cache.",
+      "path": "skills/react-patterns"
+    },
+    {
+      "name": "react-performance",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node"
+      ],
+      "description": "Measure-first workflow for slow React UIs - profile renders with React DevTools and the Profiler API, cut wasted re-renders with memo, useMemo and useCallback only where the profile shows a win (or let React Compiler do it), virtualise long lists, split code with lazy and Suspense, remove request waterfalls, and shrink the JavaScript bundle. Use when a React or Next.js screen feels laggy, typing or scrolling stutters, a component re-renders too often, Interaction to Next Paint is poor, or the client bundle has grown too big.",
+      "path": "skills/react-performance"
+    },
+    {
+      "name": "redis-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "redis-cli"
+      ],
+      "description": "Redis and Valkey design for application code, covering which data structure fits each job, key naming and TTLs, cache-aside with stampede protection, single-instance locks and their limits, Streams consumer groups versus pub/sub, and maxmemory, eviction and persistence settings. Use when adding a Redis cache, rate limiter, queue, leaderboard or lock, reviewing Redis keys and commands for memory or latency problems, or choosing eviction and AOF or RDB settings.",
+      "path": "skills/redis-patterns"
+    },
+    {
+      "name": "refactoring-safely",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Step-by-step method for restructuring code while proving its observable behaviour stays identical, by pinning current output with characterisation tests, making one small reversible move at a time, preferring automated IDE-style transformations, and using a strangler fig to replace large legacy modules incrementally. Use when renaming, extracting, moving or splitting code, untangling a legacy module, or planning a rewrite that must not break existing users.",
+      "path": "skills/refactoring-safely"
+    },
+    {
+      "name": "release-management",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Ships a software release end to end - deciding the next semantic version from what changed, updating the changelog, tagging, writing release notes for users, cutting alpha/beta/rc pre-releases, patching an old version from a hotfix branch, and wiring up release tooling such as release-please, semantic-release or Changesets. Use when preparing or publishing a release, picking a version number, turning merged work into release notes, shipping a hotfix to an already-released line, or automating versioning and changelogs.",
+      "path": "skills/release-management"
+    },
+    {
+      "name": "ruby-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "ruby",
+        "bundle"
+      ],
+      "description": "Ruby 3 idioms for plain Ruby and gem code - small objects with clear responsibilities, blocks and Enumerable over manual loops, custom exception hierarchies and narrow rescue, frozen string literals, keyword arguments, Bundler and Gemfile.lock discipline, RuboCop configuration, optional RBS or Sorbet signatures, and the allocation and lookup mistakes that make Ruby slow. Use when writing or restructuring Ruby classes and modules, designing a gem's public API, setting up RuboCop or type signatures, or asking why a Ruby script is slow or allocating heavily.",
+      "path": "skills/ruby-patterns"
+    },
+    {
+      "name": "ruby-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "ruby",
+        "bundle"
+      ],
+      "description": "Writes and stabilises Ruby test suites in whichever framework the project already runs, RSpec or Minitest, with FactoryBot or fixtures, verifying doubles and stubs, frozen or travelled time, WebMock and VCR to keep tests off the network, and a seed-and-bisect routine for order-dependent or flaky specs. Use when adding RSpec examples or Minitest tests to a Ruby or Rails codebase, stubbing an HTTP client or the clock in Ruby, or tracking down a spec that fails only in CI or only with some seeds.",
+      "path": "skills/ruby-testing"
+    },
+    {
+      "name": "rust-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "cargo"
+      ],
+      "description": "Idiomatic Rust design guide covering ownership and borrowing choices, Result-based errors with thiserror in libraries and anyhow in binaries, traits and generics, iterator chains, async with tokio, rules for unsafe, cargo workspaces and clippy settings. Use when writing new Rust code, shaping a crate's public API, choosing between owned and borrowed types, or setting up a Cargo workspace and lint policy.",
+      "path": "skills/rust-patterns"
+    },
+    {
+      "name": "rust-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "cargo"
+      ],
+      "description": "Writing and organising tests for Rust crates with cargo test, covering #[cfg(test)] unit modules, integration tests under tests/, doc tests, trait-based fakes and mockall, property tests with proptest, #[tokio::test] for async code, and the cargo test flags for filtering and output. Use when adding or fixing Rust tests, deciding where a test belongs in a crate, testing async or I/O-bound Rust code, or getting a flaky cargo test run under control.",
+      "path": "skills/rust-testing"
+    },
+    {
+      "name": "search-first",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "network",
+      "requires": [],
+      "description": "Reuse-before-build check that runs before writing any new helper, utility, component or integration. Searches the current codebase for an existing function or pattern, then the project's installed dependencies and the standard library, then the package ecosystem, and weighs reuse, extend or build on fit, maintenance, licence, size and security before any code is written. Use when about to add a new function, module, wrapper or dependency, when the user asks \"do we already have something for this\" or \"is there a library for X\", or when a task smells like a solved problem (parsing, retries, dates, validation, caching).",
+      "path": "skills/search-first"
     },
     {
       "name": "security-review",
@@ -35,13 +1104,99 @@
       "path": "skills/security-review"
     },
     {
-      "name": "skill-authoring",
+      "name": "seo-audit",
       "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [
+        "curl"
+      ],
+      "description": "Technical and on-page SEO audit of a website or its source code, covering crawlability, robots.txt and sitemaps, indexation and canonicals, titles and meta descriptions, structured data, Core Web Vitals, and internal linking, ending in a fix list ranked by impact and effort. Use when someone asks why pages are not ranking or not indexed, wants an SEO health check before or after a launch or migration, or needs a prioritised list of search fixes for a site.",
+      "path": "skills/seo-audit"
+    },
+    {
+      "name": "session-handoff",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "Writes a structured handoff note into the repo (goal, current state, decisions with reasons, exact next steps, open questions) so a later agent session or a teammate can pick up mid-task, and resumes work from such a note by re-checking it against the code before acting. Use when a session is ending or the context is nearly full with work unfinished, when the user says \"save where we are\" or \"pick up where we left off\", or when starting in a repo that already holds a handoff file.",
+      "path": "skills/session-handoff"
+    },
+    {
+      "name": "skill-authoring",
+      "version": "0.1.1",
       "category": "meta",
       "risk": "writes-files",
       "requires": [],
       "description": "Creates or improves an Agent Skill (a SKILL.md folder) so it loads reliably and works unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code, including portable frontmatter, a tight trigger description, short instructions, helper scripts and trigger evals. Use when the user wants to write a new skill, turn a repeated workflow into a skill, or fix a skill that triggers at the wrong time.",
       "path": "skills/skill-authoring"
+    },
+    {
+      "name": "spring-boot-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "description": "Spring Boot application structure and conventions, covering controller-service-repository layering, constructor injection, typed @ConfigurationProperties, @Transactional boundaries, Bean Validation, ProblemDetail error responses, SecurityFilterChain setup, Actuator exposure and focused test slices such as @WebMvcTest and @DataJpaTest. Use when building or changing a Spring Boot service, adding an endpoint or configuration, securing routes, wiring health checks, or writing Spring Boot tests.",
+      "path": "skills/spring-boot-patterns"
+    },
+    {
+      "name": "stripe-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [
+        "stripe"
+      ],
+      "description": "Builds and hardens Stripe payments and billing, from Checkout Sessions and Payment Intents with SCA and 3D Secure handling to Stripe-Signature webhook verification on the unparsed request body, Idempotency-Key headers on every POST, subscriptions driven by invoice events, the Billing customer portal, and test clocks for simulating renewals and trial ends. Use when adding Stripe Checkout or Elements, setting up Stripe subscriptions or the customer portal, fixing a Stripe webhook signature error or duplicate fulfilment, or testing billing cycles with the Stripe CLI.",
+      "path": "skills/stripe-integration"
+    },
+    {
+      "name": "svelte-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Svelte 5 runes and SvelteKit 2 guidance for $state, $derived, $effect and $props reactivity, snippets instead of slots, universal versus server load functions, form actions with use:enhance and fail(), $lib/server and $env/static/private for server-only code, and SSR traps such as shared module state leaking between users. Use when writing or migrating Svelte components to runes, adding SvelteKit routes, loads or actions, or debugging an effect loop or a value that differs between server and browser.",
+      "path": "skills/svelte-patterns"
+    },
+    {
+      "name": "swift-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "swift"
+      ],
+      "description": "Idiomatic Swift 5.x and 6 for writing or restructuring code, covering structs and enums over classes, protocols with associated types and some/any, optional handling without force unwraps, typed and untyped throws, async/await, actors, Sendable and strict concurrency checking, plus Package.swift layout for SwiftPM. Use when writing new Swift code, choosing between a struct, class or actor, adopting async/await, migrating a module to the Swift 6 language mode, or setting up a Swift package.",
+      "path": "skills/swift-patterns"
+    },
+    {
+      "name": "swift-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "swift"
+      ],
+      "description": "Writes and fixes Swift unit, async and UI tests using Apple's Swift Testing framework (@Test, @Suite, #expect, #require, parameterized arguments, confirmation) alongside XCTest, with protocol-based fakes injected through initializers instead of mocking frameworks, and XCUITest basics for UI flows. Use when adding tests to a Swift package or Xcode project, testing async or actor code, replacing a live network or database dependency with a fake, converting XCTestCase classes to Swift Testing, or fixing a flaky Swift test.",
+      "path": "skills/swift-testing"
+    },
+    {
+      "name": "swiftui-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "xcodebuild"
+      ],
+      "description": "SwiftUI view design built on structural identity, with property-wrapper choices (@State, @Binding, @Observable models with @Bindable, @Environment), NavigationStack and value-based navigation paths, one-way data flow, keeping body cheap to avoid excess view updates, #Preview setups with sample data, and UIKit interop through UIViewRepresentable and UIHostingController. Use when building or restructuring SwiftUI screens, deciding which property wrapper owns a piece of state, migrating from ObservableObject to @Observable, fixing views that reset or redraw too often, or embedding UIKit in SwiftUI or the reverse.",
+      "path": "skills/swiftui-patterns"
     },
     {
       "name": "tdd-workflow",
@@ -55,6 +1210,66 @@
       "path": "skills/tdd-workflow"
     },
     {
+      "name": "technical-writing",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Writes and restructures developer-facing documentation people actually use, such as READMEs, how-to guides, tutorials and API reference, by naming the audience first, organising around the reader's task, shipping copy-paste examples that are run before publishing, and keeping docs beside the code they describe. Use when drafting or rewriting a README, a getting-started or how-to guide, reference docs for a library, CLI or HTTP API, or when docs are confusing, stale or nobody reads them.",
+      "path": "skills/technical-writing"
+    },
+    {
+      "name": "terraform-patterns",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "terraform"
+      ],
+      "description": "Terraform and OpenTofu infrastructure-as-code practice, from root and child module layout, pinned providers and remote state with locking, through per-environment variables, reading a plan before apply, detecting drift, adopting existing resources with import blocks, and renaming or moving resources safely with moved and removed blocks instead of destroy and recreate. Use when writing or restructuring .tf code, setting up a state backend, reviewing what terraform plan will replace or destroy, or bringing hand-made cloud resources under Terraform.",
+      "path": "skills/terraform-patterns"
+    },
+    {
+      "name": "test-coverage-improvement",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Raises meaningful test coverage by measuring line and branch coverage, ranking untested code by risk and churn, adding tests that pin observable behaviour rather than executing lines, and using mutation testing (Stryker, PIT, mutmut, cargo-mutants, Infection) to prove the new tests catch faults. Use when coverage is low or below a CI threshold, when asked where tests are missing in a module, or when a team wants coverage numbers they can trust.",
+      "path": "skills/test-coverage-improvement"
+    },
+    {
+      "name": "threat-modeling",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "description": "STRIDE threat modelling for a planned feature or an existing system, done before or alongside the code. Maps the data flow, trust boundaries and assets, enumerates spoofing, tampering, repudiation, information disclosure, denial of service and elevation of privilege threats per element, and ends with a ranked list of mitigations the team can turn into tickets. Use when designing a feature that touches auth, money, personal data, uploads, webhooks or third-party integrations, when someone asks what could go wrong or how this could be attacked, or before a security sign-off on an architecture.",
+      "path": "skills/threat-modeling"
+    },
+    {
+      "name": "typescript-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "Idiomatic TypeScript and modern JavaScript for Node.js and the browser, covering strict tsconfig settings, discriminated unions and narrowing, restrained generics, typed error handling, async/await pitfalls, ESM versus CommonJS packaging, project layout and ESLint/Prettier setup. Use when writing or restructuring TS/JS code, designing types for a module, setting up tsconfig or package.json \"type\"/\"exports\", or choosing lint and format tooling.",
+      "path": "skills/typescript-patterns"
+    },
+    {
+      "name": "typescript-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "node"
+      ],
+      "description": "Vitest and Jest test suites for TypeScript and JavaScript projects, picking whichever runner the repo already uses, with module mocks, spies, fake timers, async assertions, fixtures, coverage thresholds and a procedure for diagnosing flaky tests. Use when writing or fixing unit and integration tests in a TS/JS codebase, mocking an import or the clock, raising coverage, or chasing a test that passes locally and fails in CI.",
+      "path": "skills/typescript-testing"
+    },
+    {
       "name": "verification-loop",
       "version": "0.1.1",
       "category": "testing",
@@ -65,9 +1280,91 @@
       ],
       "description": "Pre-merge verification that detects the project's build, lint, type-check and test commands, runs them in order, fixes what it safely can and reports a pass/fail verdict. Use when the user asks to verify, check or validate changes before committing, opening a pull request, merging or shipping.",
       "path": "skills/verification-loop"
+    },
+    {
+      "name": "vite-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "Configuring and debugging Vite builds and dev servers, covering vite.config with defineConfig and loadEnv, VITE_ env variables and modes, path aliases, plugin ordering and writing small plugins, library mode with package exports, SSR entry builds, base path and build output, and fixing breakage when moving from webpack or Create React App or across Vite majors (Rollup to Rolldown). Use when editing vite.config, env variables are undefined in the browser, an alias or import fails only in build, publishing a library with Vite, or upgrading Vite.",
+      "path": "skills/vite-patterns"
+    },
+    {
+      "name": "vue-patterns",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Vue 3 Composition API guidance for writing and fixing single-file components with script setup, covering ref versus reactive, reactivity lost by destructuring, computed and watch rules, composables with cleanup, typed defineProps, defineEmits and defineModel, Pinia stores with storeToRefs, and component tests with Vue Test Utils. Use when building or refactoring a Vue 3 component, writing a composable or Pinia store, or debugging a value that stopped updating in a Vue view.",
+      "path": "skills/vue-patterns"
+    },
+    {
+      "name": "web-accessibility",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Builds and fixes web UI so it meets WCAG 2.2 Level AA, starting from semantic HTML and adding keyboard support, focus management, labelled forms with announced errors, sufficient colour contrast and ARIA only where native elements fall short, then checks the result with axe and a screen reader. Use when writing or changing components, forms, dialogs, menus or pages that people must be able to use with a keyboard, screen reader, zoom or voice control.",
+      "path": "skills/web-accessibility"
+    },
+    {
+      "name": "web-performance",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Measures and improves page speed against Core Web Vitals (LCP, INP, CLS) using field data from CrUX or real-user monitoring and lab runs in Lighthouse and DevTools, then fixes the actual bottleneck, whether that is image and font delivery, render-blocking resources, HTTP caching, or too much JavaScript on the main thread. Use when a site or page feels slow, a Lighthouse or PageSpeed Insights score dropped, Search Console flags poor Core Web Vitals, or a bundle or asset change needs a before-and-after measurement.",
+      "path": "skills/web-performance"
     }
   ],
   "agents": [
+    {
+      "name": "accessibility-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits changed UI code and rendered pages for WCAG 2.2 Level AA failures in its own context, and returns element-level findings that each name the success criterion, the file and line, who is blocked, and the exact fix, without editing any files. Use when the user wants an accessibility audit of a component, page, form or pull request, a check of whether a UI change is usable by keyboard and screen reader users, or an a11y sign-off before release.",
+      "path": "agents/accessibility-reviewer"
+    },
+    {
+      "name": "agent-evaluator",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Grades the outputs or transcripts of an AI agent or LLM-powered feature against a set of tasks and a scoring rubric in its own context, then returns per-criterion scores and the recurring failure patterns, each backed by quoted examples, while leaving the code and prompts untouched. Use when someone wants an independent read on how well their agent performed across a batch of runs, why it fails on certain tasks, or whether a new prompt or model version behaves worse than the last one.",
+      "path": "agents/agent-evaluator"
+    },
+    {
+      "name": "architect",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Software architect subagent that designs a new system or module, or evaluates an existing one, by pinning down constraints and quality attributes, comparing two or three concrete options on their trade-offs, and returning one recommendation with risks and a migration path, all without editing code. Use when the user asks how a system should be structured, wants a monolith, microservice, queue or datastore choice weighed, or wants an independent assessment of whether the current design will hold up.",
+      "path": "agents/architect"
+    },
     {
       "name": "code-reviewer",
       "version": "0.1.0",
@@ -83,9 +1380,924 @@
       ],
       "description": "Reviews a diff or branch for correctness bugs in a separate context and returns a short, verified list of findings ranked by severity, without editing any files. Use when the user asks for a code review of their changes, a second pair of eyes before a commit or pull request, or a check of whether a change breaks existing callers.",
       "path": "agents/code-reviewer"
+    },
+    {
+      "name": "code-simplifier",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Cleans up freshly written or recently modified code by flattening deep nesting, collapsing pointless wrappers and indirection, removing duplicated logic and clarifying names, while keeping behaviour identical and confirming it with the existing test suite. Use when the user asks to tidy, simplify or make more readable the code they just wrote or the files touched in the current diff or last few commits.",
+      "path": "agents/code-simplifier"
+    },
+    {
+      "name": "cpp-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "cmake"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Gets a broken C++ build green again by diagnosing compiler errors, linker failures such as undefined reference or LNK2019, CMake configure problems, and vcpkg or Conan dependency issues, then applying the smallest fix and rebuilding to prove it. Use when a C++ project fails to configure, compile or link, CMake cannot find a package, symbols are missing or duplicated, or a dependency manager upgrade broke the build.",
+      "path": "agents/cpp-build-resolver"
+    },
+    {
+      "name": "cpp-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "C++ change reviewer that hunts for undefined behaviour, dangling references and views, use-after-move, memory and handle leaks, data races, broken exception safety and ABI breaks in public headers, then returns ranked, verified findings without editing code. Use when a C++ diff, branch or pull request needs a review before merge, or when the user suspects a memory-safety, lifetime or threading bug in changed C++ code.",
+      "path": "agents/cpp-reviewer"
+    },
+    {
+      "name": "csharp-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repairs failing .NET builds by reading dotnet restore and dotnet build output and fixing C# compiler errors, NuGet restore failures, package downgrades and version conflicts, target framework and SDK mismatches, and analyzer warnings treated as errors, using the smallest diff and re-running the build to prove it. Use when dotnet build, dotnet restore or dotnet test will not compile, a NuGet NU1xxx error blocks restore, or an SDK or TargetFramework upgrade broke the solution.",
+      "path": "agents/csharp-build-resolver"
+    },
+    {
+      "name": "csharp-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "dotnet"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "C# and .NET change reviewer that hunts for async void, sync-over-async deadlocks, nullable-safety holes, undisposed resources, repeated LINQ enumeration, EF Core query mistakes and DI lifetime bugs, then returns verified findings ranked by severity without touching files. Use when a C# diff, branch or pull request needs a .NET-specific bug review before it merges, or when a .NET service hangs, leaks or throws NullReferenceException after a recent change.",
+      "path": "agents/csharp-reviewer"
+    },
+    {
+      "name": "dart-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "dart"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Gets a red Dart or Flutter build back to green with the smallest diff, resolving dart analyze and flutter analyze errors, compile failures, pub \"version solving failed\" dependency conflicts and build_runner code generation problems (stale or conflicting .g.dart and .freezed.dart outputs, missing part directives, generator and analyzer version clashes), then re-runs the failing command to prove it passes. Use when dart or flutter analyze, flutter build, dart compile, pub get or build_runner is failing and the user wants it fixed.",
+      "path": "agents/dart-build-resolver"
+    },
+    {
+      "name": "dart-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "dart"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Dart-language bug hunter for diffs in packages, CLIs, servers and the logic layers of Flutter apps (repositories, blocs, services), checking `!` and `late` null-safety escapes, unawaited or discarded futures, StreamSubscription and StreamController leaks, isolate and port misuse, non-exhaustive sealed switches, plus setState after dispose and side effects in build methods where widgets are touched; it verifies each finding and returns a severity-ranked list without editing files. Use when a Dart diff, branch or pull request needs checking for async, stream and null-safety bugs before merge, rather than a Flutter UI review of rebuilds and platform behaviour.",
+      "path": "agents/dart-reviewer"
+    },
+    {
+      "name": "database-reviewer",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Database change auditor for SQL schema files, migrations, ORM models and query code, checking for DDL that takes blocking table locks, unindexed filters and foreign keys, N+1 query loops, destructive or irreversible migrations that can lose data, and transaction bugs such as read-then-write races or missing rollbacks, and returning verified findings by severity without changing anything. Use when a pull request touches migrations, schema or database queries, before running a migration on a large production table, or when the user asks whether a query or data model change is safe.",
+      "path": "agents/database-reviewer"
+    },
+    {
+      "name": "django-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "python"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Django-focused reviewer that inspects a diff or branch for N+1 querysets, raw SQL built from user input, views and DRF endpoints missing authentication or object-level permission checks, migrations that lock or break live tables, and insecure or environment-leaking settings, then returns verified, severity-ranked findings without modifying files. Use when someone wants Django models, views, serializers, migrations or settings checked before merge or deploy.",
+      "path": "agents/django-reviewer"
+    },
+    {
+      "name": "doc-updater",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Brings documentation back in line with a code change by reading the diff, finding every README, docs page, docstring, code comment, example and changelog entry that now describes old behaviour, and editing only those documentation files so they match the new code. Use when a change renamed, added or removed a flag, endpoint, config key or function and the docs need syncing, or before a merge to make sure docs and changelog reflect what was built.",
+      "path": "agents/doc-updater"
+    },
+    {
+      "name": "e2e-runner",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Runs a browser end-to-end suite (Playwright, Cypress, WebdriverIO or Selenium), reproduces each failure, classifies it as a product bug, a flaky test or an environment problem using traces and repeated runs, and repairs only test-side flakiness with a minimal, evidenced diff. Use when an e2e or UI test run is red or intermittently failing locally or in CI and someone needs it triaged and stabilised.",
+      "path": "agents/e2e-runner"
+    },
+    {
+      "name": "fastapi-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "python"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "FastAPI change auditor that traces each touched route and dependency to catch blocking I/O inside async def handlers, database sessions or clients that are never closed, request models that accept unvalidated or server-owned fields, routes that skip or weaken the auth dependency, and responses that expose private fields because response_model is missing, and reports only findings it has confirmed, read-only. Use when a FastAPI branch, diff or pull request needs a review before it is merged.",
+      "path": "agents/fastapi-reviewer"
+    },
+    {
+      "name": "flutter-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "flutter"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Flutter-specific change reviewer that runs in its own context, reads the diff plus the surrounding widgets, and reports verified defects such as widgets rebuilding far more than needed, BuildContext or setState used after an await without a mounted check, controllers, streams and timers never disposed, futures created in build, and code that breaks on iOS, Android or web. It never edits files. Use when someone wants a Flutter or Dart UI pull request, branch or uncommitted change checked before merging, or suspects a Flutter screen leaks memory, janks or crashes after navigation.",
+      "path": "agents/flutter-reviewer"
+    },
+    {
+      "name": "fsharp-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "dotnet"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Gets a failing F# build green again by diagnosing compiler errors such as FS0039 from wrong .fsproj compile order, FS0072 and FS0001 type inference failures, FS0030 value restriction, and indentation errors, plus NuGet, FSharp.Core and Paket restore problems, applying the smallest fix and re-running the build to prove it. Use when dotnet build or dotnet test fails to compile an F# project, or package restore breaks for an F# solution.",
+      "path": "agents/fsharp-build-resolver"
+    },
+    {
+      "name": "fsharp-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "dotnet"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "F#-specific change reviewer that hunts for partial functions like List.head and Option.get, exceptions leaking out of Result pipelines, incomplete or wildcard-masked pattern matches, shared mutable state, and nulls arriving from .NET interop, then returns verified findings without editing code. Use when a diff, branch or pull request touches .fs, .fsi or .fsx files and the user wants it checked before merging.",
+      "path": "agents/fsharp-reviewer"
+    },
+    {
+      "name": "go-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "go",
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repair subagent for broken Go builds that diagnoses go build, go vet and compile errors plus module failures (go.mod and go.sum mismatches, replace directives, version conflicts, missing or ambiguous imports, toolchain directives) and applies the smallest fix, then re-runs the failing command to prove it passes. Use when go build, go vet, go test compilation or go mod tidy fails, or a Go dependency upgrade leaves the module unbuildable.",
+      "path": "agents/go-build-resolver"
+    },
+    {
+      "name": "go-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "go"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Go-specific reviewer subagent that reads a Go diff or package and reports verified defects such as unchecked errors, leaked goroutines, data races, misused context.Context, nil-pointer dereferences, typed-nil interfaces and slice or map aliasing, ranked by severity and without modifying code. Use when the user wants Go changes, a Go pull request or a Go package checked for concurrency and error-handling bugs before merging.",
+      "path": "agents/go-reviewer"
+    },
+    {
+      "name": "infra-reviewer",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits infrastructure files in a separate context, covering Dockerfiles, Compose files, Kubernetes manifests and Helm charts, Terraform or OpenTofu code and plans, and CI pipeline configs, and returns verified findings on security misconfiguration, missing resource limits and probes, state and secret exposure, and plan changes that would replace or destroy live resources, without editing files or applying anything. Use when the user wants infrastructure or deployment config checked before merge or apply, a terraform plan screened for destructive changes, or a container and cluster setup audited for hardening gaps.",
+      "path": "agents/infra-reviewer"
+    },
+    {
+      "name": "java-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "java"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repairs failing Maven and Gradle builds for Java projects, covering javac compile errors, unresolved or conflicting dependency versions, annotation processors such as Lombok and MapStruct, and JDK, toolchain or release-level mismatches, using the smallest edit and re-running the build to prove it passes. Use when mvn or gradle fails to compile, a Java build broke after a dependency or JDK upgrade, or the error mentions NoSuchMethodError, cannot find symbol, or an unsupported class file version.",
+      "path": "agents/java-build-resolver"
+    },
+    {
+      "name": "java-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Java-specific code reviewer that inspects a diff for NullPointerException paths, unclosed streams and connections, broken equals/hashCode contracts, data races and lock misuse, swallowed or mis-wrapped exceptions, and misuse of JDK and framework APIs, then returns verified findings without editing files. Use when the user wants a Java or Spring change reviewed before merge, asks whether Java code is thread-safe, or suspects a leak or null bug in a Java pull request.",
+      "path": "agents/java-reviewer"
+    },
+    {
+      "name": "kotlin-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Gets a failing Kotlin or Gradle build green again with the smallest possible change, diagnosing compiler errors such as unresolved references and type mismatches, kapt and KSP processor failures, Kotlin Gradle plugin, KSP, Compose compiler and AGP version mismatches, JVM target conflicts and dependency resolution conflicts, then re-runs the failing task to prove the fix. Use when ./gradlew build, assemble or compileKotlin fails, a Kotlin version bump broke the build, an annotation processor like Room, Hilt or Moshi stops generating code, or Gradle reports incompatible or conflicting dependency versions.",
+      "path": "agents/kotlin-build-resolver"
+    },
+    {
+      "name": "kotlin-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Kotlin-specific change reviewer for JVM and Android projects that hunts for !! crashes, coroutine scope leaks, blocking calls on the main thread, swallowed CancellationException, Flow collected twice or outside the lifecycle, and nullable platform types leaking in from Java, then returns verified, ranked findings without touching files. Use when the user wants a Kotlin diff, branch or pull request reviewed, asks whether their coroutine or Flow code is safe, or wants a second check on Kotlin code that calls Java libraries.",
+      "path": "agents/kotlin-reviewer"
+    },
+    {
+      "name": "mle-reviewer",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "python"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits machine learning code in a separate context for data leakage between splits, train and eval behaving differently, metrics that do not measure the stated goal, unseeded or non-reproducible randomness, and silent tensor shape or broadcasting bugs, then returns verified findings without editing files. Use when the user wants ML training, feature or evaluation code checked before trusting a result, merging a model change, or reporting a metric.",
+      "path": "agents/mle-reviewer"
+    },
+    {
+      "name": "network-config-reviewer",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits firewall rulesets, router exports, VPN configs and DNS server settings (nftables, iptables, ufw, pf, OPNsense/pfSense XML, OpenWrt, MikroTik, WireGuard, OpenVPN, IPsec, Unbound, BIND, dnsmasq) for services exposed to the internet, allow-any or shadowed rules, weak ciphers and key handling, open resolvers, and changes that would lock the admin out, and returns ranked findings with redacted evidence without applying anything. Use when someone wants a second look at a network or VPN configuration before deploying it, after a change, or when they suspect something is reachable that should not be.",
+      "path": "agents/network-config-reviewer"
+    },
+    {
+      "name": "payments-reviewer",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits payment and billing code for money-losing defects with any provider (Stripe, Paystack, Flutterwave, M-Pesa, MTN MoMo, Hubtel and others), hunting for prices or amounts trusted from the client, webhooks or callbacks acted on without signature or status verification, missing idempotency on charges and fulfilment, float arithmetic on money, leaked secret keys and unhandled pending, failed or reversed states, then returns a ranked, verified list without editing anything. Use when the user wants checkout, webhook, payout or subscription code checked before release, or asks whether their payment integration can be faked, double-charge or double-fulfil.",
+      "path": "agents/payments-reviewer"
+    },
+    {
+      "name": "performance-optimizer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Measures a specific slow endpoint, job, query or function with a repeatable benchmark and a profiler, pins down the single biggest cost from evidence rather than guesswork, applies the narrowest fix that removes it, and reports timings before and after. Use when the user says a particular request, page, script, build step or test run is too slow, uses too much memory or CPU, and wants it made faster.",
+      "path": "agents/performance-optimizer"
+    },
+    {
+      "name": "perl-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "perl"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Fixes broken Perl installs and startup failures - cpanm or Carton dependency errors, XS modules that fail to compile against missing C headers or libraries, and \"Can't locate Foo.pm in @INC\" load-path problems - with the smallest change, then re-runs the failing command to prove it works. Use when cpanm, carton install, perl Makefile.PL, make or a Perl script fails to build, install or load a module.",
+      "path": "agents/perl-build-resolver"
+    },
+    {
+      "name": "perl-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "perl"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only reviewer for Perl 5 diffs that hunts missing strict or warnings, two-arg open and shell-string system or backtick calls, unanchored or injectable regexes, list-versus-scalar context mistakes, unchecked eval and $@ handling, and SQL or command injection, returning verified findings by severity. Use when someone wants a Perl pull request, .pm module change or .pl script checked for bugs and security holes before merging.",
+      "path": "agents/perl-reviewer"
+    },
+    {
+      "name": "php-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "php",
+        "composer",
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Fix-it subagent for PHP projects that will not install, autoload or pass analysis, resolving Composer dependency conflicts and platform requirement errors, \"Class not found\" PSR-4 autoload mismatches, PHPStan or Psalm failures, and code broken by a PHP version upgrade, through the smallest edit followed by a re-run of the failing command as proof. Use when composer install or composer update errors out, a PHP class stops autoloading, static analysis turns CI red, or moving to a newer PHP release surfaces deprecations and fatal errors.",
+      "path": "agents/php-build-resolver"
+    },
+    {
+      "name": "php-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "php"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "PHP-focused review subagent that inspects a PHP diff, pull request or directory and returns severity-ranked, verified findings on SQL injection, cross-site scripting, loose-comparison type juggling, files missing declare(strict_types=1), unserialize on untrusted data, swallowed exceptions and unchecked false returns, never changing the code itself. Use when someone wants PHP, Laravel or Symfony changes audited for injection, escaping and error-handling defects before they merge.",
+      "path": "agents/php-reviewer"
+    },
+    {
+      "name": "planner",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Implementation planning subagent that reads the codebase and turns a feature request or change into an ordered, step-by-step plan naming the exact files to touch, the tests to write first, the risks, and a checkpoint command after each step, all without editing code. Use when the user wants a feature, bug fix or migration broken down before coding starts, asks what files a change will touch, or wants work split into small reviewable steps.",
+      "path": "agents/planner"
+    },
+    {
+      "name": "pr-test-analyzer",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits the tests that accompany a pull request or branch against the behaviour it changes, mapping each changed branch to the test that covers it, flagging untested cases, assertions too weak to fail and mocks that replace the code under test, and returns a ranked list of specific tests to add, without editing files. Use when someone asks whether a PR is adequately tested, what tests a change still needs, or for a test-quality review before merge.",
+      "path": "agents/pr-test-analyzer"
+    },
+    {
+      "name": "python-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "python"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Diagnoses and repairs broken Python builds and environments with the smallest possible change, covering ModuleNotFoundError and import errors, pip, uv and poetry dependency resolution conflicts, stale lockfiles, pyproject.toml packaging and build-backend failures, mypy or pyright type errors, and wrong-interpreter or virtualenv mix-ups, then re-runs the failing command to prove it passes. Use when a Python install, import, type check or package build is failing and the user wants it fixed rather than explained.",
+      "path": "agents/python-build-resolver"
+    },
+    {
+      "name": "python-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "python"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Python-specific change reviewer that hunts mutable default arguments, swallowed or over-broad exceptions, missing or wrong type hints, blocking calls and unawaited coroutines in asyncio code, unclosed files and connections, SQL and shell injection, and plain logic bugs, then returns verified findings ranked by severity without touching the code. Use when the user wants a Python diff, branch or pull request checked before merging, or asks whether a Python change is safe.",
+      "path": "agents/python-reviewer"
+    },
+    {
+      "name": "rag-reviewer",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Audits the code and configuration of a retrieval-augmented generation pipeline (ingestion, chunking, embeddings, vector and keyword search, reranking, permission filters, prompt assembly, citations, index freshness and evals) and returns ranked weaknesses, each with a concrete fix, while leaving every file untouched. Use when the user wants a RAG system, semantic search index or chat-over-documents feature reviewed, or asks why retrieval quality is poor before deciding what to change.",
+      "path": "agents/rag-reviewer"
+    },
+    {
+      "name": "react-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "React and Next.js change reviewer that reads a diff in its own context and reports verified defects - Rules of Hooks violations, effects with missing or wrong dependencies and no cleanup, stale closures, unstable or index keys, state mirrored from props, \"use client\"/\"use server\" boundary leaks of secrets or server data, unprotected Server Actions, and accessibility regressions - without editing files. Use when the user wants a React, JSX/TSX or Next.js App Router change, branch or pull request reviewed before merging.",
+      "path": "agents/react-reviewer"
+    },
+    {
+      "name": "refactor-cleaner",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Removes dead code from a repository, including unreferenced functions and files, unused exports, unused package dependencies and duplicated helper functions, but only after gathering evidence that nothing uses each item, and runs the tests after every single deletion. Use when the user wants to prune dead code, drop unused dependencies, shrink a bloated codebase, or consolidate copy-pasted utility functions.",
+      "path": "agents/refactor-cleaner"
+    },
+    {
+      "name": "ruby-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "ruby",
+        "bundle",
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repair subagent that gets a broken Ruby environment loading again by fixing Bundler resolution conflicts, lockfile platform mismatches, gem native extension compile failures (nokogiri, pg, mysql2, ffi, psych), LoadError and load path problems, and Ruby version mismatches with the smallest possible change, then re-runs the failing command as proof. Use when bundle install or bundle exec fails, a gem will not build its C extension, Ruby raises cannot load such file, or the app refuses to boot after a Ruby or gem upgrade.",
+      "path": "agents/ruby-build-resolver"
+    },
+    {
+      "name": "ruby-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only review subagent for Ruby and Rails diffs that hunts NoMethodError on nil, rescue clauses that swallow everything, N+1 queries and missing eager loading, risky metaprogramming such as send or constantize on user input, unpermitted mass assignment, and SQL, shell or YAML injection, then returns verified findings ranked by severity. Use when the user wants a Ruby branch, pull request or set of changed .rb files checked before merge, or asks whether a Rails change introduces nil crashes, query explosions or injection holes.",
+      "path": "agents/ruby-reviewer"
+    },
+    {
+      "name": "rust-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "cargo"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repairs failing cargo build, cargo check and cargo test compilation by reading rustc error codes and fixing borrow checker conflicts, lifetime mismatches, unsatisfied trait bounds, missing feature flags and conflicting dependency versions with the smallest diff, then re-running cargo to prove the build is green. Use when a Rust project no longer compiles, rustc reports errors such as E0502, E0499, E0382, E0277 or E0308, or a Cargo.lock or dependency upgrade broke the build.",
+      "path": "agents/rust-build-resolver"
+    },
+    {
+      "name": "rust-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "cargo"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Rust-specific change reviewer that hunts for unwrap and expect outside tests, reachable panics and indexing, unsound or undocumented unsafe blocks, blocking calls and std Mutex guards held across await in tokio code, needless clones, and swallowed or stringly-typed errors, then returns verified findings without touching files. Use when a Rust diff, crate or pull request needs a language-aware review before merge, or when the user wants a second opinion on unsafe or async Rust code.",
+      "path": "agents/rust-reviewer"
+    },
+    {
+      "name": "security-reviewer",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Isolated security pass over a diff, branch or pull request that traces untrusted input to where it is used and reports only exploitable problems - leaked secrets, SQL, shell and template injection, path traversal and SSRF, missing or broken authorization (IDOR), weak input validation, and sensitive data in responses or logs - each ranked by severity with an attack scenario and a fix, never modifying the code. Use when the user wants a vulnerability check of their change delegated to a subagent, a security gate before merging, or an independent look at whether a new endpoint or handler can be abused.",
+      "path": "agents/security-reviewer"
+    },
+    {
+      "name": "silent-failure-hunter",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only auditor that searches a diff, module or service for places where failures vanish without a trace, such as empty or catch-all exception handlers, discarded error returns, unawaited promises, fallback values that mask a broken dependency, and error paths with no log or metric, then reports each with its concrete consequence. Use when the user suspects errors are being hidden, asks why something fails with no logs, or wants a change audited for swallowed exceptions before merging.",
+      "path": "agents/silent-failure-hunter"
+    },
+    {
+      "name": "swift-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "swift",
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repairs failing Swift and Xcode builds with the smallest diff, working through compiler errors, Swift 6 strict concurrency diagnostics such as non-Sendable sends and actor-isolated access, SwiftPM dependency resolution and Package.resolved conflicts, and build settings like SWIFT_VERSION or search paths, then re-runs the failing build to prove it passes. Use when swift build, swift test or xcodebuild fails, after a toolchain, Xcode or Swift 6 upgrade breaks compilation, or when SwiftPM cannot resolve or fetch packages. Not for code signing or provisioning problems.",
+      "path": "agents/swift-build-resolver"
+    },
+    {
+      "name": "swift-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "swift"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only Swift code reviewer that inspects a diff for crash-prone force unwraps and try!, retain cycles in escaping closures, actor isolation mistakes and Sendable violations, UIKit or SwiftUI state touched off the main actor, and swallowed or misrouted errors, then returns verified findings ranked by severity. Use when the user wants a Swift or iOS/macOS pull request checked before merge, asks whether a change could leak memory or race, or wants a second opinion on Swift concurrency code.",
+      "path": "agents/swift-reviewer"
+    },
+    {
+      "name": "typescript-build-resolver",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "edit"
+      ],
+      "description": "Repairs failing TypeScript and JavaScript builds with the smallest diff, working through tsc type errors, \"Cannot find module\" and module resolution failures, ESM/CJS interop errors, bundler (Vite, webpack, esbuild, tsup) failures and broken or mismatched npm/pnpm dependencies, then re-runs the failing command to prove it passes. Use when tsc, npm run build, a bundler or CI type-check is red and the user wants it green again.",
+      "path": "agents/typescript-build-resolver"
+    },
+    {
+      "name": "typescript-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "node"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "TypeScript and JavaScript diff reviewer that hunts type holes (any, unsafe casts, non-null assertions, ts-ignore), floating or unhandled promises, async races, ESM/CommonJS import breakage and runtime bugs the compiler cannot see, then returns verified findings without touching files. Use when a TS/JS change, branch or pull request needs a language-aware review before it is committed or merged.",
+      "path": "agents/typescript-reviewer"
+    },
+    {
+      "name": "vue-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only reviewer for Vue 3 and Nuxt diffs that hunts for state which silently stops being reactive, watchers and listeners never torn down, props or store state mutated from a child, server and client rendering that disagree, and Nuxt data fetched twice or secrets exposed through public runtime config, then returns verified findings with file and line. Use when the user wants a Vue or Nuxt pull request, branch or uncommitted change checked before merge.",
+      "path": "agents/vue-reviewer"
     }
   ],
   "commands": [
+    {
+      "name": "build-fix",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Fix the current build, compile or type-check failure with the smallest change, routed to the build resolver for that language.",
+      "path": "commands/build-fix.md"
+    },
+    {
+      "name": "commit",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Write a Conventional Commits message for the staged changes, show it, and commit only after the user confirms.",
+      "path": "commands/commit.md"
+    },
+    {
+      "name": "onboard",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Get oriented in an unfamiliar codebase: what it does, how it is laid out, how to build, test and run it, and where to start.",
+      "path": "commands/onboard.md"
+    },
+    {
+      "name": "plan-feature",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Turn a feature request into a step-by-step implementation plan with files to touch, risks and tests, without writing code.",
+      "path": "commands/plan-feature.md"
+    },
+    {
+      "name": "pr-describe",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Draft a pull request title and description for the current branch from its commits and diff against the base branch.",
+      "path": "commands/pr-describe.md"
+    },
+    {
+      "name": "refactor-clean",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Find and remove dead code, unused exports and unused dependencies, verifying with the build and tests after each removal.",
+      "path": "commands/refactor-clean.md"
+    },
+    {
+      "name": "resume-session",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Resume work from the latest session handoff note, checking it against the repository before taking the next step.",
+      "path": "commands/resume-session.md"
+    },
+    {
+      "name": "review",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Review the current changes for bugs, risky patterns and missing tests, routed to the reviewer for the language that changed.",
+      "path": "commands/review.md"
+    },
+    {
+      "name": "save-session",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Save a handoff note recording the current goal, progress, decisions and next steps so a later session can resume.",
+      "path": "commands/save-session.md"
+    },
+    {
+      "name": "security-scan",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Scan the current change for vulnerabilities, leaked secrets and unsafe dependencies, and report findings by severity.",
+      "path": "commands/security-scan.md"
+    },
+    {
+      "name": "test-coverage",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Find untested behaviour in the current change and add focused tests for it, then show the coverage before and after.",
+      "path": "commands/test-coverage.md"
+    },
+    {
+      "name": "update-docs",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Update the README, API docs, changelog and code comments that the current change made stale, without touching unrelated docs.",
+      "path": "commands/update-docs.md"
+    },
     {
       "name": "verify",
       "version": "0.1.0",

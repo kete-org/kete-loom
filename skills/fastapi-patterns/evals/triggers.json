@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add a FastAPI router for invoices with create and list endpoints and Pydantic schemas",
+    "How should I wire a SQLAlchemy session into my FastAPI routes with Depends?",
+    "Should this FastAPI endpoint be async def or def? It calls requests and the ORM",
+    "Write tests for my FastAPI app using TestClient and override the auth dependency",
+    "Set up JWT bearer auth as a dependency for our FastAPI service"
+  ],
+  "should_not_trigger": [
+    "Review this FastAPI pull request for blocking calls in async routes and leaked sessions",
+    "Add a Django model and migration for invoices",
+    "Restructure our Flask app into blueprints with an app factory",
+    "Explain asyncio.gather versus TaskGroup in a plain Python script",
+    "Design the REST resource naming and versioning for our public API"
+  ]
+}

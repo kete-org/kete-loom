@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "I'm out of time today, write down where we are so tomorrow's session can carry on",
+    "Pick up where we left off yesterday, there should be a handoff file in the repo",
+    "Before the context fills up, save a note with our decisions and next steps for the next agent",
+    "Hand this half-finished migration over to my colleague with a status note they can follow"
+  ],
+  "should_not_trigger": [
+    "Write a pull request description for the changes on this branch",
+    "Draft a commit message for the staged files following conventional commits",
+    "I'm new to this codebase, give me a tour of how the modules fit together",
+    "My context window keeps filling up when I read big log files, how should I approach this task"
+  ]
+}

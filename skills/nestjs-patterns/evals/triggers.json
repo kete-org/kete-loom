@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Nest can't resolve dependencies of the OrdersService (?), please fix it",
+    "Add a global JWT guard to our NestJS API with a @Public() decorator to opt out",
+    "Set up a ValidationPipe so our Nest DTOs reject unknown fields",
+    "Write an e2e test for the users module in NestJS that overrides the email provider",
+    "How should I split this NestJS app into feature modules with a shared Prisma service?"
+  ],
+  "should_not_trigger": [
+    "Add graceful shutdown and pino logging to our plain Express server",
+    "Design the REST resource naming and pagination for our public API",
+    "Write a Prisma migration that adds a status column to orders",
+    "Review this TypeScript pull request for type safety problems",
+    "Our Vite dev server can't find env variables in the React app"
+  ]
+}

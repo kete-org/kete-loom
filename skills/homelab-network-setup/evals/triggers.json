@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "I just bought a managed switch and an OPNsense box, how should I lay out VLANs for my homelab?",
+    "Help me put all my smart plugs and the TV on their own network so they can't see my NAS",
+    "Set up WireGuard so I can reach Jellyfin and my NAS at home from my phone",
+    "Should I port forward Nextcloud or is there a safer way to make it reachable from outside?",
+    "Plan a Pi-hole setup for every VLAN at home without a public DNS fallback leaking queries",
+    "I'm rebuilding my home network from scratch, guest Wi-Fi, cameras with no internet, the works"
+  ],
+  "should_not_trigger": [
+    "My laptop gets a 169.254 address and can't reach anything, how do I debug it?",
+    "Audit this pf.conf and OpenVPN server config from my firewall for weak settings",
+    "Write a docker-compose file for Nextcloud with Postgres and Redis",
+    "Create a Kubernetes Ingress with cert-manager for my cluster",
+    "Design an AWS VPC with private subnets and a NAT gateway for production",
+    "dig shows SERVFAIL for my domain but only on some resolvers, why?"
+  ]
+}

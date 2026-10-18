@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Add a new REST endpoint to our Spring Boot order service with request validation and proper 404 responses",
+    "Bind the payments.* settings in application.yml to a typed config class in Spring Boot",
+    "My @Transactional method in the Spring service doesn't roll back when called from the same class, why?",
+    "Lock down our Spring Boot API with a SecurityFilterChain and JWT resource server, keeping actuator health public",
+    "Write a @WebMvcTest for the invoice controller using MockitoBean instead of MockBean",
+    "Which actuator endpoints should a Spring Boot app expose for Kubernetes liveness and readiness probes?"
+  ],
+  "should_not_trigger": [
+    "Our Hibernate entities trigger hundreds of selects when loading the order list, fix the N+1",
+    "Build a Quarkus REST endpoint backed by Panache and make it compile to a native image",
+    "Add JWT authentication and StatusPages error handling to my Ktor server",
+    "Review this Java pull request for null handling and resource leaks",
+    "Fix the Maven build: cannot find symbol after upgrading the JDK to 21",
+    "Write JUnit 5 parameterized tests for this plain Java date parsing utility"
+  ]
+}

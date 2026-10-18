@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Model the checkout screen state in Kotlin as a sealed interface with loading, success and error cases",
+    "This Kotlin repository class has !! everywhere, rewrite it with proper null safety",
+    "Which dispatcher should my suspend function use for the database call, and who should own the coroutine scope?",
+    "Expose the user list from my Android ViewModel as a StateFlow instead of LiveData",
+    "Move our hard-coded dependency versions in build.gradle.kts into a libs.versions.toml catalog"
+  ],
+  "should_not_trigger": [
+    "Add a test that checks my Kotlin repository retries twice before failing",
+    "Go through the Kotlin PR my teammate opened and flag any risky coroutine code",
+    "The Android build broke with a Duplicate class error after adding a library",
+    "Build the settings screen in Jetpack Compose with a lazy list",
+    "Share the networking layer between Android and iOS with Kotlin Multiplatform"
+  ]
+}

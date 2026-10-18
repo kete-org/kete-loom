@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review my Java pull request for resource leaks and equals/hashCode bugs",
+    "Is this Java cache class thread-safe? Look at the diff before I merge",
+    "Second pair of eyes on the Spring service changes in this branch, I think there's an NPE somewhere",
+    "Check the Java changes in my last commit for swallowed exceptions and unclosed JDBC connections"
+  ],
+  "should_not_trigger": [
+    "Maven fails with 'package javax.annotation does not exist' after upgrading to JDK 21, fix the build",
+    "Write JUnit 5 tests with Mockito for the OrderService class",
+    "Review this Kotlin coroutine code for leaks before I merge",
+    "Do a security audit of the authentication module",
+    "Should this Java hierarchy be an enum, a record or a sealed interface?",
+    "Review the Postgres schema migration and indexes in this Java service's Flyway scripts"
+  ]
+}

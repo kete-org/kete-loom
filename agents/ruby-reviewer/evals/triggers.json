@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review my Ruby changes before I merge, I'm worried about nil crashes",
+    "Can you check this Rails PR for N+1 queries and mass assignment problems?",
+    "Look over the diff in app/controllers and tell me if any params reach SQL or constantize",
+    "Second pair of eyes on my Ruby branch: are any of these rescue blocks swallowing errors?",
+    "Audit the changed .rb files on this branch for injection and unsafe YAML.load"
+  ],
+  "should_not_trigger": [
+    "Fix bundle install: Bundler could not find compatible versions for gem rack",
+    "Write RSpec specs for the new OrdersController",
+    "What's the idiomatic way to define value objects in Ruby 3?",
+    "Review this Django pull request for ORM query problems",
+    "Review my Go changes for goroutine leaks before I merge"
+  ]
+}

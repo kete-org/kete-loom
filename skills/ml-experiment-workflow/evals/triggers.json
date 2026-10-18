@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We want to predict customer churn next quarter. How should I set up the experiment and which metric should we use?",
+    "My new model is 0.4% better on validation than the old one. Is that a real improvement?",
+    "Turn my exploratory Jupyter notebook into a reproducible training pipeline with tracked runs",
+    "Plan an ablation study for the three changes we stacked into the fraud model",
+    "How do I split patient records into train and test so the same patient never shows up in both?"
+  ],
+  "should_not_trigger": [
+    "My torch DataLoader is slow and the GPU sits at 20% utilisation",
+    "Check this pull request's feature engineering code for target leakage and broadcasting bugs",
+    "Write a SQL query that counts weekly active users by country",
+    "Score our RAG assistant's answers for faithfulness against the source documents",
+    "Benchmark this sorting function against the old version and tell me if it's faster"
+  ]
+}

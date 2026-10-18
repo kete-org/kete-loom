@@ -1,0 +1,21 @@
+{
+  "should_trigger": [
+    "Design the tool set and agent loop for a coding agent that fixes failing CI builds",
+    "Our in-house agent framework loses track of finished steps after it compacts the context, how should the harness keep state?",
+    "How do I sandbox shell commands my task agent runs and decide which need human approval?",
+    "The agent says it's finished but the tests still fail, how do we add a verification loop?",
+    "Add tracing and cost limits to our tool-calling agent so runaway loops get stopped",
+    "We're building an autonomous ticket-triage agent, what should the harness look like?"
+  ],
+  "should_not_trigger": [
+    "Write an MCP server that exposes our Postgres database as tools",
+    "Build a RAG pipeline over our help center articles with citations",
+    "Score our agent's transcripts against a rubric and track pass rate over time",
+    "Run several sub-agents in parallel to refactor these five modules",
+    "Rewrite this system prompt so the model follows the output format",
+    "Plan the implementation of a new billing feature step by step",
+    "My Claude Code session is nearly out of context, what should I drop or summarise?",
+    "Set up a loop that keeps re-running the agent overnight until every test passes",
+    "Write a handoff note so the next session can pick up where I stopped"
+  ]
+}

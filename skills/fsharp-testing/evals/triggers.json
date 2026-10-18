@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add Expecto tests for the F# invoice module, including the task-based repository calls",
+    "Turn these F# example tests into FsCheck properties so we cover more inputs",
+    "My xUnit test in F# hangs when I call Async.RunSynchronously, how should I test this async workflow?",
+    "Write Unquote assertions for the F# parser instead of Assert.Equal",
+    "Should our new F# library use Expecto or xUnit for its test project?"
+  ],
+  "should_not_trigger": [
+    "Model the payment states in F# with discriminated unions",
+    "Review my F# changes for partial functions and incomplete matches",
+    "The F# test project won't compile because of a value restriction error",
+    "Write xUnit tests with Moq for my C# OrderService",
+    "Raise test coverage across the repo to 80 percent"
+  ]
+}

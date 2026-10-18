@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My EF Core LINQ query throws 'could not be translated' when I call my own helper in Where",
+    "Loading orders with Include on lines and payments returns millions of rows in EF Core, should I use AsSplitQuery?",
+    "Two admins edit the same account and the last save wins, add optimistic concurrency with EF Core",
+    "How do I deploy dotnet ef migrations to production without calling Database.Migrate at startup?",
+    "Should this read-only EF Core endpoint use AsNoTracking or a projection?"
+  ],
+  "should_not_trigger": [
+    "Our ASP.NET Core middleware order breaks authentication, fix Program.cs",
+    "Refactor this C# service to use records and pattern matching",
+    "Write a Prisma migration for the new invoices table",
+    "This PostgreSQL index isn't being used for the orders query, read the EXPLAIN output",
+    "Configure Hibernate second-level cache for our Spring Boot JPA entities"
+  ]
+}

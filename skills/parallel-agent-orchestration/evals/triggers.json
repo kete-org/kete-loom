@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Spin up several subagents to migrate each of our 8 packages to ESM at the same time",
+    "Split this big refactor across parallel workers without them stepping on each other's files",
+    "Run one agent per service to add health checks, then merge everything into one branch",
+    "How should I divide this job between a team of agents and combine what they produce"
+  ],
+  "should_not_trigger": [
+    "Keep retrying the flaky integration test fix overnight until CI is green",
+    "Design the message queue so our worker processes handle jobs concurrently",
+    "The context keeps overflowing when I read this monorepo, help me budget it",
+    "Plan the implementation steps for the new invoicing feature"
+  ]
+}

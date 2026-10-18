@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a conventional commit message for what I've staged",
+    "commitlint keeps failing with 'subject may not be empty', fix my commit message",
+    "Is removing the legacy config flag a feat or a breaking change? How do I mark it in the commit?",
+    "I've staged a bug fix and a refactor together, split them into properly typed commits",
+    "Rewrite this commit message so it explains why we changed the retry logic, not just what"
+  ],
+  "should_not_trigger": [
+    "Decide whether the next release should be 3.0.0 or 2.5.0 and publish it",
+    "My rebase onto main has conflicts in the lockfile, help me finish it",
+    "Write the pull request description for this branch",
+    "Generate release notes for v1.8.0 from the changelog",
+    "Recover the commits I lost after a bad interactive rebase"
+  ]
+}

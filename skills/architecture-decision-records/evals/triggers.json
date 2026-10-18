@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Write an ADR for our decision to move from RabbitMQ to Kafka",
+    "We agreed in the meeting to use Keycloak for auth, can you document that decision in the repo?",
+    "Set up an architecture decision log in this repo with the first record",
+    "ADR 0004 is outdated since we switched to DynamoDB, mark it superseded and write the new one",
+    "Record why we chose server-side rendering over a SPA so future devs understand it"
+  ],
+  "should_not_trigger": [
+    "Should we use RabbitMQ or Kafka for order events? Weigh the options and recommend one",
+    "Write a README section explaining how to run the project locally",
+    "Draft the changelog and release notes for version 2.3.0",
+    "Design the pagination and versioning scheme for the public API",
+    "Write a commit message for these staged changes",
+    "Turn this feature request into a step-by-step implementation plan"
+  ]
+}

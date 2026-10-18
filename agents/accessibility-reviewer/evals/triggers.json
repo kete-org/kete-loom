@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Run an accessibility audit on my branch before I merge it",
+    "Can a keyboard-only user get through the new checkout form? Review it and report problems",
+    "Check this PR for WCAG 2.2 AA issues, findings only, no edits",
+    "Give me an a11y sign-off review of the settings page changes before release"
+  ],
+  "should_not_trigger": [
+    "Fix the focus trap in our modal dialog component so it meets WCAG",
+    "Review my changes for logic bugs before I commit",
+    "Review this Vue component for reactivity mistakes",
+    "Do a security review of the login endpoint",
+    "Why is our Cumulative Layout Shift so high on the blog pages?"
+  ]
+}

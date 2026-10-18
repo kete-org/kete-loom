@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a PHP 8.3 value object for an email address with validation and readonly properties",
+    "How should I model order statuses in PHP now that we have enums?",
+    "Modernise this old PHP 7 class with typed properties and constructor promotion",
+    "Set up PSR-4 autoloading and a sensible folder layout for my new Composer package",
+    "What's the idiomatic way to handle errors in modern PHP instead of returning false?"
+  ],
+  "should_not_trigger": [
+    "Add PHPUnit tests with a data provider covering the discount rules",
+    "Check this PHP pull request for injection and escaping bugs before merge",
+    "composer update can't resolve a conflict between symfony/console and laravel/framework",
+    "Build a Laravel Eloquent model and controller for blog posts",
+    "Write idiomatic Ruby with proper error handling for this service object"
+  ]
+}

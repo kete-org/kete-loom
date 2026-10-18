@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My Nuxt page calls the API twice, once on the server and again in the browser",
+    "Prerender the blog section of our Nuxt app but keep the dashboard client-only",
+    "How do I keep the Stripe secret out of the browser using Nuxt runtimeConfig?",
+    "Add a server/api endpoint in Nuxt that validates the POST body",
+    "Fix the hydration mismatch on my Nuxt product page caused by the date"
+  ],
+  "should_not_trigger": [
+    "Why does my Vue 3 composable lose reactivity when I destructure it?",
+    "Review my Nuxt pull request for missing watcher cleanup",
+    "Write a SvelteKit form action that validates the signup form",
+    "Set up getServerSideProps in my Next.js page",
+    "Write a Pinia store for user preferences in a plain Vite Vue app"
+  ]
+}

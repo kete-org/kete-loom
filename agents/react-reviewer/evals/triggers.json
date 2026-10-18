@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review my React component changes for hook rule violations before I merge",
+    "Can you check this Next.js PR for anything leaking from server components into the client bundle?",
+    "Look over the diff on my feature branch, I rewrote the useEffect logic in the chat widget and want a second opinion",
+    "Review the TSX changes in this pull request for stale closures, bad keys and accessibility problems"
+  ],
+  "should_not_trigger": [
+    "Write a new React hook that debounces a search input",
+    "Explain when to use useMemo versus useCallback",
+    "Review my Vue 3 composition API changes before merge",
+    "Profile the React table and make scrolling faster",
+    "Do a full WCAG audit of the whole marketing site",
+    "Review the Django views in this pull request"
+  ]
+}

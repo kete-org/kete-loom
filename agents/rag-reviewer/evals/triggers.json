@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review our RAG pipeline code and tell me what's wrong with the chunking and retrieval",
+    "Audit our chat-over-docs feature for permission leaks and weak retrieval before launch",
+    "Give me a read-only assessment of why our semantic search returns irrelevant passages",
+    "Can you look over the vector search config and prompt builder in our support bot and list issues?"
+  ],
+  "should_not_trigger": [
+    "Implement hybrid search with reciprocal rank fusion in our pgvector index",
+    "Review my pull request for bugs before I merge it",
+    "Build an MCP server so agents can query our knowledge base",
+    "Review this Postgres schema migration for locking problems",
+    "Design the context compaction strategy for our coding agent",
+    "Do a security review of the login and session handling code"
+  ]
+}

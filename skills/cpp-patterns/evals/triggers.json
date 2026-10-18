@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Rewrite this class so it stops using raw new and delete and uses smart pointers instead",
+    "Should this member be a unique_ptr, a shared_ptr or just a value?",
+    "Set up a new C++20 CMake project with warnings, sanitizers and clang-tidy",
+    "Modernise this old C++03 parser to C++17 style with RAII and string_view",
+    "Write a thread-safe connection pool class in modern C++"
+  ],
+  "should_not_trigger": [
+    "Write GoogleTest unit tests for the Matrix class and hook them into CTest",
+    "Review my C++ pull request for dangling references and data races",
+    "The linker says undefined reference to vtable for Widget, fix the build",
+    "Refactor this Rust module to avoid cloning and use borrowed slices",
+    "Add idiomatic error handling with errors.Is to this Go service"
+  ]
+}

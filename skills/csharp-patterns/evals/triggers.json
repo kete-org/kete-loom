@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Turn on nullable reference types in our .NET 8 class library and fix the warnings in the files I touched",
+    "Should this C# DTO be a record or a class, and how do I make it immutable?",
+    "Refactor this C# service so every async method takes a CancellationToken and stops calling .Result",
+    "How should I register a DbContext and a background worker in Microsoft.Extensions.DependencyInjection without a captive dependency?",
+    "Rewrite this C# if/else chain with a switch expression and property patterns"
+  ],
+  "should_not_trigger": [
+    "Add a unit test project for the C# billing library with xUnit",
+    "My .NET solution stopped compiling after a NuGet update, CS0246 everywhere",
+    "Review my C# pull request for async void and disposal leaks",
+    "Add an EF Core migration for the new Invoices table",
+    "Set up a minimal API endpoint with ASP.NET Core authentication and rate limiting",
+    "Write idiomatic F# discriminated unions for the payment states"
+  ]
+}

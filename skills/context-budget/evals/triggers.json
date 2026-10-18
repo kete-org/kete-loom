@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "This repo is huge and you keep forgetting what we decided earlier, work more economically",
+    "The build log is 40,000 lines, find the real error without dumping it all into the chat",
+    "We're going to touch about 60 files in this refactor, plan how to do it without blowing the context window",
+    "You're close to the context limit, how should we keep going on this task without losing track"
+  ],
+  "should_not_trigger": [
+    "Save a handoff note so I can resume this in a fresh session tomorrow",
+    "Split this migration across four subagents working in parallel",
+    "Set up an unattended loop that keeps fixing lint errors until the count hits zero",
+    "Reduce the token cost of the system prompt in our customer support chatbot"
+  ]
+}

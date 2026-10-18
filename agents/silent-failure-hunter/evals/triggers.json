@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Find places where errors are swallowed in the sync worker",
+    "Uploads sometimes fail and we get no logs at all, find where the errors go",
+    "Audit my branch for empty catch blocks and ignored error returns before I merge",
+    "Look for unawaited promises and fallbacks that hide failures in the payments service",
+    "Check the import module for exceptions caught and silently dropped"
+  ],
+  "should_not_trigger": [
+    "Add retries with exponential backoff to our HTTP client for the shipping API",
+    "Review the diff in this PR for bugs",
+    "Do a security audit of the authentication module",
+    "Fix the failing unit tests in the user service",
+    "Find and delete dead code and unused exports in this repo"
+  ]
+}

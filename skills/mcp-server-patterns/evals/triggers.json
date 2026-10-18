@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Build an MCP server that exposes our Jira instance as tools for Claude and Cursor",
+    "My stdio MCP server disconnects right after starting, the client says invalid JSON",
+    "How should I name and describe the tools on my Model Context Protocol server?",
+    "Add OAuth to our remote MCP server running over streamable HTTP",
+    "Turn our internal billing REST API into an MCP server agents can call",
+    "Test my MCP server's tools with the inspector before publishing it"
+  ],
+  "should_not_trigger": [
+    "Design the overall tool set and sandbox for our autonomous coding agent",
+    "Add vector search and reranking over our product manuals for the support bot",
+    "Design a clean REST API for our orders service with versioning and pagination",
+    "Write prompts that make the model call functions more reliably",
+    "Set up OAuth login with Google for our web app users",
+    "Review our retrieval-augmented generation code for chunking problems"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "import.meta.env.API_URL is undefined in the browser in my Vite app",
+    "Set up Vite library mode so our component package ships ESM and CJS without bundling React",
+    "We're moving off Create React App to Vite and get 'process is not defined'",
+    "The @ alias resolves in dev but the vite build fails to find the module",
+    "Upgrade our vite.config from rollupOptions to the new Vite 8 options"
+  ],
+  "should_not_trigger": [
+    "Our React components re-render too often, how do I memoize them properly",
+    "Configure nuxt.config route rules for prerendering the marketing pages",
+    "Migrate our Jest tests to bun test",
+    "Reduce our Largest Contentful Paint on the landing page",
+    "Add helmet and CORS to the Fastify API server"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Review my Rust changes before I open the PR, I'm worried about unwraps",
+    "Can you check this unsafe block in our FFI wrapper crate for soundness?",
+    "Look over the tokio service diff for anything that blocks the runtime or deadlocks",
+    "Do a Rust-focused code review of the last three commits on this branch"
+  ],
+  "should_not_trigger": [
+    "cargo check is failing with lifetime may not live long enough, please fix it",
+    "Write unit and doc tests for the Rust config loader",
+    "Show me how to structure a Rust workspace with shared dependencies",
+    "Review my Go changes for goroutine leaks",
+    "Audit our dependencies for known CVEs"
+  ]
+}

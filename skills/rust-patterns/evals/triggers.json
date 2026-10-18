@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Should this Rust function take a String or a &str? It just looks up a key in a map",
+    "Set up a thiserror error enum for my parser crate and use anyhow in the CLI binary",
+    "Split my Rust project into a cargo workspace with a core library and a cli crate",
+    "Write an async tokio worker that pulls jobs from a channel and processes them with bounded concurrency",
+    "What's the idiomatic way to design a trait for pluggable storage backends in Rust?"
+  ],
+  "should_not_trigger": [
+    "Add proptest property tests for my Rust base64 encoder",
+    "Review this Rust pull request for unwraps and unsafe blocks before I merge it",
+    "cargo build fails with E0502 cannot borrow as mutable because it is also borrowed as immutable",
+    "Write idiomatic Go error handling with wrapped errors for this HTTP handler",
+    "Design a REST API for the orders service with pagination and versioning"
+  ]
+}

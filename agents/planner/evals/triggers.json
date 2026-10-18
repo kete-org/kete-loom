@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Plan out how to add CSV export to the reports page before we write any code",
+    "Break the multi-currency support feature into small steps with tests for each",
+    "What files would I need to touch to add soft delete to users? Give me an ordered plan",
+    "Turn this ticket into an implementation plan with checkpoints: users can reset their password via SMS",
+    "We need to migrate sessions from cookies to Redis. Lay out the steps and risks first"
+  ],
+  "should_not_trigger": [
+    "Should the reports module be its own service? Compare the options",
+    "Implement the CSV export for reports now, test first",
+    "Write an ADR recording our choice of Redis for sessions",
+    "Review the changes on this branch for bugs",
+    "Design the REST endpoints for the password reset flow",
+    "Fix the failing TypeScript build in the reports package"
+  ]
+}

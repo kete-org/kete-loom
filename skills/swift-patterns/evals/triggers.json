@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Should this cache be a class, a struct or an actor in Swift?",
+    "Convert these completion-handler network calls in my Swift package to async/await",
+    "Help me design a Swift protocol with an associated type for our repository layer",
+    "We want to move our iOS app's core module to the Swift 6 language mode, where do we start?",
+    "Set up a new Package.swift with a library target and an executable target"
+  ],
+  "should_not_trigger": [
+    "Write Swift Testing tests with #expect for the PriceCalculator struct",
+    "Review this Swift pull request for retain cycles and force unwraps",
+    "Xcode build fails with 'sending value of non-Sendable type' after upgrading, fix it",
+    "Build a SwiftUI settings screen with a NavigationStack and a Form",
+    "Write idiomatic Kotlin coroutines for this Android repository class"
+  ]
+}

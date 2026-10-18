@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My FlatList of 2000 chat messages stutters when scrolling on Android, how do I fix it?",
+    "Set up expo-router tabs with a details screen that takes an id param",
+    "We need to call a native Bluetooth SDK from our Expo app, how should I wrap it?",
+    "Can I push this fix to users with EAS Update or do I need a new App Store build?",
+    "The keyboard covers the login form on iOS but not Android in our React Native app"
+  ],
+  "should_not_trigger": [
+    "Build a Next.js page that server-renders the product catalogue",
+    "My Flutter ListView rebuilds every item when one changes",
+    "Write Playwright end-to-end tests for the web checkout",
+    "Add a SwiftUI settings screen with a NavigationStack",
+    "Reduce re-renders in this React web dashboard using memo and useCallback"
+  ]
+}
