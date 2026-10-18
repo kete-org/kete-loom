@@ -1,0 +1,18 @@
+{
+  "name": "chrome-devtools",
+  "description": "The Chrome DevTools MCP server: control and inspect a live Chrome, including console, network, performance traces and screenshots.",
+  "version": "0.1.0",
+  "category": "testing",
+  "risk": "runs-commands",
+  "transport": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "chrome-devtools-mcp@latest"
+  ],
+  "auth": "none",
+  "requires": [
+    "node"
+  ],
+  "homepage": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+}

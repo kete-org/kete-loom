@@ -1,0 +1,11 @@
+{
+  "name": "stripe",
+  "description": "Stripe's remote MCP server: work with the Stripe API and search Stripe docs, signed in with Stripe OAuth.",
+  "version": "0.1.0",
+  "category": "integrations",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.stripe.com",
+  "auth": "oauth",
+  "homepage": "https://docs.stripe.com/mcp"
+}

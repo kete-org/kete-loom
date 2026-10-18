@@ -1,0 +1,11 @@
+{
+  "name": "notion",
+  "description": "Notion's remote MCP server: search, read and edit pages and databases, signed in with Notion OAuth.",
+  "version": "0.1.0",
+  "category": "integrations",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.notion.com/mcp",
+  "auth": "oauth",
+  "homepage": "https://developers.notion.com/docs/get-started-with-mcp"
+}

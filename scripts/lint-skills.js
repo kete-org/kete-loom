@@ -8,6 +8,8 @@ const path = require('path');
 const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('./lib/skills');
 const { TOOLS } = require('./lib/render');
 const { loadProfiles, DETECT } = require('./lib/profiles');
+const { translations } = require('./lib/i18n');
+const { listMcp } = require('./lib/mcp-install');
 
 const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const SEMVER_RE = /^\d+\.\d+\.\d+$/;
@@ -165,14 +167,14 @@ function lintProfiles(items) {
   } catch (e) {
     return [`profiles.json: ${e.message}`];
   }
-  const KEYS = new Set(['description', 'extends', 'skills', 'agents', 'commands', 'rules', 'hooks', 'categories', 'detect', 'all']);
+  const KEYS = new Set(['description', 'extends', 'skills', 'agents', 'commands', 'rules', 'hooks', 'mcp', 'categories', 'detect', 'all']);
   for (const [name, p] of Object.entries(profiles)) {
     if (!NAME_RE.test(name)) errors.push(`profiles.json: profile name "${name}" must match ${NAME_RE}`);
     for (const k of Object.keys(p)) if (!KEYS.has(k)) errors.push(`profiles.json: ${name} has unknown key "${k}"`);
     if (typeof p.description !== 'string' || p.description.length < 20) errors.push(`profiles.json: ${name} needs a description of at least 20 characters`);
     for (const parent of p.extends || []) if (!profiles[parent]) errors.push(`profiles.json: ${name} extends unknown profile "${parent}"`);
     for (const c of p.categories || []) if (!CATEGORIES.includes(c)) errors.push(`profiles.json: ${name} has unknown category "${c}"`);
-    for (const k of ['skills', 'agents', 'commands', 'rules', 'hooks']) {
+    for (const k of ['skills', 'agents', 'commands', 'rules', 'hooks', 'mcp']) {
       for (const n of p[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profiles.json: ${name} lists unknown ${k.slice(0, -1)} "${n}"`);
     }
   }
@@ -180,6 +182,28 @@ function lintProfiles(items) {
   for (const d of DETECT) {
     for (const k of ['skills', 'agents', 'rules']) for (const n of d[k] || []) if (!items[k].some((i) => i.dir === n)) errors.push(`profile detection (${d.what}) names unknown ${k.slice(0, -1)} "${n}"`);
   }
+  return errors;
+}
+
+// mcp/<name>.json: no secrets anywhere, HTTPS remotes that sign in with OAuth, or a local command.
+const MCP_KEYS = new Set(['name', 'description', 'version', 'category', 'risk', 'transport', 'url', 'command', 'args', 'auth', 'requires', 'homepage']);
+function lintMcp(server) {
+  const errors = [];
+  for (const k of Object.keys(server)) if (!MCP_KEYS.has(k) && !['kind', 'dir', 'file'].includes(k)) errors.push(`unknown key "${k}" (servers carry no headers, env or tokens)`);
+  if (server.name !== server.dir) errors.push(`name "${server.name}" must equal the file name "${server.dir}"`);
+  if (!NAME_RE.test(server.dir)) errors.push(`file name must match ${NAME_RE}`);
+  if (typeof server.description !== 'string' || server.description.length < 20 || server.description.length > 300) errors.push('description must be 20-300 characters');
+  if (!SEMVER_RE.test(server.version || '')) errors.push('version must be semver');
+  if (!CATEGORIES.includes(server.category)) errors.push(`category must be one of ${CATEGORIES.join(', ')}`);
+  if (!RISKS.includes(server.risk)) errors.push(`risk must be one of ${RISKS.join(', ')}`);
+  if (!/^https:\/\//.test(server.homepage || '')) errors.push('homepage must be an https URL');
+  if (server.transport === 'http') {
+    if (!/^https:\/\//.test(server.url || '')) errors.push('url must be https');
+    if (server.auth !== 'oauth' && server.auth !== 'none') errors.push('auth must be oauth or none');
+  } else if (server.transport === 'stdio') {
+    if (typeof server.command !== 'string' || !Array.isArray(server.args)) errors.push('stdio servers need command and args');
+  } else errors.push('transport must be http or stdio');
+  if (/(token|secret|password|api[_-]?key|bearer)\s*[=:]/i.test(JSON.stringify(server.args || []) + (server.url || ''))) errors.push('looks like a secret in args or url; servers must not carry secrets');
   return errors;
 }
 
@@ -247,9 +271,15 @@ function main() {
   const warn = (msg) => (console.log(`! ${msg}`), warnCount++);
 
   for (const e of lintManifests()) error(`manifest  ${e}`);
-  for (const e of lintProfiles({ skills, agents, commands, rules, hooks })) error(e);
+  for (const e of lintProfiles({ skills, agents, commands, rules, hooks, mcp: listMcp() })) error(e);
   for (const e of [...strayFolders(SKILLS_DIR, 'SKILL.md'), ...strayFolders(AGENTS_DIR, 'AGENT.md'), ...strayFolders(HOOKS_DIR, 'HOOK.md')]) error(e);
 
+  const mcp = listMcp();
+  for (const s of mcp) {
+    const errs = lintMcp(s);
+    if (!errs.length) console.log(`✓ mcp     ${s.dir}`);
+    for (const e of errs) error(`mcp     ${s.dir}  ${e}`);
+  }
   for (const item of [...skills, ...agents, ...commands, ...rules, ...hooks]) {
     const { errors, warnings } = lintItem(item);
     if (!errors.length && !warnings.length) console.log(`✓ ${item.kind.padEnd(7)} ${item.dir}`);
@@ -259,6 +289,11 @@ function main() {
 
   // Overlapping descriptions make hosts pick the wrong skill or agent.
   for (const w of [...overlaps(skills), ...overlaps(agents)]) warn(w);
+  // A translation made from older English prose is a warning: it lags, but it isn't broken.
+  for (const t of translations()) {
+    if (!t.source) error(`docs/i18n/README.${t.code}.md  is missing its "translated from README.md, source <hash>" line`);
+    else if (!t.current) warn(`docs/i18n/README.${t.code}.md  was translated from older README prose (${t.source}); update it`);
+  }
   // Claude Code serves commands and skills from one namespace.
   for (const c of commands) if (skills.some((s) => s.dir === c.dir)) error(`command ${c.dir}  has the same name as a skill`);
 

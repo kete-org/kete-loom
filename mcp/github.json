@@ -1,0 +1,11 @@
+{
+  "name": "github",
+  "description": "GitHub's official remote MCP server: repositories, issues, pull requests and Actions, signed in with GitHub OAuth.",
+  "version": "0.1.0",
+  "category": "integrations",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://api.githubcopilot.com/mcp/",
+  "auth": "oauth",
+  "homepage": "https://github.com/github/github-mcp-server"
+}

@@ -7,6 +7,10 @@
 <p align="center"><strong>Curated, tested Agent Skills, subagents and commands for coding agents.</strong><br/>
 One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.</p>
 
+<!-- languages:start -->
+<p align="center"><a href="README.md">English</a> · <a href="docs/i18n/README.ar.md">العربية</a> · <a href="docs/i18n/README.de.md">Deutsch</a> · <a href="docs/i18n/README.es.md">Español</a> · <a href="docs/i18n/README.fr.md">Français</a> · <a href="docs/i18n/README.ja.md">日本語</a> · <a href="docs/i18n/README.pt-BR.md">Português (Brasil)</a> · <a href="docs/i18n/README.sw.md">Kiswahili</a> · <a href="docs/i18n/README.zh-CN.md">简体中文</a></p>
+<!-- languages:end -->
+
 ---
 
 Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It ships three kinds of items: **skills** (folders the agent loads when relevant), **agents** (subagents it delegates to) and **commands** (slash commands you type). It takes a quality-first approach: fewer items, and every one of them is
@@ -402,6 +406,39 @@ The installer registers each hook with Claude Code and every other host it finds
 | [`load-session-context`](hooks/load-session-context/HOOK.md) | meta | runs-commands | At the start of each session, tells the agent the current branch, how many uncommitted changes there are, and the latest session handoff note, so it picks up where the last session stopped. |
 | [`protect-files`](hooks/protect-files/HOOK.md) | security | read-only | Stops the agent from editing files that should never be hand-edited, such as .env files with secrets, package lockfiles, anything inside .git, and private keys. |
 <!-- hooks:end -->
+
+## MCP servers
+
+Curated MCP server configs, registered with every host you use in that host's own format. None of them puts a token in a config file: remote servers sign in with OAuth through the host (`/mcp` in Claude Code, `codex mcp login`, `kete mcp auth`…), and local servers need no secrets. MCP servers are opt-in: `install` never adds them unless you name them.
+
+```bash
+npx @ketecode/loom install --mcp github,playwright          # chosen servers
+npx @ketecode/loom install --profile mcp-web                # a pack: playwright, chrome-devtools, context7, fetch
+npx @ketecode/loom uninstall --mcp github
+```
+
+Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase read-only, Stripe), `mcp-design` (Figma). Claude Code servers are added with `claude mcp add-json --scope user` (or `.mcp.json` with `--project`); Codex gets them in a marked block of `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode and Kete Code in their MCP config files. A server you already configured under the same name is never replaced. Copilot CLI gets local servers only, because it has no documented way to sign in to remote ones.
+
+<!-- mcp:start -->
+| Server | Kind | Sign-in | What it does |
+|---|---|---|---|
+| [`atlassian`](mcp/atlassian.json) | remote | OAuth | Atlassian's remote MCP server for Jira and Confluence: issues, pages and search, signed in with Atlassian OAuth. |
+| [`chrome-devtools`](mcp/chrome-devtools.json) | local | none | The Chrome DevTools MCP server: control and inspect a live Chrome, including console, network, performance traces and screenshots. |
+| [`cloudflare`](mcp/cloudflare.json) | remote | OAuth | Cloudflare's remote MCP server for the Cloudflare API and docs, signed in with Cloudflare OAuth. |
+| [`context7`](mcp/context7.json) | remote | OAuth | Context7 by Upstash: up-to-date, version-specific library documentation and code examples for the model. Works without a key at lower rate limits. |
+| [`fetch`](mcp/fetch.json) | local | none | The reference Fetch MCP server: fetch a web page and return it as Markdown for the model to read. |
+| [`figma`](mcp/figma.json) | remote | OAuth | Figma's remote MCP server: bring design context (frames, components, variables) into code, signed in with Figma. |
+| [`git`](mcp/git.json) | local | none | The reference Git MCP server: read history, diffs and status and make commits in a local repository. |
+| [`github`](mcp/github.json) | remote | OAuth | GitHub's official remote MCP server: repositories, issues, pull requests and Actions, signed in with GitHub OAuth. |
+| [`linear`](mcp/linear.json) | remote | OAuth | Linear's remote MCP server: read and update issues, projects and comments, signed in with Linear OAuth. |
+| [`memory`](mcp/memory.json) | local | none | The reference Memory MCP server: a local knowledge graph the agent can store and recall facts in across sessions. |
+| [`notion`](mcp/notion.json) | remote | OAuth | Notion's remote MCP server: search, read and edit pages and databases, signed in with Notion OAuth. |
+| [`playwright`](mcp/playwright.json) | local | none | Microsoft's Playwright MCP server: drive a real browser through the accessibility tree to navigate, click, fill forms and check pages. |
+| [`sentry`](mcp/sentry.json) | remote | OAuth | Sentry's remote MCP server: search errors and issues, inspect events and triage, signed in with Sentry OAuth. |
+| [`stripe`](mcp/stripe.json) | remote | OAuth | Stripe's remote MCP server: work with the Stripe API and search Stripe docs, signed in with Stripe OAuth. |
+| [`supabase`](mcp/supabase.json) | remote | OAuth | Supabase's remote MCP server in read-only mode: inspect projects, schemas and data, and search the docs, signed in with Supabase OAuth. |
+| [`time`](mcp/time.json) | local | none | The reference Time MCP server: current time and timezone conversion. |
+<!-- mcp:end -->
 
 ## Where hosts look
 

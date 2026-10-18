@@ -1,0 +1,18 @@
+{
+  "name": "playwright",
+  "description": "Microsoft's Playwright MCP server: drive a real browser through the accessibility tree to navigate, click, fill forms and check pages.",
+  "version": "0.1.0",
+  "category": "testing",
+  "risk": "runs-commands",
+  "transport": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@playwright/mcp@latest"
+  ],
+  "auth": "none",
+  "requires": [
+    "node"
+  ],
+  "homepage": "https://github.com/microsoft/playwright-mcp"
+}

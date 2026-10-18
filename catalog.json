@@ -3144,5 +3144,183 @@
       "description": "Stops the agent from editing files that should never be hand-edited, such as .env files with secrets, package lockfiles, anything inside .git, and private keys.",
       "path": "hooks/protect-files"
     }
+  ],
+  "mcp": [
+    {
+      "name": "atlassian",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Atlassian's remote MCP server for Jira and Confluence: issues, pages and search, signed in with Atlassian OAuth.",
+      "homepage": "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/",
+      "path": "mcp/atlassian.json"
+    },
+    {
+      "name": "chrome-devtools",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "The Chrome DevTools MCP server: control and inspect a live Chrome, including console, network, performance traces and screenshots.",
+      "homepage": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "path": "mcp/chrome-devtools.json"
+    },
+    {
+      "name": "cloudflare",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Cloudflare's remote MCP server for the Cloudflare API and docs, signed in with Cloudflare OAuth.",
+      "homepage": "https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/",
+      "path": "mcp/cloudflare.json"
+    },
+    {
+      "name": "context7",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Context7 by Upstash: up-to-date, version-specific library documentation and code examples for the model. Works without a key at lower rate limits.",
+      "homepage": "https://github.com/upstash/context7",
+      "path": "mcp/context7.json"
+    },
+    {
+      "name": "fetch",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "The reference Fetch MCP server: fetch a web page and return it as Markdown for the model to read.",
+      "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+      "path": "mcp/fetch.json"
+    },
+    {
+      "name": "figma",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Figma's remote MCP server: bring design context (frames, components, variables) into code, signed in with Figma.",
+      "homepage": "https://developers.figma.com/docs/figma-mcp-server/",
+      "path": "mcp/figma.json"
+    },
+    {
+      "name": "git",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "The reference Git MCP server: read history, diffs and status and make commits in a local repository.",
+      "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+      "path": "mcp/git.json"
+    },
+    {
+      "name": "github",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "GitHub's official remote MCP server: repositories, issues, pull requests and Actions, signed in with GitHub OAuth.",
+      "homepage": "https://github.com/github/github-mcp-server",
+      "path": "mcp/github.json"
+    },
+    {
+      "name": "linear",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Linear's remote MCP server: read and update issues, projects and comments, signed in with Linear OAuth.",
+      "homepage": "https://linear.app/docs/mcp",
+      "path": "mcp/linear.json"
+    },
+    {
+      "name": "memory",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "The reference Memory MCP server: a local knowledge graph the agent can store and recall facts in across sessions.",
+      "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory",
+      "path": "mcp/memory.json"
+    },
+    {
+      "name": "notion",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Notion's remote MCP server: search, read and edit pages and databases, signed in with Notion OAuth.",
+      "homepage": "https://developers.notion.com/docs/get-started-with-mcp",
+      "path": "mcp/notion.json"
+    },
+    {
+      "name": "playwright",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "Microsoft's Playwright MCP server: drive a real browser through the accessibility tree to navigate, click, fill forms and check pages.",
+      "homepage": "https://github.com/microsoft/playwright-mcp",
+      "path": "mcp/playwright.json"
+    },
+    {
+      "name": "sentry",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Sentry's remote MCP server: search errors and issues, inspect events and triage, signed in with Sentry OAuth.",
+      "homepage": "https://github.com/getsentry/sentry-mcp",
+      "path": "mcp/sentry.json"
+    },
+    {
+      "name": "stripe",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Stripe's remote MCP server: work with the Stripe API and search Stripe docs, signed in with Stripe OAuth.",
+      "homepage": "https://docs.stripe.com/mcp",
+      "path": "mcp/stripe.json"
+    },
+    {
+      "name": "supabase",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "network",
+      "transport": "http",
+      "auth": "oauth",
+      "description": "Supabase's remote MCP server in read-only mode: inspect projects, schemas and data, and search the docs, signed in with Supabase OAuth.",
+      "homepage": "https://supabase.com/docs/guides/getting-started/mcp",
+      "path": "mcp/supabase.json"
+    },
+    {
+      "name": "time",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "The reference Time MCP server: current time and timezone conversion.",
+      "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/time",
+      "path": "mcp/time.json"
+    }
   ]
 }

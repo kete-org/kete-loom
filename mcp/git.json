@@ -1,0 +1,17 @@
+{
+  "name": "git",
+  "description": "The reference Git MCP server: read history, diffs and status and make commits in a local repository.",
+  "version": "0.1.0",
+  "category": "devops",
+  "risk": "runs-commands",
+  "transport": "stdio",
+  "command": "uvx",
+  "args": [
+    "mcp-server-git"
+  ],
+  "auth": "none",
+  "requires": [
+    "uvx"
+  ],
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/git"
+}

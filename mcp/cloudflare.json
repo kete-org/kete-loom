@@ -1,0 +1,11 @@
+{
+  "name": "cloudflare",
+  "description": "Cloudflare's remote MCP server for the Cloudflare API and docs, signed in with Cloudflare OAuth.",
+  "version": "0.1.0",
+  "category": "devops",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.cloudflare.com/mcp",
+  "auth": "oauth",
+  "homepage": "https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/"
+}

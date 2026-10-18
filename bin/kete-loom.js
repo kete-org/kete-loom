@@ -14,6 +14,7 @@ const { MARKER_RE, render } = require('../scripts/lib/render');
 const Hooks = require('../scripts/lib/hooks-install');
 const { loadProfiles, resolveProfiles } = require('../scripts/lib/profiles');
 const Rules = require('../scripts/lib/rules-install');
+const Mcp = require('../scripts/lib/mcp-install');
 
 const MARKER = '.kete-loom.json';
 const pkg = require('../package.json');
@@ -35,6 +36,7 @@ function parseArgs(argv) {
     else if (a === '--command') opts.commands = csv(next());
     else if (a === '--hook') opts.hookNames = csv(next());
     else if (a === '--rule' || a === '-r') opts.rules = csv(next());
+    else if (a === '--mcp') opts.mcp = csv(next());
     else if (a === '--hooks') opts.withHooks = true;
     else if (a === '--profile' || a === '-P') opts.profiles = csv(next());
     else if (a === '--category' || a === '-c') opts.categories = csv(next());
@@ -85,6 +87,8 @@ Options
       --hook <a,b>     Only these hooks
                        (--skill, --agent, --command, --rule and --hook combine; with none,
                        all skills, agents, commands and rules are installed)
+      --mcp <a,b>      Also register these MCP servers (see "kete-loom list"). Remote
+                       servers sign in with OAuth; none need a token in a config file.
       --hooks          Also install every hook. Hooks run before each shell command and are
                        registered in each host's config, including Claude Code's and Gemini
                        CLI's settings.json (backed up first). User scope only.
@@ -109,7 +113,7 @@ Examples
 }
 
 function catalog(opts) {
-  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands(), rules: listRules(), hooks: listHooks() };
+  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands(), rules: listRules(), hooks: listHooks(), mcp: Mcp.listMcp() };
 }
 
 // Folds --profile into the explicit --skill/--agent/--command/--hook lists (or "everything" for full).
@@ -120,8 +124,10 @@ function applyProfiles(opts, all) {
   opts.detected = r.detected;
   if (r.all) {
     opts.withHooks = true;
+    opts.mcp = all.mcp.map((m) => m.dir);
     return;
   }
+  if (r.mcp.size) opts.mcp = [...new Set([...(opts.mcp || []), ...r.mcp])];
   const merge = (key, set) => (set.size || opts[key] ? (opts[key] = [...new Set([...(opts[key] || []), ...set])]) : undefined);
   merge('skills', r.skills);
   merge('agents', r.agents);
@@ -137,7 +143,7 @@ function applyProfiles(opts, all) {
 function selectItems(opts) {
   const all = catalog(opts);
   applyProfiles(opts, all);
-  const named = KINDS.some((k) => opts[k]) || Boolean(opts.hookNames);
+  const named = KINDS.some((k) => opts[k]) || Boolean(opts.hookNames) || Boolean(opts.mcp);
   const chosen = {};
   for (const kind of KINDS) {
     let items = all[kind];
@@ -155,6 +161,10 @@ function selectItems(opts) {
   if (unknownHooks.length) throw new Error(`unknown hook(s): ${unknownHooks.join(', ')}. Run "kete-loom list".`);
   chosen.hooks = opts.hookNames ? all.hooks.filter((h) => opts.hookNames.includes(h.dir)) : opts.withHooks ? all.hooks : [];
   if (opts.categories) chosen.hooks = chosen.hooks.filter((h) => opts.categories.includes(h.category));
+  // MCP servers are opt-in too: only with --mcp or a profile that names them.
+  const unknownMcp = (opts.mcp || []).filter((n) => !all.mcp.some((m) => m.dir === n));
+  if (unknownMcp.length) throw new Error(`unknown MCP server(s): ${unknownMcp.join(', ')}. Run "kete-loom list".`);
+  chosen.mcp = all.mcp.filter((m) => (opts.mcp || []).includes(m.dir));
   return chosen;
 }
 
@@ -221,6 +231,14 @@ function linkedRuleHosts(opts) {
   if (opts.dir || opts.scope === 'project') return [];
   const where = { scope: 'user', home: opts.home || os.homedir(), cwd: process.cwd() };
   return Rules.RULE_HOSTS.filter((t) => (opts.targets ? opts.targets.includes(t) : detected(t, where)));
+}
+
+// Hosts to register MCP servers with: the --target list, or Claude Code plus every other host found.
+function mcpHosts(opts) {
+  const where = { scope: opts.scope, home: opts.home || os.homedir(), cwd: process.cwd() };
+  const hosts = opts.targets ? opts.targets.filter((t) => Mcp.MCP_HOSTS.includes(t)) : Mcp.MCP_HOSTS.filter((t) => TARGETS[t].default || detected(t, where));
+  // At project scope Copilot reads the .mcp.json written for Claude Code.
+  return opts.scope === 'project' ? hosts.filter((t) => t !== 'copilot') : hosts;
 }
 
 function readMarker(dir) {
@@ -324,7 +342,7 @@ function installFile(item, dir, target, opts) {
 
 function install(opts) {
   const selected = selectItems(opts);
-  if (![...KINDS, 'hooks'].some((k) => selected[k].length)) throw new Error('nothing matched your filters');
+  if (![...KINDS, 'hooks', 'mcp'].some((k) => selected[k].length)) throw new Error('nothing matched your filters');
   const results = [];
   for (const { target, kind, dir } of destinations(opts)) {
     for (const item of selected[kind]) {
@@ -335,6 +353,10 @@ function install(opts) {
   // Hosts that can't scope by path load every rule they get on every turn, so they only get rules that
   // were chosen (--rule or a profile), never the whole library.
   if (selected.rules.length && opts.rules) for (const host of linkedRuleHosts(opts)) results.push(...Rules.installRules(host, selected.rules, { home: opts.home || os.homedir(), dryRun: opts.dryRun }));
+  if (selected.mcp.length && !opts.dir) {
+    const all = Mcp.listMcp();
+    for (const host of mcpHosts(opts)) results.push(...Mcp.installMcp(host, selected.mcp, all, { scope: opts.scope, home: opts.home || os.homedir(), cwd: process.cwd(), dryRun: opts.dryRun }));
+  }
   results.push(...installHooks(selected.hooks, opts));
   report(results, opts);
   if (!opts.json && opts.detected && opts.detected.length) console.log(`\nDetected in this project: ${opts.detected.join(', ')}.`);
@@ -370,6 +392,12 @@ function uninstall(opts) {
     }
   }
   if (!named || opts.rules) for (const host of linkedRuleHosts(opts)) results.push(...Rules.uninstallRules(host, named ? opts.rules : null, { home: opts.home || os.homedir(), dryRun: opts.dryRun }));
+  if (!opts.dir && (!named || opts.mcp)) {
+    const all = Mcp.listMcp();
+    const servers = opts.mcp ? all.filter((m) => opts.mcp.includes(m.dir)) : all;
+    const hosts = opts.targets ? opts.targets.filter((t) => Mcp.MCP_HOSTS.includes(t)) : Mcp.MCP_HOSTS;
+    for (const host of hosts) results.push(...Mcp.uninstallMcp(host, servers, all, { scope: opts.scope, home: opts.home || os.homedir(), cwd: process.cwd(), dryRun: opts.dryRun }));
+  }
   results.push(...uninstallHooks(opts, named));
   report(results, opts);
   return results;
@@ -403,7 +431,7 @@ function missingRequirements(items) {
 
 function list(opts) {
   const selected = selectItems(opts);
-  const items = [...KINDS, 'hooks'].flatMap((k) => (k === 'hooks' ? catalog(opts).hooks : selected[k]));
+  const items = [...KINDS, 'hooks', 'mcp'].flatMap((k) => (k === 'hooks' || k === 'mcp' ? catalog(opts)[k] : selected[k]));
   if (opts.json) {
     return console.log(JSON.stringify(items.map(({ kind, dir, version, category, risk, description }) => ({ kind, name: dir, version, category, risk, description })), null, 2));
   }
@@ -411,7 +439,7 @@ function list(opts) {
     console.log(`${s.kind.padEnd(8)} ${s.dir.padEnd(24)} v${(s.version || '?').padEnd(7)} ${String(s.category).padEnd(12)} ${s.risk}`);
   }
   const count = (k) => `${selected[k].length} ${k.slice(0, -1)}(s)`;
-  console.log(`\n${KINDS.map(count).join(', ')}, ${catalog(opts).hooks.length} hook(s). Install with: npx @ketecode/loom install (hooks: --hooks)`);
+  console.log(`\n${KINDS.map(count).join(', ')}, ${catalog(opts).hooks.length} hook(s), ${catalog(opts).mcp.length} MCP server(s). Install with: npx @ketecode/loom install (hooks: --hooks, MCP servers: --mcp <names>)`);
 }
 
 function profiles(opts) {

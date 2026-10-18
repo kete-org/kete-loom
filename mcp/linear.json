@@ -1,0 +1,11 @@
+{
+  "name": "linear",
+  "description": "Linear's remote MCP server: read and update issues, projects and comments, signed in with Linear OAuth.",
+  "version": "0.1.0",
+  "category": "integrations",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.linear.app/mcp",
+  "auth": "oauth",
+  "homepage": "https://linear.app/docs/mcp"
+}

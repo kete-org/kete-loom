@@ -1,0 +1,11 @@
+{
+  "name": "context7",
+  "description": "Context7 by Upstash: up-to-date, version-specific library documentation and code examples for the model. Works without a key at lower rate limits.",
+  "version": "0.1.0",
+  "category": "docs",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.context7.com/mcp",
+  "auth": "oauth",
+  "homepage": "https://github.com/upstash/context7"
+}

@@ -122,5 +122,44 @@
   "full": {
     "description": "Everything in Kete Loom, including every hook.",
     "all": true
+  },
+  "mcp-web": {
+    "description": "MCP pack for web work: Playwright and Chrome DevTools browsers, Context7 library docs and Fetch.",
+    "mcp": [
+      "playwright",
+      "chrome-devtools",
+      "context7",
+      "fetch"
+    ]
+  },
+  "mcp-code": {
+    "description": "MCP pack for code hosting and errors: GitHub, local Git and Sentry.",
+    "mcp": [
+      "github",
+      "git",
+      "sentry"
+    ]
+  },
+  "mcp-team": {
+    "description": "MCP pack for team tools: Linear, Notion and Atlassian (Jira and Confluence).",
+    "mcp": [
+      "linear",
+      "notion",
+      "atlassian"
+    ]
+  },
+  "mcp-cloud": {
+    "description": "MCP pack for cloud and payments: Cloudflare, Supabase (read-only) and Stripe.",
+    "mcp": [
+      "cloudflare",
+      "supabase",
+      "stripe"
+    ]
+  },
+  "mcp-design": {
+    "description": "MCP pack for design handoff: Figma.",
+    "mcp": [
+      "figma"
+    ]
   }
 }

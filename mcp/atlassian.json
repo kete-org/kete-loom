@@ -1,0 +1,11 @@
+{
+  "name": "atlassian",
+  "description": "Atlassian's remote MCP server for Jira and Confluence: issues, pages and search, signed in with Atlassian OAuth.",
+  "version": "0.1.0",
+  "category": "integrations",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.atlassian.com/v2/mcp",
+  "auth": "oauth",
+  "homepage": "https://support.atlassian.com/atlassian-rovo-mcp-server/docs/getting-started-with-the-atlassian-remote-mcp-server/"
+}

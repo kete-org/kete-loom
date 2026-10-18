@@ -9,12 +9,15 @@ const fs = require('fs');
 const path = require('path');
 const { REPO_ROOT, SKILLS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('./lib/skills');
 const { pluginAgents } = require('./lint-skills');
+const { switcher, translations, SWITCHER_RE } = require('./lib/i18n');
+const { listMcp } = require('./lib/mcp-install');
 
 const skills = listSkills(SKILLS_DIR);
 const agents = listAgents();
 const commands = listCommands();
 const hooks = listHooks();
 const rules = listRules();
+const mcp = listMcp();
 const version = require(path.join(REPO_ROOT, 'package.json')).version;
 
 const entry = (s, rel) => ({
@@ -38,6 +41,7 @@ const catalog = {
   commands: commands.map((c) => entry(c, `commands/${c.dir}.md`)),
   rules: rules.map((r) => entry(r, `rules/${r.dir}.md`)),
   hooks: hooks.map((h) => entry(h, `hooks/${h.dir}`)),
+  mcp: mcp.map((m) => ({ name: m.dir, version: m.version, category: m.category, risk: m.risk, transport: m.transport, auth: m.auth, description: m.description, homepage: m.homepage, path: `mcp/${m.dir}.json` })),
 };
 fs.writeFileSync(path.join(REPO_ROOT, 'catalog.json'), JSON.stringify(catalog, null, 2) + '\n');
 
@@ -55,6 +59,11 @@ const sections = {
   commands: table(commands, (c) => `commands/${c.dir}.md`, (c) => `/${c.dir}`),
   rules: table(rules, (r) => `rules/${r.dir}.md`, (r) => r.dir),
   hooks: table(hooks, (h) => `hooks/${h.dir}/HOOK.md`, (h) => h.dir),
+  mcp: [
+    '| Server | Kind | Sign-in | What it does |',
+    '|---|---|---|---|',
+    ...mcp.map((m) => `| [\`${m.dir}\`](mcp/${m.dir}.json) | ${m.transport === 'http' ? 'remote' : 'local'} | ${m.auth === 'oauth' ? 'OAuth' : 'none'} | ${m.description} |`),
+  ].join('\n'),
 };
 
 const readmePath = path.join(REPO_ROOT, 'README.md');
@@ -64,11 +73,16 @@ for (const [key, body] of Object.entries(sections)) {
   if (!re.test(readme)) throw new Error(`README.md is missing the <!-- ${key}:start --> / <!-- ${key}:end --> markers`);
   readme = readme.replace(re, `<!-- ${key}:start -->\n${body}\n<!-- ${key}:end -->`);
 }
+if (SWITCHER_RE.test(readme)) readme = readme.replace(SWITCHER_RE, switcher());
 fs.writeFileSync(readmePath, readme);
+for (const t of translations()) {
+  const text = fs.readFileSync(t.file, 'utf8');
+  if (SWITCHER_RE.test(text)) fs.writeFileSync(t.file, text.replace(SWITCHER_RE, switcher('docs/i18n')));
+}
 
 const pluginPath = path.join(REPO_ROOT, '.claude-plugin', 'plugin.json');
 const plugin = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
 plugin.agents = pluginAgents();
 fs.writeFileSync(pluginPath, JSON.stringify(plugin, null, 2) + '\n');
 
-console.log(`catalog.json, README tables and Claude plugin agents updated (${skills.length} skills, ${agents.length} agents, ${commands.length} commands, ${rules.length} rules, ${hooks.length} hooks)`);
+console.log(`catalog.json, README tables and Claude plugin agents updated (${skills.length} skills, ${agents.length} agents, ${commands.length} commands, ${rules.length} rules, ${hooks.length} hooks, ${mcp.length} MCP servers)`);

@@ -1,0 +1,17 @@
+{
+  "name": "time",
+  "description": "The reference Time MCP server: current time and timezone conversion.",
+  "version": "0.1.0",
+  "category": "meta",
+  "risk": "runs-commands",
+  "transport": "stdio",
+  "command": "uvx",
+  "args": [
+    "mcp-server-time"
+  ],
+  "auth": "none",
+  "requires": [
+    "uvx"
+  ],
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/time"
+}

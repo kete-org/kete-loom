@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROFILES_FILE = path.join(__dirname, '..', '..', 'profiles.json');
-const KINDS = ['skills', 'agents', 'commands', 'rules', 'hooks'];
+const KINDS = ['skills', 'agents', 'commands', 'rules', 'hooks', 'mcp'];
 
 const loadProfiles = (file = PROFILES_FILE) => JSON.parse(fs.readFileSync(file, 'utf8'));
 
@@ -111,7 +111,8 @@ function resolveProfiles(names, { catalog, cwd = process.cwd(), profiles = loadP
     for (const parent of p.extends || []) visit(parent, [...chain, name]);
     if (p.all) out.all = true;
     for (const k of KINDS) for (const n of p[k] || []) out[k].add(n);
-    for (const cat of p.categories || []) for (const k of KINDS) for (const item of catalog[k]) if (item.category === cat) out[k].add(item.dir);
+    // MCP servers reach the network and run code, so they come only from a profile's explicit `mcp` list.
+    for (const cat of p.categories || []) for (const k of KINDS.filter((x) => x !== 'mcp')) for (const item of catalog[k] || []) if (item.category === cat) out[k].add(item.dir);
     if (p.detect) {
       for (const d of detect(cwd)) {
         out.detected.push(d.what);

@@ -32,6 +32,7 @@
     "commands/",
     "hooks/",
     "rules/",
+    "mcp/",
     "profiles.json",
     "schemas/",
     "README.md",

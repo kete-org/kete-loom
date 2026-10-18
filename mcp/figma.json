@@ -1,0 +1,11 @@
+{
+  "name": "figma",
+  "description": "Figma's remote MCP server: bring design context (frames, components, variables) into code, signed in with Figma.",
+  "version": "0.1.0",
+  "category": "coding",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.figma.com/mcp",
+  "auth": "oauth",
+  "homepage": "https://developers.figma.com/docs/figma-mcp-server/"
+}

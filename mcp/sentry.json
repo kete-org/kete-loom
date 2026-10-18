@@ -1,0 +1,11 @@
+{
+  "name": "sentry",
+  "description": "Sentry's remote MCP server: search errors and issues, inspect events and triage, signed in with Sentry OAuth.",
+  "version": "0.1.0",
+  "category": "devops",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.sentry.dev/mcp",
+  "auth": "oauth",
+  "homepage": "https://github.com/getsentry/sentry-mcp"
+}

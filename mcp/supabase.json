@@ -1,0 +1,11 @@
+{
+  "name": "supabase",
+  "description": "Supabase's remote MCP server in read-only mode: inspect projects, schemas and data, and search the docs, signed in with Supabase OAuth.",
+  "version": "0.1.0",
+  "category": "data",
+  "risk": "network",
+  "transport": "http",
+  "url": "https://mcp.supabase.com/mcp?read_only=true",
+  "auth": "oauth",
+  "homepage": "https://supabase.com/docs/guides/getting-started/mcp"
+}

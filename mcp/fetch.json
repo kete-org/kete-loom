@@ -1,0 +1,17 @@
+{
+  "name": "fetch",
+  "description": "The reference Fetch MCP server: fetch a web page and return it as Markdown for the model to read.",
+  "version": "0.1.0",
+  "category": "docs",
+  "risk": "runs-commands",
+  "transport": "stdio",
+  "command": "uvx",
+  "args": [
+    "mcp-server-fetch"
+  ],
+  "auth": "none",
+  "requires": [
+    "uvx"
+  ],
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "memory",
+  "description": "The reference Memory MCP server: a local knowledge graph the agent can store and recall facts in across sessions.",
+  "version": "0.1.0",
+  "category": "ai",
+  "risk": "runs-commands",
+  "transport": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-memory"
+  ],
+  "auth": "none",
+  "requires": [
+    "node"
+  ],
+  "homepage": "https://github.com/modelcontextprotocol/servers/tree/main/src/memory"
+}
