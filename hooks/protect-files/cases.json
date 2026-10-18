@@ -1,0 +1,27 @@
+{
+  "should_block": [
+    { "files": [{ "path": ".env", "content": "DB_URL=postgres://x" }] },
+    { "files": [{ "path": "apps/api/.env.local", "content": "X=1" }] },
+    { "files": [{ "path": ".env.production", "content": "X=1" }] },
+    { "files": [{ "path": "package-lock.json", "content": "{}" }] },
+    { "files": [{ "path": "web/pnpm-lock.yaml", "content": "" }] },
+    { "files": [{ "path": "Cargo.lock", "content": "" }] },
+    { "files": [{ "path": "go.sum", "content": "" }] },
+    { "files": [{ "path": ".git/config", "content": "[core]" }] },
+    { "files": [{ "path": ".git/hooks/pre-commit", "content": "exit 0" }] },
+    { "files": [{ "path": "certs/server.key", "content": "x" }] },
+    { "files": [{ "path": "deploy/id_ed25519", "content": "x" }] },
+    { "files": [{ "path": "src/ok.ts", "content": "x" }, { "path": "yarn.lock", "content": "" }] }
+  ],
+  "should_allow": [
+    { "files": [{ "path": ".env.example", "content": "DB_URL=" }] },
+    { "files": [{ "path": "config/.env.template", "content": "X=" }] },
+    { "files": [{ "path": "src/env.ts", "content": "export const env = process.env" }] },
+    { "files": [{ "path": "package.json", "content": "{}" }] },
+    { "files": [{ "path": "docs/lockfiles.md", "content": "about package-lock.json" }] },
+    { "files": [{ "path": ".github/workflows/ci.yml", "content": "on: push" }] },
+    { "files": [{ "path": "deploy/id_ed25519.pub", "content": "ssh-ed25519 AAAA" }] },
+    { "files": [{ "path": "src/keyboard.ts", "content": "x" }] },
+    { "files": [{ "path": ".gitignore", "content": "node_modules" }] }
+  ]
+}

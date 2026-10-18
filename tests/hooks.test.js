@@ -24,7 +24,7 @@ const PAYLOADS = {
   kete: (c) => ({ event: 'PreToolUse', tool: 'shell', tool_input: { command: c }, cwd: '/tmp' }),
   cursor: (c) => ({ command: c, cwd: '/tmp' }),
   copilot: (c) => ({ toolName: 'bash', toolArgs: JSON.stringify({ command: c }), cwd: '/tmp' }),
-  opencode: (c) => ({ command: c, cwd: '/tmp' }),
+  opencode: (c) => ({ tool: 'bash', args: { command: c }, cwd: '/tmp' }),
 };
 
 test('runner blocks with exit 2 and allows with exit 0 on every host', () => {
@@ -105,4 +105,100 @@ test('never rewrites a settings file with comments, and refuses project-scope ho
   assert.match(out, /run_shell_command/, 'prints the snippet to paste');
   assert.strictEqual(fs.readFileSync(gemini, 'utf8'), text);
   assert.throws(() => execFileSync(process.execPath, [CLI, 'install', '--project', '--hook', HOOK], { cwd: tmp(), stdio: 'pipe' }), /user scope only/);
+});
+
+// pre-edit: one write of `.env` per host, in that host's payload shape.
+const EDIT_PAYLOADS = {
+  claude: (p, c) => ({ tool_name: 'Write', tool_input: { file_path: p, content: c }, cwd: '/r' }),
+  gemini: (p, c) => ({ tool_name: 'write_file', tool_input: { file_path: p, content: c }, cwd: '/r' }),
+  codex: (p, c) => ({ tool_name: 'apply_patch', tool_input: { command: `*** Begin Patch\n*** Add File: ${p}\n+${c}\n*** End Patch` }, cwd: '/r' }),
+  kete: (p, c) => ({ event: 'PreToolUse', tool: 'write', tool_input: { path: p, content: c }, cwd: '/r' }),
+  copilot: (p, c) => ({ toolName: 'create', toolArgs: JSON.stringify({ path: p, file_text: c }), cwd: '/r' }),
+  opencode: (p, c) => ({ tool: 'write', args: { filePath: p, content: c }, cwd: '/r' }),
+};
+
+test('pre-edit hooks block protected files and secrets on every host that supports them', () => {
+  const key = `sk_live_${'a'.repeat(40)}`;
+  for (const [host, payload] of Object.entries(EDIT_PAYLOADS)) {
+    assert.strictEqual(respond(host, 'protect-files', JSON.stringify(payload('.env', 'X=1')), HOOKS, 'pre-edit').code, 2, `${host} protect-files`);
+    assert.strictEqual(respond(host, 'protect-files', JSON.stringify(payload('src/app.ts', 'x')), HOOKS, 'pre-edit').code, 0, `${host} allows normal files`);
+    const r = respond(host, 'guard-secrets', JSON.stringify(payload('src/pay.ts', `const k = "${key}"`)), HOOKS, 'pre-edit');
+    assert.strictEqual(r.code, 2, `${host} guard-secrets`);
+    assert.doesNotMatch(r.stderr, new RegExp(key), 'the secret is masked in the reason');
+  }
+  // Claude Edit sends only the replacement text.
+  assert.strictEqual(respond('claude', 'guard-secrets', JSON.stringify({ tool_name: 'Edit', tool_input: { file_path: '/r/a.ts', old_string: 'x', new_string: `k = "${key}"` } }), HOOKS, 'pre-edit').code, 2);
+});
+
+test('hosts that send every tool to one event only run the matching hooks', () => {
+  // Copilot and Kete Code fire their pre-tool event for every tool: a shell hook ignores edits and vice versa.
+  assert.strictEqual(respond('copilot', 'protect-files', JSON.stringify({ toolName: 'bash', toolArgs: { command: 'cat .env' } }), HOOKS, 'pre-edit').code, 0);
+  assert.strictEqual(respond('copilot', HOOK, JSON.stringify({ toolName: 'create', toolArgs: { path: 'a', file_text: 'rm -rf ~' } }), HOOKS, 'pre-shell').code, 0);
+  assert.strictEqual(respond('kete', 'protect-files', JSON.stringify({ tool: 'shell', tool_input: { command: 'x' } }), HOOKS, 'pre-edit').code, 0);
+});
+
+test('session-start context is returned in each host format', () => {
+  const repo = tmp();
+  const git = (...a) => execFileSync('git', ['-c', 'user.email=t@t', '-c', 'user.name=t', ...a], { cwd: repo, stdio: 'ignore' });
+  git('init', '-q', '-b', 'main');
+  fs.writeFileSync(path.join(repo, 'a.txt'), 'x');
+  git('add', '.');
+  git('commit', '-qm', 'init');
+  fs.mkdirSync(path.join(repo, '.handoff'));
+  fs.writeFileSync(path.join(repo, '.handoff', 'main.md'), '# Handoff\nNext: wire the webhook\n');
+  fs.writeFileSync(path.join(repo, 'b.txt'), 'uncommitted');
+  const out = (host, payload) => JSON.parse(respond(host, 'load-session-context', JSON.stringify(payload), HOOKS, 'session-start').stdout);
+  const claude = out('claude', { hook_event_name: 'SessionStart', cwd: repo }).hookSpecificOutput;
+  assert.strictEqual(claude.hookEventName, 'SessionStart');
+  assert.match(claude.additionalContext, /Branch: main, \d+ uncommitted/);
+  assert.match(claude.additionalContext, /wire the webhook/);
+  assert.match(out('kete', { event: 'SessionStart', cwd: repo }).context, /wire the webhook/);
+  assert.match(out('cursor', { workspace_roots: [repo] }).additional_context, /Branch: main/);
+  assert.match(out('copilot', { cwd: repo }).additionalContext, /Branch: main/);
+  assert.strictEqual(respond('claude', 'load-session-context', JSON.stringify({ cwd: tmp() }), HOOKS, 'session-start').stdout, '', 'nothing outside a git repo');
+});
+
+test('format-on-edit runs the project formatter on edited files only', { skip: process.platform === 'win32' }, () => {
+  const proj = tmp();
+  const bin = path.join(proj, 'node_modules', '.bin');
+  fs.mkdirSync(bin, { recursive: true });
+  // A stub prettier that marks the file it was asked to format.
+  fs.writeFileSync(path.join(bin, 'prettier'), '#!/bin/sh\nfor a; do f="$a"; done\necho "// formatted" >> "$f"\n');
+  fs.chmodSync(path.join(bin, 'prettier'), 0o755);
+  fs.writeFileSync(path.join(proj, 'a.ts'), 'const x=1\n');
+  fs.writeFileSync(path.join(proj, 'notes.txt'), 'plain\n');
+  const outside = path.join(tmp(), 'b.ts');
+  fs.writeFileSync(outside, 'const y=1\n');
+  for (const p of ['a.ts', 'notes.txt', outside]) {
+    const r = respond('claude', 'format-on-edit', JSON.stringify({ tool_name: 'Write', tool_input: { file_path: path.isAbsolute(p) ? p : path.join(proj, p) }, cwd: proj }), HOOKS, 'post-edit');
+    assert.strictEqual(r.code, 0);
+  }
+  assert.match(fs.readFileSync(path.join(proj, 'a.ts'), 'utf8'), /formatted/);
+  assert.strictEqual(fs.readFileSync(path.join(proj, 'notes.txt'), 'utf8'), 'plain\n', 'no formatter for .txt');
+  assert.strictEqual(fs.readFileSync(outside, 'utf8'), 'const y=1\n', 'files outside the project are left alone');
+});
+
+test('guard-secrets uses the same rules as the security-review scanner', () => {
+  const block = (f) => {
+    const t = fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
+    return t.slice(t.indexOf('const RULES = ['), t.indexOf('];', t.indexOf('const RULES = [')));
+  };
+  assert.strictEqual(block('hooks/guard-secrets/hook.js'), block('skills/security-review/scripts/scan-secrets.js'));
+});
+
+test('--hooks registers every hook where its event is supported, and uninstall removes them all', () => {
+  const home = tmp();
+  for (const d of ['.codex', '.gemini', '.cursor', '.copilot', '.config/opencode', '.config/kete']) fs.mkdirSync(path.join(home, d), { recursive: true });
+  const out = run(['install', '--home', home, '--hooks', '--skill', 'tdd-workflow']);
+  assert.match(out, /cursor has no pre-edit hook/);
+  assert.match(out, /opencode has no session-start hook/);
+  const claude = readJson(path.join(home, '.claude', 'settings.json')).hooks;
+  assert.deepStrictEqual(Object.keys(claude).sort(), ['PostToolUse', 'PreToolUse', 'SessionStart']);
+  assert.ok(claude.PreToolUse.some((g) => g.matcher === 'Edit|Write|NotebookEdit'));
+  assert.deepStrictEqual(Object.keys(readJson(path.join(home, '.config', 'kete', 'kete.json')).kete.hooks).sort(), ['PostToolUse', 'PreToolUse', 'SessionStart']);
+  assert.deepStrictEqual(Object.keys(readJson(path.join(home, '.cursor', 'hooks.json')).hooks).sort(), ['afterFileEdit', 'beforeShellExecution', 'sessionStart']);
+  run(['uninstall', '--home', home]);
+  assert.ok(!fs.existsSync(path.join(home, '.claude', 'settings.json')) || !readJson(path.join(home, '.claude', 'settings.json')).hooks);
+  assert.deepStrictEqual(fs.readdirSync(path.join(home, '.copilot', 'hooks')), []);
+  assert.ok(!fs.existsSync(path.join(home, '.kete-loom')));
 });

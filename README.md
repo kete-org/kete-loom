@@ -278,20 +278,25 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 
 ## Hooks
 
-Checks that run automatically before the agent runs a shell command, and block it with a reason the agent sees. Hooks are opt-in: `install` never adds them unless you ask.
+Checks that run automatically at points in the agent loop: before a shell command or a file edit (and can block it, with a reason the agent sees), after an edit, or when a session starts. Hooks are opt-in: `install` never adds them unless you ask.
 
 ```bash
-npx @ketecode/loom install --hook block-dangerous-commands   # one hook
+npx @ketecode/loom install --hook block-dangerous-commands,guard-secrets   # chosen hooks
 npx @ketecode/loom install --hooks                           # everything, plus every hook
 npx @ketecode/loom uninstall --hook block-dangerous-commands
 ```
 
-The installer registers each hook with Claude Code and every other host it finds: Claude Code and Gemini CLI in their `settings.json`, Kete Code in `kete.json`, Codex and Cursor in their `hooks.json`, Copilot CLI in `~/.copilot/hooks/` and OpenCode as a plugin. It only adds and removes its own entries, backs a file up to `<file>.kete-loom-backup` before changing it, and never rewrites a file that has comments (it prints the snippet to paste instead). Codex runs a new hook only after you trust it with `/hooks`. Hooks install for your user only, not per project.
+The installer registers each hook with Claude Code and every other host it finds: Claude Code and Gemini CLI in their `settings.json`, Kete Code in `kete.json`, Codex and Cursor in their `hooks.json`, Copilot CLI in `~/.copilot/hooks/` and OpenCode as a plugin. It only adds and removes its own entries, backs a file up to `<file>.kete-loom-backup` before changing it, and never rewrites a file that has comments (it prints the snippet to paste instead). Codex runs a new hook only after you trust it with `/hooks`. Hooks install for your user only, not per project. Cursor has no hook before an edit and OpenCode none that adds context at session start, so those hooks skip them.
 
 <!-- hooks:start -->
 | Name | Category | Risk | What it does |
 |---|---|---|---|
 | [`block-dangerous-commands`](hooks/block-dangerous-commands/HOOK.md) | security | read-only | Stops the agent before it runs shell commands that destroy data or systems, such as rm -rf on / or your home folder, force-pushing main, wiping disks, piping curl into a shell, dropping databases or auto-approved terraform destroy. |
+| [`block-no-verify`](hooks/block-no-verify/HOOK.md) | security | read-only | Stops the agent from skipping the project's git hooks with git commit --no-verify, -n, HUSKY=0, SKIP= or a swapped core.hooksPath, so pre-commit checks keep running. |
+| [`format-on-edit`](hooks/format-on-edit/HOOK.md) | coding | runs-commands | After the agent edits a file, formats it with the formatter the project already uses (Biome or Prettier, Ruff or Black, gofmt, rustfmt), so agent changes match the project's style. |
+| [`guard-secrets`](hooks/guard-secrets/HOOK.md) | security | read-only | Stops the agent from writing API keys, tokens, passwords, connection strings or private keys into files, using the same rules as the security-review secret scanner. |
+| [`load-session-context`](hooks/load-session-context/HOOK.md) | meta | runs-commands | At the start of each session, tells the agent the current branch, how many uncommitted changes there are, and the latest session handoff note, so it picks up where the last session stopped. |
+| [`protect-files`](hooks/protect-files/HOOK.md) | security | read-only | Stops the agent from editing files that should never be hand-edited, such as .env files with secrets, package lockfiles, anything inside .git, and private keys. |
 <!-- hooks:end -->
 
 ## Where hosts look

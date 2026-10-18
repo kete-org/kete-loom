@@ -1,8 +1,8 @@
 'use strict';
 
-// Registers kete-loom hooks with each host (verified against host docs, Oct 2026). User scope only.
-// Every host calls `"<node>" "~/.kete-loom/hooks/run.js" <host> <hook>`; that command string is how we
-// recognise our own entries, so we never touch anyone else's hooks.
+// Registers kete-loom hooks with each host (verified against host docs and Kete Code's source,
+// Oct 2026). User scope only. Every host calls `"<node>" "~/.kete-loom/hooks/run.js" <host> <hook>
+// <event>`; that command string is how we recognise our own entries, so we never touch anyone else's.
 //
 // Shared settings files (Claude Code, Gemini CLI, Kete Code) are edited in place: parsed as strict
 // JSON, backed up to `<file>.kete-loom-backup`, written atomically, and refused (with a snippet to
@@ -11,110 +11,115 @@
 const fs = require('fs');
 const path = require('path');
 
-const RUNNER_RE = /\.kete-loom[\\/]hooks[\\/]run\.js"?\s+([a-z]+)\s+([a-z0-9-]+)\s*$/;
-const TIMEOUT_S = 10;
+const RUNNER_RE = /\.kete-loom[\\/]hooks[\\/]run\.js"?\s+([a-z]+)\s+([a-z0-9-]+)(?:\s+([a-z-]+))?\s*$/;
+// Seconds. A formatter run after an edit gets longer than a check before one.
+const TIMEOUT_S = { 'pre-shell': 10, 'pre-edit': 10, 'post-edit': 60, 'session-start': 10 };
 
 const runtimeDir = (home) => path.join(home, '.kete-loom', 'hooks');
-const command = (home, host, hook, node = process.execPath) => `"${node}" "${path.join(runtimeDir(home), 'run.js')}" ${host} ${hook}`;
+const command = (home, host, hook, event = 'pre-shell', node = process.execPath) =>
+  `"${node}" "${path.join(runtimeDir(home), 'run.js')}" ${host} ${hook} ${event}`;
 
-// Is this hook entry (or command string) one of ours, optionally for a given hook?
 function ours(cmd, hook) {
   const m = typeof cmd === 'string' && RUNNER_RE.exec(cmd);
   return Boolean(m) && (!hook || m[2] === hook);
 }
 
-// Claude-style `{ <event>: [{ matcher, hooks: [entry] }] }` maps (Claude Code, Codex, Gemini CLI).
-function addGrouped(map, event, matcher, entry) {
-  const groups = (map[event] ||= []);
-  groups.push({ matcher, hooks: [entry] });
-}
+// Host event name and tool matcher for each kete-loom event; a missing entry means the host can't
+// run that event (Cursor has no documented pre-edit hook; OpenCode can't add context at session start).
+const EVENTS = {
+  claude: { 'pre-shell': ['PreToolUse', 'Bash'], 'pre-edit': ['PreToolUse', 'Edit|Write|NotebookEdit'], 'post-edit': ['PostToolUse', 'Edit|Write|NotebookEdit'], 'session-start': ['SessionStart'] },
+  codex: { 'pre-shell': ['PreToolUse', 'Bash'], 'pre-edit': ['PreToolUse', 'apply_patch'], 'post-edit': ['PostToolUse', 'apply_patch'], 'session-start': ['SessionStart'] },
+  gemini: { 'pre-shell': ['BeforeTool', 'run_shell_command'], 'pre-edit': ['BeforeTool', 'write_file|replace'], 'post-edit': ['AfterTool', 'write_file|replace'], 'session-start': ['SessionStart'] },
+  kete: { 'pre-shell': ['PreToolUse', 'shell'], 'pre-edit': ['PreToolUse', 'edit|write|patch'], 'post-edit': ['PostToolUse', 'edit|write|patch'], 'session-start': ['SessionStart'] },
+  cursor: { 'pre-shell': ['beforeShellExecution'], 'post-edit': ['afterFileEdit'], 'session-start': ['sessionStart'] },
+  copilot: { 'pre-shell': ['preToolUse'], 'pre-edit': ['preToolUse'], 'post-edit': ['postToolUse'], 'session-start': ['sessionStart'] },
+  opencode: { 'pre-shell': ['tool.execute.before'], 'pre-edit': ['tool.execute.before'], 'post-edit': ['tool.execute.after'] },
+};
 
+// Claude-style `{ <event>: [{ matcher, hooks: [entry] }] }` (Claude Code, Codex, Gemini CLI).
 function removeGrouped(map, hook) {
   let removed = 0;
-  for (const event of Object.keys(map || {})) {
-    if (!Array.isArray(map[event])) continue;
-    map[event] = map[event].filter((group) => {
+  for (const ev of Object.keys(map || {})) {
+    if (!Array.isArray(map[ev])) continue;
+    map[ev] = map[ev].filter((group) => {
       if (!group || !Array.isArray(group.hooks)) return true;
       const before = group.hooks.length;
       group.hooks = group.hooks.filter((h) => !ours(h && h.command, hook));
       removed += before - group.hooks.length;
       return group.hooks.length > 0 || before === 0;
     });
-    if (!map[event].length) delete map[event];
+    if (!map[ev].length) delete map[ev];
   }
   return removed;
 }
 
-function removeFlat(list, hook, key = 'command') {
-  if (!Array.isArray(list)) return { list, removed: 0 };
-  const kept = list.filter((h) => !ours(h && h[key], hook));
-  return { list: kept, removed: list.length - kept.length };
+// `{ <event>: [entry] }` (Kete Code, Cursor).
+function removeFlat(map, hook) {
+  let removed = 0;
+  for (const ev of Object.keys(map || {})) {
+    if (!Array.isArray(map[ev])) continue;
+    const kept = map[ev].filter((h) => !ours(h && h.command, hook));
+    removed += map[ev].length - kept.length;
+    if (kept.length) map[ev] = kept;
+    else delete map[ev];
+  }
+  return removed;
 }
 
-// Each host: where its file is, and how to add or remove our entry in the parsed JSON.
-// `own: true` hosts get a file of their own per hook, so removal deletes the file.
-const HOSTS = {
-  claude: {
-    file: (home) => path.join(home, '.claude', 'settings.json'),
-    add: (data, cmd) => addGrouped((data.hooks ||= {}), 'PreToolUse', 'Bash', { type: 'command', command: cmd, timeout: TIMEOUT_S }),
+function grouped(host, timeoutUnit = 1) {
+  return {
+    add: (data, cmd, hook, event) => {
+      const [ev, matcher] = EVENTS[host][event];
+      const entry = { type: 'command', command: cmd, timeout: TIMEOUT_S[event] * timeoutUnit };
+      if (host === 'gemini') entry.name = `kete-loom-${hook}`;
+      ((data.hooks ||= {})[ev] ||= []).push({ ...(matcher ? { matcher } : {}), hooks: [entry] });
+    },
     remove: (data, hook) => removeGrouped(data.hooks, hook),
-  },
+  };
+}
+
+const pascal = (s) => s.replace(/(^|-)(\w)/g, (_, __, c) => c.toUpperCase());
+
+const HOSTS = {
+  claude: { file: (home) => path.join(home, '.claude', 'settings.json'), ...grouped('claude') },
   codex: {
     standalone: true,
     file: (home) => path.join(home, '.codex', 'hooks.json'),
-    add: (data, cmd) => addGrouped((data.hooks ||= {}), 'PreToolUse', 'Bash', { type: 'command', command: cmd, timeout: TIMEOUT_S }),
-    remove: (data, hook) => removeGrouped(data.hooks, hook),
+    ...grouped('codex'),
     note: 'Codex runs a new or changed hook only after you trust it: open Codex and run /hooks.',
   },
-  gemini: {
-    file: (home) => path.join(home, '.gemini', 'settings.json'),
-    // Gemini CLI timeouts are milliseconds.
-    add: (data, cmd, hook) => addGrouped((data.hooks ||= {}), 'BeforeTool', 'run_shell_command', { type: 'command', name: `kete-loom-${hook}`, command: cmd, timeout: TIMEOUT_S * 1000 }),
-    remove: (data, hook) => removeGrouped(data.hooks, hook),
-  },
+  // Gemini CLI timeouts are milliseconds.
+  gemini: { file: (home) => path.join(home, '.gemini', 'settings.json'), ...grouped('gemini', 1000) },
   kete: {
-    // Kete Code reads kete.json and kete.jsonc; edit the one that exists, preferring .jsonc like Kete does.
+    // Kete Code reads kete.json and kete.jsonc; edit the one that exists, preferring .jsonc.
     file: (home) => {
       const dir = path.join(home, '.config', 'kete');
       const jsonc = path.join(dir, 'kete.jsonc');
       return fs.existsSync(jsonc) ? jsonc : path.join(dir, 'kete.json');
     },
-    add: (data, cmd) => {
-      const hooks = ((data.kete ||= {}).hooks ||= {});
-      (hooks.PreToolUse ||= []).push({ match: 'shell', command: cmd, timeout: TIMEOUT_S });
+    add: (data, cmd, hook, event) => {
+      const [ev, match] = EVENTS.kete[event];
+      (((data.kete ||= {}).hooks ||= {})[ev] ||= []).push({ ...(match ? { match } : {}), command: cmd, timeout: TIMEOUT_S[event] });
     },
-    remove: (data, hook) => {
-      const hooks = data.kete && data.kete.hooks;
-      if (!hooks) return 0;
-      const { list, removed } = removeFlat(hooks.PreToolUse, hook);
-      if (list && list.length) hooks.PreToolUse = list;
-      else delete hooks.PreToolUse;
-      return removed;
-    },
+    remove: (data, hook) => removeFlat(data.kete && data.kete.hooks, hook),
   },
   cursor: {
     standalone: true,
     file: (home) => path.join(home, '.cursor', 'hooks.json'),
-    add: (data, cmd) => {
+    add: (data, cmd, hook, event) => {
       data.version ||= 1;
-      ((data.hooks ||= {}).beforeShellExecution ||= []).push({ command: cmd, timeout: TIMEOUT_S });
+      ((data.hooks ||= {})[EVENTS.cursor[event][0]] ||= []).push({ command: cmd, timeout: TIMEOUT_S[event] });
     },
-    remove: (data, hook) => {
-      if (!data.hooks) return 0;
-      const { list, removed } = removeFlat(data.hooks.beforeShellExecution, hook);
-      if (list && list.length) data.hooks.beforeShellExecution = list;
-      else delete data.hooks.beforeShellExecution;
-      return removed;
-    },
+    remove: (data, hook) => removeFlat(data.hooks, hook),
   },
   copilot: {
     own: true,
     file: (home, hook) => path.join(process.env.COPILOT_HOME || path.join(home, '.copilot'), 'hooks', `kete-loom-${hook}.json`),
-    content: (cmd) =>
-      JSON.stringify({ version: 1, hooks: { preToolUse: [{ type: 'command', bash: cmd, powershell: `& ${cmd}`, timeoutSec: TIMEOUT_S }] } }, null, 2) + '\n',
+    content: (cmd, hook, event) =>
+      JSON.stringify({ version: 1, hooks: { [EVENTS.copilot[event][0]]: [{ type: 'command', bash: cmd, powershell: `& ${cmd}`, timeoutSec: TIMEOUT_S[event] }] } }, null, 2) + '\n',
     isOurs: (text, hook) => {
       try {
-        return ours(JSON.parse(text).hooks.preToolUse[0].bash, hook);
+        return Object.values(JSON.parse(text).hooks).some((list) => list.some((h) => ours(h.bash, hook)));
       } catch {
         return false;
       }
@@ -123,28 +128,31 @@ const HOSTS = {
   opencode: {
     own: true,
     file: (home, hook) => path.join(home, '.config', 'opencode', 'plugins', `kete-loom-${hook}.js`),
-    // OpenCode hooks are plugins: run the shared runner and throw to block.
-    content: (cmd, hook, home, node = process.execPath) => `// kete-loom hook ${hook}: generated by \`npx @ketecode/loom install --hook ${hook}\`; remove with uninstall.
+    // OpenCode hooks are plugins: hand the raw call to the shared runner, and throw to block.
+    content: (cmd, hook, event, home, node = process.execPath) => {
+      const key = EVENTS.opencode[event][0];
+      const before = key === 'tool.execute.before';
+      return `// kete-loom hook ${hook} (${event}): generated by \`npx @ketecode/loom install --hook ${hook}\`; remove with uninstall.
 // runner: ${cmd}
 import { spawnSync } from "node:child_process"
 
-export const KeteLoom${hook.replace(/(^|-)(\w)/g, (_, __, c) => c.toUpperCase())} = async ({ directory }) => ({
-  "tool.execute.before": async (input, output) => {
-    if (input.tool !== "bash") return
-    const r = spawnSync(${JSON.stringify(node)}, [${JSON.stringify(path.join(runtimeDir(home), 'run.js'))}, "opencode", ${JSON.stringify(hook)}], {
-      input: JSON.stringify({ command: output.args && output.args.command, cwd: directory }),
+export const KeteLoom${pascal(hook)} = async ({ directory }) => ({
+  ${JSON.stringify(key)}: async (input, output) => {
+    const r = spawnSync(${JSON.stringify(node)}, [${JSON.stringify(path.join(runtimeDir(home), 'run.js'))}, "opencode", ${JSON.stringify(hook)}, ${JSON.stringify(event)}], {
+      input: JSON.stringify({ tool: input && input.tool, args: (output && output.args) || (input && input.args), cwd: directory }),
       encoding: "utf8",
-      timeout: ${TIMEOUT_S * 1000},
-    })
-    if (r.status === 2) throw new Error((r.stderr || "").trim() || "Blocked by kete-loom")
+      timeout: ${TIMEOUT_S[event] * 1000},
+    })${before ? '\n    if (r.status === 2) throw new Error((r.stderr || "").trim() || "Blocked by kete-loom")' : ''}
   },
 })
-`,
+`;
+    },
     isOurs: (text, hook) => ours((/^\/\/ runner: (.*)$/m.exec(text) || [])[1], hook),
   },
 };
 
 const HOOK_HOSTS = Object.keys(HOSTS);
+const supports = (host, event) => Boolean(EVENTS[host] && EVENTS[host][event]);
 
 class CommentedFileError extends Error {}
 
@@ -185,33 +193,33 @@ function writeAtomic(file, text) {
   fs.renameSync(tmp, file);
 }
 
-// The JSON a user can paste by hand when we won't edit their file.
-function snippet(host, cmd, hook) {
+function snippet(host, cmd, hook, event) {
   const data = {};
-  HOSTS[host].add(data, cmd, hook);
+  HOSTS[host].add(data, cmd, hook, event);
   return JSON.stringify(data, null, 2);
 }
 
 // Registers one hook with one host. Returns { action, dest, reason?, note? }.
-function register(host, hook, { home, dryRun = false, node = process.execPath }) {
+function register(host, hook, event, { home, dryRun = false, node = process.execPath }) {
   const h = HOSTS[host];
-  const cmd = command(home, host, hook, node);
+  if (!supports(host, event)) return { action: 'skipped', dest: h.file(home, hook), reason: `${host} has no ${event} hook` };
+  const cmd = command(home, host, hook, event, node);
   const file = h.file(home, hook);
   if (h.own) {
     const exists = fs.existsSync(file);
     if (exists && !h.isOurs(fs.readFileSync(file, 'utf8'), hook)) return { action: 'skipped', dest: file, reason: 'a file with this name exists and was not written by kete-loom' };
-    if (!dryRun) writeAtomic(file, h.content(cmd, hook, home, node));
+    if (!dryRun) writeAtomic(file, h.content(cmd, hook, event, home, node));
     return { action: exists ? 'updated' : 'installed', dest: file, note: h.note };
   }
   let data;
   try {
     data = readJson(file);
   } catch (e) {
-    const reason = e instanceof CommentedFileError ? `${e.message}. Add this yourself:\n${snippet(host, cmd, hook)}` : e.message;
+    const reason = e instanceof CommentedFileError ? `${e.message}. Add this yourself:\n${snippet(host, cmd, hook, event)}` : e.message;
     return { action: 'skipped', dest: file, reason };
   }
   const existed = h.remove(data, hook) > 0;
-  h.add(data, cmd, hook);
+  h.add(data, cmd, hook, event);
   if (!dryRun) writeAtomic(file, JSON.stringify(data, null, 2) + '\n');
   return { action: existed ? 'updated' : 'installed', dest: file, note: h.note };
 }
@@ -236,16 +244,14 @@ function unregister(host, hook, { home, dryRun = false, names = [] }) {
   try {
     data = readJson(file);
   } catch {
-    return []; // not ours to fix; doctor reports unreadable files
+    return []; // not ours to fix
   }
   const before = registered(host, { home });
-  const n = h.remove(data, hook);
-  if (!n) return [];
+  if (!h.remove(data, hook)) return [];
   prune(data);
   if (!dryRun) {
     // A standalone hooks file holding nothing but its version is deleted rather than left behind.
-    const rest = Object.keys(data).filter((k) => k !== 'version');
-    if (h.standalone && !rest.length) fs.rmSync(file);
+    if (h.standalone && !Object.keys(data).filter((k) => k !== 'version').length) fs.rmSync(file);
     else writeAtomic(file, JSON.stringify(data, null, 2) + '\n');
   }
   return before.filter((name) => !hook || name === hook).map((name) => ({ name, dest: file }));
@@ -283,4 +289,4 @@ function installRuntime(hooks, { home, dryRun = false, sourceDir }) {
   }
 }
 
-module.exports = { HOSTS, HOOK_HOSTS, register, unregister, registered, installRuntime, runtimeDir, command, ours };
+module.exports = { HOSTS, HOOK_HOSTS, EVENTS, supports, register, unregister, registered, installRuntime, runtimeDir, command, ours };

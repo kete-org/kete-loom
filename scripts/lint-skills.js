@@ -15,7 +15,7 @@ const CATEGORIES = ['coding', 'testing', 'security', 'integrations', 'devops', '
 const RISKS = ['read-only', 'writes-files', 'runs-commands', 'network'];
 const MAX_LINES = 300;
 const MIN_EVALS = 3;
-const HOOK_EVENTS = ['pre-shell'];
+const HOOK_EVENTS = ['pre-shell', 'pre-edit', 'post-edit', 'session-start'];
 // Tool names that only exist in one host. Skills should describe the action instead.
 const HOST_SPECIFIC = /\b(Bash tool|Read tool|Edit tool|Write tool|Grep tool|Glob tool|TodoWrite|apply_patch|str_replace_editor)\b/;
 
@@ -114,7 +114,8 @@ function lintItem(item) {
   return { errors, warnings };
 }
 
-// A hook ships hook.js (exports check) and cases.json; every case must give the expected verdict.
+// A hook ships hook.js (exports check). Blocking (pre-*) hooks also ship cases.json, and every case must
+// give the expected verdict; a case is a command string or an event object such as { files: [...] }.
 function lintHook(hook) {
   const errors = [];
   if (!HOOK_EVENTS.includes(hook.event)) errors.push(`kete-loom/event must be one of ${HOOK_EVENTS.join(', ')}`);
@@ -125,6 +126,7 @@ function lintHook(hook) {
     return [...errors, `hook.js failed to load: ${e.message}`];
   }
   if (typeof check !== 'function') return [...errors, 'hook.js must export a check(event) function'];
+  if (!String(hook.event).startsWith('pre-')) return errors;
   let cases;
   try {
     // Fake secrets are written as {{repeat:c:n}} so the repository never holds key-shaped strings.
@@ -133,16 +135,17 @@ function lintHook(hook) {
     return [...errors, `cases.json missing or invalid: ${e.message}`];
   }
   for (const [key, want] of [['should_block', true], ['should_allow', false]]) {
-    if (!Array.isArray(cases[key]) || cases[key].length < MIN_EVALS) errors.push(`cases.json needs at least ${MIN_EVALS} "${key}" commands`);
-    for (const command of cases[key] || []) {
+    if (!Array.isArray(cases[key]) || cases[key].length < MIN_EVALS) errors.push(`cases.json needs at least ${MIN_EVALS} "${key}" cases`);
+    for (const c of cases[key] || []) {
+      const event = typeof c === 'string' ? { command: c, cwd: process.cwd() } : { cwd: process.cwd(), ...c };
       let got;
       try {
-        got = Boolean(check({ command, cwd: process.cwd() }).block);
+        got = Boolean(check(event).block);
       } catch (e) {
-        errors.push(`check() threw on ${JSON.stringify(command)}: ${e.message}`);
+        errors.push(`check() threw on ${JSON.stringify(c)}: ${e.message}`);
         continue;
       }
-      if (got !== want) errors.push(`case ${JSON.stringify(command)} should ${want ? 'block' : 'be allowed'}`);
+      if (got !== want) errors.push(`case ${JSON.stringify(c)} should ${want ? 'block' : 'be allowed'}`);
     }
   }
   return errors;

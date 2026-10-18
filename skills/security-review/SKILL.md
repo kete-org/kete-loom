@@ -4,7 +4,7 @@ description: Security review of a code change or module covering secrets, inject
 license: MIT
 compatibility: Any Agent Skills host. The secret scanner needs Node 18+ and git.
 metadata:
-  kete-loom/version: "0.1.1"
+  kete-loom/version: "0.1.2"
   kete-loom/category: security
   kete-loom/risk: read-only
   kete-loom/requires: "git, node"

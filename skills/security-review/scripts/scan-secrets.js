@@ -22,7 +22,7 @@ const RULES = [
   ['Private key block', /-----BEGIN (RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY-----/],
   ['JWT', /\beyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/],
   ['Connection string with password', /\b(postgres(ql)?|mysql|mongodb(\+srv)?|redis|amqp):\/\/[^\s:@/]+:[^\s@/]{3,}@/i],
-  ['Hard-coded secret assignment', /\b(password|passwd|secret|api[_-]?key|access[_-]?token|auth[_-]?token)\b\s*[:=]\s*["'][^"'\s]{8,}["']/i],
+  ['Hard-coded secret assignment', /\b(password|passwd|secret|api[_-]?key|access[_-]?token|auth[_-]?token)\b["']?\s*[:=]\s*["'][^"'\s]{8,}["']/i],
 ];
 
 const PLACEHOLDER = /(example|placeholder|changeme|your[_-]|xxxx|dummy|fake|<[^>]+>|\$\{|process\.env|os\.environ)/i;

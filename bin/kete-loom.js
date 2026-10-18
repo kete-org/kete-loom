@@ -153,7 +153,7 @@ function installHooks(hooks, opts) {
   Hooks.installRuntime(hooks, { home, dryRun: opts.dryRun, sourceDir: HOOKS_DIR });
   const results = [];
   for (const target of hookHosts(opts)) {
-    for (const hook of hooks) results.push({ target, kind: 'hook', name: hook.dir, ...Hooks.register(target, hook.dir, { home, dryRun: opts.dryRun }) });
+    for (const hook of hooks) results.push({ target, kind: 'hook', name: hook.dir, ...Hooks.register(target, hook.dir, hook.event, { home, dryRun: opts.dryRun }) });
   }
   return results;
 }

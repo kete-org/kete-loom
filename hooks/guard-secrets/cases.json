@@ -1,0 +1,110 @@
+{
+  "should_block": [
+    {
+      "files": [
+        {
+          "path": "src/pay.ts",
+          "content": "const key = 'sk_live_{{repeat:a:40}}';"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "config.py",
+          "content": "AWS_KEY = 'AKIA{{repeat:Q:16}}'"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "app.js",
+          "content": "const k = process.env.KEY || 'sk_live_{{repeat:b:40}}'"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "ci.yml",
+          "content": "token: ghp_{{repeat:a:36}}"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "db.ts",
+          "content": "const url = 'postgres://admin:hunter2pass@db.internal:5432/app'"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "keys/deploy",
+          "content": "{{repeat:-:5}}BEGIN OPENSSH PRIVATE KEY{{repeat:-:5}}\nabc"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "settings.json",
+          "content": "{ \"api_key\": \"q8Zr1xWm3Lp9TbV2\" }"
+        }
+      ]
+    }
+  ],
+  "should_allow": [
+    {
+      "files": [
+        {
+          "path": "src/pay.ts",
+          "content": "const key = process.env.PAYSTACK_SECRET_KEY"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": ".env.example",
+          "content": "PAYSTACK_SECRET_KEY=sk_test_your_key_here"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "docs/setup.md",
+          "content": "Set api_key: \"<your-api-key>\" in config"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "db.ts",
+          "content": "const url = `postgres://${user}:${pass}@${host}/app`"
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "README.md",
+          "content": "Get a key from the dashboard and export it."
+        }
+      ]
+    },
+    {
+      "files": [
+        {
+          "path": "test/fixtures.ts",
+          "content": "const password = 'changeme-in-tests'"
+        }
+      ]
+    }
+  ]
+}

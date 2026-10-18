@@ -1,0 +1,30 @@
+{
+  "should_block": [
+    "git commit --no-verify -m 'wip'",
+    "git commit -m 'wip' --no-verify",
+    "git commit -n -m 'skip'",
+    "git commit -nm 'skip'",
+    "git commit -am 'x' -n",
+    "git push --no-verify origin feature/x",
+    "git -C app commit --no-verify -m x",
+    "HUSKY=0 git commit -m 'x'",
+    "HUSKY_SKIP_HOOKS=1 git push",
+    "git -c core.hooksPath=/dev/null commit -m x",
+    "git config core.hooksPath /tmp/empty",
+    "SKIP=eslint,prettier git commit -m 'x'",
+    "npm test && git commit --no-verify -m x",
+    "git -c user.name=bot commit --no-verify -m x"
+  ],
+  "should_allow": [
+    "git commit -m 'fix: handle empty input'",
+    "git commit -am 'feat: add retry' ",
+    "git push origin feature/x",
+    "git log --no-merges -n 5",
+    "git config --get core.hooksPath",
+    "git commit -m 'docs: explain --no-verify policy'",
+    "npx husky init",
+    "git merge --no-ff feature/x",
+    "git commit -m \"skip -n flag docs\"",
+    "git -C app log -n 3"
+  ]
+}

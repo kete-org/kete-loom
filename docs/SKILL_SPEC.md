@@ -112,16 +112,23 @@ A hook runs automatically at a point in the agent loop and can stop the agent. K
 ```
 hooks/<name>/
 ├── HOOK.md       # required. Frontmatter and a short explanation for users.
-├── hook.js       # required. Exports check(event) -> { block: true, reason } | { block: false }.
-└── cases.json    # required. Commands that must be blocked and must be allowed.
+├── hook.js       # required. Exports check(event).
+└── cases.json    # required for pre-* hooks. Events that must be blocked and must be allowed.
 ```
 
 | Key | Rule | Why |
 |---|---|---|
 | `name`, `license`, `metadata` | as for skills (`kete-loom/version`, `kete-loom/category`, `kete-loom/risk` required) | |
 | `description` | one line, 20 to 300 chars | Shown in the catalog and `kete-loom list` |
-| `metadata.kete-loom/event` | `pre-shell` (runs before every shell command; `check` gets `{ command, cwd }`) | The only event every host supports the same way today |
+| `metadata.kete-loom/event` | one of the events below | Decides where and when each host runs it |
 
-`hook.js` must be fast, pure and dependency-free: no network, no writes, no child processes. The runner treats any error as allow, so a broken hook never blocks every command. `cases.json` holds at least 3 `should_block` and 3 `should_allow` commands; `npm run lint` runs every one, so add a case for each rule and for each false positive you fix.
+| Event | `check` gets | Returns | Hosts |
+|---|---|---|---|
+| `pre-shell` | `{ command, cwd }` before a shell command | `{ block, reason }` | all seven |
+| `pre-edit` | `{ files: [{ path, content }], cwd }` before a file is written; `content` is the new text (for patches, the added lines) | `{ block, reason }` | all but Cursor (no documented pre-edit hook) |
+| `post-edit` | `{ files: [{ path }], cwd }` after files were written | nothing; it can't block | all seven |
+| `session-start` | `{ cwd }` when a session starts | `{ context }`, short text added to the agent's context | all but OpenCode (no way to add context) |
+
+`hook.js` must be fast and dependency-free, and never use the network. `pre-*` hooks must be pure: no writes, no child processes. `post-edit` and `session-start` hooks may run local tools the project already uses (a formatter, `git`), with short timeouts, and must swallow their errors. The runner treats any error as allow, so a broken hook never blocks every call. A `pre-*` hook's `cases.json` holds at least 3 `should_block` and 3 `should_allow` cases (a command string, or an event object such as `{ "files": [{ "path": ".env", "content": "" }] }`); `npm run lint` runs every one, so add a case for each rule and for each false positive you fix. Other hooks are covered by tests in `tests/hooks.test.js`.
 
 A hook is a seatbelt, not a security boundary: it reads the command text, which unusual quoting can get past.

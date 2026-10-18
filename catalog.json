@@ -1093,7 +1093,7 @@
     },
     {
       "name": "security-review",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "security",
       "risk": "read-only",
       "requires": [
@@ -2318,6 +2318,56 @@
       "event": "pre-shell",
       "description": "Stops the agent before it runs shell commands that destroy data or systems, such as rm -rf on / or your home folder, force-pushing main, wiping disks, piping curl into a shell, dropping databases or auto-approved terraform destroy.",
       "path": "hooks/block-dangerous-commands"
+    },
+    {
+      "name": "block-no-verify",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-shell",
+      "description": "Stops the agent from skipping the project's git hooks with git commit --no-verify, -n, HUSKY=0, SKIP= or a swapped core.hooksPath, so pre-commit checks keep running.",
+      "path": "hooks/block-no-verify"
+    },
+    {
+      "name": "format-on-edit",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "event": "post-edit",
+      "description": "After the agent edits a file, formats it with the formatter the project already uses (Biome or Prettier, Ruff or Black, gofmt, rustfmt), so agent changes match the project's style.",
+      "path": "hooks/format-on-edit"
+    },
+    {
+      "name": "guard-secrets",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-edit",
+      "description": "Stops the agent from writing API keys, tokens, passwords, connection strings or private keys into files, using the same rules as the security-review secret scanner.",
+      "path": "hooks/guard-secrets"
+    },
+    {
+      "name": "load-session-context",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "event": "session-start",
+      "description": "At the start of each session, tells the agent the current branch, how many uncommitted changes there are, and the latest session handoff note, so it picks up where the last session stopped.",
+      "path": "hooks/load-session-context"
+    },
+    {
+      "name": "protect-files",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-edit",
+      "description": "Stops the agent from editing files that should never be hand-edited, such as .env files with secrets, package lockfiles, anything inside .git, and private keys.",
+      "path": "hooks/protect-files"
     }
   ]
 }
