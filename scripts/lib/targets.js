@@ -24,6 +24,7 @@ const TARGETS = {
     user: { skills: ['.claude', 'skills'], agents: ['.claude', 'agents'], commands: ['.claude', 'commands'] },
     project: { skills: ['.claude', 'skills'], agents: ['.claude', 'agents'], commands: ['.claude', 'commands'] },
     default: true,
+    hooks: true,
   },
   codex: {
     label: 'Codex (agents only; skills come from .agents)',
@@ -31,6 +32,7 @@ const TARGETS = {
     project: { agents: ['.codex', 'agents'] },
     detect: { user: ['.codex'], project: ['.codex'] },
     auto: true,
+    hooks: true,
   },
   opencode: {
     label: 'OpenCode',
@@ -38,6 +40,7 @@ const TARGETS = {
     project: { skills: ['.opencode', 'skills'], agents: ['.opencode', 'agents'], commands: ['.opencode', 'commands'] },
     detect: { user: ['.config', 'opencode'], project: ['.opencode'] },
     auto: true,
+    hooks: true,
   },
   // Kete Code (an OpenCode fork) reads skills from .agents and .claude, but agents and commands only from its own folders.
   // shortcut: user paths assume XDG_CONFIG_HOME is ~/.config (as for opencode); honour it if users report custom roots.
@@ -47,11 +50,15 @@ const TARGETS = {
     project: { skills: ['.kete', 'skills'], agents: ['.kete', 'agents'], commands: ['.kete', 'commands'] },
     detect: { user: ['.config', 'kete'], project: ['.kete'] },
     auto: true,
+    hooks: true,
   },
   cursor: {
     label: 'Cursor only',
     user: { skills: ['.cursor', 'skills'], agents: ['.cursor', 'agents'] },
     project: { skills: ['.cursor', 'skills'], agents: ['.cursor', 'agents'] },
+    // Detected only for hooks: Cursor already reads agents from .claude.
+    detect: { user: ['.cursor'], project: ['.cursor'] },
+    hooks: true,
   },
   gemini: {
     label: 'Gemini CLI',
@@ -59,11 +66,14 @@ const TARGETS = {
     project: { skills: ['.gemini', 'skills'], agents: ['.gemini', 'agents'], commands: ['.gemini', 'commands'] },
     detect: { user: ['.gemini'], project: ['.gemini'] },
     auto: true,
+    hooks: true,
   },
   copilot: {
     label: 'GitHub Copilot only',
     user: { skills: ['.copilot', 'skills'], agents: ['.copilot', 'agents'] },
     project: { skills: ['.github', 'skills'], agents: ['.github', 'agents'] },
+    detect: { user: ['.copilot'], project: ['.github'] },
+    hooks: true,
   },
 };
 

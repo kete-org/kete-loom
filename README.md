@@ -276,6 +276,24 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 | [`/verify`](commands/verify.md) | testing | runs-commands | Verify the current changes by running the project's build, lint, type-check and tests, then report pass or fail. |
 <!-- commands:end -->
 
+## Hooks
+
+Checks that run automatically before the agent runs a shell command, and block it with a reason the agent sees. Hooks are opt-in: `install` never adds them unless you ask.
+
+```bash
+npx @ketecode/loom install --hook block-dangerous-commands   # one hook
+npx @ketecode/loom install --hooks                           # everything, plus every hook
+npx @ketecode/loom uninstall --hook block-dangerous-commands
+```
+
+The installer registers each hook with Claude Code and every other host it finds: Claude Code and Gemini CLI in their `settings.json`, Kete Code in `kete.json`, Codex and Cursor in their `hooks.json`, Copilot CLI in `~/.copilot/hooks/` and OpenCode as a plugin. It only adds and removes its own entries, backs a file up to `<file>.kete-loom-backup` before changing it, and never rewrites a file that has comments (it prints the snippet to paste instead). Codex runs a new hook only after you trust it with `/hooks`. Hooks install for your user only, not per project.
+
+<!-- hooks:start -->
+| Name | Category | Risk | What it does |
+|---|---|---|---|
+| [`block-dangerous-commands`](hooks/block-dangerous-commands/HOOK.md) | security | read-only | Stops the agent before it runs shell commands that destroy data or systems, such as rm -rf on / or your home folder, force-pushing main, wiping disks, piping curl into a shell, dropping databases or auto-approved terraform destroy. |
+<!-- hooks:end -->
+
 ## Where hosts look
 
 ### Skills

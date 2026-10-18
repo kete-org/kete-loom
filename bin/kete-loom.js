@@ -8,9 +8,10 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { SKILLS_DIR, listSkills, listAgents, listCommands } = require('../scripts/lib/skills');
+const { SKILLS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks } = require('../scripts/lib/skills');
 const { TARGETS, KINDS, HOST_READS, resolveTarget, detected } = require('../scripts/lib/targets');
 const { MARKER_RE, render } = require('../scripts/lib/render');
+const Hooks = require('../scripts/lib/hooks-install');
 
 const MARKER = '.kete-loom.json';
 const pkg = require('../package.json');
@@ -30,6 +31,8 @@ function parseArgs(argv) {
     else if (a === '--skill' || a === '-s') opts.skills = csv(next());
     else if (a === '--agent' || a === '-a') opts.agents = csv(next());
     else if (a === '--command') opts.commands = csv(next());
+    else if (a === '--hook') opts.hookNames = csv(next());
+    else if (a === '--hooks') opts.withHooks = true;
     else if (a === '--category' || a === '-c') opts.categories = csv(next());
     else if (a === '--scope') opts.scope = next();
     else if (a === '--project' || a === '-p') opts.scope = 'project';
@@ -54,7 +57,7 @@ function help() {
   console.log(`kete-loom ${pkg.version} — install Kete Loom skills, agents and commands into any Agent Skills host
 
 Usage
-  kete-loom install   [options]   Copy skills, agents and commands into host folders
+  kete-loom install   [options]   Copy skills, agents and commands into host folders (hooks with --hooks)
   kete-loom update    [options]   Same as install (refreshes kete-loom items; never overwrites yours)
   kete-loom uninstall [options]   Remove items that kete-loom installed
   kete-loom list      [--json]    List available skills, agents and commands
@@ -73,7 +76,12 @@ Options
   -s, --skill <a,b>    Only these skills
   -a, --agent <a,b>    Only these agents
       --command <a,b>  Only these commands
-                       (--skill, --agent and --command combine; with none, all are installed)
+      --hook <a,b>     Only these hooks
+                       (--skill, --agent, --command and --hook combine; with none, all
+                       skills, agents and commands are installed)
+      --hooks          Also install every hook. Hooks run before each shell command and are
+                       registered in each host's config, including Claude Code's and Gemini
+                       CLI's settings.json (backed up first). User scope only.
   -c, --category <a,b> Only these categories
       --link           Symlink skills instead of copying (for skill authors)
   -f, --force          Overwrite items with the same name not installed by kete-loom
@@ -85,17 +93,18 @@ Examples
   npx @ketecode/loom install --target claude
   npx @ketecode/loom install --target codex --agent code-reviewer
   npx @ketecode/loom install --dir ~/.my-agent/skills
+  npx @ketecode/loom install --hook block-dangerous-commands
 `);
 }
 
 function catalog(opts) {
-  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands() };
+  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands(), hooks: listHooks() };
 }
 
 // Returns { skills, agents, commands } after the --skill/--agent/--command/--category filters.
 function selectItems(opts) {
   const all = catalog(opts);
-  const named = KINDS.some((k) => opts[k]);
+  const named = KINDS.some((k) => opts[k]) || Boolean(opts.hookNames);
   const chosen = {};
   for (const kind of KINDS) {
     let items = all[kind];
@@ -108,6 +117,11 @@ function selectItems(opts) {
     if (opts.categories) items = items.filter((i) => opts.categories.includes(i.category));
     chosen[kind] = items;
   }
+  // Hooks are opt-in: only with --hooks or when named with --hook.
+  const unknownHooks = (opts.hookNames || []).filter((n) => !all.hooks.some((h) => h.dir === n));
+  if (unknownHooks.length) throw new Error(`unknown hook(s): ${unknownHooks.join(', ')}. Run "kete-loom list".`);
+  chosen.hooks = opts.hookNames ? all.hooks.filter((h) => opts.hookNames.includes(h.dir)) : opts.withHooks ? all.hooks : [];
+  if (opts.categories) chosen.hooks = chosen.hooks.filter((h) => opts.categories.includes(h.category));
   return chosen;
 }
 
@@ -123,6 +137,49 @@ function destinations(opts) {
   return picks.flatMap(({ target, kinds }) =>
     kinds.map((kind) => ({ target, kind, dir: resolveTarget(target, { ...where, kind }) })).filter((d) => d.dir)
   );
+}
+
+// Hosts to register hooks with: the --target list, or Claude Code plus every other hook host found.
+function hookHosts(opts) {
+  const where = { scope: 'user', home: opts.home || os.homedir(), cwd: process.cwd() };
+  if (opts.targets) return opts.targets.filter((t) => TARGETS[t].hooks);
+  return Hooks.HOOK_HOSTS.filter((t) => TARGETS[t].default || detected(t, where));
+}
+
+function installHooks(hooks, opts) {
+  if (!hooks.length) return [];
+  if (opts.scope === 'project') throw new Error('hooks install at user scope only; drop --project, or pass --skill/--agent/--command to choose what to install in the project');
+  const home = opts.home || os.homedir();
+  Hooks.installRuntime(hooks, { home, dryRun: opts.dryRun, sourceDir: HOOKS_DIR });
+  const results = [];
+  for (const target of hookHosts(opts)) {
+    for (const hook of hooks) results.push({ target, kind: 'hook', name: hook.dir, ...Hooks.register(target, hook.dir, { home, dryRun: opts.dryRun }) });
+  }
+  return results;
+}
+
+function uninstallHooks(opts, named) {
+  if (named && !opts.hookNames) return [];
+  const home = opts.home || os.homedir();
+  const names = listHooks().map((h) => h.dir);
+  const hosts = opts.targets ? opts.targets.filter((t) => TARGETS[t].hooks) : Hooks.HOOK_HOSTS;
+  const results = [];
+  for (const target of hosts) {
+    for (const hook of opts.hookNames || [null]) {
+      for (const r of Hooks.unregister(target, hook, { home, dryRun: opts.dryRun, names })) results.push({ target, kind: 'hook', action: 'removed', ...r });
+    }
+  }
+  // The shared runtime goes once no host is told to call it any more.
+  const left = Hooks.HOOK_HOSTS.flatMap((t) => Hooks.registered(t, { home, names }));
+  if (!opts.dryRun) {
+    for (const hook of opts.hookNames || names) if (!left.includes(hook)) fs.rmSync(path.join(Hooks.runtimeDir(home), hook), { recursive: true, force: true });
+    if (!left.length) {
+      fs.rmSync(Hooks.runtimeDir(home), { recursive: true, force: true });
+      const parent = path.dirname(Hooks.runtimeDir(home));
+      if (fs.existsSync(parent) && !fs.readdirSync(parent).length) fs.rmdirSync(parent);
+    }
+  }
+  return results;
 }
 
 function readMarker(dir) {
@@ -226,7 +283,7 @@ function installFile(item, dir, target, opts) {
 
 function install(opts) {
   const selected = selectItems(opts);
-  if (!KINDS.some((k) => selected[k].length)) throw new Error('nothing matched your filters');
+  if (![...KINDS, 'hooks'].some((k) => selected[k].length)) throw new Error('nothing matched your filters');
   const results = [];
   for (const { target, kind, dir } of destinations(opts)) {
     for (const item of selected[kind]) {
@@ -234,7 +291,10 @@ function install(opts) {
       if (r) results.push({ target, kind: item.kind, name: item.dir, ...r });
     }
   }
+  results.push(...installHooks(selected.hooks, opts));
   report(results, opts);
+  const notes = [...new Set(results.map((r) => r.note).filter(Boolean))];
+  if (notes.length && !opts.json) console.log(`\n${notes.join('\n')}`);
   const missing = missingRequirements(KINDS.flatMap((k) => selected[k]));
   if (missing.length && !opts.json) {
     console.log(`\nNote: some items expect tools that are not on your PATH:`);
@@ -248,7 +308,7 @@ function install(opts) {
 const itemName = (entry) => entry.replace(/(\.agent)?\.(md|toml)$/, '');
 
 function uninstall(opts) {
-  const named = KINDS.some((k) => opts[k]);
+  const named = KINDS.some((k) => opts[k]) || Boolean(opts.hookNames);
   const results = [];
   for (const { target, kind, dir } of destinations(opts)) {
     if (named && !opts[kind]) continue;
@@ -262,6 +322,7 @@ function uninstall(opts) {
       results.push({ target, kind: kind.slice(0, -1), name, action: 'removed', dest: p });
     }
   }
+  results.push(...uninstallHooks(opts, named));
   report(results, opts);
   return results;
 }
@@ -294,7 +355,7 @@ function missingRequirements(items) {
 
 function list(opts) {
   const selected = selectItems(opts);
-  const items = KINDS.flatMap((k) => selected[k]);
+  const items = [...KINDS, 'hooks'].flatMap((k) => (k === 'hooks' ? catalog(opts).hooks : selected[k]));
   if (opts.json) {
     return console.log(JSON.stringify(items.map(({ kind, dir, version, category, risk, description }) => ({ kind, name: dir, version, category, risk, description })), null, 2));
   }
@@ -302,7 +363,7 @@ function list(opts) {
     console.log(`${s.kind.padEnd(8)} ${s.dir.padEnd(24)} v${(s.version || '?').padEnd(7)} ${String(s.category).padEnd(12)} ${s.risk}`);
   }
   const count = (k) => `${selected[k].length} ${k.slice(0, -1)}(s)`;
-  console.log(`\n${KINDS.map(count).join(', ')}. Install with: npx @ketecode/loom install`);
+  console.log(`\n${KINDS.map(count).join(', ')}, ${catalog(opts).hooks.length} hook(s). Install with: npx @ketecode/loom install (hooks: --hooks)`);
 }
 
 function doctor(opts) {
@@ -327,6 +388,13 @@ function doctor(opts) {
     console.log(`  [${r.scope}] ${r.target.padEnd(9)} ${r.kind.padEnd(9)} ${r.dir.replace(os.homedir(), '~')}  (${r.items.length})`);
   }
   if (!rows.some((r) => r.items.length)) console.log('  none yet. Run: npx @ketecode/loom install');
+  const hookNames = listHooks().map((h) => h.dir);
+  const hookRows = Hooks.HOOK_HOSTS.map((t) => ({ target: t, hooks: Hooks.registered(t, { home, names: hookNames }) })).filter((r) => r.hooks.length);
+  if (hookRows.length) {
+    console.log('\nHooks:');
+    for (const r of hookRows) console.log(`  ${r.target.padEnd(9)} ${r.hooks.join(', ')}`);
+    if (!fs.existsSync(path.join(Hooks.runtimeDir(home), 'run.js'))) console.log(`  ! the hook runtime is missing from ${Hooks.runtimeDir(home)}; run install --hooks again`);
+  }
   console.log('\nSkills visible to each host:');
   for (const [host, reads] of Object.entries(HOST_READS)) {
     const seen = new Set(rows.filter((r) => r.kind === 'skills' && reads.includes(r.target)).flatMap((r) => r.items));

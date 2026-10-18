@@ -30,6 +30,7 @@
     "skills/",
     "agents/",
     "commands/",
+    "hooks/",
     "schemas/",
     "README.md",
     "LICENSE"

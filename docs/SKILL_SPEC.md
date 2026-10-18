@@ -104,3 +104,24 @@ Use `$ARGUMENTS` where the user's text goes; the installer converts it for Gemin
 # Installed files
 
 Installed agent and command files start with a `# kete-loom <name>@<version>` comment, and installed skill folders contain `.kete-loom.json`. That is how `install` avoids overwriting files you wrote and how `uninstall` removes only what kete-loom installed. Don't add either marker by hand.
+
+# Hooks
+
+A hook runs automatically at a point in the agent loop and can stop the agent. Kete Loom writes each hook once as a plain function; `hooks/run.js` translates every host's payload and answer format, and the installer registers it with each host.
+
+```
+hooks/<name>/
+├── HOOK.md       # required. Frontmatter and a short explanation for users.
+├── hook.js       # required. Exports check(event) -> { block: true, reason } | { block: false }.
+└── cases.json    # required. Commands that must be blocked and must be allowed.
+```
+
+| Key | Rule | Why |
+|---|---|---|
+| `name`, `license`, `metadata` | as for skills (`kete-loom/version`, `kete-loom/category`, `kete-loom/risk` required) | |
+| `description` | one line, 20 to 300 chars | Shown in the catalog and `kete-loom list` |
+| `metadata.kete-loom/event` | `pre-shell` (runs before every shell command; `check` gets `{ command, cwd }`) | The only event every host supports the same way today |
+
+`hook.js` must be fast, pure and dependency-free: no network, no writes, no child processes. The runner treats any error as allow, so a broken hook never blocks every command. `cases.json` holds at least 3 `should_block` and 3 `should_allow` commands; `npm run lint` runs every one, so add a case for each rule and for each false positive you fix.
+
+A hook is a seatbelt, not a security boundary: it reads the command text, which unusual quoting can get past.

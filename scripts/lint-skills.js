@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, listSkills, listAgents, listCommands } = require('./lib/skills');
+const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks } = require('./lib/skills');
 const { TOOLS } = require('./lib/render');
 
 const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -15,6 +15,7 @@ const CATEGORIES = ['coding', 'testing', 'security', 'integrations', 'devops', '
 const RISKS = ['read-only', 'writes-files', 'runs-commands', 'network'];
 const MAX_LINES = 300;
 const MIN_EVALS = 3;
+const HOOK_EVENTS = ['pre-shell'];
 // Tool names that only exist in one host. Skills should describe the action instead.
 const HOST_SPECIFIC = /\b(Bash tool|Read tool|Edit tool|Write tool|Grep tool|Glob tool|TodoWrite|apply_patch|str_replace_editor)\b/;
 
@@ -43,8 +44,8 @@ function lintItem(item) {
   }
 
   if (!d.description) errors.push('missing "description"');
-  else if (item.kind === 'command') {
-    // Users pick commands by name; the description is the one-line menu text.
+  else if (item.kind === 'command' || item.kind === 'hook') {
+    // Commands are picked by name and hooks run on events; the description is one line for menus and the catalog.
     const len = d.description.length;
     if (len < 20 || len > 300) errors.push(`description is ${len} chars; must be 20-300`);
   } else {
@@ -91,8 +92,10 @@ function lintItem(item) {
     }
   }
 
-  // Hosts route to skills and agents by description, so both need trigger evals. Commands are invoked by name.
-  const evalFile = item.kind === 'command' ? null : path.join(item.path, 'evals', 'triggers.json');
+  if (item.kind === 'hook') errors.push(...lintHook(item));
+
+  // Hosts route to skills and agents by description, so both need trigger evals. Commands and hooks aren't routed.
+  const evalFile = item.kind === 'command' || item.kind === 'hook' ? null : path.join(item.path, 'evals', 'triggers.json');
   if (evalFile && !fs.existsSync(evalFile)) errors.push('missing evals/triggers.json');
   else if (evalFile) {
     try {
@@ -109,6 +112,40 @@ function lintItem(item) {
   if (hostHit) warnings.push(`mentions host-specific tool "${hostHit[1]}"; describe the action instead so every host can follow it`);
 
   return { errors, warnings };
+}
+
+// A hook ships hook.js (exports check) and cases.json; every case must give the expected verdict.
+function lintHook(hook) {
+  const errors = [];
+  if (!HOOK_EVENTS.includes(hook.event)) errors.push(`kete-loom/event must be one of ${HOOK_EVENTS.join(', ')}`);
+  let check;
+  try {
+    ({ check } = require(path.join(hook.path, 'hook.js')));
+  } catch (e) {
+    return [...errors, `hook.js failed to load: ${e.message}`];
+  }
+  if (typeof check !== 'function') return [...errors, 'hook.js must export a check(event) function'];
+  let cases;
+  try {
+    // Fake secrets are written as {{repeat:c:n}} so the repository never holds key-shaped strings.
+    cases = JSON.parse(fs.readFileSync(path.join(hook.path, 'cases.json'), 'utf8').replace(/\{\{repeat:(.):(\d+)\}\}/g, (_, c, n) => c.repeat(Number(n))));
+  } catch (e) {
+    return [...errors, `cases.json missing or invalid: ${e.message}`];
+  }
+  for (const [key, want] of [['should_block', true], ['should_allow', false]]) {
+    if (!Array.isArray(cases[key]) || cases[key].length < MIN_EVALS) errors.push(`cases.json needs at least ${MIN_EVALS} "${key}" commands`);
+    for (const command of cases[key] || []) {
+      let got;
+      try {
+        got = Boolean(check({ command, cwd: process.cwd() }).block);
+      } catch (e) {
+        errors.push(`check() threw on ${JSON.stringify(command)}: ${e.message}`);
+        continue;
+      }
+      if (got !== want) errors.push(`case ${JSON.stringify(command)} should ${want ? 'block' : 'be allowed'}`);
+    }
+  }
+  return errors;
 }
 
 function lintManifests() {
@@ -167,15 +204,16 @@ function main() {
   const skills = listSkills(SKILLS_DIR);
   const agents = listAgents();
   const commands = listCommands();
+  const hooks = listHooks();
   let errorCount = 0;
   let warnCount = 0;
   const error = (msg) => (console.log(`✗ ${msg}`), errorCount++);
   const warn = (msg) => (console.log(`! ${msg}`), warnCount++);
 
   for (const e of lintManifests()) error(`manifest  ${e}`);
-  for (const e of [...strayFolders(SKILLS_DIR, 'SKILL.md'), ...strayFolders(AGENTS_DIR, 'AGENT.md')]) error(e);
+  for (const e of [...strayFolders(SKILLS_DIR, 'SKILL.md'), ...strayFolders(AGENTS_DIR, 'AGENT.md'), ...strayFolders(HOOKS_DIR, 'HOOK.md')]) error(e);
 
-  for (const item of [...skills, ...agents, ...commands]) {
+  for (const item of [...skills, ...agents, ...commands, ...hooks]) {
     const { errors, warnings } = lintItem(item);
     if (!errors.length && !warnings.length) console.log(`✓ ${item.kind.padEnd(7)} ${item.dir}`);
     for (const e of errors) error(`${item.kind.padEnd(7)} ${item.dir}  ${e}`);
@@ -187,7 +225,7 @@ function main() {
   // Claude Code serves commands and skills from one namespace.
   for (const c of commands) if (skills.some((s) => s.dir === c.dir)) error(`command ${c.dir}  has the same name as a skill`);
 
-  console.log(`\n${skills.length} skill(s), ${agents.length} agent(s), ${commands.length} command(s), ${errorCount} error(s), ${warnCount} warning(s)`);
+  console.log(`\n${skills.length} skill(s), ${agents.length} agent(s), ${commands.length} command(s), ${hooks.length} hook(s), ${errorCount} error(s), ${warnCount} warning(s)`);
   return errorCount ? 1 : 0;
 }
 

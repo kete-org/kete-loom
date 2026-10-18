@@ -2307,5 +2307,17 @@
       "description": "Verify the current changes by running the project's build, lint, type-check and tests, then report pass or fail.",
       "path": "commands/verify.md"
     }
+  ],
+  "hooks": [
+    {
+      "name": "block-dangerous-commands",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-shell",
+      "description": "Stops the agent before it runs shell commands that destroy data or systems, such as rm -rf on / or your home folder, force-pushing main, wiping disks, piping curl into a shell, dropping databases or auto-approved terraform destroy.",
+      "path": "hooks/block-dangerous-commands"
+    }
   ]
 }
