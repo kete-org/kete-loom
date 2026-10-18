@@ -265,4 +265,20 @@ function uninstallMcp(host, servers, all, { scope = 'user', home, cwd = process.
   return rows.map((r) => ({ target: host, kind: 'mcp', ...r }));
 }
 
-module.exports = { MCP_HOSTS, MCP_DIR, listMcp, RENDER, installMcp, uninstallMcp, tomlTable };
+// Names of kete-loom MCP servers registered with a host (exact matches only).
+function registeredMcp(host, all, { scope = 'user', home, cwd = process.cwd() }) {
+  if (host === 'claude' && scope === 'user') return readState(home)['claude-user'] || [];
+  const file = fileFor(host, scope, home, cwd);
+  if (!file || !fs.existsSync(file)) return [];
+  if (host === 'codex') return blockNames(fs.readFileSync(file, 'utf8'));
+  let data;
+  try {
+    data = readJson(file);
+  } catch {
+    return [];
+  }
+  const holder = JSON_HOSTS[host].holder(data);
+  return all.filter((s) => holder[s.dir] && RENDER[host](s) && same(holder[s.dir], RENDER[host](s))).map((s) => s.dir);
+}
+
+module.exports = { MCP_HOSTS, MCP_DIR, listMcp, RENDER, installMcp, uninstallMcp, registeredMcp, tomlTable };

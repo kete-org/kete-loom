@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code にそのままインストールできます。</p>
 
-<!-- translated from README.md, source 11b4fb1ab2a5 -->
+<!-- translated from README.md, source 3eb8b3837837 -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -139,6 +139,20 @@ npx @ketecode/loom uninstall --mcp github
 パック: `mcp-web`、`mcp-code`(GitHub、Git、Sentry)、`mcp-team`(Linear、Notion、Atlassian)、`mcp-cloud`(Cloudflare、Supabase 読み取り専用、Stripe)、`mcp-design`(Figma)。Claude Code のサーバーは `claude mcp add-json --scope user`(`--project` を指定した場合は `.mcp.json`)で追加されます。Codex には `config.toml` のマーク付きブロックに、Gemini CLI、Cursor、Copilot CLI、OpenCode、Kete Code にはそれぞれの MCP 設定ファイルに追加されます。同じ名前ですでに設定済みのサーバーが置き換えられることはありません。Copilot CLI にはローカルサーバーだけが追加されます。リモートサーバーにサインインする方法が文書化されていないためです。
 
 全一覧は英語版 README の [MCP servers](../../README.md#mcp-servers) と `catalog.json` にあります。
+
+## ハウスキーピング
+
+```bash
+npx @ketecode/loom@latest update      # refresh exactly what you installed, in the hosts it's in
+npx @ketecode/loom outdated           # installed items older than the latest Kete Loom
+npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
+npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
+npx @ketecode/loom doctor             # what is installed where
+```
+
+`audit` は、リポジトリでエージェントがうまく動作するための条件をチェックします。対象は、エージェント向けの指示(`AGENTS.md`/`CLAUDE.md`)、検出したスタックに対応する Kete Loom のパック、テストと lint のコマンド、CI、安全用 hook、そして `.env` ファイルが無視されていてコミットされていないことです。チェックに失敗すると 0 以外の終了コードで終了するため、CI で実行できます。
+
+エージェント内では、`/loom` がタスクに適したアイテムを見つけ、`/checkpoint` がコミットせずに復元可能なスナップショットを保存し、`/sessions` が引き継ぎメモを一覧表示して整理し、`/codemap` が短いアーキテクチャマップを書き、`/model-route` がモデルのティアを提案し、`/aside` がタスクを脱線させずに横道の質問に答えます。
 
 ## ホストが参照する場所
 

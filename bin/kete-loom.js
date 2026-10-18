@@ -8,13 +8,16 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { SKILLS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('../scripts/lib/skills');
+const { SKILLS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, listRules, loadSkill, loadAgent, loadCommand, loadHook, loadRule } = require('../scripts/lib/skills');
+const { lintItem } = require('../scripts/lib/lint');
+const { audit } = require('../scripts/lib/audit');
 const { TARGETS, KINDS, HOST_READS, resolveTarget, detected } = require('../scripts/lib/targets');
 const { MARKER_RE, render } = require('../scripts/lib/render');
 const Hooks = require('../scripts/lib/hooks-install');
 const { loadProfiles, resolveProfiles } = require('../scripts/lib/profiles');
 const Rules = require('../scripts/lib/rules-install');
 const Mcp = require('../scripts/lib/mcp-install');
+const { inventory, compare } = require('../scripts/lib/inventory');
 
 const MARKER = '.kete-loom.json';
 const pkg = require('../package.json');
@@ -64,7 +67,10 @@ function help() {
 
 Usage
   kete-loom install   [options]   Copy skills, agents and commands into host folders (hooks with --hooks)
-  kete-loom update    [options]   Same as install (refreshes kete-loom items; never overwrites yours)
+  kete-loom update    [options]   Refresh exactly what kete-loom installed, in the hosts it's in
+  kete-loom outdated  [--json]    Installed items that are older than this version of Kete Loom
+  kete-loom audit     [--json]    Score this project's readiness for coding agents, with fixes
+  kete-loom check <path>          Lint your own skills, agents, commands, rules or hooks against the spec
   kete-loom uninstall [options]   Remove items that kete-loom installed
   kete-loom list      [--json]    List available skills, agents, commands and hooks
   kete-loom profiles  [--json]    List install profiles
@@ -442,6 +448,122 @@ function list(opts) {
   console.log(`\n${KINDS.map(count).join(', ')}, ${catalog(opts).hooks.length} hook(s), ${catalog(opts).mcp.length} MCP server(s). Install with: npx @ketecode/loom install (hooks: --hooks, MCP servers: --mcp <names>)`);
 }
 
+// Installed items for this scope, with the library's current version beside each.
+function installed(opts) {
+  const all = catalog(opts);
+  const version = new Map([...KINDS, 'hooks', 'mcp'].flatMap((k) => (all[k] || []).map((i) => [`${k}:${i.dir}`, i.version])));
+  const rows = inventory({ scope: opts.scope, home: opts.home || os.homedir(), cwd: process.cwd(), mcpAll: all.mcp, hookNames: all.hooks.map((h) => h.dir) });
+  return rows.map((r) => ({ ...r, latest: version.get(`${r.kind}:${r.name}`) || null }));
+}
+
+// update: re-apply exactly what is installed, in the hosts it is installed in.
+function update(opts) {
+  const rows = installed(opts);
+  if (!rows.length) {
+    console.log(`Nothing installed by kete-loom at ${opts.scope} scope. Run: npx @ketecode/loom install`);
+    return [];
+  }
+  const gone = [...new Set(rows.filter((r) => !r.latest && r.kind !== 'hooks' && r.kind !== 'mcp').map((r) => `${r.kind.replace(/s$/, '')} ${r.name}`))];
+  const pick = (kind) => [...new Set(rows.filter((r) => r.kind === kind && !r.linked && (r.latest || kind === 'hooks' || kind === 'mcp')).map((r) => r.name))];
+  const known = (kind, names) => names.filter((n) => catalog(opts)[kind].some((i) => i.dir === n));
+  const next = {
+    ...opts,
+    force: false,
+    targets: [...new Set(rows.map((r) => r.target))],
+    skills: pick('skills'),
+    agents: pick('agents'),
+    commands: pick('commands'),
+    rules: pick('rules'),
+    hookNames: known('hooks', pick('hooks')),
+    mcp: known('mcp', pick('mcp')),
+  };
+  for (const k of ['skills', 'agents', 'commands', 'rules', 'hookNames', 'mcp']) if (!next[k].length) delete next[k];
+  const changes = rows.filter((r) => r.version && r.latest && compare(r.version, r.latest) < 0);
+  const results = install(next);
+  if (!opts.json) {
+    const versions = [...new Map(changes.map((r) => [`${r.kind}:${r.name}`, `  ${r.kind.replace(/s$/, '').padEnd(8)} ${r.name.padEnd(28)} ${r.version} -> ${r.latest}`])).values()];
+    console.log(versions.length ? `\nNew versions:\n${versions.join('\n')}` : '\nEverything was already at the latest version.');
+    const linked = rows.filter((r) => r.linked).map((r) => r.name);
+    if (linked.length) console.log(`Linked skills are live already and were left alone: ${[...new Set(linked)].join(', ')}.`);
+    if (gone.length) console.log(`No longer in Kete Loom, left in place (remove with uninstall): ${gone.join(', ')}.`);
+  }
+  return results;
+}
+
+function outdated(opts) {
+  const rows = installed(opts).filter((r) => r.version && r.latest && compare(r.version, r.latest) < 0);
+  if (opts.json) {
+    console.log(JSON.stringify(rows.map(({ target, kind, name, version, latest }) => ({ target, kind, name, version, latest })), null, 2));
+    return rows.length ? 1 : 0;
+  }
+  if (!rows.length) {
+    console.log('Everything kete-loom installed is up to date.');
+    return 0;
+  }
+  for (const r of rows) console.log(`${r.kind.replace(/s$/, '').padEnd(8)} ${r.name.padEnd(28)} ${r.version.padEnd(8)} -> ${r.latest.padEnd(8)} ${r.target}`);
+  console.log('\nRun: npx @ketecode/loom@latest update');
+  return 1;
+}
+
+// check: lint items you wrote, wherever they live.
+function itemsAt(target) {
+  const p = path.resolve(target);
+  if (!fs.existsSync(p)) throw new Error(`${target} does not exist`);
+  if (fs.statSync(p).isFile()) {
+    if (!p.endsWith('.md')) throw new Error(`${target}: expected a .md command or rule, or a folder`);
+    return [path.basename(path.dirname(p)) === 'rules' ? loadRule(p) : loadCommand(p)];
+  }
+  const kinds = [['SKILL.md', loadSkill], ['AGENT.md', loadAgent], ['HOOK.md', loadHook]];
+  const own = kinds.find(([f]) => fs.existsSync(path.join(p, f)));
+  if (own) return [own[1](p)];
+  return fs.readdirSync(p).sort().flatMap((entry) => {
+    const child = path.join(p, entry);
+    if (fs.statSync(child).isDirectory()) {
+      const k = kinds.find(([f]) => fs.existsSync(path.join(child, f)));
+      return k ? [k[1](child)] : [];
+    }
+    return entry.endsWith('.md') && !/^(README|CHANGELOG|AGENTS|CLAUDE)\.md$/i.test(entry) ? [path.basename(p) === 'rules' ? loadRule(child) : loadCommand(child)] : [];
+  });
+}
+
+function check(opts) {
+  const target = opts._[1];
+  if (!target) throw new Error('usage: kete-loom check <path to a skill, agent, hook, command or rule, or a folder of them>');
+  const items = itemsAt(target);
+  if (!items.length) throw new Error(`no skills, agents, commands, rules or hooks found in ${target}`);
+  let errors = 0;
+  const out = items.map((item) => {
+    const r = lintItem(item);
+    errors += r.errors.length;
+    return { kind: item.kind, name: item.dir, path: item.path, ...r };
+  });
+  if (opts.json) console.log(JSON.stringify(out, null, 2));
+  else {
+    for (const r of out) {
+      if (!r.errors.length && !r.warnings.length) console.log(`✓ ${r.kind.padEnd(7)} ${r.name}`);
+      for (const e of r.errors) console.log(`✗ ${r.kind.padEnd(7)} ${r.name}  ${e}`);
+      for (const w of r.warnings) console.log(`! ${r.kind.padEnd(7)} ${r.name}  ${w}`);
+    }
+    console.log(`\n${out.length} item(s), ${errors} error(s). The rules are in docs/SKILL_SPEC.md of the Kete Loom repository.`);
+  }
+  return errors ? 1 : 0;
+}
+
+function auditCmd(opts) {
+  const all = catalog(opts);
+  const r = audit({ cwd: process.cwd(), home: opts.home || os.homedir(), catalog: all });
+  if (opts.json) console.log(JSON.stringify(r, null, 2));
+  else {
+    console.log(`Agent readiness for ${r.root.replace(os.homedir(), '~')}: ${r.score}/100\n`);
+    const mark = { pass: '✓', warn: '!', fail: '✗' };
+    for (const c of r.checks) {
+      console.log(`${mark[c.status]} ${c.title}: ${c.detail}`);
+      if (c.fix) console.log(`    fix: ${c.fix}`);
+    }
+  }
+  return r.checks.some((c) => c.status === 'fail') ? 1 : 0;
+}
+
 function profiles(opts) {
   const all = loadProfiles();
   const items = catalog(opts);
@@ -517,8 +639,14 @@ function main(argv) {
         install(opts);
         break;
       case 'update':
-        install({ ...opts, force: false });
+        update(opts);
         break;
+      case 'outdated':
+        return outdated(opts);
+      case 'audit':
+        return auditCmd(opts);
+      case 'check':
+        return check(opts);
       case 'uninstall':
       case 'remove':
         uninstall(opts);

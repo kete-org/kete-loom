@@ -2645,6 +2645,15 @@
   ],
   "commands": [
     {
+      "name": "aside",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Answer a quick side question without changing files or losing the thread of the current task, then pick the task up where it was.",
+      "path": "commands/aside.md"
+    },
+    {
       "name": "build-fix",
       "version": "0.1.0",
       "category": "coding",
@@ -2663,6 +2672,26 @@
       ],
       "description": "Write changelog entries for the changes since the last release tag, grouped by type, with breaking changes called out first.",
       "path": "commands/changelog.md"
+    },
+    {
+      "name": "checkpoint",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Save a restorable snapshot of the working tree after running the project's checks, without committing or changing anything, or list and restore earlier ones.",
+      "path": "commands/checkpoint.md"
+    },
+    {
+      "name": "codemap",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Write or refresh a short architecture map of the codebase (entry points, modules, data flow, commands) at docs/CODEMAP.md, so agents can orient without reading everything.",
+      "path": "commands/codemap.md"
     },
     {
       "name": "commit",
@@ -2703,6 +2732,24 @@
       ],
       "description": "Check the current UI changes for internationalisation problems such as hard-coded strings, concatenation, plurals, and date or currency formatting.",
       "path": "commands/i18n-check.md"
+    },
+    {
+      "name": "loom",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Find the Kete Loom skills, agents, commands, rules, hooks or MCP servers that fit what you are doing, and show how to install them.",
+      "path": "commands/loom.md"
+    },
+    {
+      "name": "model-route",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Recommend which model tier to use for a task (fast, balanced or most capable), weighing complexity, risk and cost, and say how to switch in this host.",
+      "path": "commands/model-route.md"
     },
     {
       "name": "onboard",
@@ -2797,6 +2844,15 @@
       "requires": [],
       "description": "Scan the current change for vulnerabilities, leaked secrets and unsafe dependencies, and report findings by severity.",
       "path": "commands/security-scan.md"
+    },
+    {
+      "name": "sessions",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "List the session handoff notes in this repository with their branch, date and next step, and tidy up ones that are finished, only with the user's go-ahead.",
+      "path": "commands/sessions.md"
     },
     {
       "name": "tdd",

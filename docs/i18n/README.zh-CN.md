@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot 和 Kete Code。</p>
 
-<!-- translated from README.md, source 11b4fb1ab2a5 -->
+<!-- translated from README.md, source 3eb8b3837837 -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -139,6 +139,20 @@ npx @ketecode/loom uninstall --mcp github
 配置包：`mcp-web`、`mcp-code`（GitHub、Git、Sentry）、`mcp-team`（Linear、Notion、Atlassian）、`mcp-cloud`（Cloudflare、Supabase 只读、Stripe）、`mcp-design`（Figma）。Claude Code 的服务器通过 `claude mcp add-json --scope user` 添加（使用 `--project` 时写入 `.mcp.json`）；Codex 的服务器写入 `config.toml` 中一个带标记的区块；Gemini CLI、Cursor、Copilot CLI、OpenCode 和 Kete Code 则写入各自的 MCP 配置文件。如果你已经用同一名称配置过某个服务器，它绝不会被替换。Copilot CLI 只会获得本地服务器，因为它没有公开文档说明如何登录远程服务器。
 
 完整列表见英文版 README：[MCP servers](../../README.md#mcp-servers)，也可查阅 [catalog.json](../../catalog.json)。
+
+## 日常维护
+
+```bash
+npx @ketecode/loom@latest update      # refresh exactly what you installed, in the hosts it's in
+npx @ketecode/loom outdated           # installed items older than the latest Kete Loom
+npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
+npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
+npx @ketecode/loom doctor             # what is installed where
+```
+
+`audit` 会检查那些让 agent 在仓库中良好工作的要素：agent 指令（`AGENTS.md`/`CLAUDE.md`）、与它检测到的技术栈对应的 Kete Loom 配置包、测试和 lint 命令、CI、安全 hook，以及 `.env` 文件是否已被忽略且未被提交。只要有一项检查失败，它就会以非零状态码退出，因此可以在 CI 中运行。
+
+在你的 agent 中，`/loom` 为任务找到合适的条目，`/checkpoint` 保存一个可恢复的快照而无需提交，`/sessions` 列出并整理交接笔记，`/codemap` 写出一份简短的架构图，`/model-route` 建议一个模型档位，`/aside` 回答一个旁支问题而不会让当前任务偏离方向。
 
 ## 各宿主的查找位置
 

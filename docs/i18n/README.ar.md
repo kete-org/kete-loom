@@ -7,7 +7,7 @@
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
 مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code.</p>
 
-<!-- translated from README.md, source 11b4fb1ab2a5 -->
+<!-- translated from README.md, source 3eb8b3837837 -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -169,6 +169,24 @@ npx @ketecode/loom uninstall --mcp github
 الحزم: `mcp-web`، و`mcp-code` (GitHub وGit وSentry)، و`mcp-team` (Linear وNotion وAtlassian)، و`mcp-cloud` (Cloudflare وSupabase للقراءة فقط وStripe)، و`mcp-design` (Figma). تُضاف خوادم Claude Code عبر `claude mcp add-json --scope user` (أو `.mcp.json` مع `--project`)؛ ويحصل عليها Codex في كتلة مُعلَّمة داخل `config.toml`؛ أما Gemini CLI وCursor وCopilot CLI وOpenCode وKete Code ففي ملفات إعدادات MCP الخاصة بها. ولا يُستبدَل أبدًا خادم سبق أن أعددته بالاسم نفسه. يحصل Copilot CLI على الخوادم المحلية فقط، لأنه لا يملك طريقة موثّقة لتسجيل الدخول إلى الخوادم البعيدة.
 
 القائمة الكاملة موجودة في ملف README الإنجليزي: [MCP servers](../../README.md#mcp-servers)، وفي `catalog.json`.
+
+## الصيانة (Housekeeping)
+
+<div dir="ltr">
+
+```bash
+npx @ketecode/loom@latest update      # refresh exactly what you installed, in the hosts it's in
+npx @ketecode/loom outdated           # installed items older than the latest Kete Loom
+npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
+npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
+npx @ketecode/loom doctor             # what is installed where
+```
+
+</div>
+
+يفحص `audit` الأمور التي تجعل الوكلاء يعملون جيدًا في المستودع: تعليمات الوكيل (`AGENTS.md`/`CLAUDE.md`)، وحزم Kete Loom الخاصة بالتقنيات التي يكتشفها، وأوامر الاختبار والفحص (lint)، وCI، وخطافات الأمان، والتأكد من أن ملفات `.env` مُتجاهَلة وغير مُودَعة (committed). ويخرج برمز غير صفري عند فشل أي فحص، لذا يمكن تشغيله في CI.
+
+داخل وكيلك، يعثر `/loom` على العناصر المناسبة لمهمة ما، ويحفظ `/checkpoint` لقطة قابلة للاستعادة دون إيداع (commit)، ويعرض `/sessions` ملاحظات التسليم (handoff notes) وينظّمها، ويكتب `/codemap` خريطة معمارية قصيرة، ويقترح `/model-route` مستوى النموذج، ويجيب `/aside` عن سؤال جانبي دون أن يُخرج المهمة عن مسارها.
 
 ## أين تبحث البيئات المضيفة
 

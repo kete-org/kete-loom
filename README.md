@@ -329,12 +329,17 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 <!-- commands:start -->
 | Name | Category | Risk | What it does |
 |---|---|---|---|
+| [`/aside`](commands/aside.md) | meta | read-only | Answer a quick side question without changing files or losing the thread of the current task, then pick the task up where it was. |
 | [`/build-fix`](commands/build-fix.md) | coding | runs-commands | Fix the current build, compile or type-check failure with the smallest change, routed to the build resolver for that language. |
 | [`/changelog`](commands/changelog.md) | meta | writes-files | Write changelog entries for the changes since the last release tag, grouped by type, with breaking changes called out first. |
+| [`/checkpoint`](commands/checkpoint.md) | devops | runs-commands | Save a restorable snapshot of the working tree after running the project's checks, without committing or changing anything, or list and restore earlier ones. |
+| [`/codemap`](commands/codemap.md) | docs | writes-files | Write or refresh a short architecture map of the codebase (entry points, modules, data flow, commands) at docs/CODEMAP.md, so agents can orient without reading everything. |
 | [`/commit`](commands/commit.md) | meta | runs-commands | Write a Conventional Commits message for the staged changes, show it, and commit only after the user confirms. |
 | [`/deps-audit`](commands/deps-audit.md) | security | runs-commands | Audit the project's dependencies for known vulnerabilities, abandoned or risky packages and licence problems, and report fixes by severity. |
 | [`/explain`](commands/explain.md) | docs | read-only | Explain how a piece of code or a flow works, tracing it through the codebase with file:line references, without changing anything. |
 | [`/i18n-check`](commands/i18n-check.md) | coding | runs-commands | Check the current UI changes for internationalisation problems such as hard-coded strings, concatenation, plurals, and date or currency formatting. |
+| [`/loom`](commands/loom.md) | meta | runs-commands | Find the Kete Loom skills, agents, commands, rules, hooks or MCP servers that fit what you are doing, and show how to install them. |
+| [`/model-route`](commands/model-route.md) | ai | read-only | Recommend which model tier to use for a task (fast, balanced or most capable), weighing complexity, risk and cost, and say how to switch in this host. |
 | [`/onboard`](commands/onboard.md) | docs | runs-commands | Get oriented in an unfamiliar codebase: what it does, how it is laid out, how to build, test and run it, and where to start. |
 | [`/plan-feature`](commands/plan-feature.md) | meta | read-only | Turn a feature request into a step-by-step implementation plan with files to touch, risks and tests, without writing code. |
 | [`/postmortem`](commands/postmortem.md) | meta | writes-files | Write a blameless postmortem for an incident, with timeline, impact, root cause, contributing factors and owned action items. |
@@ -345,6 +350,7 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 | [`/review`](commands/review.md) | coding | runs-commands | Review the current changes for bugs, risky patterns and missing tests, routed to the reviewer for the language that changed. |
 | [`/save-session`](commands/save-session.md) | meta | writes-files | Save a handoff note recording the current goal, progress, decisions and next steps so a later session can resume. |
 | [`/security-scan`](commands/security-scan.md) | security | runs-commands | Scan the current change for vulnerabilities, leaked secrets and unsafe dependencies, and report findings by severity. |
+| [`/sessions`](commands/sessions.md) | meta | writes-files | List the session handoff notes in this repository with their branch, date and next step, and tidy up ones that are finished, only with the user's go-ahead. |
 | [`/tdd`](commands/tdd.md) | testing | runs-commands | Implement the requested change test-first, writing one failing test, the smallest code to pass it, then refactoring, step by step. |
 | [`/test-coverage`](commands/test-coverage.md) | testing | runs-commands | Find untested behaviour in the current change and add focused tests for it, then show the coverage before and after. |
 | [`/threat-model`](commands/threat-model.md) | security | read-only | Produce a threat model for a feature or system, with assets, trust boundaries, data flows, STRIDE threats and ranked mitigations. |
@@ -439,6 +445,20 @@ Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, 
 | [`supabase`](mcp/supabase.json) | remote | OAuth | Supabase's remote MCP server in read-only mode: inspect projects, schemas and data, and search the docs, signed in with Supabase OAuth. |
 | [`time`](mcp/time.json) | local | none | The reference Time MCP server: current time and timezone conversion. |
 <!-- mcp:end -->
+
+## Housekeeping
+
+```bash
+npx @ketecode/loom@latest update      # refresh exactly what you installed, in the hosts it's in
+npx @ketecode/loom outdated           # installed items older than the latest Kete Loom
+npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
+npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
+npx @ketecode/loom doctor             # what is installed where
+```
+
+`audit` checks the things that make agents work well in a repository: agent instructions (`AGENTS.md`/`CLAUDE.md`), the Kete Loom packs for the stack it detects, test and lint commands, CI, the safety hooks, and that `.env` files are ignored and not committed. It exits non-zero when a check fails, so it can run in CI.
+
+Inside your agent, `/loom` finds the right items for a task, `/checkpoint` saves a restorable snapshot without committing, `/sessions` lists and tidies handoff notes, `/codemap` writes a short architecture map, `/model-route` suggests a model tier, and `/aside` answers a side question without derailing the task.
 
 ## Where hosts look
 

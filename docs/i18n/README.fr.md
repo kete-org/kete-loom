@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot et Kete Code.</p>
 
-<!-- translated from README.md, source 11b4fb1ab2a5 -->
+<!-- translated from README.md, source 3eb8b3837837 -->
 
 <!-- languages:start -->
 <p align="center"><a href="../../README.md">English</a> · <a href="README.ar.md">العربية</a> · <a href="README.de.md">Deutsch</a> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ja.md">日本語</a> · <a href="README.pt-BR.md">Português (Brasil)</a> · <a href="README.sw.md">Kiswahili</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="https://kete-org.github.io/kete-loom/">Browse the catalog ↗</a></p>
@@ -139,6 +139,20 @@ npx @ketecode/loom uninstall --mcp github
 Packs : `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase en lecture seule, Stripe), `mcp-design` (Figma). Les serveurs pour Claude Code sont ajoutés avec `claude mcp add-json --scope user` (ou dans `.mcp.json` avec `--project`) ; Codex les reçoit dans un bloc balisé de `config.toml` ; Gemini CLI, Cursor, Copilot CLI, OpenCode et Kete Code dans leurs fichiers de configuration MCP. Un serveur que vous avez déjà configuré sous le même nom n'est jamais remplacé. Copilot CLI ne reçoit que les serveurs locaux, car il n'offre aucun moyen documenté de s'authentifier auprès des serveurs distants.
 
 La liste complète se trouve dans le README en anglais : [MCP servers](../../README.md#mcp-servers), ainsi que dans `catalog.json`.
+
+## Maintenance
+
+```bash
+npx @ketecode/loom@latest update      # refresh exactly what you installed, in the hosts it's in
+npx @ketecode/loom outdated           # installed items older than the latest Kete Loom
+npx @ketecode/loom audit              # score this project's readiness for coding agents, with fixes
+npx @ketecode/loom check ./my-skills  # lint your own skills, agents, commands, rules or hooks
+npx @ketecode/loom doctor             # what is installed where
+```
+
+`audit` vérifie ce qui permet aux agents de bien fonctionner dans un dépôt : les instructions pour les agents (`AGENTS.md`/`CLAUDE.md`), les packs Kete Loom correspondant à la stack qu'il détecte, les commandes de test et de lint, la CI, les hooks de sécurité, et le fait que les fichiers `.env` sont ignorés et non commités. Il se termine avec un code non nul lorsqu'une vérification échoue, ce qui permet de l'exécuter en CI.
+
+Dans votre agent, `/loom` trouve les éléments adaptés à une tâche, `/checkpoint` enregistre un instantané restaurable sans faire de commit, `/sessions` liste et range les notes de passage de relais, `/codemap` rédige une courte carte de l'architecture, `/model-route` suggère un niveau de modèle, et `/aside` répond à une question annexe sans détourner l'agent de sa tâche.
 
 ## Où les hôtes cherchent
 
