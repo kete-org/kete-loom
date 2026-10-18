@@ -26,6 +26,7 @@
     "./agents/accessibility-reviewer/AGENT.md",
     "./agents/agent-evaluator/AGENT.md",
     "./agents/architect/AGENT.md",
+    "./agents/assumptions-analyzer/AGENT.md",
     "./agents/billing-reviewer/AGENT.md",
     "./agents/code-reviewer/AGENT.md",
     "./agents/code-simplifier/AGENT.md",
@@ -61,6 +62,7 @@
     "./agents/perl-reviewer/AGENT.md",
     "./agents/php-build-resolver/AGENT.md",
     "./agents/php-reviewer/AGENT.md",
+    "./agents/plan-checker/AGENT.md",
     "./agents/planner/AGENT.md",
     "./agents/pr-test-analyzer/AGENT.md",
     "./agents/python-build-resolver/AGENT.md",
@@ -81,6 +83,7 @@
     "./agents/task-implementer/AGENT.md",
     "./agents/typescript-build-resolver/AGENT.md",
     "./agents/typescript-reviewer/AGENT.md",
+    "./agents/ui-auditor/AGENT.md",
     "./agents/vue-reviewer/AGENT.md"
   ]
 }

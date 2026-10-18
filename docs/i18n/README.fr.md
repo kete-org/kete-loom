@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source ac3a3c3f2b95 -->
+<!-- translated from README.md, source 848b1e887ff1 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,8 +42,9 @@ Vous pouvez aussi choisir un profil au lieu de tout installer :
 | `minimal` | Développement piloté par les tests, vérification, revue de sécurité, revue de code |
 | `core` | L'essentiel, la planification, git, la prise en main d'un projet et le passage de relais entre sessions, **plus les packs de langages et de frameworks utilisés par votre projet** (détectés à partir de `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile`, etc.) |
 | `developer` | `core` plus les quatre hooks de sécurité |
-| `strict` | `developer` plus les garde-fous optionnels : lire avant de modifier, configurations de lint protégées, serveurs de développement en arrière-plan, lint et vérification des types avant de terminer |
+| `strict` | `developer` plus les garde-fous optionnels : lire avant de modifier, configurations de lint protégées, serveurs de développement en arrière-plan, rester dans le worktree, aucune lecture de secrets ni d'instructions dissimulées, des messages de commit valides, et ni ébauches inachevées ni échec du lint et de la vérification des types à la fin |
 | `method` | Une méthode de développement complète : la conception avant le code, des plans détaillés, un sous-agent neuf par tâche avec revue de conformité à la spécification et de qualité, un débogage méthodique, la réponse aux revues, des worktrees et une fin de branche propre |
+| `project` | `method` plus la planification de projet : une feuille de route avec des phases dans `.planning/`, la clarification des exigences, la vérification des plans avant le code, des tests d'acceptation avec vous, un backlog d'idées, des spikes de faisabilité et des commandes de récupération |
 | `security` | Tous les éléments de sécurité et de conformité, plus les hooks de sécurité |
 | `ai`, `data` | `core` plus tous les éléments IA ou données |
 | `business` | Skills de marketing, de recherche, de relations investisseurs, de rédaction, de PRD et d'opérations |
@@ -104,6 +105,18 @@ Installez `--profile method` pour une façon de travailler complète, de l'idée
 | 7. Terminer | `/finish-branch` (`finishing-a-branch`) | Les tests d'abord, puis fusionner en local, ouvrir une pull request, conserver la branche ou la supprimer (seulement après que vous avez tapé une confirmation). |
 
 `/feature-dev` exécute toute la séquence en s'arrêtant pour attendre votre validation entre les étapes, et la règle `use-skills` pousse l'agent à recourir à ces skills au lieu de travailler de mémoire.
+
+Pour un travail plus vaste qu'une seule fonctionnalité, `--profile project` ajoute la planification autour. Tout est conservé dans de simples fichiers Markdown sous `.planning/`, que vous pouvez lire, modifier et committer :
+
+| Besoin | Outil |
+|---|---|
+| Une feuille de route de jalons et de phases liés à des exigences numérotées, avec un état courant qui persiste d'une session à l'autre | `project-roadmap` ; `/progress` indique où en sont les choses et nomme la prochaine action |
+| Des exigences précisées avant la planification : les zones d'ombre, les hypothèses de l'agent avec leurs preuves, les cas limites | `spec-clarification`, `assumptions-analyzer` |
+| Un plan vérifié par rapport à son objectif avant qu'une seule ligne de code soit écrite | `plan-checker` |
+| « Est-ce que cela peut seulement fonctionner ? » tranché par une expérience limitée dans le temps et un verdict | `feasibility-spike` |
+| Des tests d'acceptation avec vous, un livrable à la fois | `/uat` (`acceptance-testing`), `ui-auditor` |
+| Des idées et des tâches à faire enregistrées sans faire dérailler la tâche en cours | `/capture` (`idea-backlog`) |
+| Récupération : corriger une liste de constats de revue, comprendre pourquoi un effort sur plusieurs sessions a mal tourné, annuler du travail en toute sécurité | `/fix-findings`, `/forensics`, `/revert-work` |
 
 ## Skills
 

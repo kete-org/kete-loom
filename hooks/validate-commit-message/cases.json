@@ -1,0 +1,18 @@
+{
+  "should_block": [
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"updated stuff\"" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -am 'Fix bug in login'" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"feature(auth): add sso\"" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git add -A && git commit --message='fix:missing space'" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"$(cat <<'EOF'\nwip\n\nmore text\nEOF\n)\"" }
+  ],
+  "should_allow": [
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"fix(auth): reject expired tokens\"" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"feat!: drop node 16\"" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"$(cat <<'EOF'\ndocs(readme): explain profiles\n\nLonger body here.\nEOF\n)\"" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit --amend --no-edit" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git commit -m \"Merge branch 'main' into feature\"" },
+    { "cwd": "hooks/validate-commit-message/fixtures/cc", "command": "git log --oneline -5" },
+    { "command": "git commit -m \"updated stuff\"" }
+  ]
+}

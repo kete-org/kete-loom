@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Before we commit to this plan, can SQLite with WAL handle 500 concurrent writes a second on our box? Spike it",
+    "I'm not sure the Shopify webhooks arrive fast enough for live stock sync. Prove whether it works before we design anything",
+    "Let's spike whether pdf.js can render our 300-page manuals in the browser without crashing mobile Safari",
+    "Run a quick timeboxed experiment to see if the Whisper API gives usable transcripts for Twi audio",
+    "The whole design assumes we can read Bluetooth heart-rate data from a PWA. Check that assumption with a throwaway test"
+  ],
+  "should_not_trigger": [
+    "How long will it take to build the bulk import feature? Give me a range",
+    "Run a benchmark comparing our two JSON serialisers and report the numbers properly",
+    "Help me design the onboarding flow; I know what I want but not how it should look",
+    "Before writing a date parser, check whether we already have one or a library for it",
+    "Note down the idea of trying Bun later, I don't want to look at it now"
+  ]
+}

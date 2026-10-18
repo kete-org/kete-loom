@@ -9,6 +9,7 @@ const { execFileSync } = require('child_process');
 
 const MAX_NOTE_LINES = 60;
 const MAX_NOTE_CHARS = 3000;
+const MAX_STATE_LINES = 30;
 
 function git(cwd, args) {
   try {
@@ -44,6 +45,11 @@ function check(event) {
   const branch = git(root, ['rev-parse', '--abbrev-ref', 'HEAD']);
   const changes = (git(root, ['status', '--porcelain']) || '').split('\n').filter(Boolean).length;
   const lines = [`Session context from kete-loom (load-session-context):`, `- Branch: ${branch || 'unknown'}, ${changes} uncommitted change(s).`];
+  const state = path.join(root, '.planning', 'STATE.md');
+  if (fs.existsSync(state)) {
+    const head = fs.readFileSync(state, 'utf8').split('\n').slice(0, MAX_STATE_LINES).join('\n').slice(0, MAX_NOTE_CHARS);
+    lines.push(`- Project state from .planning/STATE.md (first ${MAX_STATE_LINES} lines; read the full file before acting on it):`, '', head, '');
+  }
   const note = findNote(root, branch);
   if (note) {
     let text = fs.readFileSync(note, 'utf8').split('\n').slice(0, MAX_NOTE_LINES).join('\n');

@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code、Kiro にそのままインストールできます。</p>
 
-<!-- translated from README.md, source ac3a3c3f2b95 -->
+<!-- translated from README.md, source 848b1e887ff1 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,8 +42,9 @@ npx @ketecode/loom install
 | `minimal` | テストファーストの作業、検証、セキュリティレビュー、コードレビュー |
 | `core` | 基本セット、計画、git、オンボーディング、セッションの引き継ぎに加えて、**プロジェクトで使っている言語とフレームワークのパック**(`package.json`、`go.mod`、`pyproject.toml`、`Cargo.toml`、`Dockerfile` などから検出) |
 | `developer` | `core` と 4 つの安全用 hook |
-| `strict` | `developer` に加えて、オプトインのガードレール: 編集前の読み込み、lint 設定の保護、開発サーバーのバックグラウンド実行、完了前の lint と型チェック |
+| `strict` | `developer` に加えて、オプトインのガードレール: 編集前の読み込み、lint 設定の保護、開発サーバーのバックグラウンド実行、worktree 内にとどまること、秘密情報を読まないことと仕込まれた指示に従わないこと、有効なコミットメッセージ、そして最後に未完成のスタブや lint と型チェックの失敗が残らないこと |
 | `method` | 完全な開発手法: コードの前の設計、細かな粒度の計画、タスクごとに新しいサブエージェントを使い仕様と品質をレビュー、体系的なデバッグ、レビューへの対応、worktree、そしてきれいな仕上げ |
+| `project` | `method` に加えてプロジェクト計画: `.planning/` 内のフェーズ付きロードマップ、要件の明確化、コードの前の計画チェック、あなたと行う受け入れテスト、アイデアのバックログ、実現可能性のスパイク、そして復旧用の command |
 | `security` | セキュリティとコンプライアンスに関するすべてのアイテムと、安全用 hook |
 | `ai`, `data` | `core` と、AI またはデータに関するすべてのアイテム |
 | `business` | マーケティング、リサーチ、投資家向け、ライティング、PRD、オペレーションの skill |
@@ -104,6 +105,18 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | 7. 仕上げ | `/finish-branch` (`finishing-a-branch`) | まずテストを実行し、そのうえでローカルでマージする、プルリクエストを開く、ブランチを残す、または破棄する(確認の入力後のみ)のいずれかを行います。 |
 
 `/feature-dev` は、段階ごとに承認のための一時停止を挟みながら一連の流れ全体を実行します。また `use-skills` rule により、エージェントは記憶に頼って作業するのではなく、これらの skill を使い続けます。
+
+1 つの機能より大きな作業には、`--profile project` がその周りの計画を追加します。すべては `.planning/` 配下のプレーンな Markdown ファイルに保存され、読む、編集する、コミットすることができます:
+
+| 必要なこと | 使うもの |
+|---|---|
+| 番号付きの要件に結び付いたマイルストーンとフェーズのロードマップと、セッションをまたいで保たれる現在の状態 | `project-roadmap`。`/progress` が現状を伝え、次のアクションを示します |
+| 計画の前に要件を確定させる: あいまいな点、根拠付きのエージェントの前提、エッジケース | `spec-clarification`、`assumptions-analyzer` |
+| コードを書く前に、目標に照らしてチェックされた計画 | `plan-checker` |
+| 「そもそもこれは実現できるのか」に、時間を区切った実験と結論で答える | `feasibility-spike` |
+| あなたと行う受け入れテスト、成果物を 1 つずつ | `/uat` (`acceptance-testing`)、`ui-auditor` |
+| 今のタスクを脱線させずにアイデアや todo を保存する | `/capture` (`idea-backlog`) |
+| 復旧: レビュー指摘のリストを修正する、複数セッションにわたる作業がなぜうまくいかなかったかを突き止める、作業を安全に取り消す | `/fix-findings`、`/forensics`、`/revert-work` |
 
 ## Skill
 

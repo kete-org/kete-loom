@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's the plan in docs/plans/2026-03-01-invoices.md. Before we execute anything, check that every requirement has a task and a test that would actually fail",
+    "Is this implementation plan complete? Make sure nothing from the spec got quietly dropped or watered down",
+    "Gate the phase 2 plan before building: do the files and commands it names exist, and are the tasks ordered right?",
+    "Check the plan against REQUIREMENTS.md and tell me PASS or what needs fixing before the implementer starts",
+    "Look over this plan for missing dependencies between tasks and verification that only happens at the very end"
+  ],
+  "should_not_trigger": [
+    "Write a step-by-step implementation plan for the invoices feature",
+    "Check whether the finished invoices branch does what the ticket asked for",
+    "Execute the plan in docs/plans one task at a time with a review after each",
+    "Review the diff on this branch for correctness bugs and broken callers",
+    "List what you'd assume about the codebase before we plan the invoice export"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Before we plan phase 3, nail down exactly what the bulk invite flow must and must not do",
+    "We already decided to add CSV import to the contacts page. What's still ambiguous about it? Ask me until the spec is locked",
+    "Go through this ticket, list the gray areas, and write a SPEC.md with the decisions once I've answered",
+    "Read the codebase and tell me what you'd assume for the refund phase so I can correct you, then lock it into a spec",
+    "Probe the edge cases and the things that must never happen for the webhook retry feature before anyone writes a plan"
+  ],
+  "should_not_trigger": [
+    "I have a rough idea for team workspaces, help me figure out which approach to take",
+    "Write a PRD for bulk invites with success metrics and rollout for leadership",
+    "Turn the locked spec in docs/specs into a task-by-task implementation plan",
+    "Check whether this branch actually delivers what the ticket asked for",
+    "Add an urgent phase to our roadmap for the security fix and update STATE.md"
+  ]
+}

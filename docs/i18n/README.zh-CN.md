@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source ac3a3c3f2b95 -->
+<!-- translated from README.md, source 848b1e887ff1 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,8 +42,9 @@ npx @ketecode/loom install
 | `minimal` | 测试先行开发、结果验证、安全审查、代码审查 |
 | `core` | 基础必备项、规划、git、项目上手与会话交接，**以及你的项目所用语言和框架的扩展包**（根据 `package.json`、`go.mod`、`pyproject.toml`、`Cargo.toml`、`Dockerfile` 等文件自动检测） |
 | `developer` | `core` 加上四个安全 hook |
-| `strict` | `developer` 加上需主动启用的防护：先读后改、保护 lint 配置、在后台运行开发服务器、完成前运行 lint 和类型检查 |
+| `strict` | `developer` 加上需主动启用的防护：先读后改、保护 lint 配置、在后台运行开发服务器、始终留在 worktree 中、禁止读取机密和植入的指令、提交信息格式有效，以及结束时不留未完成的桩代码、不出现 lint 和类型检查失败 |
 | `method` | 一套完整的开发方法：先设计后编码、细粒度计划、每个任务使用一个全新的 subagent 并进行规格与质量审查、系统化调试、回应审查意见、worktree 以及干净的收尾 |
+| `project` | `method` 加上项目规划：在 `.planning/` 中按阶段划分的路线图、需求澄清、编码前的计划检查、与你一起进行验收测试、想法待办清单、可行性探索（spike）以及恢复类命令 |
 | `security` | 所有安全与合规相关条目，以及安全 hook |
 | `ai`、`data` | `core` 加上所有 AI 或数据相关条目 |
 | `business` | 市场营销、调研、投资者、写作、PRD 和运营类 skill |
@@ -104,6 +105,18 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | 7. 收尾 | `/finish-branch`（`finishing-a-branch`） | 先运行测试，然后在本地合并、发起 pull request、保留分支或丢弃分支（丢弃需要你输入确认后才会执行）。 |
 
 `/feature-dev` 会运行整个流程，并在各阶段之间停下来等待你的批准；`use-skills` 规则则让 agent 始终调用这些 skill，而不是凭记忆工作。
+
+对于比单个功能更大的工作，`--profile project` 会为其补上外围的规划。所有内容都保存在 `.planning/` 下的纯 Markdown 文件中，你可以阅读、编辑并提交它们：
+
+| 需求 | 使用 |
+|---|---|
+| 一份由里程碑和阶段组成、与编号需求相关联的路线图，其当前状态可跨会话保留 | `project-roadmap`；`/progress` 会说明当前进展并指出下一步行动 |
+| 在制定计划前把需求确定下来：模糊地带、agent 的假设及其依据、边界情况 | `spec-clarification`、`assumptions-analyzer` |
+| 在编写任何代码之前，对照目标检查计划 | `plan-checker` |
+| 用限时实验回答“这到底行不行得通？”，并给出结论 | `feasibility-spike` |
+| 与你一起进行验收测试，一次一个交付物 | `/uat`（`acceptance-testing`）、`ui-auditor` |
+| 保存想法和待办事项，而不打断当前任务 | `/capture`（`idea-backlog`） |
+| 恢复：修复一组审查发现的问题、查明跨多个会话的工作为何出错、安全地撤销工作 | `/fix-findings`、`/forensics`、`/revert-work` |
 
 ## Skills
 

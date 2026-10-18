@@ -1,0 +1,30 @@
+{
+  "should_block": [
+    "cat .env",
+    "head -n 5 apps/api/.env.local",
+    "grep DATABASE_URL .env.production",
+    "less ~/.aws/credentials",
+    "cat ~/.ssh/id_ed25519",
+    "git show HEAD~3:.env",
+    "bash -c 'cat .env | base64'",
+    "cp .env /tmp/env-copy",
+    "awk -F= '{print $1}' < .env",
+    "sudo cat /etc/app/server.key",
+    "cat ~/.npmrc",
+    "rg -n SECRET .env.staging"
+  ],
+  "should_allow": [
+    "cat .env.example",
+    "cp .env.example .env",
+    "ls -la .env",
+    "git check-ignore -q .env",
+    "source .env && npm run migrate",
+    "docker run --env-file .env myimage",
+    "dotenv -e .env -- npm test",
+    "rm .env.local",
+    "cat ~/.ssh/id_ed25519.pub",
+    "grep -r process.env src/",
+    "echo 'remember to set .env' > notes.md",
+    "git ls-files .env"
+  ]
+}

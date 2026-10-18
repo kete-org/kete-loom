@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "While I remember: we should cache the exchange rates. Park that idea, don't do it now, keep fixing the login bug",
+    "Add a todo to rename the UserManager class once this PR is in",
+    "Save a seed: when we add a second payment provider, revisit the PaymentGateway interface",
+    "We're starting the v2 milestone. Go through the parked ideas and tell me which ones are now relevant",
+    "Our .planning/backlog folder has 40 stale notes. Review them with me and delete the dead ones"
+  ],
+  "should_not_trigger": [
+    "I have an idea for a referral programme feature; let's think through the design before we write any code",
+    "Write a handoff note so the next session can pick up this refactor where I left off",
+    "Create GitHub issues for each of these five tasks with acceptance criteria",
+    "Can we even stream audio from the browser to our Go server over WebSockets? Prove it before we plan",
+    "Turn the lesson from this session into a rule in AGENTS.md"
+  ]
+}

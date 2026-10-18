@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Set up a roadmap with milestones and phases for this side project, I'll be working on it over many sessions",
+    "We have three PRDs and a pile of ADRs in docs/. Turn them into a requirements list with IDs and a phased roadmap in .planning",
+    "Insert an urgent phase for the GDPR export before phase 4 in our roadmap without breaking the numbering",
+    "Milestone v1 is finished, close it out with a summary and archive it, then start planning v2",
+    "Our STATE.md says phase 3 is in progress but git shows it was merged a week ago, fix the planning files",
+    "Check that every requirement in REQUIREMENTS.md is covered by some phase of the roadmap"
+  ],
+  "should_not_trigger": [
+    "Write a PRD for the offline sync feature with goals, metrics and a rollout plan",
+    "Break the approved design for coupon expiry into a task-by-task implementation plan file",
+    "How long will the billing rewrite take? Give me a best, likely and worst case",
+    "Save a handoff note so tomorrow's session can carry on with the migration",
+    "Split this epic into GitHub issues with acceptance criteria",
+    "Help me pin down exactly what phase 2's password reset should and should not do before we plan it"
+  ]
+}

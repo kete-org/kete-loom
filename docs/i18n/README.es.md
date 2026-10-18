@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagentes y comandos seleccionados y probados para agentes de programación.</strong><br/>
 Una sola fuente. Se instala sin cambios en Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code y Kiro.</p>
 
-<!-- translated from README.md, source ac3a3c3f2b95 -->
+<!-- translated from README.md, source 848b1e887ff1 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,8 +42,9 @@ O elige un perfil en lugar de instalarlo todo:
 | `minimal` | Trabajo guiado por pruebas, verificación, revisión de seguridad, revisión de código |
 | `core` | Lo esencial, planificación, git, incorporación al proyecto y traspaso entre sesiones, **más los paquetes de lenguaje y framework que usa tu proyecto** (detectados a partir de `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile`, etc.) |
 | `developer` | `core` más los cuatro hooks de seguridad |
-| `strict` | `developer` más las salvaguardas opcionales: leer antes de editar, configuraciones de lint protegidas, servidores de desarrollo en segundo plano, lint y comprobación de tipos antes de terminar |
+| `strict` | `developer` más las salvaguardas opcionales: leer antes de editar, configuraciones de lint protegidas, servidores de desarrollo en segundo plano, permanecer en el worktree, ni lecturas de secretos ni instrucciones inyectadas, mensajes de commit válidos y, al final, ni stubs sin terminar ni fallos de lint o de comprobación de tipos |
 | `method` | Un método de desarrollo completo: diseño antes del código, planes granulares, un subagente nuevo por tarea con revisión de especificación y de calidad, depuración sistemática, respuesta a las revisiones, worktrees y un cierre limpio |
+| `project` | `method` más la planificación del proyecto: una hoja de ruta con fases en `.planning/`, aclaración de requisitos, comprobación de los planes antes del código, pruebas de aceptación contigo, un backlog de ideas, spikes de viabilidad y comandos de recuperación |
 | `security` | Todos los elementos de seguridad y cumplimiento normativo, más los hooks de seguridad |
 | `ai`, `data` | `core` más todos los elementos de IA o de datos |
 | `business` | Skills de marketing, investigación, inversores, redacción, PRD y operaciones |
@@ -104,6 +105,18 @@ Instala `--profile method` para tener una forma de trabajar completa, desde la i
 | 7. Terminar | `/finish-branch` (`finishing-a-branch`) | Primero las pruebas; después, fusionar localmente, abrir un pull request, conservar la rama o descartarla (solo después de que escribas una confirmación). |
 
 `/feature-dev` ejecuta toda la secuencia con una pausa para tu aprobación entre etapas, y la regla `use-skills` hace que el agente recurra a estos skills en lugar de trabajar de memoria.
+
+Para trabajos más grandes que una sola funcionalidad, `--profile project` añade la planificación que los rodea. Todo se guarda en archivos Markdown simples dentro de `.planning/`, que puedes leer, editar e incluir en un commit:
+
+| Necesidad | Usa |
+|---|---|
+| Una hoja de ruta de hitos y fases vinculados a requisitos numerados, con un estado actual que se conserva entre sesiones | `project-roadmap`; `/progress` indica en qué punto están las cosas y nombra la siguiente acción |
+| Requisitos bien definidos antes de planificar: las zonas grises, las suposiciones del agente con sus pruebas, los casos límite | `spec-clarification`, `assumptions-analyzer` |
+| Un plan comprobado frente a su objetivo antes de escribir código | `plan-checker` |
+| "¿Puede esto funcionar siquiera?" respondido con un experimento de duración limitada y un veredicto | `feasibility-spike` |
+| Pruebas de aceptación contigo, un entregable cada vez | `/uat` (`acceptance-testing`), `ui-auditor` |
+| Ideas y tareas pendientes guardadas sin desviarte de la tarea actual | `/capture` (`idea-backlog`) |
+| Recuperación: corregir una lista de hallazgos de revisión, averiguar por qué falló un esfuerzo de varias sesiones, deshacer trabajo de forma segura | `/fix-findings`, `/forensics`, `/revert-work` |
 
 ## Skills
 

@@ -307,3 +307,30 @@ test('doctor --fix restores an out-of-date hook runtime and drops hooks the cata
   assert.match(fs.readFileSync(settings, 'utf8'), /block-dangerous-commands/);
   assert.doesNotMatch(run(['doctor', '--home', home]), /Problems:/);
 });
+
+test('block-unfinished-stubs flags only lines the change adds, and only once in a row', () => {
+  const { check } = require('../hooks/block-unfinished-stubs/hook.js');
+  const repo = gitRepo({ 'a.js': '// TODO: old one\nexport const a = 1\n' });
+  execFileSync('git', ['add', '-A'], { cwd: repo });
+  execFileSync('git', ['-c', 'user.email=t@t', '-c', 'user.name=t', 'commit', '-qm', 'init'], { cwd: repo });
+  assert.strictEqual(check({ cwd: repo }).block, false, 'existing TODOs are not the agent\'s');
+  fs.writeFileSync(path.join(repo, 'a.js'), '// TODO: old one\nexport const a = 1\nexport function b() { throw new Error("not implemented") }\n');
+  fs.writeFileSync(path.join(repo, 'a.test.js'), 'it.only("works", () => {})\n');
+  fs.writeFileSync(path.join(repo, 'NOTES.md'), 'TODO: write docs\n');
+  const v = check({ cwd: repo });
+  assert.strictEqual(v.block, true);
+  assert.match(v.reason, /a\.js: a "not implemented" stub/);
+  assert.match(v.reason, /a\.test\.js: a focused test/);
+  assert.doesNotMatch(v.reason, /NOTES\.md|old one/);
+  assert.strictEqual(check({ cwd: repo, again: true }).block, false);
+});
+
+test('load-session-context includes the head of .planning/STATE.md', () => {
+  const { check } = require('../hooks/load-session-context/hook.js');
+  const repo = gitRepo({});
+  fs.mkdirSync(path.join(repo, '.planning'));
+  fs.writeFileSync(path.join(repo, '.planning', 'STATE.md'), '# State\nPhase 2 of 4: checkout\n' + 'x\n'.repeat(100));
+  const { context } = check({ cwd: repo });
+  assert.match(context, /Project state from \.planning\/STATE\.md[\s\S]*Phase 2 of 4: checkout/);
+  assert.ok(context.split('\n').filter((l) => l === 'x').length <= 30);
+});

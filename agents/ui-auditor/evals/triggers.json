@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Score the new dashboard screens on spacing, typography, states and responsiveness before the release",
+    "The settings pages feel off compared with the rest of the app, can you audit the implemented UI and tell me what to fix first?",
+    "Give me a graded UI quality report on the checkout flow with screenshots at mobile and desktop widths",
+    "Audit the components in this branch for missing empty, loading and error states and inconsistent spacing"
+  ],
+  "should_not_trigger": [
+    "Check the signup form for WCAG 2.2 AA failures for keyboard and screen reader users",
+    "Our app looks generic, pick a visual direction and apply a type scale and colour tokens",
+    "Click through staging and file bug reports for broken journeys before the demo",
+    "Trace why the filter toggle snaps back when I change the sort order",
+    "Review my React component diff for hook rule violations and stale closures"
+  ]
+}

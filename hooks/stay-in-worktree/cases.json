@@ -1,0 +1,14 @@
+{
+  "should_block": [
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt", "files": [{ "path": "../../../../README.md", "content": "x" }] },
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt", "files": [{ "path": "/home/dev/app/src/a.js", "content": "x" }] },
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt/src", "files": [{ "path": "../../other-worktree/src/a.js", "content": "x" }] },
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt", "files": [{ "path": "src/a.js", "content": "x" }, { "path": "../wt-sibling/b.js", "content": "x" }] }
+  ],
+  "should_allow": [
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt", "files": [{ "path": "src/a.js", "content": "x" }] },
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt/src", "files": [{ "path": "../README.md", "content": "x" }] },
+    { "cwd": "hooks/stay-in-worktree/fixtures/wt", "files": [{ "path": "new/dir/file.ts", "content": "x" }] },
+    { "files": [{ "path": "../outside-but-not-a-worktree.txt", "content": "x" }] }
+  ]
+}

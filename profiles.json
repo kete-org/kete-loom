@@ -67,7 +67,7 @@
     ]
   },
   "strict": {
-    "description": "Developer plus the opt-in guardrails: read files before editing them, don't weaken lint configs, keep dev servers in the background, and pass lint and type-check before finishing.",
+    "description": "Developer plus the opt-in guardrails: read files before editing them, don't weaken lint configs, keep dev servers in the background, stay inside the worktree, keep secrets and planted instructions out, valid commit messages, and no unfinished stubs or failing lint and type-check at the end.",
     "extends": [
       "developer"
     ],
@@ -75,7 +75,12 @@
       "read-before-edit",
       "protect-lint-config",
       "block-foreground-servers",
-      "verify-before-stop"
+      "verify-before-stop",
+      "guard-prompt-injection",
+      "block-secret-reads",
+      "stay-in-worktree",
+      "validate-commit-message",
+      "block-unfinished-stubs"
     ]
   },
   "method": {
@@ -112,6 +117,32 @@
       "testing"
     ]
   },
+  "project": {
+    "description": "The method plus project-level planning: a roadmap with phases kept in .planning/, requirement clarification, plan checks before code, acceptance testing with you, an idea backlog, feasibility spikes and recovery tools.",
+    "extends": [
+      "method"
+    ],
+    "skills": [
+      "project-roadmap",
+      "spec-clarification",
+      "acceptance-testing",
+      "idea-backlog",
+      "feasibility-spike"
+    ],
+    "agents": [
+      "assumptions-analyzer",
+      "plan-checker",
+      "ui-auditor"
+    ],
+    "commands": [
+      "progress",
+      "uat",
+      "capture",
+      "fix-findings",
+      "forensics",
+      "revert-work"
+    ]
+  },
   "security": {
     "description": "Security and compliance: every security and compliance item, the essentials, and the four safety hooks.",
     "extends": [
@@ -133,7 +164,9 @@
       "block-dangerous-commands",
       "block-no-verify",
       "protect-files",
-      "guard-secrets"
+      "guard-secrets",
+      "guard-prompt-injection",
+      "block-secret-reads"
     ]
   },
   "ai": {

@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source ac3a3c3f2b95 -->
+<!-- translated from README.md, source 848b1e887ff1 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,8 +42,9 @@ Statt alles zu installieren, kannst du auch ein Profil wählen:
 | `minimal` | Test-first-Arbeit, Verifikation, Security-Review, Code-Review |
 | `core` | Das Wesentliche, Planung, Git, Onboarding und Session-Übergabe, **plus die Sprach- und Framework-Pakete, die dein Projekt nutzt** (erkannt anhand von `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` usw.) |
 | `developer` | `core` plus die vier Sicherheits-Hooks |
-| `strict` | `developer` plus die Opt-in-Leitplanken: Lesen vor dem Bearbeiten, geschützte Lint-Konfigurationen, Dev-Server im Hintergrund, Lint und Typprüfung vor dem Abschluss |
+| `strict` | `developer` plus die Opt-in-Leitplanken: Lesen vor dem Bearbeiten, geschützte Lint-Konfigurationen, Dev-Server im Hintergrund, Verbleib im Worktree, kein Lesen von Secrets und keine eingeschleusten Anweisungen, gültige Commit-Messages und am Ende keine unfertigen Stubs und keine fehlschlagende Lint- oder Typprüfung |
 | `method` | Eine vollständige Entwicklungsmethode: Design vor Code, kleinteilige Pläne, ein frischer Subagent pro Aufgabe mit Spec- und Qualitäts-Review, systematisches Debugging, Umgang mit Reviews, Worktrees und ein sauberer Abschluss |
+| `project` | `method` plus Projektplanung: eine Roadmap mit Phasen in `.planning/`, Klärung der Anforderungen, Planprüfungen vor dem Code, Abnahmetests gemeinsam mit dir, ein Ideen-Backlog, Machbarkeits-Spikes und Recovery-Commands |
 | `security` | Alle Bausteine zu Sicherheit und Compliance, plus die Sicherheits-Hooks |
 | `ai`, `data` | `core` plus alle KI- bzw. Daten-Bausteine |
 | `business` | Skills für Marketing, Recherche, Investoren, Schreiben, PRDs und Operations |
@@ -104,6 +105,18 @@ Installiere `--profile method` für eine vollständige Arbeitsweise, von der Ide
 | 7. Abschließen | `/finish-branch` (`finishing-a-branch`) | Zuerst die Tests, dann lokal mergen, einen Pull Request öffnen, den Branch behalten oder ihn verwerfen (erst nachdem du eine Bestätigung eintippst). |
 
 `/feature-dev` führt die gesamte Abfolge aus und hält zwischen den Phasen für deine Freigabe an, und die Rule `use-skills` sorgt dafür, dass der Agent zu diesen Skills greift, statt aus dem Gedächtnis zu arbeiten.
+
+Für Arbeit, die größer ist als ein einzelnes Feature, ergänzt `--profile project` die Planung drumherum. Alles liegt in einfachen Markdown-Dateien unter `.planning/`, die du lesen, bearbeiten und committen kannst:
+
+| Bedarf | Verwendung |
+|---|---|
+| Eine Roadmap aus Meilensteinen und Phasen, verknüpft mit nummerierten Anforderungen, mit einem aktuellen Stand, der über Sessions hinweg erhalten bleibt | `project-roadmap`; `/progress` sagt, wo die Dinge stehen, und nennt die nächste Aktion |
+| Anforderungen, die vor der Planung festgezurrt werden: Grauzonen, die Annahmen des Agents samt Belegen, die Randfälle | `spec-clarification`, `assumptions-analyzer` |
+| Ein Plan, der gegen sein Ziel geprüft wird, bevor Code geschrieben wird | `plan-checker` |
+| „Kann das überhaupt funktionieren?“, beantwortet durch ein zeitlich begrenztes Experiment und ein Urteil | `feasibility-spike` |
+| Abnahmetests gemeinsam mit dir, ein Ergebnis nach dem anderen | `/uat` (`acceptance-testing`), `ui-auditor` |
+| Ideen und Todos festhalten, ohne die aktuelle Aufgabe zu unterbrechen | `/capture` (`idea-backlog`) |
+| Recovery: eine Liste von Review-Befunden abarbeiten, herausfinden, warum ein Vorhaben über mehrere Sessions schiefging, Arbeit sicher rückgängig machen | `/fix-findings`, `/forensics`, `/revert-work` |
 
 ## Skills
 

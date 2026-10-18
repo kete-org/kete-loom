@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
 Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source ac3a3c3f2b95 -->
+<!-- translated from README.md, source 848b1e887ff1 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -42,8 +42,9 @@ Au chagua profile badala ya kusakinisha kila kitu:
 | `minimal` | Kazi ya test-first, uthibitishaji, ukaguzi wa usalama, code review |
 | `core` | Mambo muhimu, upangaji, git, onboarding na makabidhiano ya session, **pamoja na language na framework packs ambazo mradi wako unatumia** (zinatambuliwa kutoka `package.json`, `go.mod`, `pyproject.toml`, `Cargo.toml`, `Dockerfile` na kadhalika) |
 | `developer` | `core` pamoja na hooks nne za usalama |
-| `strict` | `developer` pamoja na kinga za hiari (opt-in guardrails): soma kabla ya kuhariri, lint configs zinazolindwa, dev servers zinazoendeshwa nyuma (background), lint na type-check kabla ya kumaliza |
+| `strict` | `developer` pamoja na kinga za hiari (opt-in guardrails): soma kabla ya kuhariri, lint configs zinazolindwa, dev servers zinazoendeshwa nyuma (background), kubaki ndani ya worktree, kutosoma secrets wala kufuata maagizo yaliyopandikizwa, commit messages halali, na mwishoni hakuna stubs ambazo hazijakamilika wala lint na type-check zinazoshindwa |
 | `method` | Mbinu kamili ya uundaji: design kabla ya code, mipango ya kina, subagent mpya kwa kila kazi pamoja na ukaguzi wa spec na ubora, debugging ya kimfumo, kujibu review, worktrees na umaliziaji safi |
+| `project` | `method` pamoja na upangaji wa mradi: roadmap yenye awamu (phases) ndani ya `.planning/`, ufafanuzi wa mahitaji (requirements), ukaguzi wa mipango kabla ya code, acceptance testing pamoja nawe, hifadhi ya mawazo (idea backlog), majaribio ya uwezekano (feasibility spikes) na commands za urejeshaji (recovery) |
 | `security` | Kila kipengele cha usalama na compliance, pamoja na hooks za usalama |
 | `ai`, `data` | `core` pamoja na kila kipengele cha AI au data |
 | `business` | Skills za marketing, utafiti, wawekezaji, uandishi, PRD na operations |
@@ -104,6 +105,18 @@ Sakinisha `--profile method` kwa njia kamili ya kufanya kazi, kuanzia wazo hadi 
 | 7. Maliza | `/finish-branch` (`finishing-a-branch`) | Tests kwanza, kisha merge kwa ndani (locally), fungua pull request, hifadhi branch, au iitupe (tu baada ya wewe kuandika uthibitisho). |
 
 `/feature-dev` huendesha mfuatano wote ikisimama ili upate kuidhinisha kati ya hatua, na rule ya `use-skills` humfanya agent aendelee kutumia skills hizi badala ya kufanya kazi kutoka kwenye kumbukumbu.
+
+Kwa kazi kubwa kuliko feature moja, `--profile project` huongeza upangaji unaoizunguka. Kila kitu huhifadhiwa katika faili za kawaida za Markdown chini ya `.planning/`, ambazo unaweza kuzisoma, kuzihariri na kuzifanyia commit:
+
+| Hitaji | Tumia |
+|---|---|
+| Roadmap ya milestones na awamu (phases) zilizofungamanishwa na mahitaji (requirements) yenye namba, pamoja na hali ya sasa inayodumu kati ya sessions | `project-roadmap`; `/progress` hueleza mambo yalipofikia na hutaja hatua inayofuata |
+| Mahitaji yaliyobainishwa kabla ya kupanga: maeneo yasiyo wazi, dhana za agent pamoja na ushahidi, na edge cases | `spec-clarification`, `assumptions-analyzer` |
+| Mpango uliokaguliwa dhidi ya lengo lake kabla code yoyote haijaandikwa | `plan-checker` |
+| "Je, hili linaweza hata kufanya kazi?" hujibiwa kwa jaribio lenye muda maalum (timeboxed) na uamuzi | `feasibility-spike` |
+| Acceptance testing pamoja nawe, kitu kimoja kinachowasilishwa (deliverable) kwa wakati | `/uat` (`acceptance-testing`), `ui-auditor` |
+| Mawazo na todos huhifadhiwa bila kuivuruga kazi ya sasa | `/capture` (`idea-backlog`) |
+| Urejeshaji (recovery): rekebisha orodha ya matokeo ya review (findings), gundua kwa nini juhudi ya sessions nyingi iliharibika, tendua kazi kwa usalama | `/fix-findings`, `/forensics`, `/revert-work` |
 
 ## Skills
 

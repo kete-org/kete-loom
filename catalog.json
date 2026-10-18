@@ -3,6 +3,17 @@
   "version": "0.2.0",
   "skills": [
     {
+      "name": "acceptance-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "User acceptance testing of delivered work run together with the user, turning the requirements, plan or ticket into concrete things the user should now be able to do, walking through them one deliverable at a time with exact steps and the expected result, adding a cold-start smoke test from a fresh clone or clean state, recording every pass, failure and skip in a UAT file that survives across sessions, and handing each failure to root-cause debugging with its reproduction. Use when a feature, phase or milestone is reported as finished and someone wants to confirm with the user that it really works before calling it done, signing it off or moving on.",
+      "path": "skills/acceptance-testing"
+    },
+    {
       "name": "accounting-api-integration",
       "version": "0.1.0",
       "category": "integrations",
@@ -651,6 +662,15 @@
       "path": "skills/fastapi-patterns"
     },
     {
+      "name": "feasibility-spike",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Time-boxed throwaway experiments that answer \"can this actually work?\" before anyone writes a plan - each open question becomes a Given/When/Then hypothesis, gets the smallest runnable proof in an isolated spike folder or branch, and ends with a VALIDATED, INVALIDATED or PARTIAL verdict backed by recorded evidence, while the spike code itself is never merged. Use when the user is unsure whether a library, API, performance target, platform limit or integration will hold up, says \"let's spike this\" or \"prove it first\", or a plan depends on an assumption nobody has tested.",
+      "path": "skills/feasibility-spike"
+    },
+    {
       "name": "ffmpeg-media-processing",
       "version": "0.1.0",
       "category": "coding",
@@ -896,6 +916,15 @@
       "requires": [],
       "description": "Internationalises an application so it can ship in more languages and regions, by moving user-facing text into message catalogs, writing ICU MessageFormat messages with plural and select rules, formatting dates, numbers, currency and lists through locale-aware APIs, making layouts work right-to-left, testing with pseudo-localisation, and keeping translation keys in sync across locales. Use when adding a second language or locale to an app, setting up i18next, react-intl, vue-i18n, gettext, Android or iOS string resources, fixing plurals or currency that read wrong in one language, or adding Arabic or Hebrew support.",
       "path": "skills/i18n-localization"
+    },
+    {
+      "name": "idea-backlog",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Parking lot for ideas that come up mid-task, kept as small plain Markdown files under .planning/backlog/ - quick notes, todos, backlog items and seeds, where a seed is an idea saved together with the trigger condition that will make it worth revisiting - plus a periodic review that promotes, keeps or deletes every entry and flags seeds whose trigger has now been met. Use when the user says \"note that for later\", \"add a todo\", \"park this idea\", \"remind me when we add payments\", wants to list or clean out saved ideas, or is starting a new milestone and wants to know which parked ideas are now relevant.",
+      "path": "skills/idea-backlog"
     },
     {
       "name": "implementation-plans",
@@ -1473,6 +1502,17 @@
       "path": "skills/production-scheduling"
     },
     {
+      "name": "project-roadmap",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "Keeps a multi-session project's plan in plain Markdown under .planning/ (PROJECT.md for vision and constraints, REQUIREMENTS.md with stable IDs, ROADMAP.md of milestones and phases with success criteria, STATE.md for the current position and decisions, DEFECTS.md as a ledger of known breakage), and runs its lifecycle - starting a project or milestone from questions or by ingesting existing PRDs, ADRs and plans, adding, inserting or removing phases, proving every requirement maps to a phase, closing a milestone with a summary and archive, repairing state that drifted from git, and optional parallel workstreams. Use when the user wants a roadmap or milestones set up for a project that spans many sessions, asks to add or reorder phases, to close out a milestone, or says the planning files no longer match the code.",
+      "path": "skills/project-roadmap"
+    },
+    {
       "name": "prompt-engineering",
       "version": "0.1.0",
       "category": "ai",
@@ -1862,6 +1902,15 @@
       "path": "skills/solidity-patterns"
     },
     {
+      "name": "spec-clarification",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Requirements interrogation for one already-scoped phase, feature or ticket before anyone plans it, scoring how ambiguous the goal, boundaries, constraints and acceptance checks still are, listing the gray areas, optionally switching to assumptions mode (stating what would be assumed, with file:line evidence from the codebase, for the user to correct), probing edge cases and \"must never happen\" prohibitions, and locking the answers into a SPEC.md with a short discussion log. Use when the direction is already chosen but the exact behaviour is not - \"before we plan phase 3, nail down what it must do\", \"what's unclear about this ticket\", \"list your assumptions about this change so I can correct them\" - and not for choosing between approaches.",
+      "path": "skills/spec-clarification"
+    },
+    {
       "name": "spring-boot-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -1947,7 +1996,7 @@
     },
     {
       "name": "systematic-debugging",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "runs-commands",
       "requires": [
@@ -2201,6 +2250,22 @@
       ],
       "description": "Software architect subagent that designs a new system or module, or evaluates an existing one, by pinning down constraints and quality attributes, comparing two or three concrete options on their trade-offs, and returning one recommendation with risks and a migration path, all without editing code. Use when the user asks how a system should be structured, wants a monolith, microservice, queue or datastore choice weighed, or wants an independent assessment of whether the current design will hold up.",
       "path": "agents/architect"
+    },
+    {
+      "name": "assumptions-analyzer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only codebase investigator that, for a proposed change, surfaces the silent assumptions an implementer would otherwise make - which conventions, data shapes, existing helpers, boundaries and constraints apply - each backed by file:line evidence, a confidence level and the cost of being wrong, plus the short list of questions only the user can answer. Use when someone wants the hidden assumptions behind a planned change exposed and corrected before a spec or plan is written, or when spec-clarification runs in assumptions mode on a change that spans many files.",
+      "path": "agents/assumptions-analyzer"
     },
     {
       "name": "billing-reviewer",
@@ -2783,6 +2848,22 @@
       "path": "agents/php-reviewer"
     },
     {
+      "name": "plan-checker",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only pre-execution gate for an implementation plan file, working backward from its goal and spec to prove every requirement has a task and an automated check that would fail if it broke, that no requirement was silently dropped or narrowed, that the files and verify commands it names really exist, that each test says how it should fail first, and that tasks are small, ordered and declare their dependencies with checks dense enough to catch a regression early, then returns PASS or a ranked list of plan defects with the fix for each. Use when a plan has been written and someone wants it checked before any code runs, asks \"is this plan complete\", or a plan-execute loop needs a gate between planning and building.",
+      "path": "agents/plan-checker"
+    },
+    {
       "name": "planner",
       "version": "0.1.0",
       "category": "coding",
@@ -3115,6 +3196,23 @@
       "path": "agents/typescript-reviewer"
     },
     {
+      "name": "ui-auditor",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell",
+        "web"
+      ],
+      "description": "Visual quality auditor for implemented frontend screens that works in its own context, reads the components and styles and, when a browser is available, the rendered pages, then scores six areas (layout and spacing, typography, colour and contrast, interaction states, responsive behaviour, and content, empty and error states) from 1 to 4 with file:line or screenshot evidence and returns the highest-value fixes, without editing anything. Use when someone wants built UI graded for finish and consistency before a release or design sign-off, asks why a screen looks off, or wants a scored UI report rather than a WCAG audit or a new visual direction.",
+      "path": "agents/ui-auditor"
+    },
+    {
       "name": "vue-reviewer",
       "version": "0.1.0",
       "category": "coding",
@@ -3167,6 +3265,15 @@
       "requires": [],
       "description": "Plan a marketing campaign: audience, positioning, channels, messages, calendar, budget split and success metrics.",
       "path": "commands/campaign.md"
+    },
+    {
+      "name": "capture",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Park an idea, todo or seed in the project backlog in one line without starting work on it, then carry on with the current task.",
+      "path": "commands/capture.md"
     },
     {
       "name": "changelog",
@@ -3229,6 +3336,15 @@
       "path": "commands/deps-audit.md"
     },
     {
+      "name": "developer-profile",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Build a short working-style profile of you from your own local agent session logs, read-only and on this machine only, then show it and write it to AGENTS.md or a profile file only if you approve.",
+      "path": "commands/developer-profile.md"
+    },
+    {
       "name": "dual-review",
       "version": "0.1.0",
       "category": "coding",
@@ -3287,6 +3403,28 @@
       ],
       "description": "Fix a reported bug by reproducing it as a failing regression test, finding the root cause, making the smallest fix, verifying, reviewing the diff and offering a commit.",
       "path": "commands/fix-bug.md"
+    },
+    {
+      "name": "fix-findings",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Work through review or audit findings one at a time, confirming each is real, fixing it with a regression test, verifying and committing per fix. Supports --max <n> and --dry-run.",
+      "path": "commands/fix-findings.md"
+    },
+    {
+      "name": "forensics",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Read-only post-mortem of a multi-session piece of work that went wrong, rebuilding the timeline from git history and plan, state and handoff files to find where it diverged and how to recover, without changing anything.",
+      "path": "commands/forensics.md"
     },
     {
       "name": "hookify",
@@ -3441,6 +3579,17 @@
       "path": "commands/production-readiness.md"
     },
     {
+      "name": "progress",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Show where the project stands from its .planning/ files, git and handoff notes, and name the single next action, stopping at hard gates such as unverified phases or open blockers.",
+      "path": "commands/progress.md"
+    },
+    {
       "name": "project-init",
       "version": "0.1.0",
       "category": "meta",
@@ -3459,6 +3608,17 @@
       "path": "commands/refactor-clean.md"
     },
     {
+      "name": "repo-triage",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "gh"
+      ],
+      "description": "Triage a GitHub repository's open issues and pull requests against its own templates and CONTRIBUTING rules, proposing labels, comments and closes in batches that are applied only after approval.",
+      "path": "commands/repo-triage.md"
+    },
+    {
       "name": "resume-session",
       "version": "0.1.0",
       "category": "meta",
@@ -3466,6 +3626,17 @@
       "requires": [],
       "description": "Resume work from the latest session handoff note, checking it against the repository before taking the next step.",
       "path": "commands/resume-session.md"
+    },
+    {
+      "name": "revert-work",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Safely undo the commits of a task, phase or the last few changes with git revert, after checking later commits that depend on them and getting confirmation; never resets or force-pushes.",
+      "path": "commands/revert-work.md"
     },
     {
       "name": "review",
@@ -3540,6 +3711,17 @@
       "requires": [],
       "description": "Produce a threat model for a feature or system, with assets, trust boundaries, data flows, STRIDE threats and ranked mitigations.",
       "path": "commands/threat-model.md"
+    },
+    {
+      "name": "uat",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "Run user acceptance testing with the user on the current phase, feature or ticket, one check at a time, and save the results to a UAT file.",
+      "path": "commands/uat.md"
     },
     {
       "name": "update-docs",
@@ -3758,7 +3940,7 @@
     },
     {
       "name": "security",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "security",
       "risk": "read-only",
       "requires": [],
@@ -3850,6 +4032,26 @@
       "path": "hooks/block-no-verify"
     },
     {
+      "name": "block-secret-reads",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-shell",
+      "description": "Stops the agent from printing or copying secrets files into the conversation through shell commands, such as cat .env, git show HEAD:.env or reading SSH keys and cloud credentials, while still letting it load them with source or --env-file.",
+      "path": "hooks/block-secret-reads"
+    },
+    {
+      "name": "block-unfinished-stubs",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "event": "stop-gate",
+      "description": "When the agent says it is done, checks the lines its uncommitted changes add to code and sends it back once if they leave TODOs, \"not implemented\" stubs, or focused (.only) or skipped tests behind.",
+      "path": "hooks/block-unfinished-stubs"
+    },
+    {
       "name": "capture-lessons",
       "version": "0.1.0",
       "category": "meta",
@@ -3870,6 +4072,16 @@
       "path": "hooks/format-on-edit"
     },
     {
+      "name": "guard-prompt-injection",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-edit",
+      "description": "Stops the agent from writing planted instructions, such as \"ignore previous instructions\", hidden Unicode or \"don't tell the user\", into AGENTS.md, rules, skills, agent files or .planning/, where every later session would obey them.",
+      "path": "hooks/guard-prompt-injection"
+    },
+    {
       "name": "guard-secrets",
       "version": "0.1.0",
       "category": "security",
@@ -3881,7 +4093,7 @@
     },
     {
       "name": "load-session-context",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "meta",
       "risk": "runs-commands",
       "requires": [],
@@ -3928,6 +4140,26 @@
       "event": "pre-edit",
       "description": "Stops the first edit of each existing file in a session and tells the agent to read the file and search for its callers first, so changes are grounded in the real code rather than a guess.",
       "path": "hooks/read-before-edit"
+    },
+    {
+      "name": "stay-in-worktree",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-edit",
+      "description": "When the agent works in a linked git worktree, stops it from editing files outside that worktree, such as the main checkout or another worktree reached through an absolute path or ../, so parallel branches don't leak into each other.",
+      "path": "hooks/stay-in-worktree"
+    },
+    {
+      "name": "validate-commit-message",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "read-only",
+      "requires": [],
+      "event": "pre-shell",
+      "description": "In repositories that enforce Conventional Commits with commitlint or commitizen, stops the agent from committing with a message like \"updated stuff\" and has it rewrite the subject as type(scope): subject first.",
+      "path": "hooks/validate-commit-message"
     },
     {
       "name": "verify-before-stop",

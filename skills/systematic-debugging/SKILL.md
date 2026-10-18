@@ -4,7 +4,7 @@ description: Root-cause investigation for any bug, failing test, crash or surpri
 license: MIT
 compatibility: Any Agent Skills host. Needs git and the project's test runner.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: coding
   kete-loom/risk: runs-commands
   kete-loom/requires: "git"
@@ -35,7 +35,7 @@ Use it for test failures, production bugs, build breaks, wrong output, performan
 
 ## 3. One hypothesis at a time
 
-1. Write the hypothesis down: "The cause is X, because evidence Y." Be specific enough that it could be wrong.
+1. Write the hypothesis down: "The cause is X, because evidence Y." Be specific enough that it could be wrong. For an investigation that may outlast the session (or the context window), keep a debug log file such as `.planning/debug/<symptom>.md`: the symptom, the reproduction, then every hypothesis with its experiment and result. Read it first when you resume, so nothing already ruled out is tried again; delete it or fold it into the report once the bug is fixed.
 2. Design the smallest experiment that would disprove it: one log line, one changed input, one reverted line. Change one variable only.
 3. Run it and read the result.
    - Confirmed: go to step 4.

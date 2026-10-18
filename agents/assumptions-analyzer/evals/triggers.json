@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Before I spec the audit-log change, dig through the code and list what you'd silently assume about where it lives and which helpers it reuses",
+    "What assumptions would someone make implementing multi-currency prices in this repo? Cite the files and how sure you are",
+    "Surface the hidden assumptions behind adding soft delete to orders, with file and line evidence, so I can correct them",
+    "Investigate the codebase for the planned SMS reminders feature and tell me the conventions and data shapes an implementer would assume, plus what only I can answer"
+  ],
+  "should_not_trigger": [
+    "Write an ordered implementation plan for soft delete on orders with the files to touch",
+    "Check whether my plan for multi-currency prices covers every requirement before we start",
+    "Help me decide whether the audit log should be a separate service or a table in the main database",
+    "Give me a tour of how this codebase is organised, I just cloned it",
+    "Check whether this branch actually delivers what ticket ORD-88 asked for"
+  ]
+}

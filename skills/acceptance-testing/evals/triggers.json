@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The checkout phase is done according to the plan, walk me through acceptance testing it before we sign it off",
+    "Can we do a UAT session on the new invoicing feature together? I'll click through, you tell me what should happen",
+    "Before I tell the client the onboarding milestone is complete, help me confirm each requirement actually works for a user",
+    "Let's verify the export-to-CSV ticket with me trying each requirement, and keep a record of what passed and failed",
+    "Resume the acceptance test we started yesterday on the reports phase, there were a few failures left to recheck"
+  ],
+  "should_not_trigger": [
+    "Run the build, lint and tests before I open the pull request",
+    "Write Playwright end-to-end tests for the signup flow",
+    "Click through our staging site and file bug reports for anything broken before the demo",
+    "Check whether this branch actually implements everything in ticket PAY-212",
+    "The CSV export crashes on empty rows, find out why"
+  ]
+}

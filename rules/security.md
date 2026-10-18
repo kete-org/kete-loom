@@ -3,7 +3,7 @@ name: security
 description: Always-on secure coding rules for any language, covering input validation, injection, authorization, least privilege, deserialisation, dependencies and keeping secrets and personal data out of logs.
 license: MIT
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: security
   kete-loom/risk: read-only
   kete-loom/owner: "Kete-org"
@@ -23,7 +23,7 @@ metadata:
 - Keep TLS certificate verification on. Never disable it to make a request work.
 - Never log secrets, tokens, passwords, session IDs or personal data. Redact them in errors, traces and analytics too.
 - Return generic error messages to clients; keep stack traces and internal details in server logs.
-- Add dependencies only when needed, from the official registry, pinned through the lockfile. Check the name for typosquats and run the project's audit tool after changes.
+- Add dependencies only when needed, from the official registry, pinned through the lockfile. Check the name for typosquats and run the project's audit tool after changes. If an install fails, find out why; never retry with a similarly named package.
 - Default to secure configuration: deny by default, `Secure`, `HttpOnly` and `SameSite` on session cookies, CSRF protection on state-changing requests that use cookie auth, debug mode off in production.
 
 For more, load the security-review skill.
