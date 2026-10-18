@@ -28,6 +28,8 @@
     "bin/",
     "scripts/lib/",
     "skills/",
+    "agents/",
+    "commands/",
     "schemas/",
     "README.md",
     "LICENSE"

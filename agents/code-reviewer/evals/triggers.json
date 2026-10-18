@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Can you review my changes before I commit them?",
+    "Get a second opinion on this branch before I open the pull request",
+    "Review the diff in this PR for bugs",
+    "Check whether my refactor of parseConfig breaks any of its callers"
+  ],
+  "should_not_trigger": [
+    "Write a new function that parses the config file",
+    "Run the test suite and tell me if it passes",
+    "Do a security audit of the authentication module",
+    "Explain what this regular expression does"
+  ]
+}

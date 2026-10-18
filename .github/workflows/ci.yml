@@ -24,7 +24,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.node == 22
         run: |
           npm run catalog
-          git diff --exit-code -- catalog.json README.md || (echo "Run 'npm run catalog' and commit the result" && exit 1)
+          git diff --exit-code -- catalog.json README.md .claude-plugin/plugin.json || (echo "Run 'npm run catalog' and commit the result" && exit 1)
       - name: Shell installer works without Node CLI options
         if: matrix.os != 'windows-latest'
         run: |

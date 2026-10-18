@@ -10,6 +10,19 @@
   "homepage": "https://ketecode.ai",
   "repository": "https://github.com/Kete-org/kete-loom",
   "license": "MIT",
-  "keywords": ["skills", "agent-skills", "tdd", "verification", "security", "paystack", "kete-code"],
-  "skills": ["./skills/"]
+  "keywords": [
+    "skills",
+    "agent-skills",
+    "tdd",
+    "verification",
+    "security",
+    "paystack",
+    "kete-code"
+  ],
+  "skills": [
+    "./skills/"
+  ],
+  "agents": [
+    "./agents/code-reviewer/AGENT.md"
+  ]
 }

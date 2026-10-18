@@ -5,7 +5,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { REPO_ROOT, SKILLS_DIR, listSkills } = require('./lib/skills');
+const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, listSkills, listAgents, listCommands } = require('./lib/skills');
+const { TOOLS } = require('./lib/render');
 
 const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const SEMVER_RE = /^\d+\.\d+\.\d+$/;
@@ -26,10 +27,10 @@ function jaccard(a, b) {
   return inter / (a.size + b.size - inter || 1);
 }
 
-function lintSkill(skill) {
-  const errors = [...skill.parseErrors];
+function lintItem(item) {
+  const errors = [...item.parseErrors];
   const warnings = [];
-  const d = skill.data;
+  const d = item.data;
   const meta = d.metadata && typeof d.metadata === 'object' ? d.metadata : null;
 
   for (const key of Object.keys(d)) if (!TOP_KEYS.has(key)) errors.push(`unknown top-level key "${key}" (put host-specific keys under metadata)`);
@@ -38,14 +39,18 @@ function lintSkill(skill) {
   else {
     if (!NAME_RE.test(d.name)) errors.push(`name "${d.name}" must match ${NAME_RE}`);
     if (d.name.length > 64) errors.push('name longer than 64 characters');
-    if (d.name !== skill.dir) errors.push(`name "${d.name}" must equal folder name "${skill.dir}"`);
+    if (d.name !== item.dir) errors.push(`name "${d.name}" must equal ${item.kind === 'command' ? 'file' : 'folder'} name "${item.dir}"`);
   }
 
   if (!d.description) errors.push('missing "description"');
-  else {
+  else if (item.kind === 'command') {
+    // Users pick commands by name; the description is the one-line menu text.
+    const len = d.description.length;
+    if (len < 20 || len > 300) errors.push(`description is ${len} chars; must be 20-300`);
+  } else {
     const len = d.description.length;
     if (len < 80 || len > 1024) errors.push(`description is ${len} chars; must be 80-1024`);
-    if (!/\buse when\b/i.test(d.description)) errors.push('description must say when to use the skill ("Use when ...")');
+    if (!/\buse when\b/i.test(d.description)) errors.push(`description must say when to use the ${item.kind} ("Use when ...")`);
   }
 
   if (!d.license) errors.push('missing "license"');
@@ -60,20 +65,24 @@ function lintSkill(skill) {
     if (!CATEGORIES.includes(c)) errors.push(`kete-loom/category must be one of ${CATEGORIES.join(', ')}`);
     const r = meta['kete-loom/risk'];
     if (!RISKS.includes(r)) errors.push(`kete-loom/risk must be one of ${RISKS.join(', ')}`);
+    if (item.tools) {
+      const bad = item.tools.filter((t) => !TOOLS.includes(t));
+      if (bad.length || !item.tools.length) errors.push(`kete-loom/tools must be a comma list of ${TOOLS.join(', ')}`);
+    }
   }
 
-  const lines = skill.text.replace(/\r?\n$/, '').split('\n').length;
-  if (lines > MAX_LINES) errors.push(`SKILL.md is ${lines} lines; limit is ${MAX_LINES}. Move detail into references/.`);
+  const lines = item.text.replace(/\r?\n$/, '').split('\n').length;
+  if (lines > MAX_LINES) errors.push(`${path.basename(item.file)} is ${lines} lines; limit is ${MAX_LINES}. Move detail into references/.`);
 
   // Every relative file the body points at must exist.
   const refs = new Set();
-  for (const m of skill.body.matchAll(/\]\((?!https?:|#|mailto:)([^)\s]+)\)/g)) refs.add(m[1]);
-  for (const m of skill.body.matchAll(/`((?:references|scripts|assets|templates)\/[^`\s]+)`/g)) refs.add(m[1]);
+  for (const m of item.body.matchAll(/\]\((?!https?:|#|mailto:)([^)\s]+)\)/g)) refs.add(m[1]);
+  for (const m of item.body.matchAll(/`((?:references|scripts|assets|templates)\/[^`\s]+)`/g)) refs.add(m[1]);
   for (const ref of refs) {
-    if (!fs.existsSync(path.join(skill.path, ref.split('#')[0]))) errors.push(`referenced file not found: ${ref}`);
+    if (!fs.existsSync(path.join(item.kind === 'command' ? path.dirname(item.path) : item.path, ref.split('#')[0]))) errors.push(`referenced file not found: ${ref}`);
   }
 
-  const scriptsDir = path.join(skill.path, 'scripts');
+  const scriptsDir = path.join(item.path, 'scripts');
   if (fs.existsSync(scriptsDir)) {
     for (const f of fs.readdirSync(scriptsDir)) {
       const p = path.join(scriptsDir, f);
@@ -82,9 +91,10 @@ function lintSkill(skill) {
     }
   }
 
-  const evalFile = path.join(skill.path, 'evals', 'triggers.json');
-  if (!fs.existsSync(evalFile)) errors.push('missing evals/triggers.json');
-  else {
+  // Hosts route to skills and agents by description, so both need trigger evals. Commands are invoked by name.
+  const evalFile = item.kind === 'command' ? null : path.join(item.path, 'evals', 'triggers.json');
+  if (evalFile && !fs.existsSync(evalFile)) errors.push('missing evals/triggers.json');
+  else if (evalFile) {
     try {
       const ev = JSON.parse(fs.readFileSync(evalFile, 'utf8'));
       for (const k of ['should_trigger', 'should_not_trigger']) {
@@ -95,7 +105,7 @@ function lintSkill(skill) {
     }
   }
 
-  const hostHit = HOST_SPECIFIC.exec(skill.body);
+  const hostHit = HOST_SPECIFIC.exec(item.body);
   if (hostHit) warnings.push(`mentions host-specific tool "${hostHit[1]}"; describe the action instead so every host can follow it`);
 
   return { errors, warnings };
@@ -124,51 +134,63 @@ function lintManifests() {
       errors.push(`${file}: ${e.message}`);
     }
   }
-  const claude = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, '.claude-plugin/plugin.json'), 'utf8'));
-  if (!Array.isArray(claude.skills)) errors.push('.claude-plugin/plugin.json: "skills" must be an array');
+  const pluginPath = path.join(REPO_ROOT, '.claude-plugin/plugin.json');
+  if (fs.existsSync(pluginPath)) {
+    const claude = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
+    if (!Array.isArray(claude.skills)) errors.push('.claude-plugin/plugin.json: "skills" must be an array');
+    // Claude Code only auto-discovers agents/*.md; ours live in folders, so the plugin lists them.
+    const want = JSON.stringify(pluginAgents());
+    if (JSON.stringify(claude.agents || []) !== want) errors.push(`.claude-plugin/plugin.json: "agents" must be ${want}. Run "npm run catalog".`);
+  }
   return errors;
+}
+
+const pluginAgents = () => listAgents().map((a) => `./agents/${a.dir}/AGENT.md`);
+
+function strayFolders(root, file) {
+  if (!fs.existsSync(root)) return [];
+  return fs.readdirSync(root, { withFileTypes: true }).filter((d) => d.isDirectory() && !fs.existsSync(path.join(root, d.name, file))).map((d) => `${d.name}  folder has no ${file}`);
+}
+
+function overlaps(items) {
+  const out = [];
+  for (let i = 0; i < items.length; i++) {
+    for (let j = i + 1; j < items.length; j++) {
+      const sim = jaccard(words(items[i].description), words(items[j].description));
+      if (sim > 0.45) out.push(`${items[i].dir} / ${items[j].dir}  descriptions overlap (${Math.round(sim * 100)}%); sharpen them so hosts can tell them apart`);
+    }
+  }
+  return out;
 }
 
 function main() {
   const skills = listSkills(SKILLS_DIR);
+  const agents = listAgents();
+  const commands = listCommands();
   let errorCount = 0;
   let warnCount = 0;
+  const error = (msg) => (console.log(`✗ ${msg}`), errorCount++);
+  const warn = (msg) => (console.log(`! ${msg}`), warnCount++);
 
-  for (const e of lintManifests()) {
-    console.log(`✗ manifest  ${e}`);
-    errorCount++;
+  for (const e of lintManifests()) error(`manifest  ${e}`);
+  for (const e of [...strayFolders(SKILLS_DIR, 'SKILL.md'), ...strayFolders(AGENTS_DIR, 'AGENT.md')]) error(e);
+
+  for (const item of [...skills, ...agents, ...commands]) {
+    const { errors, warnings } = lintItem(item);
+    if (!errors.length && !warnings.length) console.log(`✓ ${item.kind.padEnd(7)} ${item.dir}`);
+    for (const e of errors) error(`${item.kind.padEnd(7)} ${item.dir}  ${e}`);
+    for (const w of warnings) warn(`${item.kind.padEnd(7)} ${item.dir}  ${w}`);
   }
 
-  const strayDirs = fs.readdirSync(SKILLS_DIR, { withFileTypes: true }).filter((d) => d.isDirectory() && !fs.existsSync(path.join(SKILLS_DIR, d.name, 'SKILL.md')));
-  for (const d of strayDirs) {
-    console.log(`✗ ${d.name}  folder has no SKILL.md`);
-    errorCount++;
-  }
+  // Overlapping descriptions make hosts pick the wrong skill or agent.
+  for (const w of [...overlaps(skills), ...overlaps(agents)]) warn(w);
+  // Claude Code serves commands and skills from one namespace.
+  for (const c of commands) if (skills.some((s) => s.dir === c.dir)) error(`command ${c.dir}  has the same name as a skill`);
 
-  for (const skill of skills) {
-    const { errors, warnings } = lintSkill(skill);
-    if (!errors.length && !warnings.length) console.log(`✓ ${skill.dir}`);
-    for (const e of errors) console.log(`✗ ${skill.dir}  ${e}`);
-    for (const w of warnings) console.log(`! ${skill.dir}  ${w}`);
-    errorCount += errors.length;
-    warnCount += warnings.length;
-  }
-
-  // Overlapping descriptions make hosts pick the wrong skill.
-  for (let i = 0; i < skills.length; i++) {
-    for (let j = i + 1; j < skills.length; j++) {
-      const sim = jaccard(words(skills[i].description), words(skills[j].description));
-      if (sim > 0.45) {
-        console.log(`! ${skills[i].dir} / ${skills[j].dir}  descriptions overlap (${Math.round(sim * 100)}%); sharpen them so hosts can tell them apart`);
-        warnCount++;
-      }
-    }
-  }
-
-  console.log(`\n${skills.length} skill(s), ${errorCount} error(s), ${warnCount} warning(s)`);
+  console.log(`\n${skills.length} skill(s), ${agents.length} agent(s), ${commands.length} command(s), ${errorCount} error(s), ${warnCount} warning(s)`);
   return errorCount ? 1 : 0;
 }
 
 if (require.main === module) process.exitCode = main();
 
-module.exports = { lintSkill, lintManifests };
+module.exports = { lintItem, lintSkill: lintItem, lintManifests, pluginAgents };

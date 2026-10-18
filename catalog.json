@@ -55,5 +55,34 @@
       "description": "Pre-merge verification that detects the project's build, lint, type-check and test commands, runs them in order, fixes what it safely can and reports a pass/fail verdict. Use when the user asks to verify, check or validate changes before committing, opening a pull request, merging or shipping.",
       "path": "skills/verification-loop"
     }
+  ],
+  "agents": [
+    {
+      "name": "code-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Reviews a diff or branch for correctness bugs in a separate context and returns a short, verified list of findings ranked by severity, without editing any files. Use when the user asks for a code review of their changes, a second pair of eyes before a commit or pull request, or a check of whether a change breaks existing callers.",
+      "path": "agents/code-reviewer"
+    }
+  ],
+  "commands": [
+    {
+      "name": "verify",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Verify the current changes by running the project's build, lint, type-check and tests, then report pass or fail.",
+      "path": "commands/verify.md"
+    }
   ]
 }

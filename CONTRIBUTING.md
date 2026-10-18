@@ -1,6 +1,6 @@
 # Contributing to Kete Loom
 
-Kete Loom prefers a small number of excellent skills to a large number of untested ones. A new skill is accepted when it:
+Kete Loom prefers a small number of excellent skills to a large number of untested ones. The same bar applies to agents (`agents/<name>/AGENT.md`) and commands (`commands/<name>.md`); see the spec for their extra rules. A new skill is accepted when it:
 
 1. Solves a task coding agents do often, and that isn't already covered by an existing skill (extend that one instead).
 2. Follows [`docs/SKILL_SPEC.md`](docs/SKILL_SPEC.md).

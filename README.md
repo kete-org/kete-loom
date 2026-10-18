@@ -4,15 +4,15 @@
 
 <h1 align="center">Kete Loom</h1>
 
-<p align="center"><strong>Curated, tested Agent Skills for coding agents.</strong><br/>
+<p align="center"><strong>Curated, tested Agent Skills, subagents and commands for coding agents.</strong><br/>
 One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code.</p>
 
 ---
 
-Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It takes a quality-first approach: fewer skills, and every one of them is
+Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It ships three kinds of items: **skills** (folders the agent loads when relevant), **agents** (subagents it delegates to) and **commands** (slash commands you type). It takes a quality-first approach: fewer items, and every one of them is
 
 - **portable**: uses the strictest common subset of the [Agent Skills](https://agentskills.io) format, so no host rejects it;
-- **tested**: ships trigger evals that check it loads for the right requests and stays out of the way for the wrong ones;
+- **tested**: skills and agents ship trigger evals that check they load for the right requests and stay out of the way for the wrong ones;
 - **short**: under 300 lines, with detail moved into `references/` that the agent reads only when needed;
 - **versioned and labelled**: semver, category and a risk level (`read-only`, `writes-files`, `runs-commands`, `network`) in its metadata;
 - **script-backed** where the work is deterministic.
@@ -25,20 +25,21 @@ Kete Loom is the skills library behind [Kete Code](https://ketecode.ai). It take
 npx @ketecode/loom install
 ```
 
-This installs every skill into `~/.agents/skills` (read by Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code) and `~/.claude/skills` (Claude Code). Restart your agent afterwards.
+This installs every skill into `~/.agents/skills` (read by Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code) and `~/.claude/skills` (Claude Code). Agents and commands go into `~/.claude/agents` and `~/.claude/commands` (read by Claude Code, and for agents also Cursor and VS Code Copilot), and into Codex, OpenCode, Gemini CLI and Kete Code's own folders when those hosts are installed. Each agent and command is converted to the format its host expects. Restart your agent afterwards.
 
 Common options:
 
 ```bash
 npx @ketecode/loom install --project                       # into this repo (.agents/ and .claude/), commit it for your team
 npx @ketecode/loom install --skill tdd-workflow,security-review
+npx @ketecode/loom install --agent code-reviewer --command verify
 npx @ketecode/loom install --target claude                  # one host only
 npx @ketecode/loom install --dir ~/.some-agent/skills       # any other agent
 npx @ketecode/loom doctor                                   # what's installed, and which hosts can see it
-npx @ketecode/loom uninstall                                # removes only skills kete-loom installed
+npx @ketecode/loom uninstall                                # removes only items kete-loom installed
 ```
 
-No Node? Use the shell installers, which fall back to a plain copy:
+No Node? Use the shell installers, which fall back to a plain copy of the skills (agents and commands need the Node installer):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.sh | bash
@@ -62,7 +63,7 @@ Plugin installs update through the host's own plugin manager. Use either a plugi
 ## Skills
 
 <!-- catalog:start -->
-| Skill | Category | Risk | What it does |
+| Name | Category | Risk | What it does |
 |---|---|---|---|
 | [`paystack-integration`](skills/paystack-integration/SKILL.md) | integrations | network | Builds and reviews Paystack payment integrations, including transaction initialisation, server-side verification, webhooks with HMAC-SHA512 signature checks, idempotent fulfilment, and Ghana mobile money (MTN, Telecel, AT) charges. |
 | [`security-review`](skills/security-review/SKILL.md) | security | read-only | Security review of a code change or module covering secrets, injection, authentication and authorization, input validation, data exposure, dependencies and unsafe configuration, with findings ranked by severity and concrete fixes. |
@@ -71,7 +72,29 @@ Plugin installs update through the host's own plugin manager. Use either a plugi
 | [`verification-loop`](skills/verification-loop/SKILL.md) | testing | runs-commands | Pre-merge verification that detects the project's build, lint, type-check and test commands, runs them in order, fixes what it safely can and reports a pass/fail verdict. |
 <!-- catalog:end -->
 
-## Where hosts look for skills
+## Agents
+
+Subagents your agent can delegate to. Each runs in its own context and returns a result.
+
+<!-- agents:start -->
+| Name | Category | Risk | What it does |
+|---|---|---|---|
+| [`code-reviewer`](agents/code-reviewer/AGENT.md) | coding | runs-commands | Reviews a diff or branch for correctness bugs in a separate context and returns a short, verified list of findings ranked by severity, without editing any files. |
+<!-- agents:end -->
+
+## Commands
+
+Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCode, Gemini CLI and Kete Code; other hosts are folding commands into skills, so use the matching skill there.
+
+<!-- commands:start -->
+| Name | Category | Risk | What it does |
+|---|---|---|---|
+| [`/verify`](commands/verify.md) | testing | runs-commands | Verify the current changes by running the project's build, lint, type-check and tests, then report pass or fail. |
+<!-- commands:end -->
+
+## Where hosts look
+
+### Skills
 
 | Host | User folder | Project folder |
 |---|---|---|
@@ -81,10 +104,25 @@ Plugin installs update through the host's own plugin manager. Use either a plugi
 | Cursor only | `~/.cursor/skills` | `.cursor/skills` |
 | Gemini CLI only | `~/.gemini/skills` | `.gemini/skills` |
 | GitHub Copilot only | `~/.copilot/skills` | `.github/skills` |
+| Kete Code only | `~/.config/kete/skills` | `.kete/skills` |
+
+### Agents and commands
+
+| Host | Agents | Commands | Installed by default |
+|---|---|---|---|
+| Claude Code | `~/.claude/agents` | `~/.claude/commands` | yes |
+| Cursor, VS Code Copilot | read `~/.claude/agents` | not installed (Cursor's are beta; VS Code uses project prompt files) | yes, through Claude's folder |
+| Codex | `~/.codex/agents` (TOML) | deprecated by Codex | when `~/.codex` exists |
+| OpenCode | `~/.config/opencode/agents` | `~/.config/opencode/commands` | when `~/.config/opencode` exists |
+| Kete Code | `~/.config/kete/agents` | `~/.config/kete/commands` | when `~/.config/kete` exists |
+| Gemini CLI | `~/.gemini/agents` | `~/.gemini/commands` (TOML) | when `~/.gemini` exists |
+| Copilot CLI | `~/.copilot/agents` (`.agent.md`) | not supported | with `--target copilot` |
+
+Project installs (`--project`) use the same folders inside the repo (`.github/agents` for Copilot, `.kete/` for Kete Code).
 
 ## Contributing
 
-Read [`docs/SKILL_SPEC.md`](docs/SKILL_SPEC.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md). Every pull request must pass:
+Read [`docs/SKILL_SPEC.md`](docs/SKILL_SPEC.md) (skills, agents and commands) and [`CONTRIBUTING.md`](CONTRIBUTING.md). Every pull request must pass:
 
 ```bash
 npm run lint      # frontmatter, length, references, evals, manifest versions

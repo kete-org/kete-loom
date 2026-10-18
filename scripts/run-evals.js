@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-// Trigger evals for every skill.
+// Trigger evals for every skill and agent (hosts route to both by description).
 //
 //   node scripts/run-evals.js            offline: validate eval files
 //   node scripts/run-evals.js --live     ask a model to route each prompt,
@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { SKILLS_DIR, listSkills } = require('./lib/skills');
+const { SKILLS_DIR, listSkills, listAgents } = require('./lib/skills');
 
 function loadEvals(skills) {
   return skills.map((s) => {
@@ -48,9 +48,9 @@ function offline(evals) {
 
 async function route(prompt, catalog, cfg) {
   const system =
-    'You are the skill router of a coding agent. You see the user request and a catalog of skills (name and description). ' +
-    'Pick every skill the agent should load to handle the request well, using only the descriptions. ' +
-    'Pick none if no skill clearly applies. Reply with JSON only: {"skills": ["name", ...]}';
+    'You are the router of a coding agent. You see the user request and a catalog of skills or subagents (name and description). ' +
+    'Pick every entry the agent should use for this request, judging only by the descriptions. ' +
+    'Pick none if nothing clearly applies. Reply with JSON only: {"skills": ["name", ...]}';
   const res = await fetch(`${cfg.baseUrl.replace(/\/$/, '')}/chat/completions`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${cfg.apiKey}` },
@@ -116,11 +116,18 @@ async function main(argv) {
   const si = argv.indexOf('--skill');
   const mi = argv.indexOf('--min-pass');
   if (mi !== -1) opts.minPass = Number(argv[mi + 1]);
-  const all = listSkills(SKILLS_DIR);
-  const selected = si !== -1 ? all.filter((s) => s.dir === argv[si + 1]) : all;
-  const evals = loadEvals(selected);
+  // Skills and agents are routed separately, each against its own catalog.
+  const groups = [listSkills(SKILLS_DIR), listAgents()].map((all) => {
+    const selected = si !== -1 ? all.filter((s) => s.dir === argv[si + 1]) : all;
+    return { all, evals: loadEvals(selected) };
+  });
+  if (si !== -1 && !groups.some((g) => g.evals.length)) {
+    console.error(`no skill or agent named "${argv[si + 1]}"`);
+    return 2;
+  }
+  const evals = groups.flatMap((g) => g.evals);
 
-  const problems = offline(evals);
+  const problems = groups.flatMap((g) => offline(g.evals));
   for (const p of problems) console.log(`✗ ${p}`);
   if (!opts.live) {
     const total = evals.reduce((n, e) => n + (e.data ? e.data.should_trigger.length + e.data.should_not_trigger.length : 0), 0);
@@ -128,7 +135,9 @@ async function main(argv) {
     return problems.length ? 1 : 0;
   }
   if (problems.length) return 1;
-  return live(evals, all, opts);
+  let code = 0;
+  for (const g of groups) if (g.evals.length) code = Math.max(code, await live(g.evals, g.all, opts));
+  return code;
 }
 
 if (require.main === module) main(process.argv.slice(2)).then((code) => (process.exitCode = code));

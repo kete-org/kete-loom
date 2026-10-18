@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 'use strict';
 
-// kete-loom: install Kete Loom skills into any Agent Skills host.
+// kete-loom: install Kete Loom skills, agents and commands into any Agent Skills host.
 // Zero dependencies; Node 18+.
 
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { SKILLS_DIR, listSkills } = require('../scripts/lib/skills');
-const { TARGETS, HOST_READS, resolveTarget } = require('../scripts/lib/targets');
+const { SKILLS_DIR, listSkills, listAgents, listCommands } = require('../scripts/lib/skills');
+const { TARGETS, KINDS, HOST_READS, resolveTarget, detected } = require('../scripts/lib/targets');
+const { MARKER_RE, render } = require('../scripts/lib/render');
 
 const MARKER = '.kete-loom.json';
 const pkg = require('../package.json');
+
+const csv = (s) => s.split(',').map((x) => x.trim()).filter(Boolean);
 
 function parseArgs(argv) {
   const opts = { _: [], scope: 'user', dryRun: false, force: false, link: false };
@@ -22,10 +25,12 @@ function parseArgs(argv) {
       if (i + 1 >= argv.length) throw new Error(`${a} needs a value`);
       return argv[++i];
     };
-    if (a === '--target' || a === '-t') opts.targets = next().split(',').map((s) => s.trim());
+    if (a === '--target' || a === '-t') opts.targets = csv(next());
     else if (a === '--all-targets') opts.targets = Object.keys(TARGETS);
-    else if (a === '--skill' || a === '-s') opts.skills = next().split(',').map((s) => s.trim());
-    else if (a === '--category' || a === '-c') opts.categories = next().split(',').map((s) => s.trim());
+    else if (a === '--skill' || a === '-s') opts.skills = csv(next());
+    else if (a === '--agent' || a === '-a') opts.agents = csv(next());
+    else if (a === '--command') opts.commands = csv(next());
+    else if (a === '--category' || a === '-c') opts.categories = csv(next());
     else if (a === '--scope') opts.scope = next();
     else if (a === '--project' || a === '-p') opts.scope = 'project';
     else if (a === '--dir') opts.dir = path.resolve(next());
@@ -41,60 +46,83 @@ function parseArgs(argv) {
     else opts._.push(a);
   }
   if (!['user', 'project'].includes(opts.scope)) throw new Error('--scope must be user or project');
+  if (opts.targets) for (const t of opts.targets) if (!TARGETS[t]) throw new Error(`unknown target "${t}". Known: ${Object.keys(TARGETS).join(', ')}`);
   return opts;
 }
 
 function help() {
-  console.log(`kete-loom ${pkg.version} — install Kete Loom skills into any Agent Skills host
+  console.log(`kete-loom ${pkg.version} — install Kete Loom skills, agents and commands into any Agent Skills host
 
 Usage
-  kete-loom install   [options]   Copy skills into host skill folders
-  kete-loom update    [options]   Same as install --force (refreshes kete-loom skills only)
-  kete-loom uninstall [options]   Remove skills that kete-loom installed
-  kete-loom list      [--json]    List available skills
+  kete-loom install   [options]   Copy skills, agents and commands into host folders
+  kete-loom update    [options]   Same as install (refreshes kete-loom items; never overwrites yours)
+  kete-loom uninstall [options]   Remove items that kete-loom installed
+  kete-loom list      [--json]    List available skills, agents and commands
   kete-loom doctor    [options]   Show what is installed where, and which hosts can see it
 
 Options
   -t, --target <a,b>   Targets: ${Object.keys(TARGETS).join(', ')}
-                       Default: agents,claude (covers Codex, OpenCode, Cursor,
-                       Gemini CLI, Copilot, Kete Code and Claude Code)
+                       Default: agents,claude (skills for every host; agents and
+                       commands for Claude Code, Cursor and VS Code Copilot), plus
+                       agents and commands for Codex, OpenCode, Gemini CLI and
+                       Kete Code when they are installed
       --all-targets    Install into every host-specific folder as well
   -p, --project        Install into the current repo instead of your home folder
       --scope <s>      user (default) or project
-      --dir <path>     Install into a custom skills folder (any other agent)
+      --dir <path>     Install skills into a custom skills folder (any other agent)
   -s, --skill <a,b>    Only these skills
+  -a, --agent <a,b>    Only these agents
+      --command <a,b>  Only these commands
+                       (--skill, --agent and --command combine; with none, all are installed)
   -c, --category <a,b> Only these categories
-      --link           Symlink instead of copy (for skill authors)
-  -f, --force          Overwrite skills with the same name not installed by kete-loom
+      --link           Symlink skills instead of copying (for skill authors)
+  -f, --force          Overwrite items with the same name not installed by kete-loom
   -n, --dry-run        Show what would happen without changing anything
 
 Examples
   npx @ketecode/loom install
   npx @ketecode/loom install --project --skill tdd-workflow,verification-loop
   npx @ketecode/loom install --target claude
+  npx @ketecode/loom install --target codex --agent code-reviewer
   npx @ketecode/loom install --dir ~/.my-agent/skills
 `);
 }
 
-function selectSkills(opts) {
-  const all = listSkills(opts.source || SKILLS_DIR);
-  let chosen = all;
-  if (opts.skills) {
-    const unknown = opts.skills.filter((s) => !all.some((k) => k.dir === s));
-    if (unknown.length) throw new Error(`unknown skill(s): ${unknown.join(', ')}. Run "kete-loom list".`);
-    chosen = chosen.filter((s) => opts.skills.includes(s.dir));
+function catalog(opts) {
+  return { skills: listSkills(opts.source || SKILLS_DIR), agents: listAgents(), commands: listCommands() };
+}
+
+// Returns { skills, agents, commands } after the --skill/--agent/--command/--category filters.
+function selectItems(opts) {
+  const all = catalog(opts);
+  const named = KINDS.some((k) => opts[k]);
+  const chosen = {};
+  for (const kind of KINDS) {
+    let items = all[kind];
+    if (named) {
+      const want = opts[kind] || [];
+      const unknown = want.filter((n) => !items.some((i) => i.dir === n));
+      if (unknown.length) throw new Error(`unknown ${kind.slice(0, -1)}(s): ${unknown.join(', ')}. Run "kete-loom list".`);
+      items = items.filter((i) => want.includes(i.dir));
+    }
+    if (opts.categories) items = items.filter((i) => opts.categories.includes(i.category));
+    chosen[kind] = items;
   }
-  if (opts.categories) chosen = chosen.filter((s) => opts.categories.includes(s.category));
   return chosen;
 }
 
 function destinations(opts) {
-  if (opts.dir) return [{ target: 'custom', dir: opts.dir }];
-  const names = opts.targets || Object.keys(TARGETS).filter((t) => TARGETS[t].default);
-  return names.map((t) => ({
-    target: t,
-    dir: resolveTarget(t, { scope: opts.scope, home: opts.home || os.homedir(), cwd: process.cwd() }),
-  }));
+  if (opts.dir) return [{ target: 'custom', kind: 'skills', dir: opts.dir }];
+  const where = { scope: opts.scope, home: opts.home || os.homedir(), cwd: process.cwd() };
+  const picks = opts.targets
+    ? opts.targets.map((t) => ({ target: t, kinds: KINDS }))
+    : Object.keys(TARGETS)
+        .filter((t) => TARGETS[t].default || (TARGETS[t].auto && detected(t, where)))
+        // Auto targets read skills from .agents already; they only need their own agents and commands.
+        .map((t) => ({ target: t, kinds: TARGETS[t].default ? KINDS : ['agents', 'commands'] }));
+  return picks.flatMap(({ target, kinds }) =>
+    kinds.map((kind) => ({ target, kind, dir: resolveTarget(target, { ...where, kind }) })).filter((d) => d.dir)
+  );
 }
 
 function readMarker(dir) {
@@ -123,6 +151,28 @@ function isOurs(dir, opts = {}) {
   return readMarker(dir) !== null;
 }
 
+// Agent and command files are ours when they carry the `# kete-loom name@version` comment.
+function isOursFile(file) {
+  try {
+    if (!fs.lstatSync(file).isFile()) return false;
+    const fd = fs.openSync(file, 'r');
+    const buf = Buffer.alloc(512);
+    const n = fs.readSync(fd, buf, 0, 512, 0);
+    fs.closeSync(fd);
+    return MARKER_RE.test(buf.toString('utf8', 0, n));
+  } catch {
+    return false;
+  }
+}
+
+function isSymlink(p) {
+  try {
+    return fs.lstatSync(p).isSymbolicLink();
+  } catch {
+    return false;
+  }
+}
+
 function copyDir(src, dest) {
   fs.mkdirSync(dest, { recursive: true });
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
@@ -137,63 +187,79 @@ function copyDir(src, dest) {
   }
 }
 
+const NOT_OURS = 'an item with this name exists and was not installed by kete-loom (use --force)';
+
+function installSkill(skill, dir, opts) {
+  const dest = path.join(dir, skill.dir);
+  const exists = fs.existsSync(dest) || isSymlink(dest);
+  if (exists && !isOurs(dest, opts) && !opts.force) return { action: 'skipped', reason: NOT_OURS, dest };
+  if (!opts.dryRun) {
+    if (exists) fs.rmSync(dest, { recursive: true, force: true });
+    fs.mkdirSync(dir, { recursive: true });
+    if (opts.link) {
+      fs.symlinkSync(skill.path, dest, 'dir');
+    } else {
+      copyDir(skill.path, dest);
+      fs.writeFileSync(
+        path.join(dest, MARKER),
+        JSON.stringify({ source: 'kete-loom', skill: skill.dir, version: skill.version, installer: pkg.version, installedAt: new Date().toISOString() }, null, 2) + '\n'
+      );
+    }
+  }
+  return { action: exists ? 'updated' : 'installed', dest };
+}
+
+// Agents and commands are rendered per host, so they are always written, never linked.
+function installFile(item, dir, target, opts) {
+  const out = render(item, target);
+  if (!out) return null;
+  const dest = path.join(dir, out.file);
+  const exists = fs.existsSync(dest) || isSymlink(dest);
+  if (exists && !isOursFile(dest) && !opts.force) return { action: 'skipped', reason: NOT_OURS, dest };
+  if (!opts.dryRun) {
+    fs.mkdirSync(dir, { recursive: true });
+    if (exists) fs.rmSync(dest, { force: true });
+    fs.writeFileSync(dest, out.content);
+  }
+  return { action: exists ? 'updated' : 'installed', dest };
+}
+
 function install(opts) {
-  const skills = selectSkills(opts);
-  if (!skills.length) throw new Error('no skills matched your filters');
+  const selected = selectItems(opts);
+  if (!KINDS.some((k) => selected[k].length)) throw new Error('nothing matched your filters');
   const results = [];
-  for (const { target, dir } of destinations(opts)) {
-    for (const skill of skills) {
-      const dest = path.join(dir, skill.dir);
-      const exists = fs.existsSync(dest) || isSymlink(dest);
-      if (exists && !isOurs(dest, opts) && !opts.force) {
-        results.push({ target, skill: skill.dir, action: 'skipped', reason: 'a skill with this name exists and was not installed by kete-loom (use --force)', dest });
-        continue;
-      }
-      if (!opts.dryRun) {
-        if (exists) fs.rmSync(dest, { recursive: true, force: true });
-        fs.mkdirSync(dir, { recursive: true });
-        if (opts.link) {
-          fs.symlinkSync(skill.path, dest, 'dir');
-        } else {
-          copyDir(skill.path, dest);
-          fs.writeFileSync(
-            path.join(dest, MARKER),
-            JSON.stringify({ source: 'kete-loom', skill: skill.dir, version: skill.version, installer: pkg.version, installedAt: new Date().toISOString() }, null, 2) + '\n'
-          );
-        }
-      }
-      results.push({ target, skill: skill.dir, action: exists ? 'updated' : 'installed', dest });
+  for (const { target, kind, dir } of destinations(opts)) {
+    for (const item of selected[kind]) {
+      const r = kind === 'skills' ? installSkill(item, dir, opts) : installFile(item, dir, target, opts);
+      if (r) results.push({ target, kind: item.kind, name: item.dir, ...r });
     }
   }
   report(results, opts);
-  const missing = missingRequirements(skills);
+  const missing = missingRequirements(KINDS.flatMap((k) => selected[k]));
   if (missing.length && !opts.json) {
-    console.log(`\nNote: some skills expect tools that are not on your PATH:`);
-    for (const m of missing) console.log(`  ${m.skill}: ${m.tools.join(', ')}`);
+    console.log(`\nNote: some items expect tools that are not on your PATH:`);
+    for (const m of missing) console.log(`  ${m.name}: ${m.tools.join(', ')}`);
   }
-  if (!opts.json && !opts.dryRun) console.log('\nRestart your agent (or start a new session) so it picks up the new skills.');
+  if (!opts.json && !opts.dryRun) console.log('\nRestart your agent (or start a new session) so it picks up the new items.');
   return results;
 }
 
-function isSymlink(p) {
-  try {
-    return fs.lstatSync(p).isSymbolicLink();
-  } catch {
-    return false;
-  }
-}
+// `code-reviewer.agent.md` -> `code-reviewer`
+const itemName = (entry) => entry.replace(/(\.agent)?\.(md|toml)$/, '');
 
 function uninstall(opts) {
-  const names = opts.skills ? new Set(opts.skills) : null;
+  const named = KINDS.some((k) => opts[k]);
   const results = [];
-  for (const { target, dir } of destinations(opts)) {
+  for (const { target, kind, dir } of destinations(opts)) {
+    if (named && !opts[kind]) continue;
     if (!fs.existsSync(dir)) continue;
     for (const entry of fs.readdirSync(dir)) {
       const p = path.join(dir, entry);
-      if (names && !names.has(entry)) continue;
-      if (!isOurs(p, opts)) continue;
+      const name = kind === 'skills' ? entry : itemName(entry);
+      if (named && !opts[kind].includes(name)) continue;
+      if (!(kind === 'skills' ? isOurs(p, opts) : isOursFile(p))) continue;
       if (!opts.dryRun) fs.rmSync(p, { recursive: true, force: true });
-      results.push({ target, skill: entry, action: 'removed', dest: p });
+      results.push({ target, kind: kind.slice(0, -1), name, action: 'removed', dest: p });
     }
   }
   report(results, opts);
@@ -206,7 +272,7 @@ function report(results, opts) {
   const prefix = opts.dryRun ? '[dry-run] ' : '';
   for (const r of results) {
     const where = r.dest.replace(os.homedir(), '~');
-    console.log(`${prefix}${r.action.padEnd(9)} ${r.skill.padEnd(24)} ${where}${r.reason ? `  (${r.reason})` : ''}`);
+    console.log(`${prefix}${r.action.padEnd(9)} ${r.kind.padEnd(7)} ${r.name.padEnd(24)} ${where}${r.reason ? `  (${r.reason})` : ''}`);
   }
 }
 
@@ -219,49 +285,58 @@ function onPath(tool) {
   }
 }
 
-function missingRequirements(skills) {
+function missingRequirements(items) {
   const cache = {};
-  return skills
-    .map((s) => ({ skill: s.dir, tools: s.requires.filter((t) => (cache[t] ??= onPath(t)) === false) }))
+  return items
+    .map((s) => ({ name: s.dir, tools: s.requires.filter((t) => (cache[t] ??= onPath(t)) === false) }))
     .filter((m) => m.tools.length);
 }
 
 function list(opts) {
-  const skills = selectSkills(opts);
+  const selected = selectItems(opts);
+  const items = KINDS.flatMap((k) => selected[k]);
   if (opts.json) {
-    return console.log(JSON.stringify(skills.map(({ dir, version, category, risk, description }) => ({ name: dir, version, category, risk, description })), null, 2));
+    return console.log(JSON.stringify(items.map(({ kind, dir, version, category, risk, description }) => ({ kind, name: dir, version, category, risk, description })), null, 2));
   }
-  for (const s of skills) {
-    console.log(`${s.dir.padEnd(24)} v${(s.version || '?').padEnd(7)} ${String(s.category).padEnd(12)} ${s.risk}`);
+  for (const s of items) {
+    console.log(`${s.kind.padEnd(8)} ${s.dir.padEnd(24)} v${(s.version || '?').padEnd(7)} ${String(s.category).padEnd(12)} ${s.risk}`);
   }
-  console.log(`\n${skills.length} skill(s). Install with: npx @ketecode/loom install`);
+  const count = (k) => `${selected[k].length} ${k.slice(0, -1)}(s)`;
+  console.log(`\n${KINDS.map(count).join(', ')}. Install with: npx @ketecode/loom install`);
 }
 
 function doctor(opts) {
   const home = opts.home || os.homedir();
   const rows = [];
   for (const scope of ['user', 'project']) {
-    for (const t of Object.keys(TARGETS)) {
-      const dir = resolveTarget(t, { scope, home, cwd: process.cwd() });
-      const ours = fs.existsSync(dir) ? fs.readdirSync(dir).filter((e) => isOurs(path.join(dir, e), opts)) : [];
-      rows.push({ scope, target: t, dir, skills: ours });
+    for (const target of Object.keys(TARGETS)) {
+      for (const kind of KINDS) {
+        const dir = resolveTarget(target, { scope, home, cwd: process.cwd(), kind });
+        if (!dir) continue;
+        const entries = fs.existsSync(dir) ? fs.readdirSync(dir) : [];
+        const ours = kind === 'skills'
+          ? entries.filter((e) => isOurs(path.join(dir, e), opts))
+          : entries.filter((e) => isOursFile(path.join(dir, e))).map(itemName);
+        rows.push({ scope, target, kind, dir, items: ours });
+      }
     }
   }
   if (opts.json) return console.log(JSON.stringify(rows, null, 2));
-  console.log('Installed kete-loom skills:\n');
-  for (const r of rows.filter((x) => x.skills.length)) {
-    console.log(`  [${r.scope}] ${r.target.padEnd(9)} ${r.dir.replace(os.homedir(), '~')}  (${r.skills.length})`);
+  console.log('Installed kete-loom items:\n');
+  for (const r of rows.filter((x) => x.items.length)) {
+    console.log(`  [${r.scope}] ${r.target.padEnd(9)} ${r.kind.padEnd(9)} ${r.dir.replace(os.homedir(), '~')}  (${r.items.length})`);
   }
-  if (!rows.some((r) => r.skills.length)) console.log('  none yet. Run: npx @ketecode/loom install');
-  console.log('\nVisible to each host:');
+  if (!rows.some((r) => r.items.length)) console.log('  none yet. Run: npx @ketecode/loom install');
+  console.log('\nSkills visible to each host:');
   for (const [host, reads] of Object.entries(HOST_READS)) {
-    const seen = new Set(rows.filter((r) => reads.includes(r.target)).flatMap((r) => r.skills));
+    const seen = new Set(rows.filter((r) => r.kind === 'skills' && reads.includes(r.target)).flatMap((r) => r.items));
     console.log(`  ${host.padEnd(15)} ${seen.size} skill(s)`);
   }
-  const missing = missingRequirements(listSkills(SKILLS_DIR));
+  const all = catalog(opts);
+  const missing = missingRequirements(KINDS.flatMap((k) => all[k]));
   if (missing.length) {
     console.log('\nMissing tools:');
-    for (const m of missing) console.log(`  ${m.skill}: ${m.tools.join(', ')}`);
+    for (const m of missing) console.log(`  ${m.name}: ${m.tools.join(', ')}`);
   }
 }
 
