@@ -2663,6 +2663,15 @@
       "path": "commands/build-fix.md"
     },
     {
+      "name": "campaign",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Plan a marketing campaign: audience, positioning, channels, messages, calendar, budget split and success metrics.",
+      "path": "commands/campaign.md"
+    },
+    {
       "name": "changelog",
       "version": "0.1.0",
       "category": "meta",
@@ -2714,6 +2723,15 @@
       "path": "commands/deps-audit.md"
     },
     {
+      "name": "epic-decompose",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "network",
+      "requires": [],
+      "description": "Break a feature or epic into small, independently shippable issues with acceptance criteria, and create them in GitHub, Jira or Linear after approval.",
+      "path": "commands/epic-decompose.md"
+    },
+    {
       "name": "explain",
       "version": "0.1.0",
       "category": "docs",
@@ -2721,6 +2739,24 @@
       "requires": [],
       "description": "Explain how a piece of code or a flow works, tracing it through the codebase with file:line references, without changing anything.",
       "path": "commands/explain.md"
+    },
+    {
+      "name": "feature-dev",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Build a feature end to end: plan it, implement it test-first, review it and verify it, stopping for approval between stages.",
+      "path": "commands/feature-dev.md"
+    },
+    {
+      "name": "hookify",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Turn a rule the agent must never break into an enforced hook: write it in the portable Kete Loom hook format, test it with cases, and show how to register it.",
+      "path": "commands/hookify.md"
     },
     {
       "name": "i18n-check",
@@ -2734,6 +2770,35 @@
       "path": "commands/i18n-check.md"
     },
     {
+      "name": "issue-sync",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "git"
+      ],
+      "description": "Bring tracked issues in line with the work: find the issues this branch or PR addresses and propose status updates, comments and links, applying them after approval.",
+      "path": "commands/issue-sync.md"
+    },
+    {
+      "name": "jira",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Work with Jira from the agent: find, read, create or update issues with JQL and transitions, asking before any change.",
+      "path": "commands/jira.md"
+    },
+    {
+      "name": "learn",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Turn a lesson from this session into a lasting project rule, in AGENTS.md or a Kete Loom rule, so future sessions don't repeat the mistake.",
+      "path": "commands/learn.md"
+    },
+    {
       "name": "loom",
       "version": "0.1.0",
       "category": "meta",
@@ -2741,6 +2806,15 @@
       "requires": [],
       "description": "Find the Kete Loom skills, agents, commands, rules, hooks or MCP servers that fit what you are doing, and show how to install them.",
       "path": "commands/loom.md"
+    },
+    {
+      "name": "loop",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Run a bounded autonomous loop toward a goal, with a stop condition, a budget and a check after every iteration.",
+      "path": "commands/loop.md"
     },
     {
       "name": "model-route",
@@ -2761,6 +2835,15 @@
       "path": "commands/onboard.md"
     },
     {
+      "name": "orchestrate",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Split a large task into independent pieces, run them in parallel subagents, then verify and merge their results.",
+      "path": "commands/orchestrate.md"
+    },
+    {
       "name": "plan-feature",
       "version": "0.1.0",
       "category": "meta",
@@ -2777,6 +2860,17 @@
       "requires": [],
       "description": "Write a blameless postmortem for an incident, with timeline, impact, root cause, contributing factors and owned action items.",
       "path": "commands/postmortem.md"
+    },
+    {
+      "name": "pr",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "git"
+      ],
+      "description": "Open a pull request for the current branch: check it is ready, write the title and description, push, and create the PR, asking before anything leaves the machine.",
+      "path": "commands/pr.md"
     },
     {
       "name": "pr-describe",
@@ -2797,6 +2891,15 @@
       "requires": [],
       "description": "Draft a product requirements document for a feature, with problem, users, requirements, success metrics and open questions.",
       "path": "commands/prd.md"
+    },
+    {
+      "name": "project-init",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Set a repository up for coding agents: write or improve AGENTS.md, install the Kete Loom packs for its stack, and fix what the readiness audit flags.",
+      "path": "commands/project-init.md"
     },
     {
       "name": "refactor-clean",
@@ -2853,6 +2956,15 @@
       "requires": [],
       "description": "List the session handoff notes in this repository with their branch, date and next step, and tidy up ones that are finished, only with the user's go-ahead.",
       "path": "commands/sessions.md"
+    },
+    {
+      "name": "skill-create",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Create a new Agent Skill for a repeated workflow, to the Kete Loom spec, with trigger evals, and check it before use.",
+      "path": "commands/skill-create.md"
     },
     {
       "name": "tdd",

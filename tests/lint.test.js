@@ -75,3 +75,9 @@ test('a SKILL.md of exactly 300 lines passes', () => {
   const { errors } = lintSkill(makeSkill('good-skill', GOOD, 'line\n'.repeat(300 - head)));
   assert.ok(!errors.some((e) => e.includes('limit is 300')), errors.join('; '));
 });
+
+test('a quoted metadata value must be one complete string', () => {
+  const broken = parseFrontmatter('---\nname: x\nmetadata:\n  kete-loom/requires: "git"\\n  kete-loom/argument-hint: "a"\n---\n');
+  assert.ok(broken.errors.some((e) => e.includes('unclosed or mismatched quote')));
+  assert.deepStrictEqual(parseFrontmatter('---\nname: x\nmetadata:\n  a: "git, node"\n  b: \'it\'\'s\'\n  c: "x" # note\n---\n').errors, []);
+});

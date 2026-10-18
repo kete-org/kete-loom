@@ -331,26 +331,38 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 |---|---|---|---|
 | [`/aside`](commands/aside.md) | meta | read-only | Answer a quick side question without changing files or losing the thread of the current task, then pick the task up where it was. |
 | [`/build-fix`](commands/build-fix.md) | coding | runs-commands | Fix the current build, compile or type-check failure with the smallest change, routed to the build resolver for that language. |
+| [`/campaign`](commands/campaign.md) | business | read-only | Plan a marketing campaign: audience, positioning, channels, messages, calendar, budget split and success metrics. |
 | [`/changelog`](commands/changelog.md) | meta | writes-files | Write changelog entries for the changes since the last release tag, grouped by type, with breaking changes called out first. |
 | [`/checkpoint`](commands/checkpoint.md) | devops | runs-commands | Save a restorable snapshot of the working tree after running the project's checks, without committing or changing anything, or list and restore earlier ones. |
 | [`/codemap`](commands/codemap.md) | docs | writes-files | Write or refresh a short architecture map of the codebase (entry points, modules, data flow, commands) at docs/CODEMAP.md, so agents can orient without reading everything. |
 | [`/commit`](commands/commit.md) | meta | runs-commands | Write a Conventional Commits message for the staged changes, show it, and commit only after the user confirms. |
 | [`/deps-audit`](commands/deps-audit.md) | security | runs-commands | Audit the project's dependencies for known vulnerabilities, abandoned or risky packages and licence problems, and report fixes by severity. |
+| [`/epic-decompose`](commands/epic-decompose.md) | docs | network | Break a feature or epic into small, independently shippable issues with acceptance criteria, and create them in GitHub, Jira or Linear after approval. |
 | [`/explain`](commands/explain.md) | docs | read-only | Explain how a piece of code or a flow works, tracing it through the codebase with file:line references, without changing anything. |
+| [`/feature-dev`](commands/feature-dev.md) | coding | writes-files | Build a feature end to end: plan it, implement it test-first, review it and verify it, stopping for approval between stages. |
+| [`/hookify`](commands/hookify.md) | security | writes-files | Turn a rule the agent must never break into an enforced hook: write it in the portable Kete Loom hook format, test it with cases, and show how to register it. |
 | [`/i18n-check`](commands/i18n-check.md) | coding | runs-commands | Check the current UI changes for internationalisation problems such as hard-coded strings, concatenation, plurals, and date or currency formatting. |
+| [`/issue-sync`](commands/issue-sync.md) | devops | network | Bring tracked issues in line with the work: find the issues this branch or PR addresses and propose status updates, comments and links, applying them after approval. |
+| [`/jira`](commands/jira.md) | integrations | network | Work with Jira from the agent: find, read, create or update issues with JQL and transitions, asking before any change. |
+| [`/learn`](commands/learn.md) | meta | writes-files | Turn a lesson from this session into a lasting project rule, in AGENTS.md or a Kete Loom rule, so future sessions don't repeat the mistake. |
 | [`/loom`](commands/loom.md) | meta | runs-commands | Find the Kete Loom skills, agents, commands, rules, hooks or MCP servers that fit what you are doing, and show how to install them. |
+| [`/loop`](commands/loop.md) | meta | writes-files | Run a bounded autonomous loop toward a goal, with a stop condition, a budget and a check after every iteration. |
 | [`/model-route`](commands/model-route.md) | ai | read-only | Recommend which model tier to use for a task (fast, balanced or most capable), weighing complexity, risk and cost, and say how to switch in this host. |
 | [`/onboard`](commands/onboard.md) | docs | runs-commands | Get oriented in an unfamiliar codebase: what it does, how it is laid out, how to build, test and run it, and where to start. |
+| [`/orchestrate`](commands/orchestrate.md) | meta | writes-files | Split a large task into independent pieces, run them in parallel subagents, then verify and merge their results. |
 | [`/plan-feature`](commands/plan-feature.md) | meta | read-only | Turn a feature request into a step-by-step implementation plan with files to touch, risks and tests, without writing code. |
 | [`/postmortem`](commands/postmortem.md) | meta | writes-files | Write a blameless postmortem for an incident, with timeline, impact, root cause, contributing factors and owned action items. |
+| [`/pr`](commands/pr.md) | devops | network | Open a pull request for the current branch: check it is ready, write the title and description, push, and create the PR, asking before anything leaves the machine. |
 | [`/pr-describe`](commands/pr-describe.md) | docs | runs-commands | Draft a pull request title and description for the current branch from its commits and diff against the base branch. |
 | [`/prd`](commands/prd.md) | meta | writes-files | Draft a product requirements document for a feature, with problem, users, requirements, success metrics and open questions. |
+| [`/project-init`](commands/project-init.md) | meta | writes-files | Set a repository up for coding agents: write or improve AGENTS.md, install the Kete Loom packs for its stack, and fix what the readiness audit flags. |
 | [`/refactor-clean`](commands/refactor-clean.md) | coding | runs-commands | Find and remove dead code, unused exports and unused dependencies, verifying with the build and tests after each removal. |
 | [`/resume-session`](commands/resume-session.md) | meta | read-only | Resume work from the latest session handoff note, checking it against the repository before taking the next step. |
 | [`/review`](commands/review.md) | coding | runs-commands | Review the current changes for bugs, risky patterns and missing tests, routed to the reviewer for the language that changed. |
 | [`/save-session`](commands/save-session.md) | meta | writes-files | Save a handoff note recording the current goal, progress, decisions and next steps so a later session can resume. |
 | [`/security-scan`](commands/security-scan.md) | security | runs-commands | Scan the current change for vulnerabilities, leaked secrets and unsafe dependencies, and report findings by severity. |
 | [`/sessions`](commands/sessions.md) | meta | writes-files | List the session handoff notes in this repository with their branch, date and next step, and tidy up ones that are finished, only with the user's go-ahead. |
+| [`/skill-create`](commands/skill-create.md) | meta | writes-files | Create a new Agent Skill for a repeated workflow, to the Kete Loom spec, with trigger evals, and check it before use. |
 | [`/tdd`](commands/tdd.md) | testing | runs-commands | Implement the requested change test-first, writing one failing test, the smallest code to pass it, then refactoring, step by step. |
 | [`/test-coverage`](commands/test-coverage.md) | testing | runs-commands | Find untested behaviour in the current change and add focused tests for it, then show the coverage before and after. |
 | [`/threat-model`](commands/threat-model.md) | security | read-only | Produce a threat model for a feature or system, with assets, trust boundaries, data flows, STRIDE threats and ranked mitigations. |
