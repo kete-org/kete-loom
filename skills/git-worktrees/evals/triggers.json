@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Set up a separate worktree for the search-filters feature so my main checkout stays clean",
+    "I want to work on two branches at once without stashing, use git worktree",
+    "Before you start executing this plan, give yourself an isolated workspace on a new branch",
+    "Create a worktree under .worktrees for the billing refactor and make sure the tests pass there first",
+    "Remove the old worktrees I'm done with and prune the stale ones"
+  ],
+  "should_not_trigger": [
+    "My rebase onto main hit conflicts in three files, help me resolve them",
+    "Write commit messages for these staged changes in conventional commit format",
+    "The feature is done and tests pass, merge it or open a PR",
+    "Set up a devcontainer so everyone gets the same toolchain",
+    "Recover the commits I lost after a hard reset yesterday"
+  ]
+}

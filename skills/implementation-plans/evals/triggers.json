@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's the approved design for coupon expiry in docs/designs. Write a detailed task-by-task plan file and then start executing it",
+    "Turn this spec into a plan saved in the repo with exact files, the failing test for each task, the commands and commits",
+    "Execute the plan in docs/plans/2025-05-02-audit-log.md in batches and report back after each batch",
+    "Write an implementation plan for the CSV importer that a contractor with no context could follow, bite-sized steps please",
+    "We have the ticket for rate limiting the login endpoint. Write the plan to docs/plans and work through it task by task, stopping if you hit a blocker"
+  ],
+  "should_not_trigger": [
+    "I have a vague idea for a referral programme, help me work out what it should be before planning anything",
+    "Should the importer be a separate worker service or a cron job in the API? Compare the options",
+    "Dispatch a fresh subagent for each task in the plan and review each one before moving on",
+    "Write the product requirements document for rate limiting for the product team",
+    "Keep fixing lint errors overnight until the repo is clean"
+  ]
+}

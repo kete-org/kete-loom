@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The reviewer left 9 comments on my PR, go through them and fix what's valid",
+    "A teammate says my retry logic should use exponential backoff and a config flag, do I really need that? Reply on the PR",
+    "CodeRabbit flagged six things on pull request 214, which of them are actually right?",
+    "Address the review feedback on my branch and answer each inline comment in its thread",
+    "My reviewer wants me to remove the legacy fallback, but I think it's still needed. Help me respond"
+  ],
+  "should_not_trigger": [
+    "Review my teammate's pull request 88 and leave comments on anything risky",
+    "Write a description for the PR I'm about to open",
+    "Squash my review-fix commits into one before merging",
+    "Set up a GitHub Action that requests a review from the owning team automatically",
+    "Look over my diff for bugs before I push it for review"
+  ]
+}

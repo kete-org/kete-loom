@@ -75,6 +75,7 @@
     "./agents/security-reviewer/AGENT.md",
     "./agents/silent-failure-hunter/AGENT.md",
     "./agents/solidity-reviewer/AGENT.md",
+    "./agents/spec-reviewer/AGENT.md",
     "./agents/swift-build-resolver/AGENT.md",
     "./agents/swift-reviewer/AGENT.md",
     "./agents/typescript-build-resolver/AGENT.md",

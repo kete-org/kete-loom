@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "The export feature is done on my branch, wrap it up",
+    "All tasks in the plan are implemented. What do we do with this branch now, merge it or open a PR?",
+    "I'm finished with feat/dark-mode, merge it back into develop locally and clean up the worktree",
+    "Throw away the experiment branch, I don't want any of it",
+    "Implementation complete on this worktree, help me integrate it"
+  ],
+  "should_not_trigger": [
+    "Write the release notes for version 2.4 from the merged PRs",
+    "My branch has diverged from main, should I rebase or merge?",
+    "Create a fresh worktree for the onboarding feature",
+    "Draft a pull request description from the commits on this branch",
+    "Review my branch diff for bugs before anyone else sees it"
+  ]
+}

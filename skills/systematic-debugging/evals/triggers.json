@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our order export started producing NaN totals sometime this week and I have no idea why. Find out what's causing it before changing anything",
+    "This test passes when I run it alone but fails when the whole suite runs. Figure out which test is breaking it",
+    "I've tried three different fixes for this null pointer in the scheduler and none stuck. Help me actually find the cause",
+    "The integration test for the upload worker fails about one run in five on CI, it has a bunch of sleeps in it",
+    "The API returns a 500 for some users only and the stack trace points deep inside the ORM. Track down where the bad value comes from"
+  ],
+  "should_not_trigger": [
+    "My coding agent kept looping on the same tool call for twenty minutes, here's the transcript, why did it do that?",
+    "Add a regression test and a fix for the negative quantity bug, I already know it's the missing check in validateCart",
+    "Ping to the database server times out from the app subnet but works from my laptop, check the routing and firewall",
+    "Run lint, type-check and tests on my branch before I open the pull request",
+    "Rename the OrderService methods and split the file without changing behaviour"
+  ]
+}

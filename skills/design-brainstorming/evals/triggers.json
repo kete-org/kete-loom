@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "I want to add some kind of team sharing to our notes app but I haven't worked out how it should behave. Can we think it through together first?",
+    "Let's brainstorm the design for a recurring-invoices feature before anyone writes code",
+    "I have a rough idea for an offline mode in our field-inspection app, help me shape it into a design we agree on",
+    "Before we build the new notification preferences, ask me what you need to know and propose a couple of approaches",
+    "Help me figure out what our internal deploy dashboard should actually do, then write the design down in the repo"
+  ],
+  "should_not_trigger": [
+    "Write a PRD for the recurring invoices feature with goals, metrics and rollout for the leadership review",
+    "Here's the approved design doc for offline mode, break it into bite-sized implementation tasks",
+    "Should our notifications live in a separate service or stay in the monolith? Weigh the options",
+    "Record our decision to use Postgres row-level security as an architecture decision record",
+    "Implement the team sharing endpoints from the plan in docs/plans, test first"
+  ]
+}

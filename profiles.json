@@ -78,6 +78,39 @@
       "verify-before-stop"
     ]
   },
+  "method": {
+    "description": "A full development method: design before code, granular plans, a fresh subagent per task with spec and quality review, systematic debugging, rigorous responses to review, worktrees and a clean finish.",
+    "skills": [
+      "design-brainstorming",
+      "implementation-plans",
+      "subagent-driven-development",
+      "systematic-debugging",
+      "tdd-workflow",
+      "verification-loop",
+      "responding-to-code-review",
+      "git-worktrees",
+      "finishing-a-branch"
+    ],
+    "agents": [
+      "planner",
+      "spec-reviewer",
+      "code-reviewer"
+    ],
+    "commands": [
+      "brainstorm",
+      "plan-feature",
+      "feature-dev",
+      "debug",
+      "verify",
+      "review",
+      "finish-branch"
+    ],
+    "rules": [
+      "use-skills",
+      "common",
+      "testing"
+    ]
+  },
   "security": {
     "description": "Security and compliance: every security and compliance item, the essentials, and the four safety hooks.",
     "extends": [

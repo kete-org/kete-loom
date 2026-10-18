@@ -3,7 +3,8 @@
     "Turn our release checklist into a skill the coding agent can follow",
     "Write a SKILL.md that teaches the agent our database migration conventions",
     "My deploy skill keeps loading when I just ask about Docker, fix its description",
-    "Make this skill work in Codex and Cursor as well as Claude Code"
+    "Make this skill work in Codex and Cursor as well as Claude Code",
+    "Pressure-test my verify-before-done skill: check the agent still obeys it when told the demo is in ten minutes"
   ],
   "should_not_trigger": [
     "Add a discount-code field to the checkout service, test first please",

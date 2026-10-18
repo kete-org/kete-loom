@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Check whether the code on this branch actually does what ticket PAY-212 asked for",
+    "The implementer says task 4 is done. Verify against the task text that nothing is missing and nothing extra was added",
+    "Compare commits abc123..def456 against the acceptance criteria in docs/designs/coupons.md and list any gaps",
+    "Does this pull request meet every requirement in the spec section I pasted? Give me file and line evidence",
+    "Before the code-quality review, gate this change on spec compliance and tell me PASS or what's missing"
+  ],
+  "should_not_trigger": [
+    "Review the diff on this branch for correctness bugs and broken callers",
+    "Write the acceptance criteria and requirements for the coupon feature",
+    "Audit our checkout code for client-trusted amounts and unverified webhooks",
+    "Check the pull request's tests for gaps in coverage and weak assertions",
+    "Break the coupon spec into an ordered plan with the files to touch"
+  ]
+}

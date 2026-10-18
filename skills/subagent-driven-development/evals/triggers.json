@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Execute docs/plans/2025-06-10-export.md using a fresh subagent for each task, with a spec review and then a code review after every one",
+    "Run my implementation plan task by task with separate implementer and reviewer agents, and keep a ledger of progress",
+    "I want each plan task handed to its own subagent and checked against the task text before the next one starts",
+    "Drive this 12-task plan with subagents: brief each implementer with the full task, review it, loop fixes until it passes, then review the whole branch"
+  ],
+  "should_not_trigger": [
+    "Fan out eight agents to migrate every package to ESM simultaneously and merge the results",
+    "Write a plan file for the export feature with exact paths, failing tests and commit messages",
+    "Does commit 9f3e1c2 cover every acceptance criterion in the coupon ticket? Just tell me what's missing",
+    "Loop the agent unattended overnight until the flaky tests are fixed, with a spend cap",
+    "Review the diff on this branch for correctness bugs before I open a pull request"
+  ]
+}

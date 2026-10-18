@@ -515,6 +515,15 @@
       "path": "skills/deployment-strategies"
     },
     {
+      "name": "design-brainstorming",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Collaborative design session that turns a rough idea into an approved design before any code is written. Reads the project first, asks one question per message (multiple choice where possible) to settle purpose, users, constraints and success criteria, offers two or three approaches with trade-offs and a recommendation, walks the design through in short sections approved one at a time, cuts anything not needed now, and saves a dated design doc in the repo for the implementation-plans skill to pick up. Use when someone has an idea, feature or change they want to build but the what and why are not pinned down yet, or says \"let's think this through before we code\".",
+      "path": "skills/design-brainstorming"
+    },
+    {
       "name": "desktop-app-testing",
       "version": "0.1.0",
       "category": "testing",
@@ -663,6 +672,17 @@
       "path": "skills/fhir-integration"
     },
     {
+      "name": "finishing-a-branch",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Closes out completed work on a feature branch - re-runs the test suite and stops if it is red, confirms the base branch, then offers exactly four outcomes (merge locally, push and open a pull request, keep the branch for later, or discard it) and carries out the one the user picks, re-testing after a local merge and cleaning up the worktree only when the work has landed or been thrown away. Use when implementation on a branch is finished and the user needs to decide how it gets integrated, or says \"wrap this branch up\".",
+      "path": "skills/finishing-a-branch"
+    },
+    {
       "name": "flask-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -745,6 +765,17 @@
       ],
       "description": "Everyday team git without an interactive editor - feature branches, choosing rebase or merge, resolving conflicts, tidying commits with fixup and autosquash, recovering lost commits through the reflog, and force-pushing with --force-with-lease so nobody's work is overwritten. Use when a branch has diverged, a rebase or merge hit conflicts, commits need squashing or rewording before review, work seems lost after a reset or bad rebase, or a rewritten branch must be pushed.",
       "path": "skills/git-workflow"
+    },
+    {
+      "name": "git-worktrees",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Sets up an isolated git worktree for a feature or an implementation plan - detects whether the session is already in one, picks the worktree folder by the project's convention, confirms a project-local folder is git-ignored, creates the branch and worktree, installs dependencies from the lockfile, runs a baseline test pass so pre-existing failures are known, and later removes and prunes it. Use when starting work that should not disturb the current checkout, running several branches side by side, or handing a plan to an agent that needs its own workspace.",
+      "path": "skills/git-worktrees"
     },
     {
       "name": "github-actions-ci",
@@ -865,6 +896,17 @@
       "requires": [],
       "description": "Internationalises an application so it can ship in more languages and regions, by moving user-facing text into message catalogs, writing ICU MessageFormat messages with plural and select rules, formatting dates, numbers, currency and lists through locale-aware APIs, making layouts work right-to-left, testing with pseudo-localisation, and keeping translation keys in sync across locales. Use when adding a second language or locale to an app, setting up i18next, react-intl, vue-i18n, gettext, Android or iOS string resources, fixing plurals or currency that read wrong in one language, or adding Arabic or Hebrew support.",
       "path": "skills/i18n-localization"
+    },
+    {
+      "name": "implementation-plans",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Writes a saved, executable implementation plan that an engineer with zero context could follow, then works through it. Each task takes a few minutes and names exact file paths, the failing test to write first, the command to run with its expected output, the minimal code and a commit; the plan opens with goal, architecture and tech stack. Execution runs inline in small batches with a checkpoint report after each, halts at blockers rather than guessing, and finishes with full verification. Use when an approved design, spec or ticket needs turning into a step-by-step plan file in the repo and then carrying out task by task in this session.",
+      "path": "skills/implementation-plans"
     },
     {
       "name": "incident-postmortem",
@@ -1642,6 +1684,18 @@
       "path": "skills/reproducible-dev-environments"
     },
     {
+      "name": "responding-to-code-review",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git",
+        "gh"
+      ],
+      "description": "Works through review comments left on your own pull request or change with technical rigour - reads every comment before touching code, restates each one, asks about unclear items first, checks each suggestion against the codebase before agreeing, pushes back with evidence when a suggestion is wrong, applies YAGNI to scope creep, fixes one item at a time with a test, and replies in the review thread itself. Use when a reviewer, teammate or bot has left feedback on your change and you must decide what to fix, what to question and how to answer.",
+      "path": "skills/responding-to-code-review"
+    },
+    {
       "name": "returns-reverse-logistics",
       "version": "0.1.0",
       "category": "business",
@@ -1750,7 +1804,7 @@
     },
     {
       "name": "skill-authoring",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "category": "meta",
       "risk": "writes-files",
       "requires": [],
@@ -1830,6 +1884,17 @@
       "path": "skills/stripe-integration"
     },
     {
+      "name": "subagent-driven-development",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Carries out a written implementation plan one task at a time, handing each task to a fresh implementer subagent with the full task text and context pasted in, answering its questions before work begins, and requiring a self-review and report. Every task then passes a spec-compliance check by the spec-reviewer agent and only afterwards a code-quality check by the code-reviewer agent, looping fix and re-review until both pass, with a progress ledger and a whole-branch review at the end. Falls back to inline execution on hosts without subagents. Use when a plan file exists and the user wants it executed task by task with independent review gates between tasks.",
+      "path": "skills/subagent-driven-development"
+    },
+    {
       "name": "subscription-billing-ops",
       "version": "0.1.0",
       "category": "business",
@@ -1881,8 +1946,19 @@
       "path": "skills/swiftui-patterns"
     },
     {
-      "name": "tdd-workflow",
+      "name": "systematic-debugging",
       "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Root-cause investigation for any bug, failing test, crash or surprising behaviour, done before a single fix is proposed. Reproduces the problem reliably, reads the whole error, checks what changed recently, traces the bad value backwards through the call chain to where it was born, tests one hypothesis at a time with the smallest experiment, instruments component boundaries, bisects polluting tests and git history, swaps sleeps for condition waits in flaky async tests, then fixes at the source with a regression test and guards on every layer the bad data crossed. Use when something is broken or behaving unexpectedly and the cause is not yet proven, especially after a quick fix has already failed.",
+      "path": "skills/systematic-debugging"
+    },
+    {
+      "name": "tdd-workflow",
+      "version": "0.2.0",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [
@@ -2937,6 +3013,22 @@
       "path": "agents/solidity-reviewer"
     },
     {
+      "name": "spec-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Requirements-conformance reviewer that compares a finished change against the ticket, task or spec it was supposed to satisfy, reading the real code and tests instead of believing the implementer's summary. Reports requirements that are missing or only partly met, unrequested additions, and requirements that were misunderstood, each backed by file:line evidence, and returns PASS or a ranked gap list without editing anything or judging style. Use when someone asks whether a branch, commit range or pull request actually delivers what its ticket or plan task specified, or as the scope gate before a code-quality review.",
+      "path": "agents/spec-reviewer"
+    },
+    {
       "name": "swift-build-resolver",
       "version": "0.1.0",
       "category": "coding",
@@ -3033,6 +3125,15 @@
       "path": "commands/aside.md"
     },
     {
+      "name": "brainstorm",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Turn a rough idea into an approved design before any code is written, asking one question at a time and comparing approaches.",
+      "path": "commands/brainstorm.md"
+    },
+    {
       "name": "build-fix",
       "version": "0.1.0",
       "category": "coding",
@@ -3093,6 +3194,15 @@
       "path": "commands/commit.md"
     },
     {
+      "name": "debug",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Find the root cause of a bug, failing test or unexpected behaviour by evidence before proposing or making any fix.",
+      "path": "commands/debug.md"
+    },
+    {
       "name": "deps-audit",
       "version": "0.1.0",
       "category": "security",
@@ -3132,12 +3242,23 @@
     },
     {
       "name": "feature-dev",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "coding",
       "risk": "writes-files",
       "requires": [],
       "description": "Build a feature end to end: plan it, implement it test-first, review it and verify it, stopping for approval between stages.",
       "path": "commands/feature-dev.md"
+    },
+    {
+      "name": "finish-branch",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Finish the current branch - run the checks, confirm the base, then merge locally, open a pull request, keep it or discard it, with cleanup and no force-push or deletion without consent.",
+      "path": "commands/finish-branch.md"
     },
     {
       "name": "fix-bug",
@@ -3668,6 +3789,16 @@
       ],
       "description": "Always-on rules for TypeScript and JavaScript files, covering type safety, untrusted input, async errors, modules and the project's own tooling.",
       "path": "rules/typescript.md"
+    },
+    {
+      "name": "use-skills",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "read-only",
+      "requires": [],
+      "paths": [],
+      "description": "Always-on rule to check for an installed skill, agent or command that fits a task before starting it, say which one is used, and follow its steps rather than working from memory.",
+      "path": "rules/use-skills.md"
     }
   ],
   "hooks": [

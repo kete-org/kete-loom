@@ -4,7 +4,7 @@ description: Creates or improves an Agent Skill (a SKILL.md folder) so it loads 
 license: MIT
 compatibility: Any Agent Skills host.
 metadata:
-  kete-loom/version: "0.1.1"
+  kete-loom/version: "0.2.0"
   kete-loom/category: meta
   kete-loom/risk: writes-files
   kete-loom/owner: "Kete-org"
@@ -78,7 +78,18 @@ Outside the repo, apply the checklist in `references/frontmatter.md` by hand. Th
 npx @ketecode/loom install --project --skill <name> --link
 ```
 
-## 6. Iterate on misses
+## 6. Pressure-test the behaviour
+
+Trigger evals prove the skill loads; they don't prove the agent obeys it when obeying is inconvenient. For any skill that enforces a discipline (test first, verify before claiming done, ask before deleting), test its behaviour too:
+
+1. Before writing the body, run a realistic scenario **without** the skill and record what the agent does and the exact words it uses to justify shortcuts.
+2. Write the body against those observed failures, not imagined ones.
+3. Re-run the scenario **with** the skill under combined pressure: time, sunk cost, authority.
+4. For every new excuse, add an explicit counter and a row in a rationalisation table. Repeat until the agent complies in every scenario.
+
+Scenario templates, the pressure list and the table format are in `references/pressure-testing.md`. Skip this for pure reference skills (API tables, syntax guides).
+
+## 7. Iterate on misses
 
 - Skill didn't load → the description is missing the user's words or the situation. Add them.
 - Loaded when it shouldn't → the description is too broad. Narrow it and add the prompt as a negative eval.

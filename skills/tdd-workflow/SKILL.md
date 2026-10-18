@@ -4,7 +4,7 @@ description: Test-first development loop that writes a failing test, makes it pa
 license: MIT
 compatibility: Any Agent Skills host. Needs the project's test runner and git.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.2.0"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/requires: "git"
@@ -61,6 +61,8 @@ When the full suite is green, commit with a message that states the behaviour ad
 - Never mock the unit under test. Mock only slow or external boundaries (network, clock, filesystem when needed).
 - Keep tests deterministic: no real network calls, fixed seeds, fixed time.
 - If you can't get to green after three focused attempts, stop and report what you tried and what you observed.
+- Production code written before its test doesn't count. Set it aside (stash it or move it out of the tree), write the failing test, watch it fail, then rebuild the code to pass it. Don't adapt the old code to the new test; use it as a reference at most. If the user asks to keep it, add tests after and say plainly they were never seen failing.
+- Before adding a mock, a test helper or a cleanup method, check `references/testing-anti-patterns.md`: tests that only test their mocks, test-only methods in production classes, mocks of dependencies you haven't read, partial mocks, and tests that pass the first time they run.
 
 ## Report back
 
