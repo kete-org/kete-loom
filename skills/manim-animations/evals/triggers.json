@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Make a Manim scene that plots y = x^2 and shades the area from 0 to 2",
+    "My MathTex fails with LaTeX compilation error converting to dvi, what's wrong?",
+    "After Transform(a, b) in Manim, animating b does nothing on screen",
+    "Animate a dot moving along a sine curve with a ValueTracker and always_redraw",
+    "Render my Manim explainer at 1080p60 instead of the low quality draft"
+  ],
+  "should_not_trigger": [
+    "Build an animated intro video in React with spring physics",
+    "Plot a matplotlib histogram of the survey results in a Jupyter notebook",
+    "Convert the rendered MP4 into an HLS stream for our website",
+    "Write a generative p5.js flow field sketch",
+    "Create a D3 chart that animates when the data changes"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Turn my 2,000-word blog post on pricing mistakes into a week of LinkedIn posts and an X thread",
+    "Here's the transcript of our podcast episode, find the best 30-second clips and write captions",
+    "Repurpose the keynote I gave last month into a newsletter section and some quote cards",
+    "Check these social posts we made from our research report, did we exaggerate anything?",
+    "We publish one long webinar a month. How do we get two weeks of social content out of each one?"
+  ],
+  "should_not_trigger": [
+    "Write a 1500-word blog post from scratch about remote onboarding",
+    "Our scheduled LinkedIn posts fail with a 401 from the Posts API",
+    "Write a cold email sequence for prospects in the healthcare sector",
+    "Define our brand voice with do and don't examples for the social team",
+    "Burn subtitles into this mp4 and trim the first ten seconds with ffmpeg"
+  ]
+}

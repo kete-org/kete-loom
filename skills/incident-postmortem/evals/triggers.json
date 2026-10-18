@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Yesterday's checkout outage is resolved. Write the blameless postmortem from this Slack export and the deploy log",
+    "Turn our incident channel notes into a timeline with time to detect and time to mitigate, plus root causes",
+    "Review this incident report draft, I think it blames the on-call engineer and the action items have no owners",
+    "We had a near miss where a migration almost dropped the users table; write it up as a post-incident review"
+  ],
+  "should_not_trigger": [
+    "The API is returning 500s right now, help me figure out what's wrong",
+    "Write a runbook for what on-call should do when the disk-full alert fires",
+    "Plan a canary rollout with automatic rollback for the new payment service",
+    "Write a handoff note so tomorrow's session can continue this refactor"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We start shipping to the US and UK next month, add HS codes and country of origin to our product catalog",
+    "Build a landed cost calculator that adds duty, import VAT and freight for each destination country",
+    "Should we sell to European distributors on FCA or DAP, and what does each mean for us?",
+    "Generate commercial invoices for our international orders from the order data",
+    "Add restricted-party screening against the Consolidated Screening List before orders are released to the warehouse"
+  ],
+  "should_not_trigger": [
+    "Our container from Shanghai is two weeks late, help me update customers and chase the forwarder",
+    "Add VAT and GST calculation to our SaaS invoices for customers in 20 countries",
+    "Plan safety stock for imported parts that have a 12 week ocean lead time",
+    "Review our GDPR data processing agreement with a US vendor",
+    "Run a dependency audit for packages with known vulnerabilities"
+  ]
+}

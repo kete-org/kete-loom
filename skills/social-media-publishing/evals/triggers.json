@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Build a scheduler that posts to our LinkedIn company page and X account from our CMS",
+    "LinkedIn rest/posts returns 403 ACCESS_DENIED when I post as our organization",
+    "How do I upload a video to X with the v2 media upload endpoints and attach it to a post?",
+    "Instagram media_publish fails because the container status is still IN_PROGRESS",
+    "Our social posting worker sometimes publishes the same Facebook Page post twice after a timeout",
+    "Which OAuth scopes do I need to let users connect their X and LinkedIn accounts for posting?"
+  ],
+  "should_not_trigger": [
+    "Turn this 40-minute conference talk into a LinkedIn post, an X thread and a newsletter",
+    "Write a voice and tone guide for how our brand sounds on social",
+    "Our marketing emails fail DMARC, fix the DNS records",
+    "Plan a six-week launch campaign with a budget split across paid social and email",
+    "Write a three-touch outbound email sequence to VPs of engineering"
+  ]
+}

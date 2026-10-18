@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "Write a runbook for the HighReplicationLag alert on our Postgres cluster so on-call knows what to check and do",
+    "Our on-call playbook for the queue backlog alert just says 'restart things'. Rewrite it with diagnosis, rollback and escalation",
+    "Document the step-by-step procedure for rotating the TLS certificates on the ingress, with verification",
+    "We're handing the billing service to the SRE rotation. Create runbooks for each of its alerts"
+  ],
+  "should_not_trigger": [
+    "Write up the postmortem for last night's replication lag outage with action items",
+    "Set up a GitHub Actions workflow that deploys the ingress config on merge",
+    "Design a blue-green deployment so we can roll back the billing service instantly",
+    "Write a how-to guide for developers on running the billing service locally"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review the renewal job changes for anything that could invoice a customer twice in the same period",
+    "A customer in Sydney was billed for the wrong month after daylight saving changed; audit our billing period code",
+    "Check this branch's proration and rounding logic before we ship the new seat-based pricing",
+    "Look over our refund handler: are we issuing credit notes and reversing tax correctly?",
+    "Why did some annual customers get charged a cent more than the invoice total? Review the billing code, don't change anything"
+  ],
+  "should_not_trigger": [
+    "Audit our payment webhook handlers for missing Stripe signature checks",
+    "Implement a dunning flow with three retries and an email on the first failed renewal",
+    "Connect our app to Xero so paid invoices show up in the customer's books",
+    "Which countries require us to issue Peppol e-invoices next year?",
+    "Review my last commit for SQL injection in the search endpoint"
+  ]
+}

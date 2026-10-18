@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write an Airflow DAG that pulls yesterday's orders from the Shopify API into S3 and loads them into Snowflake",
+    "Our nightly ETL job inserts duplicate rows every time we rerun a failed day, make it idempotent",
+    "Convert this cron-driven Python ingestion script into Dagster partitioned assets with checks",
+    "We need to backfill six months of event data after fixing a bug in the transform step, how do we do it safely?",
+    "Events keep arriving up to three days late and our daily aggregates are wrong, how should the pipeline handle that?"
+  ],
+  "should_not_trigger": [
+    "Restructure our dbt project into staging, intermediate and marts folders",
+    "Build a scraper that collects product prices from a retailer's listing pages",
+    "Decide which KPIs and charts should go on the weekly sales dashboard",
+    "Design ClickHouse tables for ingesting clickstream events with a materialised view rollup",
+    "Explore this CSV in a Jupyter notebook and plot the monthly churn rate"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Audit our lending protocol contracts for oracle manipulation and reentrancy before launch",
+    "Can a flash loan drain our ERC-4626 vault through a share price inflation attack?",
+    "Write Foundry invariant tests that try to break the solvency of our staking contract",
+    "Our permit-based meta-transaction signatures don't include a nonce, is that exploitable and how bad is it?",
+    "Is our DEX router code ready for an external audit? Run Slither and do a security pass first"
+  ],
+  "should_not_trigger": [
+    "Write an ERC-20 token contract with a capped supply and an owner-only mint using Foundry",
+    "Show the token balance with the right decimals in our wagmi frontend and send an approve transaction",
+    "Review my last commit for security vulnerabilities in the login flow",
+    "Check our npm dependencies for known CVEs and abandoned packages",
+    "Explain how proof of stake consensus works on Ethereum"
+  ]
+}

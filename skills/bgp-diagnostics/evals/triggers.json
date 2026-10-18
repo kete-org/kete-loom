@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "show ip bgp summary says our neighbor 203.0.113.1 is stuck in Active, what does that mean?",
+    "Our transit provider says they don't see our /24 but it's in our BGP table, where is it getting dropped?",
+    "BGP session with the IX route server goes down every few minutes with hold timer expired",
+    "Why is the router choosing the path through ISP B when we set local-pref 200 on ISP A?",
+    "RIPEstat shows our prefix with a different origin AS since this morning, is this a hijack?",
+    "The peer sent a NOTIFICATION cease subcode 1 and the session dropped, how do I read that?"
+  ],
+  "should_not_trigger": [
+    "Write a Nornir task that renders BGP neighbor config from NetBox and pushes it to all edge routers",
+    "Configure an extended ACL on the Cisco switch to block telnet to the management VLAN",
+    "My laptop can reach google.com by IP but DNS lookups fail on the office Wi-Fi",
+    "Plan an address scheme and VLANs for a new branch office network",
+    "Review this firewall ruleset before I load it on the edge gateway",
+    "Write the OSPF config for three Cisco routers sharing area 0 over point-to-point links"
+  ]
+}

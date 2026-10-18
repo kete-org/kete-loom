@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Scrape job listings from this careers site into a CSV, including all pages",
+    "My BeautifulSoup scraper suddenly returns empty titles since the site redesign",
+    "Am I allowed to scrape this marketplace, and how do I check robots.txt properly?",
+    "The crawler keeps getting HTTP 429 from the target site, how should I throttle it?",
+    "This page renders its table with JavaScript, should I use Playwright to extract it?"
+  ],
+  "should_not_trigger": [
+    "Click through our staging site and report any broken forms before the release",
+    "Audit our website's robots.txt and sitemap so Google indexes the right pages",
+    "Write Playwright end-to-end tests for our signup flow",
+    "Research and compare three vector databases with cited sources",
+    "Schedule the ingestion of our vendor's SFTP drop files into the warehouse every night"
+  ]
+}

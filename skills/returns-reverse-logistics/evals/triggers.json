@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Design the RMA workflow for our online shop, from return request to refund",
+    "Write grading criteria so the warehouse knows whether a returned laptop is restocked, refurbished or scrapped",
+    "Should we refund returns when the carrier scans the parcel or only after inspection?",
+    "We keep getting empty boxes and swapped serial numbers back, how do we catch return fraud?",
+    "Draft a 30 day return policy for our apparel store that also works for EU customers"
+  ],
+  "should_not_trigger": [
+    "The outbound parcel was lost in transit, help me open a trace and claim with the courier",
+    "Set up dunning emails and retries for failed subscription renewals",
+    "Calculate safety stock for our returnable packaging crates",
+    "Generate a VAT-compliant credit note PDF for a cancelled invoice",
+    "Pick the right HS code and duty rate for refurbished phones we import"
+  ]
+}

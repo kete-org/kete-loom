@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My bcftools merge fails because the contig names in one VCF are chr1 and the other is 1, how do I fix it safely?",
+    "Write a Snakemake pipeline that runs FastQC, aligns paired-end reads with bwa-mem2 and outputs sorted indexed BAMs",
+    "Parse this FASTQ file with Biopython and drop reads shorter than 50 bases",
+    "Our Nextflow run on the cluster died halfway, how do I restart it without redoing the alignment tasks?",
+    "Pin the conda environments for our variant calling workflow so the lab next door gets the same samtools version"
+  ],
+  "should_not_trigger": [
+    "Find and summarise recent papers on CRISPR off-target prediction methods",
+    "Set up an Airflow DAG that loads our sales CSVs into the warehouse every night",
+    "Tidy my exploratory pandas notebook and move the cleaning code into a module",
+    "Write a dbt model that joins orders to customers",
+    "Write a GitHub Actions workflow that runs pytest on every pull request"
+  ]
+}

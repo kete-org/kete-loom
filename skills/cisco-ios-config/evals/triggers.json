@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "I need to add VLAN 40 to the trunk on Gi1/0/48 of our Catalyst 9300 without breaking the other VLANs",
+    "Give me the IOS-XE commands to restrict SSH on the VTY lines to the 10.10.0.0/16 admin subnet",
+    "Explain what each part of this show running-config from our ISR 4331 is doing",
+    "How do I roll this Cisco switch back to yesterday's config after a bad change?",
+    "Change the native VLAN on a Cisco trunk remotely without locking myself out",
+    "Write a named extended ACL on IOS that only lets the web servers reach the database on 5432"
+  ],
+  "should_not_trigger": [
+    "Our BGP neighbor to the upstream ISP shows Idle (PfxCt), what happened?",
+    "Write an Ansible playbook using cisco.ios.ios_vlans to roll VLANs out to 80 switches",
+    "Audit this pfSense export and MikroTik config for ports open to the internet",
+    "Our Wi-Fi clients get an IP but can't load any websites, how do I narrow it down?",
+    "Design VLANs for my home lab with a guest network and an IoT network",
+    "Write a Kubernetes NetworkPolicy so only the API pods can reach Postgres"
+  ]
+}

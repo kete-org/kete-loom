@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write an MLLP listener in Node that receives ADT messages and sends back an ACK",
+    "The lab says our ORU^R01 parser files results under the wrong patient when PID-3 has two identifiers",
+    "Our interface engine keeps resending messages because it never gets an AA back, help me debug the ACK",
+    "Map OBX segments from incoming HL7 v2 lab results into FHIR Observation resources",
+    "Generate outbound ORM order messages with proper MSH-10 control IDs and escaping of the ^ character in names"
+  ],
+  "should_not_trigger": [
+    "Query a FHIR server for all Encounters in the last week using _include for the patient",
+    "Design drug-interaction alerts so clinicians don't get alert fatigue",
+    "Set up a Kafka consumer with exactly-once processing for our order events",
+    "Check our hospital feed handler for patient data written to application logs",
+    "Write the HIPAA audit logging requirements for our EHR export feature"
+  ]
+}

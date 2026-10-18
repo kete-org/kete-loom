@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our Jira sync broke because /rest/api/3/search now returns 410, move it to the new JQL search endpoint",
+    "Create Jira issues from our support tool and fill the Severity custom field from code",
+    "Move a Jira ticket to Done through the REST API when the related PR merges",
+    "Set up OAuth 2.0 3LO so customers can connect their Jira Cloud site to our app",
+    "The Jira importer keeps getting 429 with RateLimit-Reason jira-burst-based, add proper backoff",
+    "Verify the X-Hub-Signature on webhooks coming from our Jira Cloud admin webhook"
+  ],
+  "should_not_trigger": [
+    "Create Linear issues from our error tracker using the GraphQL API",
+    "Write a JQL filter in the Jira UI that shows my team's overdue bugs",
+    "Estimate how many sprints the checkout rewrite will take",
+    "Open a GitHub issue automatically when the nightly job fails",
+    "Write the incident postmortem for last night's outage"
+  ]
+}

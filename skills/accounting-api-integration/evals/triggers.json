@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Sync our app's invoices and payments into QuickBooks Online for each customer company that connects",
+    "Our Xero refresh keeps failing with invalid_grant after a few days when two workers run at once",
+    "Build a screen where the accountant maps our product types to their Xero chart of accounts and tax rates",
+    "Retries are creating duplicate invoices in QuickBooks; how do we make the posting idempotent?",
+    "Verify the intuit-signature header on QuickBooks webhooks and fetch the changed invoices",
+    "We hit 429 errors from the Xero API during our nightly backfill of 20,000 invoices"
+  ],
+  "should_not_trigger": [
+    "Set up Stripe webhooks so we fulfil orders when checkout.session.completed arrives",
+    "How should VAT be shown on invoices to EU business customers under reverse charge?",
+    "Design our dunning emails and retry schedule for failed card renewals",
+    "Prepare the month-end close checklist and journal entries for our finance team",
+    "Review our billing code for proration and timezone bugs before release"
+  ]
+}

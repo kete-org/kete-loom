@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Write a Nornir script that pushes our NTP and syslog template to 200 IOS-XE switches with a dry run first",
+    "My Ansible ios_config task reports changed on every run even though nothing is different, why?",
+    "Should we use NAPALM or plain Netmiko to roll out ACL updates across Arista and Cisco boxes?",
+    "Add an automatic revert to our NAPALM deploy so a bad push doesn't strand us without SSH",
+    "Our network inventory YAML has device passwords in plaintext, move them to vault or env vars",
+    "Set up a containerlab topology so we can test our Ansible network playbooks before production"
+  ],
+  "should_not_trigger": [
+    "Our eBGP session to the transit provider keeps flapping between Active and Idle",
+    "Write the IOS commands to make Gi1/0/5 an access port in VLAN 30 with portfast",
+    "Review this OPNsense config.xml for anything exposed on the WAN side",
+    "Traceroute from the app server dies at the second hop, help me find where packets drop",
+    "Write a Terraform module for an Azure virtual network with two subnets",
+    "Write an Ansible playbook that installs nginx and certbot on Ubuntu servers"
+  ]
+}

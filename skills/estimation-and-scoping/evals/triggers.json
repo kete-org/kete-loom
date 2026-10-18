@@ -1,0 +1,14 @@
+{
+  "should_trigger": [
+    "How long will it take to add SSO login to our app? Give me a range, not one number",
+    "We have to launch the mobile checkout by March 1. Look at the scope and tell me what to cut to make that date",
+    "Size this epic for quarterly planning, call out the unknowns and suggest spikes",
+    "Our last project was estimated at 3 weeks and took 9. Help me figure out why and estimate the next one better"
+  ],
+  "should_not_trigger": [
+    "Write the product requirements doc for SSO login with acceptance criteria",
+    "List the files I need to change to add SSO and the order to change them in",
+    "Estimate how much this AWS setup will cost per month",
+    "Benchmark the checkout endpoint and tell me its p99 latency"
+  ]
+}

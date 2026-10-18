@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our password reset emails keep landing in Gmail spam, here are the headers showing dmarc=fail",
+    "Set up SPF, DKIM and DMARC for our new sending domain before we turn on Amazon SES",
+    "SPF check says permerror too many DNS lookups, how do I fix the record?",
+    "We send 20k newsletters a day, what do we need for the Gmail and Yahoo bulk sender requirements?",
+    "Plan a warm-up schedule for the brand new domain we bought for product emails",
+    "How should we handle hard bounces and spam complaints coming back from Postmark webhooks?"
+  ],
+  "should_not_trigger": [
+    "Write a five-step cold email sequence for CFOs at logistics companies",
+    "Turn our latest blog post into a weekly newsletter issue and three LinkedIn posts",
+    "Build the HTML template for our order confirmation email in React Email",
+    "Schedule our product announcement to post on X and LinkedIn via their APIs",
+    "Plan the launch campaign and channel budget for our new app"
+  ]
+}

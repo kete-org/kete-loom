@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our generated PDF invoices are missing the customer's VAT number and the reverse charge note for EU business customers",
+    "Should we integrate Avalara or Stripe Tax, or switch to a merchant of record like Paddle for selling SaaS worldwide?",
+    "Belgium now requires Peppol e-invoices for B2B; what do we need to change in our invoicing system?",
+    "Tax on our invoices is off by a cent compared with the total; should VAT be rounded per line or per invoice?",
+    "We start selling to US customers in several states. How do we figure out where we need to collect sales tax?",
+    "Make our invoice numbers sequential and gap-free per legal entity, they currently use random IDs"
+  ],
+  "should_not_trigger": [
+    "Implement mid-cycle proration when a customer upgrades from the monthly to the annual plan",
+    "Classify our product under the right HS code for importing into the EU",
+    "Sync invoices from our app into Xero with the right account codes",
+    "Check our payroll setup for the right employer tax withholding",
+    "Review this pull request that changes how invoice totals are calculated"
+  ]
+}

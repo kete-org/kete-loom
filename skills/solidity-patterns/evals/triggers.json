@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write an ERC-20 token contract with a capped supply and an owner-only mint using Foundry",
+    "Should our staking vault contract be upgradeable with UUPS or deployed immutable?",
+    "Set up a new Foundry project with OpenZeppelin and a basic NFT contract",
+    "Add a withdraw function to my Solidity escrow contract that follows checks-effects-interactions",
+    "Refactor this Solidity contract to use custom errors and emit events when the fee changes"
+  ],
+  "should_not_trigger": [
+    "Audit our lending protocol contracts for oracle manipulation and reentrancy before launch",
+    "Connect MetaMask to our React app with viem and show the user's USDC balance",
+    "Review the Solidity diff in this PR for missing access control and storage collisions",
+    "Integrate Stripe subscriptions into the billing page",
+    "Write a Rust program that parses a CSV of transactions"
+  ]
+}

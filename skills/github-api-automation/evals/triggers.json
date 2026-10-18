@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Write a script that uses gh api to add a label to every open issue across our org's repos",
+    "Should our PR bot use a fine-grained personal access token or a GitHub App installation token?",
+    "Our GitHub webhook receiver needs to verify X-Hub-Signature-256 before processing push events",
+    "The sync job hits 403 secondary rate limit errors from api.github.com, how do I back off properly?",
+    "Trigger a workflow_dispatch run from our deploy service through the REST API and wait for it to finish",
+    "Fetch every pull request with its review comments via the GraphQL API using cursor pagination"
+  ],
+  "should_not_trigger": [
+    "Add a GitHub Actions workflow that lints and tests on every pull request",
+    "Speed up the dependency cache step in our .github/workflows/test.yml",
+    "Create a Jira issue automatically when a build fails",
+    "Post a message to a Slack channel when a deploy finishes",
+    "Sync our Linear issues into a weekly report"
+  ]
+}

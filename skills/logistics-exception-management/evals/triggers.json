@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Tracking has not updated in five days and the customer is angry, what should we do and say?",
+    "Help me put together a damage claim for a pallet that arrived crushed via our LTL carrier",
+    "Design a shipment exceptions queue with severities, SLA timers and root-cause codes",
+    "The carrier marked the parcel delivered but the customer says it never arrived, how do we handle it?",
+    "Write customer email templates for delayed, lost and wrong-address deliveries"
+  ],
+  "should_not_trigger": [
+    "Customers want to send items back, design our returns portal and RMA numbering",
+    "Calculate the reorder point for SKU 1043 given a four week lead time",
+    "Which Incoterm should we quote to a buyer in Germany so they handle import duties?",
+    "Plan the shift schedule for our packing line around the bottleneck machine",
+    "Write a postmortem for yesterday's checkout outage"
+  ]
+}

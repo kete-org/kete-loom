@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review my checkout UI diff for hard-coded strings and concatenated sentences before I merge",
+    "Check this pull request for broken plurals and dates formatted without the locale",
+    "Is the new settings screen ready for translators? Look over the branch for i18n problems",
+    "Audit the changes to our React Native profile screen for anything that will break in Arabic right-to-left",
+    "Look over my last commit and tell me if any translation keys are missing from the locale files"
+  ],
+  "should_not_trigger": [
+    "Set up i18next in our Next.js app and move the strings into JSON catalogs",
+    "Translate this onboarding copy into Spanish and Portuguese",
+    "Review this React component diff for hooks rule violations and missing effect cleanup",
+    "Audit the checkout page for WCAG 2.2 accessibility failures",
+    "Add a Hebrew locale to the app and convert the CSS to logical properties"
+  ]
+}

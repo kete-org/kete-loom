@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review our patient portal changes for PHI ending up in Sentry errors before we release",
+    "Check the lab results module for missing audit entries when clinicians view or export records",
+    "Audit our EHR integration code for patient matching bugs and results filed against the wrong patient",
+    "Can you review this telehealth branch for consent checks we skipped and patient data in analytics events?",
+    "Look over our pharmacy service diff for unsafe defaults like assuming units or treating missing values as normal"
+  ],
+  "should_not_trigger": [
+    "Implement a SMART on FHIR EHR launch for our clinician dashboard",
+    "Write an HL7 v2 ADT parser that handles escape sequences",
+    "What HIPAA safeguards and BAAs do we need for a new telehealth startup?",
+    "Review our checkout webhooks for float money and missing signature verification",
+    "Review my last commit for SQL injection and XSS in the admin panel"
+  ]
+}

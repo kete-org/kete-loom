@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Build a CDS Hooks service that warns at order-sign when a renally cleared drug is ordered for a patient with low eGFR",
+    "Our sepsis alert fires constantly and nurses override 95% of them, how should we redesign it?",
+    "Does our symptom checker that recommends a diagnosis to patients count as a medical device under FDA rules?",
+    "Set up versioning, clinician sign-off and regression tests for our medication dosing rules",
+    "How do we audit which decision support cards were shown, accepted or overridden by each clinician?"
+  ],
+  "should_not_trigger": [
+    "Fetch MedicationRequest resources from the EHR's FHIR API with a SMART standalone launch",
+    "Parse ORU^R01 lab results arriving over MLLP and send an ACK",
+    "Which HIPAA safeguards does our telehealth backend need for video visits?",
+    "Train a gradient boosting model to predict readmission and report its AUC",
+    "Review the clinic scheduling service for PHI in logs and missing consent checks"
+  ]
+}

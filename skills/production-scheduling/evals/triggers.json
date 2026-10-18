@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Sequence these 40 orders across our two injection moulding machines to minimise late jobs",
+    "Our paint line loses hours on colour changeovers, find a better job order for the week",
+    "Model our job shop in OR-Tools CP-SAT with alternative machines and shift calendars",
+    "Machine 3 just broke down for six hours, reschedule the rest of the day with minimal disruption",
+    "Which machine is our bottleneck and can we hit all the due dates this month?"
+  ],
+  "should_not_trigger": [
+    "Forecast next quarter's demand for our spare parts and set reorder points",
+    "Write an on-call rota for our SRE team across three time zones",
+    "Write a runbook for restarting the factory's MES database server",
+    "Set up a schedule in our CI to run nightly integration tests",
+    "Estimate how many sprints the new scheduling feature will take"
+  ]
+}

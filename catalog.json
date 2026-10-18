@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "skills": [
     {
+      "name": "accounting-api-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Connects an application's sales and payments to QuickBooks Online and Xero through their accounting APIs, handling the OAuth 2.0 authorisation code flow with rotating refresh tokens, per-company realm or tenant IDs, chart of accounts and tax code mapping, posting customers, invoices, payments and credit notes, safe retries with requestid or Idempotency-Key, HMAC-verified webhooks, 429 rate-limit backoff, and nightly reconciliation against the ledger. Use when building a QuickBooks or Xero sync, fixing duplicate or missing invoices in the books, debugging invalid_grant or token expiry, mapping products to income accounts, or reconciling app revenue with what the accountant sees.",
+      "path": "skills/accounting-api-integration"
+    },
+    {
       "name": "agent-harness-design",
       "version": "0.1.0",
       "category": "ai",
@@ -10,6 +19,15 @@
       "requires": [],
       "description": "Architecture for the loop around an LLM agent, covering which tools to give it, how to manage and compact its context window, plan-act-verify cycles, permission tiers and sandboxing, tracing and cost limits, and recovery when steps fail or the agent loops. Use when you are building or debugging the harness of a coding agent, task-automation agent or other tool-calling loop (not tuning your own session), or when the agent you built forgets earlier work, runs dangerous commands, or stops before the job is done.",
       "path": "skills/agent-harness-design"
+    },
+    {
+      "name": "ai-media-generation",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "network",
+      "requires": [],
+      "description": "Product features built on hosted generative image, video, speech and music models, including prompt templates with fixed parameters and seeds, long-running jobs submitted then polled or confirmed by signed webhooks, per-user quotas and cost estimates before submission, input and output moderation, C2PA content credentials and AI-generated labels, and copying results to your own storage before provider URLs expire. Use when adding text-to-image, image editing, text-to-video or text-to-speech generation to an app, wiring up a generation provider's async job API, or controlling the cost, safety and storage of generated media.",
+      "path": "skills/ai-media-generation"
     },
     {
       "name": "angular-patterns",
@@ -112,6 +130,27 @@
       "path": "skills/benchmark-methodology"
     },
     {
+      "name": "bgp-diagnostics",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Diagnoses Border Gateway Protocol problems on Cisco, Juniper, Arista and FRR routers by reading neighbor state (Idle, Active, OpenSent, Established) and NOTIFICATION codes, checking which prefixes are received, accepted and advertised through prefix-lists, route-maps and max-prefix limits, walking best-path selection, decoding standard and large communities, spotting RPKI-invalid or leaked routes, and confirming what the internet sees from RIPEstat, RouteViews and other looking glasses. Use when a BGP session will not come up or keeps flapping, a prefix is missing, not propagating or taking the wrong path, a provider says they are not receiving an announcement, or traffic shifted after a routing change or an upstream incident.",
+      "path": "skills/bgp-diagnostics"
+    },
+    {
+      "name": "bioinformatics-workflows",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "samtools",
+        "bcftools"
+      ],
+      "description": "Bioinformatics pipeline work on FASTA, FASTQ, SAM/BAM/CRAM and VCF files with Biopython, samtools, bcftools, seqkit, FastQC, aligners such as bwa-mem2 and minimap2, and Snakemake or Nextflow workflows run in pinned conda, Docker or Apptainer environments so results reproduce. Use when parsing or converting sequence and alignment files, writing or debugging a Snakemake or Nextflow pipeline, running read QC, alignment or variant calling steps, or making a genomics analysis reproducible on a laptop, HPC cluster or cloud.",
+      "path": "skills/bioinformatics-workflows"
+    },
+    {
       "name": "brand-voice",
       "version": "0.1.0",
       "category": "business",
@@ -141,6 +180,15 @@
       "path": "skills/bun-runtime"
     },
     {
+      "name": "cisco-ios-config",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Reads and writes Cisco IOS and IOS-XE running configuration by hand without cutting off access, covering access and trunk switchports, VLANs and VTP, named extended ACLs edited by sequence number, static routes and basic OSPF, SSH and local user hardening, config archive with configure replace and revert timers, and the show commands that prove each change worked. Use when someone needs CLI commands for a Catalyst switch or ISR/ASR/Catalyst 8000 router, wants a pasted show running-config explained, is about to change a trunk, ACL or VTY line remotely, or needs to roll a Cisco device back to an earlier config.",
+      "path": "skills/cisco-ios-config"
+    },
+    {
       "name": "clickhouse-patterns",
       "version": "0.1.0",
       "category": "data",
@@ -150,6 +198,15 @@
       ],
       "description": "ClickHouse table and query design for analytics, choosing a MergeTree family engine, ordering the sorting key for the filters that matter, keeping partitions coarse, building incremental and refreshable materialised views, batching or async-inserting writes to avoid too many parts, and reading EXPLAIN and system tables to make slow queries fast. Use when creating or changing ClickHouse tables, ingesting events into ClickHouse, a ClickHouse query scans too many rows, or deduplication and rollups give unexpected results.",
       "path": "skills/clickhouse-patterns"
+    },
+    {
+      "name": "clinical-decision-support",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Engineering discipline for software that recommends or warns at the point of care, including CDS Hooks services (discovery, patient-view and order-sign hooks, prefetch, cards, suggestions, feedback), alert design that avoids alert fatigue, versioned rule logic tied to cited evidence, clinician sign-off and regression testing on synthetic cases, override and audit trails, and the regulatory line where software becomes a medical device (FDA CDS guidance, EU MDR Rule 11, UK DCB0129). Use when building drug-interaction or dosing alerts, risk scores, care-gap reminders or AI suggestions shown to clinicians, writing a CDS Hooks service, or deciding whether a clinical feature needs regulatory or clinical-safety review.",
+      "path": "skills/clinical-decision-support"
     },
     {
       "name": "code-tour",
@@ -172,6 +229,24 @@
       ],
       "description": "Gets you productive in an unfamiliar repository fast by locating its entry points, building and running it locally, mapping modules and the main data flow, reading the tests as a specification, and ending with a one-page orientation note. Use when someone has just cloned or inherited a project, asks \"how does this codebase work\", \"where do I start\", or needs to understand a repo before changing it.",
       "path": "skills/codebase-onboarding"
+    },
+    {
+      "name": "cold-outreach-sequences",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Plans, writes and runs B2B cold outreach sequences to prospects who have not opted in - picking an ideal customer profile and a narrow segment, researching a genuine reason to write to each person, drafting short multi-touch email and LinkedIn steps with sensible spacing, staying within CAN-SPAM, GDPR and PECR, and judging results by positive replies and meetings rather than opens. Use when a founder or sales team wants an outbound prospecting sequence written or reviewed, asks why cold emails get no replies, or needs to know whether emailing a bought list of business contacts is allowed.",
+      "path": "skills/cold-outreach-sequences"
+    },
+    {
+      "name": "content-repurposing",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Breaks one finished long-form source (article, talk recording, podcast episode, webinar or report) into channel-native derivatives such as LinkedIn posts, X threads, newsletter sections, short video clip scripts and quote cards, by extracting the core claims with timestamps or paragraph references, matching each to a format, and checking every derivative against the source so nothing is exaggerated, misquoted or stripped of its caveats. Use when someone has a long piece already published or recorded and wants a set of social posts, threads, a newsletter or clips made from it, or wants derivatives checked for accuracy against the original.",
+      "path": "skills/content-repurposing"
     },
     {
       "name": "context-budget",
@@ -248,6 +323,15 @@
       "path": "skills/css-architecture"
     },
     {
+      "name": "customs-trade-compliance",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "network",
+      "requires": [],
+      "description": "Cross-border shipping groundwork for software and operations teams, covering Harmonized System product codes, choosing and reading Incoterms 2020 rules, estimating duties, import taxes and landed cost, the data a commercial invoice needs, and screening buyers against restricted-party and sanctions lists, with a firm line on which decisions a licensed customs broker or trade lawyer must make. Use when adding international shipping to a store or ERP, building a landed-cost calculator or export documents, or deciding who pays duties and when goods need a broker.",
+      "path": "skills/customs-trade-compliance"
+    },
+    {
       "name": "dart-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -270,6 +354,24 @@
       "path": "skills/dart-testing"
     },
     {
+      "name": "data-analysis-notebooks",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Keeps Jupyter and other notebook analyses reproducible from a clean kernel, with a set project layout, a pinned environment, raw data treated as read-only, pandas and polars code free of chained assignment and silent dtype or join errors, honest plots, and statistics that avoid p-hacking, multiple-comparison and leakage traps, then moves code that has settled into tested modules. Use when starting or cleaning up an exploratory analysis notebook, when a notebook gives different results on rerun, when reviewing the statistics or charts in an analysis, or when turning notebook code into a script or package others can run.",
+      "path": "skills/data-analysis-notebooks"
+    },
+    {
+      "name": "data-pipelines",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Batch data pipeline engineering for extract-load-transform jobs run by an orchestrator such as Airflow, Dagster or Prefect, built so every task is idempotent and safe to rerun for any past interval, partitioned by logical date, guarded by row-count, freshness and schema checks before data is published, tolerant of late-arriving records, and traceable through lineage. Use when building or fixing a scheduled ingestion or ETL/ELT job, writing an Airflow DAG, Dagster asset or Prefect flow, planning a backfill, or chasing duplicate or missing rows after a rerun.",
+      "path": "skills/data-pipelines"
+    },
+    {
       "name": "database-migrations",
       "version": "0.1.0",
       "category": "data",
@@ -277,6 +379,17 @@
       "requires": [],
       "description": "Plans and writes zero-downtime schema migrations with the expand-migrate-contract sequence, so columns, tables and indexes can be added, renamed, retyped or dropped while old and new app versions run side by side, with batched backfills, lock and statement timeouts, tested rollbacks, and the conventions of tools such as Flyway, Liquibase, Alembic, Django, Rails, Prisma and Knex. Use when writing a migration against a live database, renaming or dropping a column in production, backfilling a large table, adding a NOT NULL column or foreign key without locking writes, or planning how to roll a schema change back.",
       "path": "skills/database-migrations"
+    },
+    {
+      "name": "dbt-patterns",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "dbt"
+      ],
+      "description": "dbt project conventions for analytics engineering, laying models out in staging, intermediate and marts layers, declaring sources with freshness, using ref and source instead of hard-coded tables, adding data tests, unit tests and enforced model contracts, choosing an incremental strategy, building snapshots for slowly changing history, documenting columns, and running slim CI on only the modified nodes. Use when creating or restructuring a dbt project, writing or refactoring a dbt model, an incremental model gives duplicates, adding dbt tests or snapshots, or setting up dbt CI with state:modified and defer.",
+      "path": "skills/dbt-patterns"
     },
     {
       "name": "deep-research",
@@ -351,6 +464,17 @@
       "path": "skills/ef-core-patterns"
     },
     {
+      "name": "email-deliverability",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [
+        "dig"
+      ],
+      "description": "Gets email into the inbox instead of spam by setting up SPF, DKIM, DMARC and BIMI DNS records with alignment, splitting transactional and marketing mail onto separate subdomains and streams, choosing a sending provider, processing bounces and complaints, keeping lists clean and warming a new domain or IP. Use when mail lands in spam or bounces, a domain needs authenticating before sending, Gmail, Yahoo or Outlook bulk-sender rules must be met, or a new sending domain is about to go live.",
+      "path": "skills/email-deliverability"
+    },
+    {
       "name": "error-handling-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -358,6 +482,24 @@
       "requires": [],
       "description": "Language-agnostic rules for designing how code fails, covering when to crash versus recover, typed and wrapped errors with context, retry with exponential backoff and jitter only for idempotent work, timeouts on every remote call, and separating what the user sees from what gets logged. Use when writing or restructuring try/catch, Result or error-return code, adding retries or timeouts to a network client, or deciding what an API should return on failure.",
       "path": "skills/error-handling-patterns"
+    },
+    {
+      "name": "estimation-and-scoping",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Software effort estimation and scope negotiation that breaks a project into small tasks, gives each a best, likely and worst case instead of a single number, surfaces unknowns and time-boxed spikes to resolve them, adds integration, review and release overhead, and offers concrete scope cuts that fit a deadline, finishing with a range and a stated confidence level. Use when someone asks how long a feature or project will take, needs a quote or a sizing for planning, has a fixed date and must decide what to cut, or wants to know why an earlier estimate was wrong.",
+      "path": "skills/estimation-and-scoping"
+    },
+    {
+      "name": "evm-dapp-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Connects web frontends and backends to Ethereum and EVM chains with viem (optionally wagmi) or ethers v6, covering EIP-1193 and EIP-6963 wallet discovery and connection, checking and switching chain IDs, typed contract reads, simulating before writes, token amounts kept as bigint with parseUnits and formatUnits against each token's decimals, the transaction lifecycle from signature to receipt status and confirmations, replaced or dropped transactions, event logs, and RPC rate limits and block-range caps. Use when adding a connect-wallet button, calling a deployed contract from a dapp or Node service, displaying or sending ERC-20 amounts, or debugging stuck transactions and RPC errors.",
+      "path": "skills/evm-dapp-integration"
     },
     {
       "name": "fastapi-patterns",
@@ -369,6 +511,27 @@
       ],
       "description": "FastAPI service construction with APIRouter modules, Pydantic models as the request and response contract, Depends-based injection for settings, database sessions and the current user, choosing async def versus def per endpoint, consistent error bodies, BackgroundTasks, lifespan startup, and tests through TestClient or httpx with dependency_overrides. Use when creating or extending a FastAPI app, wiring a database session or auth into routes, deciding whether an endpoint should be async, or writing tests for FastAPI endpoints.",
       "path": "skills/fastapi-patterns"
+    },
+    {
+      "name": "ffmpeg-media-processing",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "ffmpeg",
+        "ffprobe"
+      ],
+      "description": "FFmpeg and ffprobe command lines for audio and video work - transcoding with libx264, libx265, libvpx-vp9, AAC and Opus, choosing containers, stream copy versus re-encode, frame-accurate trimming, concat demuxer joins, scale and pad filters, burned-in or soft subtitles, thumbnails and contact sheets, HLS VOD ladders, NVENC, VideoToolbox, QSV and VAAPI hardware encoding, and calling ffmpeg safely from code with argument arrays. Use when writing or debugging an ffmpeg command, converting or compressing media files, cutting or joining clips, producing HLS segments, or running ffmpeg on user uploads in a backend.",
+      "path": "skills/ffmpeg-media-processing"
+    },
+    {
+      "name": "fhir-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "HL7 FHIR R4 and R4B REST client and server work, covering resource modelling and references, search parameters with _include and chained queries, paging through Bundle next links, transaction and batch bundles with urn:uuid references, SMART on FHIR authorization (EHR and standalone launch, v2 scopes, PKCE, backend services), profile validation with $validate and the HL7 validator, and testing against public sandboxes. Use when calling or exposing a FHIR API, registering a SMART app with an EHR such as Epic or Oracle Health, writing FHIR search queries, posting transaction bundles, or debugging OperationOutcome errors.",
+      "path": "skills/fhir-integration"
     },
     {
       "name": "flask-patterns",
@@ -458,6 +621,17 @@
       "path": "skills/github-actions-ci"
     },
     {
+      "name": "github-api-automation",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [
+        "gh"
+      ],
+      "description": "Scripts and services that drive GitHub through the gh CLI, the REST and GraphQL APIs or a GitHub App, covering the choice between fine-grained tokens and app installation tokens, JWT-to-installation-token exchange, Link-header and cursor pagination, primary and secondary rate limits, X-Hub-Signature-256 webhook verification, and the Actions REST endpoints for dispatching, re-running and reading workflow runs. Use when writing a bot, sync job or webhook receiver that calls the GitHub API, choosing between a PAT and a GitHub App, or debugging 403 rate-limit or signature failures from GitHub.",
+      "path": "skills/github-api-automation"
+    },
+    {
       "name": "go-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -498,6 +672,15 @@
       "path": "skills/hipaa-compliance"
     },
     {
+      "name": "hl7v2-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Parses, generates and routes pipe-delimited HL7 version 2.x messages such as ADT admit/discharge/transfer events, ORM and OML orders and ORU results, handling MSH encoding characters and escape sequences, repeating fields and components, MSH-10 control IDs, original and enhanced ACK/NACK modes, MLLP framing over TCP, interface engines like Mirth Connect (NextGen Connect), and mapping v2 segments to FHIR resources. Use when receiving or sending HL7 v2 feeds from a hospital, lab or EHR, debugging a rejected message or missing ACK, writing an MLLP listener, or converting PID, PV1, OBR and OBX data into FHIR.",
+      "path": "skills/hl7v2-integration"
+    },
+    {
       "name": "homelab-network-setup",
       "version": "0.1.0",
       "category": "devops",
@@ -516,6 +699,33 @@
       "path": "skills/hubtel-integration"
     },
     {
+      "name": "i18n-localization",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Internationalises an application so it can ship in more languages and regions, by moving user-facing text into message catalogs, writing ICU MessageFormat messages with plural and select rules, formatting dates, numbers, currency and lists through locale-aware APIs, making layouts work right-to-left, testing with pseudo-localisation, and keeping translation keys in sync across locales. Use when adding a second language or locale to an app, setting up i18next, react-intl, vue-i18n, gettext, Android or iOS string resources, fixing plurals or currency that read wrong in one language, or adding Arabic or Hebrew support.",
+      "path": "skills/i18n-localization"
+    },
+    {
+      "name": "incident-postmortem",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Blameless post-incident review writing that rebuilds a timestamped timeline from alerts, chat and deploy logs, quantifies customer and business impact, separates the trigger from root causes and contributing factors, records what went well and where the team got lucky, and turns findings into a short list of owned, dated action items with a follow-up review. Use when an outage, data loss, security event or near miss is over and someone needs the postmortem, incident report or retrospective written, reviewed or its action items tracked.",
+      "path": "skills/incident-postmortem"
+    },
+    {
+      "name": "inventory-demand-planning",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Inventory and demand planning for stocked SKUs, from cleaning sales history and picking a simple forecast to sizing safety stock for a target service level, setting reorder points and order quantities from lead times, ranking items with ABC analysis, and weighing stockout cost against overstock cost, built as a spreadsheet or a small script. Use when deciding how much stock to hold or when to reorder, building a replenishment model or reorder report, or explaining why a SKU keeps running out or piling up.",
+      "path": "skills/inventory-demand-planning"
+    },
+    {
       "name": "investor-materials",
       "version": "0.1.0",
       "category": "business",
@@ -523,6 +733,15 @@
       "requires": [],
       "description": "Drafts startup fundraising documents, namely a pitch deck outline, a one-page investor summary and the recurring investor update, built around a clear narrative, the few metrics investors judge a company on, a specific ask and use of funds. Use when a founder is preparing to raise a seed or Series A round, writing to existing investors about progress, or wants a deck or one-pager reviewed for gaps and common fundraising mistakes.",
       "path": "skills/investor-materials"
+    },
+    {
+      "name": "invoicing-and-tax",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Guides software teams through issuing legally usable invoices and charging sales tax, VAT or GST correctly, covering required invoice fields and sequential numbering, choosing a tax calculation service or merchant of record over hand-rolled rate tables, registration thresholds and nexus at a high level, reverse charge for B2B, tax-inclusive versus exclusive pricing, line-level rounding, and national e-invoicing mandates such as Peppol, KSeF and Factur-X, with a firm handoff to a qualified accountant for anything that is a tax position. Use when building or fixing invoice generation, adding VAT or sales tax to checkout, deciding whether to integrate Avalara, Stripe Tax or a merchant of record, or preparing for an e-invoicing deadline in a country you sell into.",
+      "path": "skills/invoicing-and-tax"
     },
     {
       "name": "java-patterns",
@@ -556,6 +775,17 @@
       ],
       "description": "Android Jetpack Compose UI work centred on hoisting state into stateless composables, understanding recomposition, stability and strong skipping, choosing the right side-effect API (LaunchedEffect, DisposableEffect, rememberUpdatedState, derivedStateOf, snapshotFlow), exposing ViewModel state with collectAsStateWithLifecycle, type-safe Navigation Compose routes, and lazy-list and baseline-profile performance. Use when writing or restructuring Compose screens on Android, debugging excessive recomposition or janky LazyColumn scrolling, wiring a ViewModel to a composable, or setting up Compose navigation.",
       "path": "skills/jetpack-compose-patterns"
+    },
+    {
+      "name": "jira-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [
+        "curl"
+      ],
+      "description": "Connects code to Jira Cloud through the REST API v3, from picking basic auth with an Atlassian API token or OAuth 2.0 (3LO) with a cloudId, through enhanced JQL search on /rest/api/3/search/jql with nextPageToken paging, creating issues with Atlassian Document Format bodies, looking up custom field IDs and running workflow transitions, to registering webhooks and coping with 429 burst and points-based quotas. Use when building a Jira sync, bot or importer, moving off the removed /rest/api/3/search endpoint, setting custom fields or transitions from code, or handling Jira webhooks and rate limits.",
+      "path": "skills/jira-integration"
     },
     {
       "name": "jpa-hibernate",
@@ -632,6 +862,24 @@
       "path": "skills/laravel-patterns"
     },
     {
+      "name": "linear-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Talks to Linear's GraphQL API at api.linear.app/graphql with the @linear/sdk or raw queries, covering personal API keys versus OAuth 2.0 apps (actor=app, 24-hour access tokens with refresh, client credentials), querying and mutating issues, projects, cycles, teams and workflow states, Relay-style first/after cursor pagination, Linear-Signature HMAC webhook checks with the webhookTimestamp replay window, and request plus complexity rate limits reported as RATELIMITED errors. Use when building a Linear sync, bot or agent, creating or moving Linear issues from code, receiving Linear webhooks, or fixing Linear auth, paging or rate-limit problems.",
+      "path": "skills/linear-integration"
+    },
+    {
+      "name": "literature-review",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "network",
+      "requires": [],
+      "description": "Scientific literature review that plans a reproducible search across PubMed, Google Scholar and arXiv, screens papers against written inclusion and exclusion criteria, appraises study design and risk of bias, extracts effect sizes into a table, cites each claim to a DOI or PMID, and states how certain the evidence is. Use when someone needs a literature review, a background or related-work section for a paper or grant, an evidence summary on a scientific or clinical question, or a PRISMA-style record of how studies were found and screened.",
+      "path": "skills/literature-review"
+    },
+    {
       "name": "llm-app-patterns",
       "version": "0.1.0",
       "category": "ai",
@@ -648,6 +896,27 @@
       "requires": [],
       "description": "Builds and runs evaluation suites that measure whether an LLM feature is good enough to ship, from assembling a versioned case set and choosing graders (exact match, code checks, rubrics, a judge model) to tracking scores across prompt and model changes, keeping test cases out of prompts and training data, and deciding when people must review outputs. Use when a team needs a pass/fail bar for an AI feature, wants to catch regressions before a prompt or model upgrade, or doubts whether its LLM-as-judge scores can be trusted.",
       "path": "skills/llm-evals"
+    },
+    {
+      "name": "logistics-exception-management",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Shipment exception handling for parcels and freight that are late, damaged, lost, refused or stuck on a bad address, covering triage by exception type, evidence capture, carrier claim deadlines, customer messages, SLA clocks and a root-cause log that shows which lane, carrier or packaging keeps failing. Use when a delivery has gone wrong and someone must decide what to do, when building an exceptions queue or claims tracker, or when setting up rules and templates for delay, damage and loss cases.",
+      "path": "skills/logistics-exception-management"
+    },
+    {
+      "name": "manim-animations",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "python3",
+        "manim"
+      ],
+      "description": "Manim Community Edition (the manim Python package, not 3b1b manimgl) for math and explainer animations, covering Scene construct methods, Mobjects and VGroups, play with the .animate syntax, Transform versus ReplacementTransform, ValueTracker updaters and always_redraw, MathTex and Tex with a LaTeX install, and render quality flags from -ql drafts to -qk 4K. Use when writing or debugging a Manim scene, animating equations, graphs or geometry in Python, or fixing Manim LaTeX, updater or render-output problems.",
+      "path": "skills/manim-animations"
     },
     {
       "name": "market-research",
@@ -678,6 +947,15 @@
       ],
       "description": "Model Context Protocol server construction, from naming tools and writing their JSON Schema inputs to returning isError results, structured output, tool annotations, OAuth-protected Streamable HTTP or local stdio transports, and testing with the MCP Inspector. Use when creating an MCP server, exposing an API or database to agents as MCP tools, or debugging why a client can't connect to, list or call a server's tools.",
       "path": "skills/mcp-server-patterns"
+    },
+    {
+      "name": "metrics-dashboards",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Designs business and product metric dashboards that people act on, starting from the decisions the audience makes, writing each metric as a precise definition with formula, grain, filters, time zone and owner, picking a chart type per question, laying out headline numbers then trends then breakdowns, showing data freshness and quality status on the page, and cutting vanity metrics that never change a decision. Use when planning a KPI or operations dashboard, a dashboard nobody trusts or opens, two reports disagree on the same number, or choosing which metrics and charts belong on a Looker, Metabase, Superset, Tableau, Power BI or Grafana board.",
+      "path": "skills/metrics-dashboards"
     },
     {
       "name": "ml-experiment-workflow",
@@ -743,6 +1021,17 @@
       ],
       "description": "NestJS application structure and conventions, covering feature modules, providers and dependency-injection scopes, ValidationPipe with class-validator DTOs, guards, interceptors, exception filters, ConfigModule, database modules (TypeORM, Prisma, Mongoose) and Test.createTestingModule unit and e2e tests. Use when building or restructuring a NestJS API, wiring a new module or provider, fixing a circular dependency or \"Nest can't resolve dependencies\" error, adding auth guards, or writing NestJS tests.",
       "path": "skills/nestjs-patterns"
+    },
+    {
+      "name": "network-automation",
+      "version": "0.1.0",
+      "category": "devops",
+      "risk": "network",
+      "requires": [
+        "python3"
+      ],
+      "description": "Automates configuration of routers, switches and firewalls with Netmiko, NAPALM, Nornir or Ansible network collections, building a source-of-truth inventory, idempotent templates and resource modules, dry runs that show a diff before any push, commit-confirm style rollback, vaulted credentials, and testing against a containerlab or CML lab before production. Use when writing or fixing a Python or Ansible script that pushes config to many network devices, choosing between these tools, adding a check-mode diff or automatic revert to a device rollout, or moving device passwords out of an inventory file.",
+      "path": "skills/network-automation"
     },
     {
       "name": "network-troubleshooting",
@@ -875,6 +1164,15 @@
       "path": "skills/postgres-patterns"
     },
     {
+      "name": "prd-writing",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Product requirements document (PRD) drafting that starts from the user problem and the evidence for it, sets goals and explicit non-goals, describes target users and scenarios, writes numbered requirements each with testable acceptance criteria and a priority, picks success and guardrail metrics with baselines, lists open questions with owners, and plans a staged rollout. Use when a product manager or engineer needs a PRD, product spec or feature brief written, reviewed or tightened before design and engineering commit to building it.",
+      "path": "skills/prd-writing"
+    },
+    {
       "name": "prisma-patterns",
       "version": "0.1.0",
       "category": "data",
@@ -894,6 +1192,15 @@
       "requires": [],
       "description": "Turns data protection law (EU/UK GDPR, Ghana Data Protection Act 2012, Nigeria Data Protection Act 2023, Kenya Data Protection Act 2019) into engineering work on personal data, covering data mapping, lawful basis and consent records, retention and deletion jobs, subject access and erasure requests, cross-border transfers to cloud vendors, and breach notice timelines. It is engineering guidance, not legal advice. Use when a feature collects or shares personal data, when adding consent banners or account deletion, when answering a data subject request, or when preparing for a privacy audit in Europe or Africa.",
       "path": "skills/privacy-compliance"
+    },
+    {
+      "name": "production-scheduling",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Production and job-shop scheduling for factories, print shops, kitchens and other work centres, covering capacity checks, finding the bottleneck, dispatching rules such as SPT, EDD and Johnson's rule, sequence-dependent changeovers, time and WIP buffers, rescheduling after a breakdown or rush order, and when to move from heuristics to a constraint solver like OR-Tools CP-SAT. Use when building or fixing a production schedule or scheduling tool, deciding job order across machines or lines, or replanning after a disruption.",
+      "path": "skills/production-scheduling"
     },
     {
       "name": "prompt-engineering",
@@ -1037,6 +1344,27 @@
       "path": "skills/release-management"
     },
     {
+      "name": "remotion-video",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node",
+        "npx"
+      ],
+      "description": "Remotion video projects written in React, covering Composition and Sequence timing, frame-driven animation with interpolate and spring, staticFile assets, font loading held by delayRender, deterministic rendering with the remotion CLI or renderMedia, and serverless rendering on AWS Lambda with concurrency and S3 privacy settings. Use when building or fixing a Remotion composition, timing scenes in frames, animating with useCurrentFrame, rendering an MP4 from React code, or setting up Remotion Lambda.",
+      "path": "skills/remotion-video"
+    },
+    {
+      "name": "returns-reverse-logistics",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Returns and reverse-logistics flow design for physical goods, from writing the return policy and issuing RMA authorisations to receiving, inspecting and grading items, routing each one to restock, refurbish, liquidate, recycle or dispose, timing the refund against receipt, and flagging return-fraud patterns such as wardrobing, item swaps and empty boxes. Use when building or fixing a returns portal, RMA workflow or grading rules, deciding when refunds are released, or reducing return losses and abuse.",
+      "path": "skills/returns-reverse-logistics"
+    },
+    {
       "name": "ruby-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -1059,6 +1387,15 @@
       ],
       "description": "Writes and stabilises Ruby test suites in whichever framework the project already runs, RSpec or Minitest, with FactoryBot or fixtures, verifying doubles and stubs, frozen or travelled time, WebMock and VCR to keep tests off the network, and a seed-and-bisect routine for order-dependent or flaky specs. Use when adding RSpec examples or Minitest tests to a Ruby or Rails codebase, stubbing an HTTP client or the clock in Ruby, or tracking down a spec that fails only in CI or only with some seeds.",
       "path": "skills/ruby-testing"
+    },
+    {
+      "name": "runbook-writing",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Operational runbook and playbook authoring for on-call engineers, built around the alert or symptom that sends someone to the page, ordered read-only diagnosis checks with expected output, copy-paste remediation commands that each carry a rollback and a stop condition, escalation paths with contacts and time limits, verification that service has recovered, and a schedule for testing the runbook in drills. Use when writing or fixing a runbook for an alert, a recurring operational task such as failover or certificate rotation, or a service handover to an on-call rotation.",
+      "path": "skills/runbook-writing"
     },
     {
       "name": "rust-patterns",
@@ -1135,6 +1472,47 @@
       "path": "skills/skill-authoring"
     },
     {
+      "name": "slack-app-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Builds Slack apps on the Bolt framework (JavaScript, Python or Java), from the app manifest and minimal bot scopes through Events API subscriptions, slash commands and shortcuts acknowledged within three seconds, Block Kit messages and modals with interactive actions, and v0 HMAC request signing checks, to tiered Web API rate limits with Retry-After, Socket Mode versus HTTP endpoints, and OAuth v2 installs for distributing an app to other workspaces. Use when creating or fixing a Slack bot, slash command, modal or interactive message, choosing Slack scopes, debugging dispatch_failed or invalid signature errors, or preparing a Slack app for multi-workspace distribution.",
+      "path": "skills/slack-app-integration"
+    },
+    {
+      "name": "smart-contract-security",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [
+        "forge",
+        "slither"
+      ],
+      "description": "Security audit procedure for Solidity and EVM smart contracts that maps the system's funds, roles and trust assumptions, then hunts reentrancy (including cross-function and read-only), broken access control, price oracle and flash-loan manipulation, rounding and precision loss in share maths, front-running and MEV exposure, signature replay across chains and nonces, and proxy upgrade risks, backed by Slither static analysis plus Foundry, Echidna or Medusa fuzzing and invariant tests, ending in a severity-rated report with a clear professional-audit boundary. Use when auditing a protocol or token contract before deployment, investigating a suspected exploit path, writing invariant tests to break a contract, or deciding whether code is ready for an external audit.",
+      "path": "skills/smart-contract-security"
+    },
+    {
+      "name": "social-media-publishing",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [],
+      "description": "Posts text, images and video to X, LinkedIn, Facebook Pages and Instagram through their official APIs, covering OAuth app setup and token refresh, the scopes each platform needs, media upload flows, rate and publishing limits, queued scheduling with retries, and per-platform length and formatting rules. Use when building or fixing code that publishes or schedules social posts programmatically, a post or media upload call fails with a 401, 403 or rate-limit error, or one message must be formatted correctly for several networks.",
+      "path": "skills/social-media-publishing"
+    },
+    {
+      "name": "solidity-patterns",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [
+        "forge"
+      ],
+      "description": "Writes Solidity contracts for Ethereum and other EVM chains the safe way, applying checks-effects-interactions ordering, Ownable2Step or AccessControl roles, OpenZeppelin Contracts instead of hand-rolled tokens, a deliberate choice between immutable and UUPS or transparent proxy deployments with ERC-7201 namespaced storage, events for every state change, custom errors and basic gas hygiene, inside a Foundry or Hardhat project with tests. Use when creating or extending a smart contract, adding an ERC-20, ERC-721 or ERC-1155 token, deciding whether a contract should be upgradeable, or setting up a new Foundry or Hardhat workspace.",
+      "path": "skills/solidity-patterns"
+    },
+    {
       "name": "spring-boot-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -1155,6 +1533,15 @@
       ],
       "description": "Builds and hardens Stripe payments and billing, from Checkout Sessions and Payment Intents with SCA and 3D Secure handling to Stripe-Signature webhook verification on the unparsed request body, Idempotency-Key headers on every POST, subscriptions driven by invoice events, the Billing customer portal, and test clocks for simulating renewals and trial ends. Use when adding Stripe Checkout or Elements, setting up Stripe subscriptions or the customer portal, fixing a Stripe webhook signature error or duplicate fulfilment, or testing billing cycles with the Stripe CLI.",
       "path": "skills/stripe-integration"
+    },
+    {
+      "name": "subscription-billing-ops",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Runs the day-to-day mechanics of recurring revenue in any billing system, whether a provider's billing product or your own ledger, covering plan and price changes with grandfathering, proration on upgrades and downgrades, trials and trial conversion, failed-payment dunning and retry schedules, invoice and credit note lifecycles, cancellation and refund policy, and basic MRR, churn and deferred revenue reporting. Use when designing or changing how plans are billed, migrating customers to a new price, deciding what a mid-cycle upgrade should cost, building a dunning flow, issuing credit notes, or reconciling MRR numbers that don't add up.",
+      "path": "skills/subscription-billing-ops"
     },
     {
       "name": "svelte-patterns",
@@ -1318,6 +1705,15 @@
       "requires": [],
       "description": "Measures and improves page speed against Core Web Vitals (LCP, INP, CLS) using field data from CrUX or real-user monitoring and lab runs in Lighthouse and DevTools, then fixes the actual bottleneck, whether that is image and font delivery, render-blocking resources, HTTP caching, or too much JavaScript on the main thread. Use when a site or page feels slow, a Lighthouse or PageSpeed Insights score dropped, Search Console flags poor Core Web Vitals, or a bundle or asset change needs a before-and-after measurement.",
       "path": "skills/web-performance"
+    },
+    {
+      "name": "web-scraping",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "network",
+      "requires": [],
+      "description": "Responsible, reliable website scraping and crawling, checking robots.txt and the site's terms before fetching, looking for an official API or feed first, throttling requests with backoff and an identifying User-Agent, parsing static HTML with selectors versus driving a headless browser only when the page needs JavaScript, walking pagination, detecting layout changes, and storing raw responses separately from parsed records. Use when writing or fixing a scraper or crawler, extracting listings, prices or tables from web pages, a scraper suddenly returns empty fields or gets 429 or 403 responses, or deciding whether a site may be scraped at all.",
+      "path": "skills/web-scraping"
     }
   ],
   "agents": [
@@ -1364,6 +1760,22 @@
       ],
       "description": "Software architect subagent that designs a new system or module, or evaluates an existing one, by pinning down constraints and quality attributes, comparing two or three concrete options on their trade-offs, and returning one recommendation with risks and a migration path, all without editing code. Use when the user asks how a system should be structured, wants a monolith, microservice, queue or datastore choice weighed, or wants an independent assessment of whether the current design will hold up.",
       "path": "agents/architect"
+    },
+    {
+      "name": "billing-reviewer",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Inspects subscription, invoicing and ledger-sync code for defects that put the wrong amount on a customer's bill, such as proration and rounding errors, charges or invoices created twice on renewal or retry, billing periods shifted by timezones, DST or month-end anchors, refunds issued without a matching credit note, issued invoices edited in place, and tax computed on the wrong base or rate, then returns verified findings with a worked example of the wrong bill, without editing any file. Use when a change touches renewals, plan changes, invoice generation, credit notes, tax lines or accounting sync and the user wants it checked before release, or asks why a customer was billed the wrong amount.",
+      "path": "agents/billing-reviewer"
     },
     {
       "name": "code-reviewer",
@@ -1668,6 +2080,38 @@
       ],
       "description": "Go-specific reviewer subagent that reads a Go diff or package and reports verified defects such as unchecked errors, leaked goroutines, data races, misused context.Context, nil-pointer dereferences, typed-nil interfaces and slice or map aliasing, ranked by severity and without modifying code. Use when the user wants Go changes, a Go pull request or a Go package checked for concurrency and error-handling bugs before merging.",
       "path": "agents/go-reviewer"
+    },
+    {
+      "name": "healthcare-reviewer",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only reviewer for clinical and patient-data code that hunts for patient data leaking into logs, error messages, analytics and URLs, record access with no audit entry, unsafe clinical defaults such as missing data treated as normal or silent unit assumptions, FHIR and HL7 v2 handling bugs like single-page searches, name-based patient matching and ACK-before-persist, and absent consent or break-the-glass checks, returning a ranked list of verified findings without changing any file. Use when the user wants an EHR, telehealth, lab, pharmacy or patient portal change checked before release, or asks whether their health app could expose or misfile patient records.",
+      "path": "agents/healthcare-reviewer"
+    },
+    {
+      "name": "i18n-reviewer",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Localisation-readiness reviewer that reads a UI diff in its own context and reports verified defects that will break in other languages - user-visible text left out of the message catalog, sentences glued together from fragments, hand-rolled or missing plural forms, dates, numbers and currency formatted without the locale, keys missing from or orphaned in locale files, and layout that won't mirror right-to-left - without editing any files. Use when the user wants a front-end or mobile change, branch or pull request checked for translation and locale problems before merge, or asks whether a screen is ready to be localised.",
+      "path": "agents/i18n-reviewer"
     },
     {
       "name": "infra-reviewer",
@@ -2098,6 +2542,22 @@
       "path": "agents/silent-failure-hunter"
     },
     {
+      "name": "solidity-reviewer",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "tools": [
+        "read",
+        "search",
+        "shell"
+      ],
+      "description": "Read-only Solidity diff reviewer that inspects changed contracts in its own context for reentrancy through external calls made before state updates, privileged or initializer functions left without access control, low-level calls whose return value is ignored, unsafe downcasts and rounding that favours the caller, storage layout collisions between proxy implementation versions, and state changes that emit no event, then returns line-anchored findings it has traced or proven with a test, never editing files. Use when a pull request or commit touches .sol files, before merging contract changes, or when the user asks whether a Solidity change is safe to ship.",
+      "path": "agents/solidity-reviewer"
+    },
+    {
       "name": "swift-build-resolver",
       "version": "0.1.0",
       "category": "coding",
@@ -2194,6 +2654,17 @@
       "path": "commands/build-fix.md"
     },
     {
+      "name": "changelog",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [
+        "git"
+      ],
+      "description": "Write changelog entries for the changes since the last release tag, grouped by type, with breaking changes called out first.",
+      "path": "commands/changelog.md"
+    },
+    {
       "name": "commit",
       "version": "0.1.0",
       "category": "meta",
@@ -2203,6 +2674,35 @@
       ],
       "description": "Write a Conventional Commits message for the staged changes, show it, and commit only after the user confirms.",
       "path": "commands/commit.md"
+    },
+    {
+      "name": "deps-audit",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Audit the project's dependencies for known vulnerabilities, abandoned or risky packages and licence problems, and report fixes by severity.",
+      "path": "commands/deps-audit.md"
+    },
+    {
+      "name": "explain",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Explain how a piece of code or a flow works, tracing it through the codebase with file:line references, without changing anything.",
+      "path": "commands/explain.md"
+    },
+    {
+      "name": "i18n-check",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "git"
+      ],
+      "description": "Check the current UI changes for internationalisation problems such as hard-coded strings, concatenation, plurals, and date or currency formatting.",
+      "path": "commands/i18n-check.md"
     },
     {
       "name": "onboard",
@@ -2223,6 +2723,15 @@
       "path": "commands/plan-feature.md"
     },
     {
+      "name": "postmortem",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Write a blameless postmortem for an incident, with timeline, impact, root cause, contributing factors and owned action items.",
+      "path": "commands/postmortem.md"
+    },
+    {
       "name": "pr-describe",
       "version": "0.1.0",
       "category": "docs",
@@ -2232,6 +2741,15 @@
       ],
       "description": "Draft a pull request title and description for the current branch from its commits and diff against the base branch.",
       "path": "commands/pr-describe.md"
+    },
+    {
+      "name": "prd",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Draft a product requirements document for a feature, with problem, users, requirements, success metrics and open questions.",
+      "path": "commands/prd.md"
     },
     {
       "name": "refactor-clean",
@@ -2281,6 +2799,15 @@
       "path": "commands/security-scan.md"
     },
     {
+      "name": "tdd",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Implement the requested change test-first, writing one failing test, the smallest code to pass it, then refactoring, step by step.",
+      "path": "commands/tdd.md"
+    },
+    {
       "name": "test-coverage",
       "version": "0.1.0",
       "category": "testing",
@@ -2288,6 +2815,15 @@
       "requires": [],
       "description": "Find untested behaviour in the current change and add focused tests for it, then show the coverage before and after.",
       "path": "commands/test-coverage.md"
+    },
+    {
+      "name": "threat-model",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Produce a threat model for a feature or system, with assets, trust boundaries, data flows, STRIDE threats and ranked mitigations.",
+      "path": "commands/threat-model.md"
     },
     {
       "name": "update-docs",

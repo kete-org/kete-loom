@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Work out safety stock and reorder points for our 400 SKUs from this weekly sales CSV",
+    "Build me a replenishment spreadsheet that tells the buyer when to reorder and how many cases",
+    "Do an ABC analysis of our product range and suggest service levels per class",
+    "Our best seller keeps stocking out even though the supplier lead time is only three weeks, what is wrong with our reorder rule?",
+    "How much extra stock does going from 95% to 99% service level cost us on the A items?"
+  ],
+  "should_not_trigger": [
+    "A pallet of our goods arrived damaged, help me file a claim with the freight carrier",
+    "Sequence next week's jobs across our three CNC machines to cut changeovers",
+    "Set up grading rules for returned items so we know what to restock and what to scrap",
+    "Find the right HS code for our stainless steel water bottles before we ship to Canada",
+    "Build a revenue dashboard with weekly active customers and churn"
+  ]
+}

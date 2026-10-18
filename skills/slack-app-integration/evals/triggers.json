@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Build a Slack bot with Bolt that answers when someone mentions it in a channel",
+    "Our /deploy slash command shows operation_timeout in Slack, fix the handler",
+    "Add a Block Kit modal with a form that opens from a message shortcut",
+    "Verify X-Slack-Signature in our serverless function that receives Slack events",
+    "Which Slack bot scopes do we need to post messages and read reactions?",
+    "Let other companies install our Slack app with OAuth v2 and store each workspace token"
+  ],
+  "should_not_trigger": [
+    "Make an animated GIF for our team Slack channel",
+    "Post one deploy notice to Slack from a shell script with an incoming webhook URL",
+    "Send a Discord webhook message when a build fails",
+    "Create a Jira ticket from a form submission",
+    "Write the internal announcement for the new release"
+  ]
+}

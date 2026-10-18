@@ -1,0 +1,15 @@
+{
+  "should_trigger": [
+    "Write a PRD for letting admins invite teammates by email, here are the support tickets asking for it",
+    "Can you turn these customer interview notes into a product requirements doc with goals, non-goals and acceptance criteria?",
+    "Review this product spec draft and tell me what's missing before we hand it to engineering",
+    "I need a feature brief for offline mode in the field app: problem, success metrics and rollout stages"
+  ],
+  "should_not_trigger": [
+    "Break the invite-teammates feature down into files to change and tests to write first",
+    "Record our decision to use Postgres instead of DynamoDB as an architecture decision record",
+    "How many weeks will the offline mode feature take? Give me a range with confidence",
+    "Write the release notes for version 2.4 that shipped the invite feature",
+    "Rewrite the README getting-started section so new contributors can run the app"
+  ]
+}

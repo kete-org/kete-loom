@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Do a literature review on whether intermittent fasting improves insulin sensitivity in adults, with the PubMed search strings you used",
+    "I need a related-work section for my paper on graph neural networks for protein folding, pull the key arXiv papers and cite them properly",
+    "Summarise the published evidence on microplastics in drinking water and how confident we can be in it",
+    "Help me set inclusion criteria and screen these 40 abstracts for a scoping review on telehealth in rural clinics",
+    "Appraise the risk of bias in these five RCTs on vitamin D and depression and build an evidence table"
+  ],
+  "should_not_trigger": [
+    "Compare three Python job queue libraries and recommend one with links to their docs",
+    "Run a differential expression analysis on my RNA-seq counts table",
+    "Size the market for a lab notebook SaaS and list the competitors",
+    "Write the methods section describing the statistical tests I ran in my own experiment",
+    "Clean up my Jupyter notebook so the statistics in it are reproducible"
+  ]
+}

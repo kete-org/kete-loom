@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Review the Solidity diff in this PR for missing access control and storage collisions",
+    "I changed the withdraw function in Vault.sol, can you check my commit for reentrancy before I merge?",
+    "Check whether the new V2 implementation contract breaks the proxy storage layout",
+    "Review the .sol changes on this branch for unchecked low-level calls and missing events",
+    "Is this Solidity change to the staking rewards maths safe to ship? Look for rounding issues"
+  ],
+  "should_not_trigger": [
+    "Audit our lending protocol contracts for oracle manipulation and reentrancy before launch",
+    "Write an ERC-20 token contract with a capped supply and an owner-only mint using Foundry",
+    "Connect MetaMask to our React app with viem and show the user's USDC balance",
+    "Review our payment code for float money arithmetic and unverified webhooks",
+    "Review my TypeScript changes for unhandled promises before I commit"
+  ]
+}

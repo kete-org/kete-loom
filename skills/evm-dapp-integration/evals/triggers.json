@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Connect MetaMask to our React app with viem and show the user's USDC balance",
+    "Show the token balance with the right decimals in our wagmi frontend and send an approve transaction",
+    "Our ethers v6 code says the transaction succeeded but the receipt status is 0, how should we handle the transaction lifecycle?",
+    "Prompt the user to switch to Base when their wallet is on the wrong chain ID before minting",
+    "getLogs keeps failing with a block range too large error from our RPC provider when backfilling Transfer events"
+  ],
+  "should_not_trigger": [
+    "Write an ERC-20 token contract with a capped supply and an owner-only mint using Foundry",
+    "Audit our lending protocol contracts for oracle manipulation and reentrancy before launch",
+    "Review the Solidity diff in this PR for missing access control and storage collisions",
+    "Add Paystack checkout to our Next.js shop for Nigerian customers",
+    "Build a REST endpoint in Express that returns a user's order history"
+  ]
+}

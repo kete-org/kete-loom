@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Build a 15-second Remotion intro where the logo springs in and the title fades up",
+    "My Remotion render flickers because the text animates with a CSS transition, how do I fix it?",
+    "Deploy our Remotion composition to Lambda and render personalised videos from an API",
+    "Google font isn't showing in the Remotion MP4 even though it works in the Studio",
+    "Use Series and TransitionSeries to stitch five slides into one Remotion video with fades"
+  ],
+  "should_not_trigger": [
+    "Trim the first ten seconds off this MP4 and convert it to WebM",
+    "Animate a proof of the Pythagorean theorem with Manim",
+    "Add a Framer Motion hover animation to the pricing cards",
+    "Generate a short product clip from a text prompt with a video generation API",
+    "Speed up our React dashboard that re-renders on every keystroke"
+  ]
+}

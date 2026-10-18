@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Create Linear issues from our error tracker using the Linear GraphQL API",
+    "Verify the Linear-Signature header on webhooks our server receives from Linear",
+    "Our Linear sync gets RATELIMITED errors, how do we stay under the complexity limit?",
+    "Should our Linear bot use a personal API key or OAuth with actor=app?",
+    "Page through every issue in the current Linear cycle with the @linear/sdk",
+    "Move a Linear issue to the team's completed state when the PR merges"
+  ],
+  "should_not_trigger": [
+    "Move a Jira ticket to In Review when a pull request is opened",
+    "Plan the next sprint and pick which tickets fit",
+    "Write a GraphQL schema for our own product API",
+    "Turn on Linear's built-in GitHub integration in workspace settings so PRs link to issues",
+    "Post a Slack message whenever a deploy finishes"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We need to launch our React dashboard in French and German, set up translations for it",
+    "Our plural messages say '1 items' and break in Polish, fix the pluralisation with ICU",
+    "Add Arabic support to the web app including right-to-left layout",
+    "Prices show as $ even for EUR customers, make currency and date formatting locale-aware",
+    "Set up pseudo-localisation and a CI check that our translation JSON files stay in sync with the source keys"
+  ],
+  "should_not_trigger": [
+    "Review this pull request for hard-coded strings and broken plurals before it merges",
+    "Audit the signup form for WCAG keyboard and screen reader problems",
+    "Write the README for our CLI tool in plain English",
+    "Rewrite our marketing copy so it sounds consistent with our brand voice",
+    "Convert all timestamps in the orders table from local time to UTC in a database migration"
+  ]
+}

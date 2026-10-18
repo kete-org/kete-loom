@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Help me design a KPI dashboard for our support team's weekly review",
+    "Finance and product report different monthly active user numbers, figure out why and fix the definition",
+    "Nobody uses our Metabase dashboard, how should we redesign it?",
+    "Which chart should I use to show conversion by marketing channel on the growth dashboard?",
+    "Add a data freshness indicator to our Looker operations board"
+  ],
+  "should_not_trigger": [
+    "Build the dbt mart that feeds the revenue dashboard",
+    "Write the nightly job that loads Stripe charges into the warehouse",
+    "Pick the five metrics investors care about for our seed pitch deck",
+    "Set up Prometheus alerts for API p99 latency above 500ms",
+    "Run a statistical test on last month's A/B experiment results in a notebook"
+  ]
+}

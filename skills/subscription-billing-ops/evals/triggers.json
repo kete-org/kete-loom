@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "We're raising prices next quarter. How do we move existing subscribers to the new price without breaking their renewals?",
+    "What should a customer pay if they upgrade from Basic to Pro halfway through their billing month?",
+    "Design a dunning flow for failed renewal payments: how many retries, which emails, and when do we cut access?",
+    "Our MRR movements don't add up from opening to closing balance each month, help me find out why",
+    "Customers on annual plans who cancel mid-year: should we issue a credit note, a refund, or neither?",
+    "Free trial users get charged twice when the trial ends; the conversion job and the renewal job both fire"
+  ],
+  "should_not_trigger": [
+    "Integrate Stripe Checkout in subscription mode and handle the invoice.paid webhook",
+    "What fields does a VAT invoice need for a B2B customer in Germany?",
+    "Push our paid invoices into QuickBooks Online as Payment entities",
+    "Review the billing module diff for rounding bugs and double charges before we merge",
+    "Write a pricing page with three tiers and a monthly/annual toggle"
+  ]
+}

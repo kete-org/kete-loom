@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Add a feature where users type a prompt and get four product mockup images from an image generation API",
+    "Our text-to-video jobs take minutes, how should we poll the provider and notify the user when it's done?",
+    "Generated images disappear after an hour because we saved the Replicate output URL",
+    "Put per-user limits on AI image generation so one customer can't run up a huge bill",
+    "Label AI-generated images and keep their C2PA content credentials when we resize them"
+  ],
+  "should_not_trigger": [
+    "Add structured JSON output and retries to our chatbot's LLM calls",
+    "Rewrite this system prompt so the support bot stops making up refund policies",
+    "Compress our product videos to H.264 and make thumbnails every ten seconds",
+    "Build a RAG pipeline over our help-centre articles with hybrid search",
+    "Make a launch video in React with animated captions"
+  ]
+}

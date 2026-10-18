@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My Jupyter notebook gives a different churn rate every time I restart the kernel and run it, help me find out why",
+    "Clean up this exploratory pandas notebook: pin the environment, fix the merge that duplicates rows and move the helpers into a module",
+    "Check the statistics in my A/B test analysis notebook, I ran a t-test on twenty metrics and reported the two that were significant",
+    "Turn the cleaning cells in 02-explore.ipynb into a tested Python package the rest of the team can import",
+    "Set up a project structure for a new research analysis in notebooks so the results are reproducible"
+  ],
+  "should_not_trigger": [
+    "Build an Airflow pipeline that refreshes the warehouse tables every hour",
+    "Create a Grafana dashboard for our API latency metrics",
+    "Fix the shape mismatch error in my PyTorch training loop",
+    "Search PubMed for studies on statin use and dementia risk and summarise them",
+    "Write a Snakemake rule that calls variants with bcftools"
+  ]
+}

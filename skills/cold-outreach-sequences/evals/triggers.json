@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a four-step cold email sequence to heads of finance at mid-size logistics firms in the UK",
+    "We sent 500 outbound emails and got two replies. Can you review the copy and targeting?",
+    "Is it legal to cold email business contacts in Germany and France that we found on LinkedIn?",
+    "Help me personalise opening lines for these 30 prospects without making stuff up",
+    "How many days should we wait between follow-ups in an outbound prospecting sequence?"
+  ],
+  "should_not_trigger": [
+    "Our newsletter emails started landing in spam after we switched provider, check our DKIM",
+    "Write a welcome email series for people who just signed up for our free trial",
+    "Repurpose our founder's podcast episode into five LinkedIn posts",
+    "Draft a proposal document for the client we met last week",
+    "Plan our product launch campaign across paid ads, email and events"
+  ]
+}

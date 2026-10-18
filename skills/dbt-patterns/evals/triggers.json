@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Set up slim CI for our dbt project so pull requests only build modified models",
+    "My dbt incremental model is producing duplicate order rows after each run",
+    "Add a dbt snapshot to track history of the customers table as a type 2 dimension",
+    "Write dbt unit tests and an enforced contract for the fct_orders mart",
+    "Where should joins live in dbt, staging or intermediate models?"
+  ],
+  "should_not_trigger": [
+    "Write an Airflow DAG that extracts from Postgres and loads into BigQuery every hour",
+    "Tune this slow Postgres query that joins orders and customers",
+    "Define what weekly active users means for the product dashboard",
+    "Add a GitHub Actions workflow that runs our Python unit tests on every push",
+    "Migrate the production users table to add a non-null column without downtime"
+  ]
+}

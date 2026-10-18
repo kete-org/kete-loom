@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our SMART on FHIR app gets invalid_scope from the Epic sandbox, what scopes should we request?",
+    "Write a client that pulls all lab Observations for a patient from a FHIR R4 server, including every page",
+    "How do I post a Patient and its Encounter together in one FHIR transaction bundle so the reference resolves?",
+    "Validate our generated Condition resources against the US Core profile before we send them",
+    "Set up a backend services client_credentials flow with a signed JWT to export data from our EHR's FHIR API"
+  ],
+  "should_not_trigger": [
+    "Parse incoming ADT^A01 messages from the hospital's interface engine over MLLP",
+    "Build a CDS Hooks service that shows a warning card at order-sign",
+    "Do we need a BAA with our cloud vendor before storing patient records?",
+    "Review our patient portal code for PHI showing up in error logs",
+    "Design a REST API with pagination and versioning for our appointment booking service"
+  ]
+}

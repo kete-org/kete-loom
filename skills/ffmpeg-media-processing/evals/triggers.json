@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Convert this MOV from my iPhone into an MP4 that plays in every browser",
+    "Cut 00:02:10 to 00:02:40 out of the lecture recording without losing sync",
+    "Turn our uploaded videos into an HLS ladder with 1080p, 720p and 480p renditions",
+    "Our Node backend runs ffmpeg on user uploads with exec and a template string, make it safe",
+    "Use NVENC to speed up transcoding on the GPU box, the software encoder is too slow"
+  ],
+  "should_not_trigger": [
+    "Render my Remotion composition to MP4 on AWS Lambda",
+    "Animate a matrix multiplication step by step with Manim",
+    "Generate a voice-over track from a script using a text-to-speech API",
+    "Set up a CDN in front of our S3 bucket of images",
+    "Write a Dockerfile for our Python API with a small image"
+  ]
+}
