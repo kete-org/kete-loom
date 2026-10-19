@@ -1,6 +1,6 @@
 {
   "name": "@ketecode/loom",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Kete Loom: curated, tested, portable Agent Skills, subagents, commands, rules, hooks and MCP configs. One source, installable in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code and Kiro.",
   "license": "MIT",
   "author": "Kete-org <support@ketecode.ai>",
