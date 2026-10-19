@@ -105,3 +105,20 @@ test('project scope writes the shared project files, and MCP packs install throu
   assert.deepStrictEqual(Object.keys(servers).sort(), ['chrome-devtools', 'context7', 'exa', 'fetch', 'firecrawl', 'playwright']);
   assert.ok(!fs.existsSync(path.join(repo, '.claude', 'skills')), 'an MCP pack installs only its servers');
 });
+
+test('a --home install registers Claude Code servers under that home, never your own config', () => {
+  const dir = tmp();
+  const home = path.join(dir, 'home');
+  fs.mkdirSync(home);
+  const seen = path.join(dir, 'seen-home.txt');
+  const bin = path.join(dir, 'claude-env.js');
+  fs.writeFileSync(bin, `#!/usr/bin/env node
+require('fs').appendFileSync(${JSON.stringify(seen)}, process.env.HOME + '\\n');
+process.exit(process.argv[3] === 'get' ? 1 : 0);
+`);
+  fs.chmodSync(bin, 0o755);
+  run(['install', '--home', home, '--target', 'claude', '--skill', 'tdd-workflow', '--mcp', 'context7'], { claudeBin: bin });
+  const homes = fs.readFileSync(seen, 'utf8').trim().split('\n');
+  assert.ok(homes.length >= 2, 'get, then add-json');
+  assert.ok(homes.every((h) => h === home), `claude ran with HOME=${homes.join(', ')}`);
+});

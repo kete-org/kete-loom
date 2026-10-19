@@ -15,6 +15,7 @@
 // same name is never touched. Claude Code's CLI-managed servers are tracked in ~/.kete-loom/mcp.json.
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { readJson, writeAtomic, CommentedFileError } = require('./hooks-install');
@@ -179,7 +180,15 @@ function writeState(home, state) {
   }
 }
 const claudeBin = () => process.env.KETE_LOOM_CLAUDE_BIN || 'claude';
-const claude = (args) => execFileSync(claudeBin(), args, { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', timeout: 30000 });
+// The claude CLI keeps user-scope servers under $HOME (or CLAUDE_CONFIG_DIR), so a --home other than
+// your own is passed on as HOME; otherwise a test install would change your real Claude Code config.
+function claudeEnv(home) {
+  if (!home || path.resolve(home) === path.resolve(os.homedir())) return process.env;
+  const env = { ...process.env, HOME: home, USERPROFILE: home };
+  delete env.CLAUDE_CONFIG_DIR;
+  return env;
+}
+const claude = (args, home) => execFileSync(claudeBin(), args, { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', timeout: 30000, env: claudeEnv(home) });
 
 function claudeUserRegister(servers, { home, dryRun }) {
   const state = readState(home);
@@ -190,20 +199,20 @@ function claudeUserRegister(servers, { home, dryRun }) {
     try {
       if (mine.has(s.dir)) {
         if (!dryRun) {
-          claude(['mcp', 'remove', s.dir, '--scope', 'user']);
-          claude(['mcp', 'add-json', s.dir, json, '--scope', 'user']);
+          claude(['mcp', 'remove', s.dir, '--scope', 'user'], home);
+          claude(['mcp', 'add-json', s.dir, json, '--scope', 'user'], home);
         }
         return { name: s.dir, action: 'updated', dest };
       }
       let exists = true;
       try {
-        claude(['mcp', 'get', s.dir]);
+        claude(['mcp', 'get', s.dir], home);
       } catch (e) {
         if (e.code === 'ENOENT') throw e;
         exists = false;
       }
       if (exists) return { name: s.dir, action: 'skipped', reason: `Claude Code already has a server named ${s.dir}, not installed by kete-loom`, dest };
-      if (!dryRun) claude(['mcp', 'add-json', s.dir, json, '--scope', 'user']);
+      if (!dryRun) claude(['mcp', 'add-json', s.dir, json, '--scope', 'user'], home);
       mine.add(s.dir);
       return { name: s.dir, action: 'installed', dest };
     } catch (e) {
@@ -222,7 +231,7 @@ function claudeUserUnregister(servers, { home, dryRun }) {
   const removed = [];
   for (const name of gone) {
     try {
-      if (!dryRun) claude(['mcp', 'remove', name, '--scope', 'user']);
+      if (!dryRun) claude(['mcp', 'remove', name, '--scope', 'user'], home);
       removed.push(name);
     } catch (e) {
       // Already removed by hand: forget it either way.
