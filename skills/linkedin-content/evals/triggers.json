@@ -1,0 +1,23 @@
+{
+  "should_trigger": [
+    "Write a LinkedIn post about how we cut our proposal time from 5 hours to 20 minutes, in my voice",
+    "Give me three hook options for a LinkedIn post about firing our biggest client",
+    "Here's a post from a VP I follow about hiring without resumes, write me a comment that isn't 'great post'",
+    "17 people commented on my LinkedIn post, help me reply to them, starting with the ones that matter",
+    "Score my LinkedIn profile and rewrite my headline and About section",
+    "Plan my LinkedIn posts for next week, I want to be known for pricing and sales ops",
+    "Here's my LinkedIn analytics export for the last 3 months, which posts actually worked and why?",
+    "Turn this list of 8 onboarding mistakes into a LinkedIn carousel",
+    "Build my LinkedIn voice profile from these three posts I wrote"
+  ],
+  "should_not_trigger": [
+    "Turn this 40-minute conference talk into a LinkedIn post, an X thread and a newsletter",
+    "LinkedIn rest/posts returns 403 ACCESS_DENIED when I post as our organization",
+    "Write a cold email sequence to CFOs at logistics companies",
+    "Define our company's brand voice and tone guide for marketing and support",
+    "This blog draft sounds like AI, de-slop it but keep my meaning",
+    "Fact-check this press release before we send it out",
+    "Triage my inbox and draft replies to the urgent emails",
+    "Write a 2,000-word essay on remote work for our company blog"
+  ]
+}

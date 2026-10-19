@@ -80,7 +80,7 @@
     },
     {
       "name": "ai-prose-cleanup",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "docs",
       "risk": "read-only",
       "requires": [],
@@ -260,7 +260,7 @@
     },
     {
       "name": "brand-voice",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "business",
       "risk": "read-only",
       "requires": [],
@@ -360,7 +360,7 @@
     },
     {
       "name": "content-repurposing",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "business",
       "risk": "read-only",
       "requires": [],
@@ -612,6 +612,15 @@
       "requires": [],
       "description": "Collaborative design session that turns a rough idea into an approved design before any code is written. Reads the project first, asks one question per message (multiple choice where possible) to settle purpose, users, constraints and success criteria, offers two or three approaches with trade-offs and a recommendation, walks the design through in short sections approved one at a time, cuts anything not needed now, and saves a dated design doc in the repo for the implementation-plans skill to pick up. Use when someone has an idea, feature or change they want to build but the what and why are not pinned down yet, or says \"let's think this through before we code\".",
       "path": "skills/design-brainstorming"
+    },
+    {
+      "name": "design-system",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Creates or extends a product's design system from its context (product category, users, platform, brand and frontend stack). It recommends a visual direction with the reason for each choice and explicit density, expressiveness and motion dials, then builds primitive, semantic and component tokens for colour, type, spacing, radius, elevation, breakpoints and motion in light and dark themes. The tokens are wired into the stack (CSS variables, Tailwind, shadcn/ui, MUI, React Native, Flutter, SwiftUI, Compose), every colour pair is checked with a bundled contrast script, and the result is recorded in a DESIGN.md with per-page overrides that later UI work reads first. Use when starting the UI of a new product or page, choosing colours, fonts and spacing for an app, setting up, extending or theming design tokens, adding dark mode to a token set, or when generated screens keep drifting apart and need one source of truth.",
+      "path": "skills/design-system"
     },
     {
       "name": "desktop-app-testing",
@@ -1276,6 +1285,15 @@
       "path": "skills/linear-integration"
     },
     {
+      "name": "linkedin-content",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Writes and improves a person's or company's LinkedIn presence in their own voice, from a voice profile kept on disk. It covers posts (several hook options from an idea, feed-shaped draft, format check), long-form articles, document (carousel) posts, comments on other people's posts, replies triaged under the user's own posts, profile scoring and rewrite, a weekly content and engagement plan, and a post-mortem of past performance computed from the user's analytics export or the official API. It never invents numbers, clients or quotes, and it never posts, comments, connects or messages; the user approves and publishes. Use when someone wants a LinkedIn post, article, carousel, comment or reply written, their profile or headline reviewed, a LinkedIn content calendar, or to understand which of their LinkedIn posts worked and why.",
+      "path": "skills/linkedin-content"
+    },
+    {
       "name": "literature-review",
       "version": "0.1.1",
       "category": "data",
@@ -1377,7 +1395,7 @@
     },
     {
       "name": "metrics-dashboards",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "data",
       "risk": "read-only",
       "requires": [],
@@ -2140,7 +2158,7 @@
     },
     {
       "name": "social-media-publishing",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "integrations",
       "risk": "network",
       "requires": [],
@@ -2368,7 +2386,7 @@
     },
     {
       "name": "ui-design-polish",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "coding",
       "risk": "writes-files",
       "requires": [],
@@ -3517,7 +3535,7 @@
     },
     {
       "name": "ui-auditor",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [
@@ -3654,6 +3672,15 @@
       "requires": [],
       "description": "Audit the project's dependencies for known vulnerabilities, abandoned or risky packages and licence problems, and report fixes by severity.",
       "path": "commands/deps-audit.md"
+    },
+    {
+      "name": "design-ui",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Design and build a UI end to end from product context: detect the stack and existing design system, agree a direction, create or extend the tokens and DESIGN.md, build the screens from them, then check contrast, accessibility, responsiveness and visual quality, stopping for approval between stages.",
+      "path": "commands/design-ui.md"
     },
     {
       "name": "developer-profile",
@@ -3794,6 +3821,15 @@
       "requires": [],
       "description": "Turn a lesson from this session into a lasting project rule, in AGENTS.md or a Kete Loom rule, so future sessions don't repeat the mistake.",
       "path": "commands/learn.md"
+    },
+    {
+      "name": "linkedin-post",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Turn an idea into an approved, copy-ready LinkedIn post in the user's own voice: load the voice profile, get one specific true fact, research and source any claims, offer three hooks, draft, run the prose and format checks, and log it once the user approves. Never publishes.",
+      "path": "commands/linkedin-post.md"
     },
     {
       "name": "lint-agent-config",

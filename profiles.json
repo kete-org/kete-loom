@@ -193,6 +193,13 @@
       "data"
     ]
   },
+  "design": {
+    "description": "UI and UX work on top of core: design systems built from product context with contrast-checked tokens and a DESIGN.md, visual polish, accessibility, motion, flow audits and the /design-ui workflow.",
+    "extends": ["core"],
+    "skills": ["design-system", "ui-design-polish", "css-architecture", "web-accessibility", "mobile-accessibility", "ui-motion", "ui-flow-audit", "design-brainstorming", "browser-qa"],
+    "agents": ["ui-auditor", "accessibility-reviewer"],
+    "commands": ["design-ui"]
+  },
   "business": {
     "description": "Founders and product teams: marketing, SEO, research, investor materials, writing, PRDs and operations.",
     "categories": [

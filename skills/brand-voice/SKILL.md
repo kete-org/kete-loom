@@ -4,7 +4,7 @@ description: Defines a company's written brand voice as three to five attributes
 license: MIT
 compatibility: Any Agent Skills host. No tools required; reads existing copy, a website or docs the user points to.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: business
   kete-loom/risk: read-only
   kete-loom/owner: "Kete-org"
@@ -13,6 +13,8 @@ metadata:
 # Brand voice
 
 Voice is who the brand is, and stays constant. Tone is how that voice adjusts to the moment. This skill has two modes: **define** a voice guide, or **apply** one to copy.
+
+This skill is for an organisation's voice. For one person's voice on LinkedIn (their words, positions, proof and off-limits topics), use the `linkedin-content` skill's voice profile instead; a company page can use either, and the two should agree.
 
 Ask which mode, or infer it: "create our voice guide" is define; "make this sound like us" or "is this on-brand?" is apply. If applying and no guide exists, offer to define a short one first.
 

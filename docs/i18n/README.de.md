@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source accf287336e0 -->
+<!-- translated from README.md, source 5fdefea7ddee -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -47,7 +47,8 @@ Statt alles zu installieren, kannst du auch ein Profil wählen:
 | `project` | `method` plus Projektplanung: eine Roadmap mit Phasen in `.planning/`, Klärung der Anforderungen, Planprüfungen vor dem Code, Abnahmetests gemeinsam mit dir, ein Ideen-Backlog, Machbarkeits-Spikes und Recovery-Commands |
 | `security` | Alle Bausteine zu Sicherheit und Compliance, plus die Sicherheits-Hooks |
 | `ai`, `data` | `core` plus alle KI- bzw. Daten-Bausteine |
-| `business` | Skills für Marketing, Recherche, Investoren, Schreiben, PRDs und Operations |
+| `business` | Skills für Marketing, LinkedIn-Inhalte, Recherche, Investoren, Schreiben, PRDs und Operations |
+| `design` | `core` plus UI-Arbeit: Designsysteme aus dem Produktkontext mit kontrastgeprüften Tokens und einer DESIGN.md, Feinschliff, Barrierefreiheit, Animation, der UI-Auditor und `/design-ui` |
 | `full` | Alles, mit jedem Hook, der nicht Opt-in ist |
 
 ```bash

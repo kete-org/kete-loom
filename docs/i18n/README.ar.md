@@ -7,7 +7,7 @@
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
 مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code وKiro.</p>
 
-<!-- translated from README.md, source accf287336e0 -->
+<!-- translated from README.md, source 5fdefea7ddee -->
 
 <!-- counts:start -->
 <!-- counts:end -->
@@ -54,7 +54,8 @@ npx @ketecode/loom install
 | `project` | `method` إضافةً إلى تخطيط المشروع: خارطة طريق بمراحل في `.planning/`، وتوضيح المتطلبات، وفحص الخطط قبل كتابة الشيفرة، واختبار القبول معك، وسجل للأفكار، وتجارب جدوى (spikes)، وأوامر للاستعادة |
 | `security` | كل عناصر الأمان والامتثال، إضافةً إلى خطافات الأمان |
 | `ai`، `data` | `core` إضافةً إلى كل عناصر الذكاء الاصطناعي أو البيانات |
-| `business` | مهارات التسويق، والبحث، والمستثمرين، والكتابة، ووثائق متطلبات المنتج (PRD)، والعمليات |
+| `business` | مهارات التسويق، ومحتوى LinkedIn، والبحث، والمستثمرين، والكتابة، ووثائق متطلبات المنتج (PRD)، والعمليات |
+| `design` | `core` مع أعمال واجهات المستخدم: أنظمة تصميم مبنية على سياق المنتج مع رموز (tokens) مفحوصة التباين وملف DESIGN.md، والتحسين البصري، وإمكانية الوصول، والحركة، ومدقق الواجهات و`/design-ui` |
 | `full` | كل شيء، مع كل خطاف غير اختياري |
 
 <div dir="ltr">

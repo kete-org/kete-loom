@@ -1,0 +1,22 @@
+{
+  "should_trigger": [
+    "We're starting the frontend for a patient booking app, pick the colours, fonts and spacing and set up design tokens",
+    "Set up a token system for our Next.js + Tailwind 4 app with light and dark themes and write it down so every page uses it",
+    "Our shadcn/ui theme needs a brand: we're a fintech for small businesses, propose a direction and wire the CSS variables",
+    "Every screen Claude generates for this app looks different, create one design system file the agent reads before building UI",
+    "Add dark mode to our existing token set and make sure all the text and button colours still pass contrast",
+    "Extract the design system that already exists in this React codebase into proper primitive and semantic tokens without changing how it looks",
+    "What visual direction should an internal admin tool for warehouse staff have? Give me density, type and colour with reasons",
+    "Create a Flutter ThemeData and spacing extension for our kids' learning app"
+  ],
+  "should_not_trigger": [
+    "The settings page buttons have no hover or disabled states and the icons are misaligned, polish it",
+    "Introduce cascade layers so the vendor CSS stops overriding our component styles",
+    "Audit the checkout form against WCAG 2.2 AA",
+    "Add a spring animation when the drawer opens",
+    "Write the brand positioning and values for our new startup",
+    "Which chart should show weekly active users by plan on the dashboard?",
+    "Fix the hydration error in our Next.js layout",
+    "Make the homepage load faster, LCP is 4 seconds"
+  ]
+}

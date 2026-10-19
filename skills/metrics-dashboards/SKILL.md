@@ -4,7 +4,7 @@ description: Designs business and product metric dashboards that people act on, 
 license: MIT
 compatibility: Any Agent Skills host. Tool-neutral; works with any BI or dashboard tool. Querying data needs the project's warehouse or database client.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: data
   kete-loom/risk: read-only
   kete-loom/owner: "Kete-org"
@@ -71,7 +71,7 @@ Prefer rates and per-unit measures (conversion rate, revenue per active customer
 | Which items need attention? | Sorted table with conditional formatting | Dense heatmap without labels |
 | Did the funnel leak? | Funnel or step bar with conversion between steps | |
 
-Chart rules: start bar axes at zero; label units and time zone; mark incomplete periods (the current day or week) so a partial bar is not read as a drop; annotate known events (launch, outage, pricing change); use color for meaning (bad, good, highlighted series), not decoration, and do not rely on color alone.
+Chart rules: start bar axes at zero; label units and time zone; mark incomplete periods (the current day or week) so a partial bar is not read as a drop; annotate known events (launch, outage, pricing change); use color for meaning (bad, good, highlighted series), not decoration, and do not rely on color alone. Make each chart readable without seeing it: a text summary of the takeaway and a data table (or a downloadable CSV) behind every chart, direct labels or shape and dash patterns in addition to colour, a colour-blind-safe palette whose marks reach 3:1 against the background, and tooltips that also open with the keyboard.
 
 ## 5. Layout
 

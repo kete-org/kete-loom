@@ -4,7 +4,7 @@ description: Machine-sounding prose audit and rewrite that ranks tells by severi
 license: MIT
 compatibility: Any Agent Skills host. No tools required; works on pasted text or files the user points to.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.2.0"
   kete-loom/category: docs
   kete-loom/risk: read-only
   kete-loom/owner: "Kete-org"
@@ -35,6 +35,14 @@ Ask, or infer from the request:
 ## 1. Detect, tier by tier
 
 Read the whole text once before flagging. Then mark every hit with its tier, the exact span, and a one-line reason. The full pattern lists and replacement guidance are in `references/patterns.md`; read it before the first pass.
+
+Start with the deterministic pass, then read for what it can't count (synonym cycling, faux balance, paragraph shape):
+
+```bash
+node <skill-dir>/scripts/prose-scan.js draft.md      # or - for stdin; --json for machine output
+```
+
+It lists tier 1 (chatbot residue, placeholders, unsourced attributions, invisible format characters such as zero-width spaces), tier 2 (stock vocabulary, openers and closers, false contrasts, signposting, intensifiers) and tier 3 (em dashes, curly quotes, odd spaces, uniform sentence length) with line:column, and exits 1 while any tier-1 hit remains. `--strip-invisible` prints the text with invisible characters removed and changes nothing else; every other fix is yours to make by hand. Its counts are prompts to read a span, never a verdict on authorship.
 
 - **Tier 1, must fix.** Chatbot residue and integrity problems: "As an AI", "I hope this helps", "Certainly! Here is", knowledge-cutoff disclaimers, placeholder brackets, leftover markdown in a plain-text destination, and vague attributions ("experts say", "studies show", "many believe") with no named source.
 - **Tier 2, should fix.** Word-list tells and template moves: overused vocabulary clusters, stock openers ("In today's fast-paced world"), stock closers ("In conclusion", "Ultimately, it's about"), "It's not just X, it's Y" contrasts, rule-of-three padding, stacked hedges ("may potentially help to"), synonym cycling that renames the same thing every sentence, and empty intensifiers.

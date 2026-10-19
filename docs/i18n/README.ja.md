@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code、Kiro にそのままインストールできます。</p>
 
-<!-- translated from README.md, source accf287336e0 -->
+<!-- translated from README.md, source 5fdefea7ddee -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -47,7 +47,8 @@ npx @ketecode/loom install
 | `project` | `method` に加えてプロジェクト計画: `.planning/` 内のフェーズ付きロードマップ、要件の明確化、コードの前の計画チェック、あなたと行う受け入れテスト、アイデアのバックログ、実現可能性のスパイク、そして復旧用の command |
 | `security` | セキュリティとコンプライアンスに関するすべてのアイテムと、安全用 hook |
 | `ai`, `data` | `core` と、AI またはデータに関するすべてのアイテム |
-| `business` | マーケティング、リサーチ、投資家向け、ライティング、PRD、オペレーションの skill |
+| `business` | マーケティング、LinkedIn コンテンツ、リサーチ、投資家向け、ライティング、PRD、オペレーションの skill |
+| `design` | `core` に UI 作業を追加：プロダクトの文脈から作るデザインシステム（コントラスト検証済みのトークンと DESIGN.md）、仕上げ、アクセシビリティ、モーション、UI 監査、`/design-ui` |
 | `full` | すべてのアイテム(オプトインでないすべての hook を含む) |
 
 ```bash

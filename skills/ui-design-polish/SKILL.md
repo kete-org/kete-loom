@@ -4,7 +4,7 @@ description: Visual design direction and design-engineering finish for product U
 license: MIT
 compatibility: Any Agent Skills host. Works with plain CSS, CSS Modules, Tailwind or CSS-in-JS. Running the app and a browser for screenshots helps but is optional.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.2.0"
   kete-loom/category: coding
   kete-loom/risk: writes-files
   kete-loom/owner: "Kete-org"
@@ -14,12 +14,12 @@ metadata:
 
 Make an interface look intended. Two jobs: pick a visual direction and hold it, then sweat the details that separate "works" from "finished". Most "it looks off" complaints are inconsistent spacing, too many font sizes, unmanaged colour and missing states, not a lack of decoration.
 
-Neighbours: `css-architecture` decides how styles are organised (layers, naming, theming plumbing); `web-accessibility` owns WCAG conformance; `ui-motion` owns animation. This skill decides what things look like.
+Neighbours: `design-system` creates or extends the system itself (direction by product category, three-layer tokens per stack, contrast-checked themes, DESIGN.md); `css-architecture` decides how styles are organised (layers, naming, theming plumbing); `web-accessibility` owns WCAG conformance; `ui-motion` owns animation. This skill makes screens look finished within that system.
 
 ## 0. Before you start
 
 1. Ask, or infer from the product, three things: **who uses it**, **the tone** (calm and dense for a tool, warm for consumer, editorial for content), and **constraints** (existing brand, component library, dark mode). If there is a brand guide or design file, it wins; **stop and ask** before overriding it.
-2. Find the current styling approach and any token file (`tokens.css`, `theme.ts`, `tailwind.config.*` `theme.extend`, CSS custom properties on `:root`). Polish goes through tokens, not one-off values.
+2. Find the current styling approach and any token file (`tokens.css`, `theme.ts`, `tailwind.config.*` `theme.extend`, CSS custom properties on `:root`). If the repo has a `DESIGN.md` (and `design/pages/<page>.md`), read it first; it wins over the defaults here. Polish goes through tokens, not one-off values. If there is no token system at all, or a new product needs one, use the `design-system` skill first.
 3. Look at the real screens. Run the app if you can and capture the screens you will change, at mobile and desktop widths, before touching anything.
 
 ## 1. Choose a direction (new UI or redesign)
@@ -50,7 +50,7 @@ Set these up (or tighten the existing ones). Value tables and naming in `referen
 - **Colour**: raw palette (`--gray-50`...`--gray-950`, one accent ramp, red/amber/green for status) mapped to **semantic** tokens (`--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-border`, `--color-accent`, `--color-danger`). Components only use semantic tokens. Dark mode redefines the semantic layer.
 - **Radius, border, shadow, z-index**: 2-3 values each.
 
-Check text contrast against WCAG AA (4.5:1 body, 3:1 large text and UI component boundaries) as you choose colours.
+Check text contrast against WCAG AA (4.5:1 body, 3:1 large text and UI component boundaries) as you choose colours, with a tool rather than by eye: the `design-system` skill's `design-system/scripts/contrast.js` checks literal colours or token pairs from a CSS file, in light and dark scopes.
 
 ## 3. Interactive states
 
@@ -81,12 +81,13 @@ Go through `references/detail-checklist.md` on each changed screen. The highest-
 - Consistent icon set, size and stroke weight.
 - No orphaned single words in headings where `text-wrap: balance` can fix it.
 - Hit targets at least 24x24 CSS px (44x44 on touch-first screens).
+- One icon family, one stroke weight; never emoji as interface icons.
 
 ## 6. Design-system audit (existing codebase)
 
 When asked to extract or audit the design system:
 
-1. Search the styles for raw values: hex/rgb/hsl colours, `px`/`rem` font sizes, spacing values, radii, shadows, z-indexes, breakpoints. Count each distinct value and where it is used.
+1. Search the styles for raw values: hex/rgb/hsl colours, `px`/`rem` font sizes, spacing values, radii, shadows, z-indexes, breakpoints. Count each distinct value and where it is used. With the `design-system` skill installed, `node <its dir>/scripts/token-audit.js <dir>` does this deterministically (add `--json` to keep the numbers); still grep for anything it doesn't cover, such as breakpoints.
 2. Cluster near-duplicates (`#1f2937` vs `#1e293b`, `14px` vs `0.875rem` vs `13.5px`).
 3. Propose the token set: the clusters that survive, with a mapping from each old value to its token.
 4. Inventory components: list every button, input, card and modal variant found, with file paths, and mark duplicates.

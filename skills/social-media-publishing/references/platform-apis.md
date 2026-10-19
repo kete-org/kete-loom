@@ -73,6 +73,20 @@ POST https://api.linkedin.com/rest/posts
 - LinkedIn Help gives 3,000 characters as the post limit; the API returns `FIELD_LENGTH_TOO_LONG` when `commentary` is over its maximum. `commentary` uses LinkedIn's "little text" format: escape the reserved characters `| { } @ [ ] ( ) < > # \ * _ ~` with a backslash whenever they are plain text rather than mention or hashtag syntax. Mentions are `@[Name](urn:li:organization:123)`; the name must match the entity's name.
 - `ugcPosts` is legacy (the Posts API replaces it); use `/rest/posts`.
 
+Analytics (checked against the October 2026 docs; keep `Linkedin-Version` current, older versions sunset):
+
+```
+GET https://api.linkedin.com/rest/memberCreatorPostAnalytics?q=entity&entity=(share:urn%3Ali%3Ashare%3A123)&queryType=REACTION&aggregation=DAILY&dateRange=(start:(day:4,month:5,year:2026),end:(day:6,month:5,year:2026))
+  permission r_member_postAnalytics; DAILY is not supported for MEMBERS_REACHED, LINK_CLICKS, FOLLOWER_GAINED_FROM_CONTENT, PROFILE_VIEW_FROM_CONTENT
+-> { "elements": [ { "count": 10, "metricType": "REACTION", "targetEntity": { "share": "urn:li:share:123" }, "dateRange": {...} } ] }
+
+GET https://api.linkedin.com/rest/organizationalEntityShareStatistics?q=organizationalEntity&organizationalEntity=urn%3Ali%3Aorganization%3A123&shares=List(urn%3Ali%3Ashare%3A1,urn%3Ali%3Ashare%3A2)
+  permission rw_organization_admin (ADMINISTRATOR role); organic only; rolling 12 months; no pagination
+-> totalShareStatistics: impressionCount, uniqueImpressionsCount, clickCount, likeCount, commentCount, shareCount, engagement
+```
+
+Shares with no activity are left out of the response; treat them as zero. `likeCount` can go negative when sponsored likes are withdrawn.
+
 ## Facebook Page (developers.facebook.com, Graph API)
 
 Use a Page access token for a Page the user manages. Facebook Login requests `pages_manage_engagement`, `pages_manage_posts`, `pages_read_engagement` and `pages_read_user_engagement`, plus `publish_video` for video.
@@ -111,6 +125,7 @@ GET  .../<ig-user-id>/content_publishing_limit   current usage against the 24-ho
 ## Sources
 
 - X chunked upload: https://docs.x.com/x-api/media/quickstart/media-upload-chunked . Create post: https://docs.x.com/x-api/posts/create-post . Scopes: https://docs.x.com/fundamentals/authentication/oauth-2-0/authorization-code . Character counting: https://docs.x.com/fundamentals/counting-characters
+- LinkedIn analytics: https://learn.microsoft.com/en-us/linkedin/marketing/community-management/members/post-statistics , https://learn.microsoft.com/en-us/linkedin/marketing/community-management/organizations/share-statistics
 - LinkedIn Posts API: https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api . little text: https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/little-text-format . Videos: https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/videos-api . Versioning: https://learn.microsoft.com/en-us/linkedin/marketing/versioning . Post length: https://www.linkedin.com/help/linkedin/answer/a528176
 - Facebook Pages posts: https://developers.facebook.com/docs/pages-api/posts
 - Instagram publishing: https://developers.facebook.com/docs/instagram-platform/content-publishing . Media reference (caption limits): https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media

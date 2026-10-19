@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
 Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source accf287336e0 -->
+<!-- translated from README.md, source 5fdefea7ddee -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -47,7 +47,8 @@ Au chagua profile badala ya kusakinisha kila kitu:
 | `project` | `method` pamoja na upangaji wa mradi: roadmap yenye awamu (phases) ndani ya `.planning/`, ufafanuzi wa mahitaji (requirements), ukaguzi wa mipango kabla ya code, acceptance testing pamoja nawe, hifadhi ya mawazo (idea backlog), majaribio ya uwezekano (feasibility spikes) na commands za urejeshaji (recovery) |
 | `security` | Kila kipengele cha usalama na compliance, pamoja na hooks za usalama |
 | `ai`, `data` | `core` pamoja na kila kipengele cha AI au data |
-| `business` | Skills za marketing, utafiti, wawekezaji, uandishi, PRD na operations |
+| `business` | Skills za marketing, maudhui ya LinkedIn, utafiti, wawekezaji, uandishi, PRD na operations |
+| `design` | `core` pamoja na kazi ya UI: mifumo ya muundo kutoka muktadha wa bidhaa yenye tokens zilizokaguliwa utofautishaji (contrast) na DESIGN.md, umaliziaji, ufikivu, mwendo, mkaguzi wa UI na `/design-ui` |
 | `full` | Kila kitu, pamoja na kila hook isiyo ya hiari (opt-in) |
 
 ```bash

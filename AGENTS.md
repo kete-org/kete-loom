@@ -4,7 +4,7 @@ This repo is a library of Agent Skills, subagents and slash commands, plus the t
 
 ## Layout
 
-- `skills/<name>/`: one skill per folder. `SKILL.md`, `evals/triggers.json`, optional `references/` and `scripts/`.
+- `skills/<name>/`: one skill per folder. `SKILL.md`, `evals/triggers.json`, optional `references/` and `scripts/`. Skill scripts run with Node 18+ and no packages, are read-only unless the skill says otherwise, and are tested in `tests/skill-scripts.test.js`.
 - `agents/<name>/`: one subagent per folder. `AGENT.md` and `evals/triggers.json`. The installer renders it per host.
 - `commands/<name>.md`: one slash command per file.
 - `rules/<name>.md`: one rule per file (short, always-on guidance, optional `kete-loom/paths`).

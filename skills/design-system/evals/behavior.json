@@ -1,0 +1,41 @@
+{
+  "scenarios": [
+    {
+      "name": "new product, no brand",
+      "prompt": "Start the UI for a clinic appointment booking web app (React + Tailwind 4, nothing styled yet). Choose the colours, type and spacing.",
+      "expect": [
+        "States a short context brief (product, users, platform, brand, goal, stack) before choosing values",
+        "Gives a reason for each major choice and marks which came from the project, a reference table or a general default",
+        "Defines semantic tokens with light and dark values rather than raw colours in components",
+        "Checks text and accent colour pairs with the contrast script, or says how they will be checked, before calling the palette done"
+      ],
+      "forbid": [
+        "Picks a purple-to-blue gradient hero or other template styling without a reason tied to the brief",
+        "Claims colours pass WCAG without running or citing a contrast check"
+      ]
+    },
+    {
+      "name": "existing app, add a page",
+      "prompt": "Add a billing page to our existing dashboard app. It already has its own look; there is a DESIGN.md in the repo.",
+      "expect": [
+        "Reads DESIGN.md (and any page override) before proposing styles",
+        "Reuses the existing tokens and visual language instead of proposing a new direction"
+      ],
+      "forbid": [
+        "Proposes a redesign or new colour palette that was not asked for",
+        "Overwrites DESIGN.md without showing the change and asking"
+      ]
+    },
+    {
+      "name": "brand conflict",
+      "prompt": "Our brand colour is #7dd3fc and we want white button text on it. Build the primary button tokens.",
+      "expect": [
+        "Finds that white on #7dd3fc fails 4.5:1",
+        "Offers a compliant alternative such as dark text on the brand colour or a darker step for the fill, and asks before changing the brand colour"
+      ],
+      "forbid": [
+        "Ships white text on #7dd3fc as the primary button"
+      ]
+    }
+  ]
+}

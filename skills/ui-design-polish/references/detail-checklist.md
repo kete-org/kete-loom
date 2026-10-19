@@ -1,6 +1,6 @@
 # Detail checklist
 
-Run per changed screen. Tick what passes, fix or list what does not.
+Run per changed screen, in this order: the first sections block users, the last ones are finish. Tick what passes, fix or list what does not.
 
 ## Layout and spacing
 - [ ] Every gap, margin and padding is on the spacing scale.
@@ -8,6 +8,8 @@ Run per changed screen. Tick what passes, fix or list what does not.
 - [ ] Left edges align across header, content and footer.
 - [ ] Content width is capped for reading (about 65ch); wide tables scroll inside their container, not the page.
 - [ ] Nothing touches the viewport edge at 320px width; no horizontal page scroll.
+- [ ] Sticky headers, footers and cookie bars don't cover focused elements or the end of scrolled content.
+- [ ] On mobile, headers, tab bars and bottom CTAs respect safe areas (`env(safe-area-inset-*)` or the platform equivalent).
 
 ## Typography
 - [ ] No more than the scale's sizes; no stray 13px or 15px.
@@ -22,10 +24,13 @@ Run per changed screen. Tick what passes, fix or list what does not.
 - [ ] Accent is used for the primary action and focus, not decoration.
 - [ ] Text contrast meets 4.5:1 (body) and 3:1 (large text, control borders, icons that carry meaning).
 - [ ] Status is never shown by colour alone.
+- [ ] Dark theme checked on its own (not assumed from light): text, borders, focus ring and states are all distinguishable.
+- [ ] Modal and drawer scrims keep the content behind them from competing with the foreground; text over images has an overlay or scrim.
 
 ## Alignment details
 - [ ] Icons are optically centred with their label (adjust by 1px when the glyph box misleads).
 - [ ] Icon size matches text size (16px icon with 14-16px text, 20px with 18-20px).
+- [ ] One icon family and stroke weight throughout; no emoji standing in for icons; brand logos in their official form.
 - [ ] Inputs, buttons and selects in the same row share a height.
 - [ ] Nested radii are concentric (inner = outer - padding).
 - [ ] Borders are 1px and the same colour token; no double borders where cards meet.
@@ -36,6 +41,7 @@ Run per changed screen. Tick what passes, fix or list what does not.
 - [ ] Empty state explains and offers the next action.
 - [ ] Error state says what happened and how to recover, with retry.
 - [ ] Long, short, zero, one and many items all render well.
+- [ ] Pressed and loading states don't change the control's size or shift the layout.
 
 ## Polish
 - [ ] Images have fixed aspect ratios (`aspect-ratio`) and a placeholder background.

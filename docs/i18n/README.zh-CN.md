@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source accf287336e0 -->
+<!-- translated from README.md, source 5fdefea7ddee -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -47,7 +47,8 @@ npx @ketecode/loom install
 | `project` | `method` 加上项目规划：在 `.planning/` 中按阶段划分的路线图、需求澄清、编码前的计划检查、与你一起进行验收测试、想法待办清单、可行性探索（spike）以及恢复类命令 |
 | `security` | 所有安全与合规相关条目，以及安全 hook |
 | `ai`、`data` | `core` 加上所有 AI 或数据相关条目 |
-| `business` | 市场营销、调研、投资者、写作、PRD 和运营类 skill |
+| `business` | 市场营销、LinkedIn 内容、调研、投资者、写作、PRD 和运营类 skill |
+| `design` | `core` 加上界面工作：基于产品背景生成设计系统（对比度已校验的 token 和 DESIGN.md）、视觉打磨、无障碍、动效、UI 审查和 `/design-ui` |
 | `full` | 全部内容，以及所有非主动启用的 hook |
 
 ```bash

@@ -4,7 +4,7 @@ description: Breaks one finished long-form source (article, talk recording, podc
 license: MIT
 compatibility: Any Agent Skills host. Needs the source as text (article or transcript with timestamps); clip cutting itself is done in the user's video tool.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: business
   kete-loom/risk: read-only
   kete-loom/owner: "Kete-org"
@@ -37,7 +37,7 @@ Turn one long piece into many short ones that each work on their own channel, an
 
 | Format | Shape | Best for |
 |---|---|---|
-| LinkedIn post | Hook line, short paragraphs, one takeaway, link in the post or first comment per the user's practice | Lessons, results, opinions with reasoning |
+| LinkedIn post | Hook line, short paragraphs, one takeaway, link in the post or first comment per the user's practice; with the `linkedin-content` skill installed, draft each in the user's voice profile and run its `post-check.js` | Lessons, results, opinions with reasoning |
 | X thread | First post states the payoff; 4 to 8 posts, one point each; last post links to the source | Step-by-step processes, lists, a story with a turn |
 | Single X post | One sharp claim or number with its context | The most quotable line |
 | Newsletter section | 150 to 400 words: why it matters to this reader, the key idea, link to the full piece | Existing subscribers; deeper context |

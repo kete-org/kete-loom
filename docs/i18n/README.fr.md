@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source accf287336e0 -->
+<!-- translated from README.md, source 5fdefea7ddee -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -47,7 +47,8 @@ Vous pouvez aussi choisir un profil au lieu de tout installer :
 | `project` | `method` plus la planification de projet : une feuille de route avec des phases dans `.planning/`, la clarification des exigences, la vérification des plans avant le code, des tests d'acceptation avec vous, un backlog d'idées, des spikes de faisabilité et des commandes de récupération |
 | `security` | Tous les éléments de sécurité et de conformité, plus les hooks de sécurité |
 | `ai`, `data` | `core` plus tous les éléments IA ou données |
-| `business` | Skills de marketing, de recherche, de relations investisseurs, de rédaction, de PRD et d'opérations |
+| `business` | Skills de marketing, de contenu LinkedIn, de recherche, de relations investisseurs, de rédaction, de PRD et d'opérations |
+| `design` | `core` plus le travail d'interface : des design systems issus du contexte produit, avec des tokens au contraste vérifié et un DESIGN.md, la finition, l'accessibilité, l'animation, l'auditeur d'UI et `/design-ui` |
 | `full` | Tout, avec chaque hook qui n'est pas optionnel |
 
 ```bash
