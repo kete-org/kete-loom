@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source 61558eb01e7c -->
+<!-- translated from README.md, source accf287336e0 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -117,6 +117,25 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | 与你一起进行验收测试，一次一个交付物 | `/uat`（`acceptance-testing`）、`ui-auditor` |
 | 保存想法和待办事项，而不打断当前任务 | `/capture`（`idea-backlog`） |
 | 恢复：修复一组审查发现的问题、查明跨多个会话的工作为何出错、安全地撤销工作 | `/fix-findings`、`/forensics`、`/revert-work` |
+
+### 从每次会话中学习
+
+Skill 会因实际工作中发现的摩擦而变得更好，因此 Kete Loom 会记录这些摩擦。`skill-observations` skill 会在每个发现出现时把它记下来：你给出的一次纠正、agent 违反的一条规则、缺失的一个步骤，或是值得单独做成 skill 的工作流。它通过 `kete-loom observe` 把每个发现写成一个小文件。之后，`/skill-review` 会把这份记录转化为由你逐条批准的修改。
+
+```bash
+npx @ketecode/loom observe scan        # open findings, whether a review is due, rules broken twice
+npx @ketecode/loom observe list --skill tdd-workflow
+```
+
+这份记录归你所有，并保存在你的机器上，位于 `~/.kete-loom/observations/`。它保存在用户范围内，因此发现不会分散在各个项目中，也不会随着删除 worktree 而丢失。CLI 会强制执行以下记录规则：
+- id 永不重复，已有文件永不被覆盖；
+- 重复陈述的发现会被拒绝，应改为扩充原有发现；
+- 每个发现都必须记录检查过哪些相关的 skill；
+- 被违反两次的规则会被标记为需要一个 hook（`/hookify`），而不是再改一次措辞。
+
+审查会暂存修改，绝不会直接编辑已安装的 Kete Loom skill，因为 `update` 会覆盖它；这些修改会变成一份上游修改草案，必要时再加上一条项目规则。安装 `load-session-context` hook 后，每次会话开始时都会知道有哪些未处理的发现。这两项都包含在 `--profile method` 中。
+
+该方法改编自 Eoghan Henn 及其贡献者的 [Task Observer](https://github.com/rebelytics/one-skill-to-rule-them-all)（CC BY 4.0）。
 
 ## Skills
 

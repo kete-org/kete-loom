@@ -4,7 +4,7 @@ description: Fans a large coding job out to several subagents at once and merges
 license: MIT
 compatibility: Any Agent Skills host that can start subagents. Worktree isolation needs git 2.17 or later (for git worktree remove).
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: meta
   kete-loom/risk: runs-commands
   kete-loom/requires: "git"
@@ -32,7 +32,7 @@ Otherwise do it sequentially, or run a read-only survey in parallel and the edit
    | Unit | Goal | Owns (may edit) | May read | Check command |
    |---|---|---|---|---|
 
-2. Give every file at most one owner. Shared files (lockfiles, `package.json`, route tables, barrel `index` files, generated catalogs, changelogs) belong to **you**: workers report what they need there and you apply it at merge time.
+2. Give every file at most one owner. Shared files (lockfiles, `package.json`, route tables, barrel `index` files, generated catalogs, changelogs) belong to **you**: workers report what they need there and you apply it at merge time. The same goes for shared state outside the repository (observation logs, trackers, notes): workers put findings in their report, and you write them once.
 3. Do shared groundwork first and yourself: interfaces, types, config that several units depend on. Commit it, then start workers from that commit.
 4. Keep the count small. Three to six workers is easier to verify than twenty. More units than that: run in waves.
 

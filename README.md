@@ -8,7 +8,7 @@
 One source. Installs unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code and Kiro.</p>
 
 <!-- counts:start -->
-<p align="center">247 skills · 62 agents · 56 commands · 19 rules · 20 hooks · 21 MCP servers</p>
+<p align="center">248 skills · 62 agents · 57 commands · 19 rules · 20 hooks · 21 MCP servers</p>
 <!-- counts:end -->
 
 <!-- languages:start -->
@@ -117,6 +117,25 @@ For work bigger than one feature, `--profile project` adds the planning around i
 | Acceptance testing with you, one deliverable at a time | `/uat` (`acceptance-testing`), `ui-auditor` |
 | Ideas and todos saved without derailing the current task | `/capture` (`idea-backlog`) |
 | Recovery: fix a list of review findings, find out why a multi-session effort went wrong, safely undo work | `/fix-findings`, `/forensics`, `/revert-work` |
+
+### Learning from every session
+
+Skills get better from friction found in real work, so Kete Loom keeps a log of it. The `skill-observations` skill notes each finding as it happens: a correction you gave, a rule the agent broke, a missing step, or a workflow worth its own skill. It writes each one as a small file through `kete-loom observe`. `/skill-review` later turns the log into changes you approve one by one.
+
+```bash
+npx @ketecode/loom observe scan        # open findings, whether a review is due, rules broken twice
+npx @ketecode/loom observe list --skill tdd-workflow
+```
+
+The log is yours and stays on your machine, in `~/.kete-loom/observations/`. It is kept at user scope, so findings aren't split across projects or lost with a deleted worktree. The CLI enforces the bookkeeping:
+- ids never repeat, and an existing file is never overwritten;
+- a restated finding is refused in favour of extending the original;
+- every finding must record which related skills were checked;
+- a rule broken twice is flagged for a hook (`/hookify`) rather than another rewording.
+
+Reviews stage changes and never edit an installed Kete Loom skill in place, since `update` would overwrite it; those become a draft upstream change plus, if needed, a project rule. With the `load-session-context` hook installed, each session starts knowing what is open. Both items are in `--profile method`.
+
+The approach is adapted from [Task Observer](https://github.com/rebelytics/one-skill-to-rule-them-all) by Eoghan Henn and contributors (CC BY 4.0).
 
 ## Skills
 
@@ -329,6 +348,7 @@ For work bigger than one feature, `--profile project` adds the planning around i
 | [`seo-audit`](skills/seo-audit/SKILL.md) | business | network | Technical and on-page SEO audit of a website or its source code, covering crawlability, robots.txt and sitemaps, indexation and canonicals, titles and meta descriptions, structured data, Core Web Vitals, and internal linking, ending in a fix list ranked by impact and effort. |
 | [`session-handoff`](skills/session-handoff/SKILL.md) | meta | writes-files | Writes a structured handoff note into the repo (goal, current state, decisions with reasons, exact next steps, open questions) so a later agent session or a teammate can pick up mid-task, and resumes work from such a note by re-checking it against the code before acting. |
 | [`skill-authoring`](skills/skill-authoring/SKILL.md) | meta | writes-files | Creates or improves an Agent Skill (a SKILL.md folder) so it loads reliably and works unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code, including portable frontmatter, a tight trigger description, short instructions, helper scripts and trigger evals. |
+| [`skill-observations`](skills/skill-observations/SKILL.md) | meta | writes-files | Keeps a durable log of what real work teaches about the skills, rules and agents in use (user corrections, rules the agent broke, missing steps, workflows that deserve their own skill), written as one structured observation per finding through the kete-loom observe CLI, so a later /skill-review can turn it into approved changes. |
 | [`slack-app-integration`](skills/slack-app-integration/SKILL.md) | integrations | network | Builds Slack apps on the Bolt framework (JavaScript, Python or Java), from the app manifest and minimal bot scopes through Events API subscriptions, slash commands and shortcuts acknowledged within three seconds, Block Kit messages and modals with interactive actions, and v0 HMAC request signing checks, to tiered Web API rate limits with Retry-After, Socket Mode versus HTTP endpoints, and OAuth v2 installs for distributing an app to other workspaces. |
 | [`slide-decks`](skills/slide-decks/SKILL.md) | docs | runs-commands | Builds presentation decks end to end - a storyline of one idea per slide with action titles, then layouts, charts and speaker notes - as reveal.js or hand-written HTML/CSS slides, or as PowerPoint files generated with python-pptx or pandoc, edited from an existing .pptx or brand template, and exported to PDF with reveal.js print-pdf, decktape or LibreOffice. |
 | [`smart-contract-security`](skills/smart-contract-security/SKILL.md) | security | runs-commands | Security audit procedure for Solidity and EVM smart contracts that maps the system's funds, roles and trust assumptions, then hunts reentrancy (including cross-function and read-only), broken access control, price oracle and flash-loan manipulation, rounding and precision loss in share maths, front-running and MEV exposure, signature replay across chains and nonces, and proxy upgrade risks, backed by Slither static analysis plus Foundry, Echidna or Medusa fuzzing and invariant tests, ending in a severity-rated report with a clear professional-audit boundary. |
@@ -499,6 +519,7 @@ Slash commands you type, for example `/verify`. Supported in Claude Code, OpenCo
 | [`/security-scan`](commands/security-scan.md) | security | runs-commands | Scan the current change for vulnerabilities, leaked secrets and unsafe dependencies, and report findings by severity. |
 | [`/sessions`](commands/sessions.md) | meta | writes-files | List the session handoff notes in this repository with their branch, date and next step, and tidy up ones that are finished, only with the user's go-ahead. |
 | [`/skill-create`](commands/skill-create.md) | meta | writes-files | Create a new Agent Skill for a repeated workflow, to the Kete Loom spec, with trigger evals, and check it before use. |
+| [`/skill-review`](commands/skill-review.md) | meta | writes-files | Review the skill observation log and turn open findings into staged, approved changes to skills, rules, hooks or instructions files, one decision at a time. |
 | [`/tdd`](commands/tdd.md) | testing | runs-commands | Implement the requested change test-first, writing one failing test, the smallest code to pass it, then refactoring, step by step. |
 | [`/test-coverage`](commands/test-coverage.md) | testing | runs-commands | Find untested behaviour in the current change and add focused tests for it, then show the coverage before and after. |
 | [`/threat-model`](commands/threat-model.md) | security | read-only | Produce a threat model for a feature or system, with assets, trust boundaries, data flows, STRIDE threats and ranked mitigations. |

@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source 61558eb01e7c -->
+<!-- translated from README.md, source accf287336e0 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -117,6 +117,25 @@ Pour un travail plus vaste qu'une seule fonctionnalité, `--profile project` ajo
 | Des tests d'acceptation avec vous, un livrable à la fois | `/uat` (`acceptance-testing`), `ui-auditor` |
 | Des idées et des tâches à faire enregistrées sans faire dérailler la tâche en cours | `/capture` (`idea-backlog`) |
 | Récupération : corriger une liste de constats de revue, comprendre pourquoi un effort sur plusieurs sessions a mal tourné, annuler du travail en toute sécurité | `/fix-findings`, `/forensics`, `/revert-work` |
+
+### Apprendre de chaque session
+
+Les skills s'améliorent grâce aux frictions rencontrées dans le travail réel, c'est pourquoi Kete Loom en tient un journal. Le skill `skill-observations` note chaque constat au moment où il se produit : une correction que vous avez donnée, une règle que l'agent a enfreinte, une étape manquante ou un workflow qui mérite son propre skill. Il écrit chacun d'eux sous forme d'un petit fichier via `kete-loom observe`. `/skill-review` transforme ensuite le journal en modifications que vous approuvez une par une.
+
+```bash
+npx @ketecode/loom observe scan        # open findings, whether a review is due, rules broken twice
+npx @ketecode/loom observe list --skill tdd-workflow
+```
+
+Le journal vous appartient et reste sur votre machine, dans `~/.kete-loom/observations/`. Il est conservé au niveau de l'utilisateur, afin que les constats ne soient pas dispersés entre les projets ni perdus avec un worktree supprimé. La CLI impose la tenue du registre :
+- les identifiants ne se répètent jamais, et un fichier existant n'est jamais écrasé ;
+- un constat reformulé est refusé au profit d'une extension de l'original ;
+- chaque constat doit indiquer quels skills liés ont été vérifiés ;
+- une règle enfreinte deux fois est signalée pour un hook (`/hookify`) plutôt que pour une nouvelle reformulation.
+
+Les revues préparent les modifications et ne modifient jamais sur place un skill Kete Loom installé, puisque `update` l'écraserait ; ces modifications deviennent un brouillon de modification en amont plus, si nécessaire, une règle de projet. Avec le hook `load-session-context` installé, chaque session commence en sachant ce qui reste ouvert. Les deux éléments font partie de `--profile method`.
+
+L'approche est adaptée de [Task Observer](https://github.com/rebelytics/one-skill-to-rule-them-all) par Eoghan Henn et ses contributeurs (CC BY 4.0).
 
 ## Skills
 

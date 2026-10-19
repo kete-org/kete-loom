@@ -1,10 +1,10 @@
 ---
 name: swiftui-patterns
-description: SwiftUI view design built on structural identity, with property-wrapper choices (@State, @Binding, @Observable models with @Bindable, @Environment), NavigationStack and value-based navigation paths, one-way data flow, keeping body cheap to avoid excess view updates, #Preview setups with sample data, and UIKit interop through UIViewRepresentable and UIHostingController. Use when building or restructuring SwiftUI screens, deciding which property wrapper owns a piece of state, migrating from ObservableObject to @Observable, fixing views that reset or redraw too often, or embedding UIKit in SwiftUI or the reverse.
+description: "SwiftUI view design built on structural identity, with property-wrapper choices (@State, @Binding, @Observable models with @Bindable, @Environment), NavigationStack and value-based navigation paths, one-way data flow, keeping body cheap to avoid excess view updates, #Preview setups with sample data, and UIKit interop through UIViewRepresentable and UIHostingController. Use when building or restructuring SwiftUI screens, deciding which property wrapper owns a piece of state, migrating from ObservableObject to @Observable, fixing views that reset or redraw too often, or embedding UIKit in SwiftUI or the reverse."
 license: MIT
 compatibility: Any Agent Skills host. Needs Xcode on macOS for building, previews and tests (xcodebuild). @Observable and @Bindable need iOS 17 / macOS 14 or newer.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: coding
   kete-loom/risk: runs-commands
   kete-loom/requires: "xcodebuild"

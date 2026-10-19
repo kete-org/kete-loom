@@ -3,7 +3,7 @@ name: load-session-context
 description: At the start of each session, tells the agent the current branch, how many uncommitted changes there are, and the latest session handoff note, so it picks up where the last session stopped.
 license: MIT
 metadata:
-  kete-loom/version: "0.1.1"
+  kete-loom/version: "0.1.2"
   kete-loom/category: meta
   kete-loom/risk: runs-commands
   kete-loom/event: "session-start"
@@ -16,6 +16,7 @@ Runs when a session starts, in a git repository only. It adds a short note to th
 
 - the current branch and the number of uncommitted changes (from `git status`);
 - the head of the project state file `.planning/STATE.md` (kept by the `project-roadmap` skill), at most 30 lines, when there is one;
+- when the skill observation log exists (`kete-loom observe`), how many observations are open, whether a review is due, and any rule broken twice without a fix;
 - the session handoff note written by the `session-handoff` skill, if there is one: `.handoff/<branch>.md`, then `HANDOFF.md`, then the newest note in `.handoff/` or `docs/handoff/`. At most 60 lines are included, and the agent is told to check it against the repository before acting on it.
 
 It only reads; it never changes files. Not available in OpenCode, which has no way for a hook to add context at session start.

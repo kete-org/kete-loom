@@ -1558,7 +1558,7 @@
     },
     {
       "name": "parallel-agent-orchestration",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "meta",
       "risk": "runs-commands",
       "requires": [
@@ -2090,12 +2090,23 @@
     },
     {
       "name": "skill-authoring",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "category": "meta",
       "risk": "writes-files",
       "requires": [],
       "description": "Creates or improves an Agent Skill (a SKILL.md folder) so it loads reliably and works unchanged in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot and Kete Code, including portable frontmatter, a tight trigger description, short instructions, helper scripts and trigger evals. Use when the user wants to write a new skill, turn a repeated workflow into a skill, or fix a skill that triggers at the wrong time.",
       "path": "skills/skill-authoring"
+    },
+    {
+      "name": "skill-observations",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "Keeps a durable log of what real work teaches about the skills, rules and agents in use (user corrections, rules the agent broke, missing steps, workflows that deserve their own skill), written as one structured observation per finding through the kete-loom observe CLI, so a later /skill-review can turn it into approved changes. Use when working through any multi-step task or work session, when the user corrects how the agent works, when the agent notices it broke a documented rule, or when the user asks to note something for skill improvement.",
+      "path": "skills/skill-observations"
     },
     {
       "name": "slack-app-integration",
@@ -2180,7 +2191,7 @@
     },
     {
       "name": "subagent-driven-development",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "runs-commands",
       "requires": [
@@ -3777,7 +3788,7 @@
     },
     {
       "name": "learn",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "meta",
       "risk": "writes-files",
       "requires": [],
@@ -4013,6 +4024,17 @@
       "path": "commands/skill-create.md"
     },
     {
+      "name": "skill-review",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "writes-files",
+      "requires": [
+        "node"
+      ],
+      "description": "Review the skill observation log and turn open findings into staged, approved changes to skills, rules, hooks or instructions files, one decision at a time.",
+      "path": "commands/skill-review.md"
+    },
+    {
       "name": "tdd",
       "version": "0.1.0",
       "category": "testing",
@@ -4081,7 +4103,7 @@
   "rules": [
     {
       "name": "common",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "read-only",
       "requires": [],
@@ -4380,7 +4402,7 @@
     },
     {
       "name": "capture-lessons",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "meta",
       "risk": "writes-files",
       "requires": [],
@@ -4440,7 +4462,7 @@
     },
     {
       "name": "load-session-context",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "meta",
       "risk": "runs-commands",
       "requires": [],

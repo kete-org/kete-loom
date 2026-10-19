@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Note that I had to tell you twice to run the linter before committing, so the skill gets fixed later",
+    "You just ignored the AGENTS.md rule about not touching migrations. Log that as a skill problem",
+    "Keep a record of this correction about how we name feature flags so the review picks it up",
+    "That's the third time this month we've done this release checklist by hand; log it as a candidate for a new skill",
+    "Start tracking where the tdd-workflow skill falls short while we work through this refactor"
+  ],
+  "should_not_trigger": [
+    "Add a rule to AGENTS.md right now saying we never squash merge",
+    "Turn the rule about not editing migrations into a hook that blocks it",
+    "Write a session handoff note so tomorrow's session can continue this refactor",
+    "Save this idea for a dark mode toggle to the backlog, don't start on it",
+    "Review last week's session logs against our rules and tell me which ones were broken"
+  ]
+}

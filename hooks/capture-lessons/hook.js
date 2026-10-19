@@ -12,6 +12,9 @@ const KEEP_MS = 14 * 24 * 60 * 60 * 1000;
 
 const stateFile = () => path.join(process.env.KETE_LOOM_STATE_DIR || path.join(os.homedir(), '.kete-loom', 'state'), 'capture-lessons.json');
 
+// When the observation log exists, lessons go there, to be reviewed later, instead of into the reply.
+const observationLog = () => fs.existsSync(path.join(path.resolve(process.env.KETE_LOOM_OBSERVATIONS_DIR || path.join(os.homedir(), '.kete-loom', 'observations')), 'log'));
+
 function check(event, now = Date.now()) {
   if (event.again) return { block: false };
   const cwd = path.resolve(event.cwd || process.cwd());
@@ -41,7 +44,9 @@ function check(event, now = Date.now()) {
   }
   return {
     block: true,
-    reason: 'kete-loom (capture-lessons): before you finish, list at most 3 lessons from this session worth keeping for next time: a mistake you made, a correction the user gave, or a non-obvious fact about this project. One line each, with the evidence. Do not save them anywhere; the user decides with /learn. If there is nothing worth keeping, reply "No lessons" and stop.',
+    reason: observationLog()
+      ? 'kete-loom (capture-lessons): before you finish, check whether this session taught anything reusable: a correction the user gave, a rule you broke, a step a skill was missing, or a workflow worth turning into a skill. Log each with the skill-observations skill (`kete-loom observe new`), at most 3, without asking the user to act on them now. If there is nothing worth keeping, reply "No observations" and stop.'
+      : 'kete-loom (capture-lessons): before you finish, list at most 3 lessons from this session worth keeping for next time: a mistake you made, a correction the user gave, or a non-obvious fact about this project. One line each, with the evidence. Do not save them anywhere; the user decides with /learn. If there is nothing worth keeping, reply "No lessons" and stop.',
   };
 }
 

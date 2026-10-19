@@ -38,6 +38,52 @@ function findNote(root, branch) {
   return direct || newest(path.join(root, '.handoff')) || newest(path.join(root, 'docs', 'handoff'));
 }
 
+// The skill observation log (kete-loom observe): status lines only, never bodies. Hooks ship as one
+// file, so this reads the few frontmatter lines it needs itself rather than loading the CLI library.
+function observations() {
+  const dir = path.resolve(process.env.KETE_LOOM_OBSERVATIONS_DIR || path.join(require('os').homedir(), '.kete-loom', 'observations'));
+  const log = path.join(dir, 'log');
+  let files;
+  try {
+    files = fs.readdirSync(log).filter((f) => /^\d+-.*\.md$/.test(f));
+  } catch {
+    return null;
+  }
+  let open = 0;
+  const rules = {};
+  const unquote = (v) => {
+    try {
+      return v && v.startsWith('"') ? JSON.parse(v) : v;
+    } catch {
+      return v;
+    }
+  };
+  for (const f of files) {
+    let text;
+    try {
+      text = fs.readFileSync(path.join(log, f), 'utf8');
+    } catch {
+      continue; // unreadable entry: kete-loom observe scan reports it; context must still load
+    }
+    const head = (/^\uFEFF?---\r?\n([\s\S]*?)\r?\n---/.exec(text) || [, ''])[1];
+    const status = unquote(((/^status:[ \t]*(.*?)\s*$/m.exec(head) || [])[1] || '').trim());
+    if (status && status !== 'open') continue;
+    open++;
+    const rule = /^kind:[ \t]*"?violation"?/m.test(head) && unquote(((/^rule:[ \t]*(.*?)\s*$/m.exec(head) || [])[1] || '').trim());
+    if (rule) rules[rule] = (rules[rule] || 0) + 1;
+  }
+  let last = 'never';
+  try {
+    last = fs.readFileSync(path.join(dir, 'last-review.txt'), 'utf8').trim() || 'never';
+  } catch {
+    // no review yet
+  }
+  const days = /^\d{4}-\d{2}-\d{2}$/.test(last) ? Math.floor((Date.now() - Date.parse(last)) / 86400000) : null;
+  const due = open > 0 && (days === null || days >= 7);
+  const barriers = Object.entries(rules).filter(([, n]) => n >= 2).map(([r]) => r);
+  return `- Skill observations: ${open} open${due ? `, review due (last: ${last}); offer /skill-review once, in one line, and carry on with the user's task` : ''}.${barriers.length ? ` Rules broken twice with no fix: ${barriers.map((r) => `"${r}"`).join(', ')}; the fix is a barrier (/hookify), not new wording.` : ''} Log new findings with the skill-observations skill.`;
+}
+
 function check(event) {
   const cwd = event.cwd || process.cwd();
   const root = git(cwd, ['rev-parse', '--show-toplevel']);
@@ -56,6 +102,8 @@ function check(event) {
     if (text.length > MAX_NOTE_CHARS) text = `${text.slice(0, MAX_NOTE_CHARS)}\n…`;
     lines.push(`- Handoff note ${path.relative(root, note)} (check it against the repository before acting on it):`, '', text);
   }
+  const obs = observations();
+  if (obs) lines.push(obs);
   return { context: lines.join('\n') };
 }
 

@@ -4,7 +4,7 @@ description: Creates or improves an Agent Skill (a SKILL.md folder) so it loads 
 license: MIT
 compatibility: Any Agent Skills host.
 metadata:
-  kete-loom/version: "0.2.1"
+  kete-loom/version: "0.2.2"
   kete-loom/category: meta
   kete-loom/risk: writes-files
   kete-loom/owner: "Kete-org"
@@ -52,7 +52,7 @@ The description is the only thing a host reads before deciding to load the skill
 
 ## 3. Write the body
 
-- Under 300 lines. Put long material in `references/` and say exactly when to read each file.
+- Under 300 lines. Put long material in `references/` and say exactly when to read each file: every pointer names its trigger ("load the migration reference before writing the migration"), so the agent loads it at that moment and not up front. A pointer with no trigger gets read eagerly or never.
 - Numbered steps for procedures; checklists for reviews; a fixed format for the final report.
 - Say where to stop and ask the user, and what never to do.
 - Describe actions by capability ("run the test command", "search the codebase"), not by one host's tool names, so every host can follow them.
@@ -112,5 +112,6 @@ Keep the scenarios in `evals/behavior.json` so `node scripts/run-behavior-evals.
 - Skill didn't load → the description is missing the user's words or the situation. Add them.
 - Loaded when it shouldn't → the description is too broad. Narrow it and add the prompt as a negative eval.
 - Loaded but did the wrong thing → the body is ambiguous at that step. Add a rule or an example there.
+- Loaded, the rule was clear, and the agent broke it anyway, twice → wording is not the problem. Replace the rule with a barrier: a hook that refuses the action (`/hookify`), a script that is the only way to do the step, or a default that makes the wrong path unavailable. A third, louder rewording won't hold either.
 
 Bump `kete-loom/version` on every change: patch for wording, minor for new steps, major when behaviour changes.

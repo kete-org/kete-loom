@@ -81,3 +81,27 @@ test('a quoted metadata value must be one complete string', () => {
   assert.ok(broken.errors.some((e) => e.includes('unclosed or mismatched quote')));
   assert.deepStrictEqual(parseFrontmatter('---\nname: x\nmetadata:\n  a: "git, node"\n  b: \'it\'\'s\'\n  c: "x" # note\n---\n').errors, []);
 });
+
+test('an unquoted description containing " #" is an error, a quoted one is fine', () => {
+  const { lintItem } = require('../scripts/lib/lint');
+  const fs = require('fs');
+  const os = require('os');
+  const path = require('path');
+  const { loadSkill } = require('../scripts/lib/skills');
+  const make = (desc) => {
+    const dir = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'kl-hash-')), 'rust-thing');
+    fs.mkdirSync(path.join(dir, 'evals'), { recursive: true });
+    fs.writeFileSync(path.join(dir, 'SKILL.md'), `---\nname: rust-thing\ndescription: ${desc}\nlicense: MIT\nmetadata:\n  kete-loom/version: "0.1.0"\n  kete-loom/category: coding\n  kete-loom/risk: read-only\n---\n\n# Rust thing\n\nBody.\n`);
+    fs.writeFileSync(path.join(dir, 'evals', 'triggers.json'), JSON.stringify({ should_trigger: ['a a a a a a a a a a', 'b b b b b b b b b b', 'c c c c c c c c c c'], should_not_trigger: ['d d d d d d d d d d', 'e e e e e e e e e e', 'f f f f f f f f f f'] }));
+    return lintItem(loadSkill(dir)).errors;
+  };
+  const text = 'Writes Rust tests with cargo test, covering #[cfg(test)] unit modules and integration tests. Use when writing Rust tests.';
+  assert.ok(make(text).some((e) => /contains " #" unquoted/.test(e)));
+  assert.ok(!make(JSON.stringify(text)).some((e) => /contains " #"/.test(e)));
+});
+
+test('a missing description is reported, not a crash', () => {
+  const { lintItem } = require('../scripts/lib/lint');
+  const errors = lintItem({ kind: 'skill', dir: 'x', path: '/nonexistent', file: '/nonexistent/SKILL.md', text: '---\nname: x\nlicense: MIT\n---\n', body: '', data: { name: 'x', license: 'MIT', metadata: {} }, parseErrors: [], tools: null, paths: [] }).errors;
+  assert.ok(errors.includes('missing "description"'), errors.join('; '));
+});

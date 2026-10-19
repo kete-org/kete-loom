@@ -46,6 +46,9 @@ function lintItem(item) {
     if (d.name !== item.dir) errors.push(`name "${d.name}" must equal ${item.kind === 'command' ? 'file' : 'folder'} name "${item.dir}"`);
   }
 
+  // In YAML a space followed by # starts a comment, so hosts that parse YAML cut an unquoted value there.
+  const rawDesc = /^description:[ \t]*(.*)$/m.exec((/^---\r?\n([\s\S]*?)\r?\n---/.exec(item.text) || [, ''])[1]);
+  if (d.description && rawDesc && !/^["']/.test(rawDesc[1]) && /\s#/.test(rawDesc[1])) errors.push('description contains " #" unquoted; YAML parsers end the value there. Wrap the description in double quotes');
   if (!d.description) errors.push('missing "description"');
   else if (item.kind === 'command' || item.kind === 'hook' || item.kind === 'rule') {
     // Commands are picked by name and hooks run on events; the description is one line for menus and the catalog.

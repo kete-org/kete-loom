@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
 Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source 61558eb01e7c -->
+<!-- translated from README.md, source accf287336e0 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -117,6 +117,25 @@ Kwa kazi kubwa kuliko feature moja, `--profile project` huongeza upangaji unaoiz
 | Acceptance testing pamoja nawe, kitu kimoja kinachowasilishwa (deliverable) kwa wakati | `/uat` (`acceptance-testing`), `ui-auditor` |
 | Mawazo na todos huhifadhiwa bila kuivuruga kazi ya sasa | `/capture` (`idea-backlog`) |
 | Urejeshaji (recovery): rekebisha orodha ya matokeo ya review (findings), gundua kwa nini juhudi ya sessions nyingi iliharibika, tendua kazi kwa usalama | `/fix-findings`, `/forensics`, `/revert-work` |
+
+### Kujifunza kutoka kila session
+
+Skills huboreka kutokana na matatizo (friction) yanayoonekana katika kazi halisi, hivyo Kete Loom huweka kumbukumbu (log) yake. Skill ya `skill-observations` huandika kila tokeo (finding) linapotokea: marekebisho uliyotoa, rule ambayo agent aliivunja, hatua iliyokosekana, au workflow inayostahili skill yake yenyewe. Huandika kila moja kama faili dogo kupitia `kete-loom observe`. Baadaye `/skill-review` hugeuza log kuwa mabadiliko unayoidhinisha moja baada ya jingine.
+
+```bash
+npx @ketecode/loom observe scan        # open findings, whether a review is due, rules broken twice
+npx @ketecode/loom observe list --skill tdd-workflow
+```
+
+Log ni yako na hubaki kwenye kompyuta yako, ndani ya `~/.kete-loom/observations/`. Huhifadhiwa katika ngazi ya mtumiaji (user scope), ili matokeo yasigawanyike kati ya projects wala kupotea pamoja na worktree iliyofutwa. CLI husimamia uwekaji wa kumbukumbu hizi:
+- ids hazirudiwi kamwe, na faili lililopo halifutwi kwa kuandikwa juu yake kamwe;
+- tokeo lililorudiwa kwa maneno mengine hukataliwa, na badala yake la awali hupanuliwa;
+- kila tokeo lazima liandike ni skills zipi zinazohusiana zilikaguliwa;
+- rule iliyovunjwa mara mbili huwekewa alama ili iwe hook (`/hookify`) badala ya kuandikwa upya kwa maneno mengine.
+
+Reviews huandaa (stage) mabadiliko na kamwe hazihariri skill ya Kete Loom iliyosakinishwa mahali ilipo, kwa kuwa `update` ingeiandika juu; mabadiliko hayo huwa rasimu ya mabadiliko ya upstream pamoja na, ikihitajika, rule ya project. Hook ya `load-session-context` ikiwa imesakinishwa, kila session huanza ikijua kilicho wazi. Vitu vyote viwili vimo katika `--profile method`.
+
+Mbinu hii imetoholewa kutoka [Task Observer](https://github.com/rebelytics/one-skill-to-rule-them-all) ya Eoghan Henn na wachangiaji (CC BY 4.0).
 
 ## Skills
 

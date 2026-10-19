@@ -77,6 +77,7 @@ Usage
   kete-loom profiles  [--json]    List install profiles
   kete-loom doctor    [options]   Show what is installed where, and which hosts can see it
                                   (--fix repairs the hook runtime and stale registrations)
+  kete-loom observe <sub>         The skill observation log ("kete-loom observe help")
 
 Options
   -t, --target <a,b>   Targets: ${Object.keys(TARGETS).join(', ')}
@@ -656,6 +657,12 @@ function doctor(opts) {
     const seen = new Set(rows.filter((r) => r.kind === 'skills' && reads.includes(r.target)).flatMap((r) => r.items));
     console.log(`  ${host.padEnd(15)} ${seen.size} skill(s)`);
   }
+  const Obs = require('../scripts/lib/observations');
+  const obs = Obs.scan(Obs.root(process.env, home));
+  if (obs.exists) {
+    console.log(`\nSkill observations (${obs.root.replace(os.homedir(), '~')}): ${obs.open} open, last review ${obs.lastReview}${obs.reviewDue ? ', review due' : ''}`);
+    for (const b of obs.broken) console.log(`  ! ${b}`);
+  }
   const all = catalog(opts);
   const missing = missingRequirements(KINDS.flatMap((k) => all[k]));
   if (missing.length) {
@@ -664,7 +671,110 @@ function doctor(opts) {
   }
 }
 
+const OBSERVE_HELP = `kete-loom observe: a durable log of what real work teaches about skills, rules and agents
+
+  kete-loom observe new <slug> --title "..." --kind improve|new-skill|simplify|violation
+                        --skill a,b | --proposes-skill name | --target-file path
+                        --siblings-checked "related items checked and the verdict"
+                        [--rule "<file or skill>: <rule>"]  (required for --kind violation)
+                        [--type open-source|internal] [--area "..."] [--context "..."]
+                        [--issue "..."] [--improvement "..."] [--principle "..."] [--force]
+  kete-loom observe scan [--json]           open observations, review due, rules that need a barrier
+  kete-loom observe list [--skill name] [--json]
+  kete-loom observe show <id>
+  kete-loom observe resolve <id> --status actioned|declined|superseded|parked|open
+                        [--resolution "what was done and where it lives"] [--until "unpark condition"]
+  kete-loom observe reviewed                record that a review was completed today
+
+The log lives in $KETE_LOOM_OBSERVATIONS_DIR, default ~/.kete-loom/observations/. "new" refuses an
+open observation's restatement (exit 3, shows the match; extend that one instead, or --force).`;
+
+// The observation log has its own options, so it is parsed apart from the installer's.
+function observe(argv) {
+  const Obs = require('../scripts/lib/observations');
+  const [sub, ...rest] = argv;
+  const VALUE = new Set(['title', 'kind', 'type', 'skill', 'proposes-skill', 'target-file', 'rule', 'siblings-checked', 'area', 'context', 'issue', 'improvement', 'principle', 'status', 'resolution', 'until']);
+  const flags = { _: [] };
+  for (let i = 0; i < rest.length; i++) {
+    const a = rest[i];
+    if (a === '--json' || a === '--force') flags[a.slice(2)] = true;
+    else if (a.startsWith('--')) {
+      // --name=value lets a value start with "--"; otherwise a missing value must not swallow the next flag.
+      const [name, inline] = a.slice(2).split(/=(.*)/s);
+      if (!VALUE.has(name)) throw new Error(`unknown option --${name}. Run "kete-loom observe help".`);
+      if (inline !== undefined) flags[name] = inline;
+      else if (rest[i + 1] === undefined || rest[i + 1].startsWith('--')) throw new Error(`--${name} needs a value (use --${name}=... for a value that starts with --)`);
+      else flags[name] = rest[++i];
+    } else flags._.push(a);
+  }
+  const dir = Obs.root();
+  const out = (v, text) => console.log(flags.json ? JSON.stringify(v, null, 2) : text);
+  switch (sub) {
+    case 'new': {
+      try {
+        const r = Obs.create(dir, {
+          slug: flags._[0], title: flags.title, kind: flags.kind || 'improve', type: flags.type || 'open-source',
+          skill: csv(flags.skill || ''), proposes_skill: csv(flags['proposes-skill'] || ''), target_file: csv(flags['target-file'] || ''),
+          rule: flags.rule, siblings_checked: flags['siblings-checked'], area: flags.area, session_context: flags.context,
+          issue: flags.issue, improvement: flags.improvement, principle: flags.principle,
+        }, { force: flags.force });
+        out(r, `created observation ${String(r.id).padStart(4, '0')}: ${r.file}${r.archived.length ? `\narchived ${r.archived.length} resolved observation(s)` : ''}`);
+        return 0;
+      } catch (e) {
+        if (e.code === 'SIMILAR') {
+          console.error(`not created: ${e.message}. Extend it instead (add this instance to its body), or rerun with --force if it is a different finding:`);
+          for (const s of e.similar) console.error(`  observation ${String(s.id).padStart(4, '0')}: ${s.title}\n    ${s.file}`);
+          return 3;
+        }
+        throw e;
+      }
+    }
+    case 'scan': {
+      const s = Obs.scan(dir);
+      if (!s.exists) return out(s, `No observation log yet at ${s.root}. "kete-loom observe new ..." creates it.`), 0;
+      const lines = [`Observation log ${s.root}`, `  ${s.open} open, ${s.parked} parked, ${s.archived} archived; last review: ${s.lastReview}${s.reviewDue ? ' — review due (/skill-review)' : ''}`];
+      const top = Object.entries(s.byTarget).sort((a, b) => b[1] - a[1]).slice(0, 8);
+      if (top.length) lines.push(`  by target: ${top.map(([t, n]) => `${t} (${n})`).join(', ')}`);
+      for (const b of s.barriers) lines.push(`  ! rule broken ${b.ids.length} times with no fix: "${b.rule}" (observations ${b.ids.join(', ')}). The fix is a barrier (/hookify, a lint rule, a safer default), not new wording.`);
+      if (s.staged.length) lines.push(`  ${s.staged.length} staged change set(s) waiting for approval: ${s.staged.join(', ')}`);
+      if (s.suspect.length) lines.push(`  ! ${s.suspect.length} observation(s) with unreadable frontmatter: ${s.suspect.map((x) => x.id).join(', ')}`);
+      for (const b of s.broken) lines.push(`  ! SCAN BROKEN: ${b}. Don't treat the log as empty; fix the files first.`);
+      out(s, lines.join('\n'));
+      return s.broken.length ? 1 : 0;
+    }
+    case 'list': {
+      const s = Obs.scan(dir);
+      const items = s.exists ? s.items.filter((o) => !flags.skill || [...o.skill, ...o.target_file].includes(flags.skill)) : [];
+      out(items, items.length ? items.map((o) => `observation ${String(o.id).padStart(4, '0')}  [${o.kind}] ${[...o.skill, ...o.target_file, ...o.proposes_skill.map((n) => `new:${n}`)].join(', ')}  ${o.title}`).join('\n') : 'No open observations.');
+      return 0;
+    }
+    case 'show':
+      console.log(Obs.show(dir, flags._[0]).text);
+      return 0;
+    case 'resolve':
+      out(Obs.setStatus(dir, flags._[0], { status: flags.status, resolution: flags.resolution || '', parked_until: flags.until || '' }), `observation ${flags._[0]} is now ${flags.status}`);
+      return 0;
+    case 'reviewed':
+      out({ date: Obs.markReviewed(dir) }, `review recorded for ${new Date().toISOString().slice(0, 10)}`);
+      return 0;
+    case undefined:
+    case 'help':
+      console.log(OBSERVE_HELP);
+      return 0;
+    default:
+      throw new Error(`unknown observe command "${sub}". Run "kete-loom observe help".`);
+  }
+}
+
 function main(argv) {
+  if (argv[0] === 'observe') {
+    try {
+      return observe(argv.slice(1));
+    } catch (e) {
+      console.error(`error: ${e.message}`);
+      return e.code === 'NOT_FOUND' ? 4 : 2;
+    }
+  }
   let opts;
   try {
     opts = parseArgs(argv);

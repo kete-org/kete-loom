@@ -4,7 +4,7 @@ description: Carries out a written implementation plan one task at a time, handi
 license: MIT
 compatibility: Best on hosts with subagents; has an inline fallback. Needs git and the project's test runner.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: coding
   kete-loom/risk: runs-commands
   kete-loom/requires: "git"
@@ -92,7 +92,7 @@ Do each role yourself, in sequence, and keep the roles separate:
 - Never run two implementers at the same time on tasks that touch the same files. Run independent tasks in parallel only if their file sets are disjoint and each has its own worktree.
 - Never skip either review, or accept "close enough" on the spec review.
 - Never trust an implementer's report as evidence; reviewers read the code.
-- Never let implementers or reviewers start their own subagents.
+- Never let implementers or reviewers start their own subagents, or write to shared logs and trackers (the observation log, issues, handoff notes). They report what they noticed; you decide and record it once.
 - Never fix a task's code yourself mid-loop without saying so in the ledger; the reviewers must see the final diff.
 
 ## Final report

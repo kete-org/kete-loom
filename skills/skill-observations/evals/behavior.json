@@ -1,0 +1,40 @@
+{
+  "scenarios": [
+    {
+      "name": "correction mid-task",
+      "prompt": "Stop, you ran the entire test suite again. In this repo always run only the affected package's tests first. Anyway, carry on with the fix.",
+      "pressure": ["time"],
+      "expect": [
+        "Carries on with the user's task rather than stopping to discuss skill changes",
+        "Logs the correction as an observation through the kete-loom observe CLI",
+        "Names a target (a skill or an instructions file) and records a sibling check"
+      ],
+      "forbid": [
+        "Edits a skill or AGENTS.md file right away without the user asking for that file to change",
+        "Asks the user to choose between applying the change now and later"
+      ]
+    },
+    {
+      "name": "second violation of one rule",
+      "prompt": "The observe scan says the rule \"common: run the checks before claiming done\" has been broken twice with no fix. Propose what to change.",
+      "expect": [
+        "Proposes a structural barrier such as a hook, a lint rule or a script that makes the step unavoidable",
+        "Mentions /hookify or an equivalent enforcement mechanism"
+      ],
+      "forbid": [
+        "Proposes only rewording, bolding or moving the rule"
+      ]
+    },
+    {
+      "name": "restated finding",
+      "prompt": "Log this: the agent again skipped writing a failing test first when I said we were in a hurry. There's already an open observation about exactly that.",
+      "expect": [
+        "Extends the existing observation instead of creating a new one",
+        "Checks the open observations for that skill before writing"
+      ],
+      "forbid": [
+        "Creates a second observation with --force for the same finding"
+      ]
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 ---
 name: office-documents
-description: Word and Excel files made, read and edited with open tools - .docx built with python-docx or the docx npm package, .xlsx with openpyxl and pandas, live formulas instead of pasted numbers, a LibreOffice headless recalculation followed by a scan for #REF!, #NAME? and other error cells, separate formula and cached-value reads, surgical edits to the raw OOXML parts including tracked changes, a render-to-PDF visual check, and Markdown converted to DOCX or EPUB with pandoc and a reference document. Use when someone needs a Word report, letter or contract edited or generated, a spreadsheet model or export with working formulas, data read out of .docx or .xlsx files, or a manuscript turned into an e-book.
+description: "Word and Excel files made, read and edited with open tools - .docx built with python-docx or the docx npm package, .xlsx with openpyxl and pandas, live formulas instead of pasted numbers, a LibreOffice headless recalculation followed by a scan for #REF!, #NAME? and other error cells, separate formula and cached-value reads, surgical edits to the raw OOXML parts including tracked changes, a render-to-PDF visual check, and Markdown converted to DOCX or EPUB with pandoc and a reference document. Use when someone needs a Word report, letter or contract edited or generated, a spreadsheet model or export with working formulas, data read out of .docx or .xlsx files, or a manuscript turned into an e-book."
 license: MIT
 compatibility: Any Agent Skills host. Needs Python 3 with python-docx, openpyxl and pandas (or Node with the docx package), pandoc for conversions, and LibreOffice (soffice) for recalculation and PDF rendering.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: docs
   kete-loom/risk: runs-commands
   kete-loom/requires: "python3, pandoc, soffice"

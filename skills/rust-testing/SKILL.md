@@ -1,10 +1,10 @@
 ---
 name: rust-testing
-description: Writing and organising tests for Rust crates with cargo test, covering #[cfg(test)] unit modules, integration tests under tests/, doc tests, trait-based fakes and mockall, property tests with proptest, #[tokio::test] for async code, and the cargo test flags for filtering and output. Use when adding or fixing Rust tests, deciding where a test belongs in a crate, testing async or I/O-bound Rust code, or getting a flaky cargo test run under control.
+description: "Writing and organising tests for Rust crates with cargo test, covering #[cfg(test)] unit modules, integration tests under tests/, doc tests, trait-based fakes and mockall, property tests with proptest, #[tokio::test] for async code, and the cargo test flags for filtering and output. Use when adding or fixing Rust tests, deciding where a test belongs in a crate, testing async or I/O-bound Rust code, or getting a flaky cargo test run under control."
 license: MIT
 compatibility: Any Agent Skills host. Needs a Rust toolchain with cargo. proptest, mockall and tokio are used only if the project already depends on them or the user agrees to add them.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/requires: "cargo"

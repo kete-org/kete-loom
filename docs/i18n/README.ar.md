@@ -7,7 +7,7 @@
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
 مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code وKiro.</p>
 
-<!-- translated from README.md, source 61558eb01e7c -->
+<!-- translated from README.md, source accf287336e0 -->
 
 <!-- counts:start -->
 <!-- counts:end -->
@@ -136,6 +136,29 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | اختبار القبول معك، مُخرَجًا واحدًا في كل مرة | `/uat` (`acceptance-testing`)، `ui-auditor` |
 | حفظ الأفكار والمهام دون الخروج عن المهمة الحالية | `/capture` (`idea-backlog`) |
 | الاستعادة: إصلاح قائمة من ملاحظات المراجعة، ومعرفة سبب تعثّر جهد امتد عبر عدة جلسات، والتراجع عن العمل بأمان | `/fix-findings`، `/forensics`، `/revert-work` |
+
+### التعلّم من كل جلسة
+
+تتحسّن المهارات بفضل مواطن الاحتكاك التي تظهر في العمل الفعلي، لذا يحتفظ Kete Loom بسجلّ لها. تدوّن المهارة `skill-observations` كل ملاحظة لحظة حدوثها: تصحيح قدّمته، أو قاعدة خالفها الوكيل، أو خطوة ناقصة، أو طريقة عمل تستحق مهارة خاصة بها. وتكتب كل ملاحظة في ملف صغير عبر `kete-loom observe`. ثم يحوّل `/skill-review` السجلّ لاحقًا إلى تغييرات توافق عليها واحدًا تلو الآخر.
+
+<div dir="ltr">
+
+```bash
+npx @ketecode/loom observe scan        # open findings, whether a review is due, rules broken twice
+npx @ketecode/loom observe list --skill tdd-workflow
+```
+
+</div>
+
+السجلّ ملكك ويبقى على جهازك، في `~/.kete-loom/observations/`. ويُحفظ على مستوى المستخدم، فلا تتوزّع الملاحظات بين المشاريع ولا تضيع مع حذف worktree. وتفرض واجهة سطر الأوامر (CLI) قواعد التدوين:
+- لا تتكرر المعرّفات أبدًا، ولا يُستبدل ملف موجود أبدًا؛
+- تُرفض الملاحظة المُعاد صياغتها، ويُطلب بدلًا من ذلك توسيع الملاحظة الأصلية؛
+- يجب أن تسجّل كل ملاحظة المهارات ذات الصلة التي جرى فحصها؛
+- القاعدة التي تُخالَف مرتين تُعلَّم لتتحول إلى خطاف (`/hookify`) بدلًا من إعادة صياغتها مرة أخرى.
+
+تُجهّز المراجعات التغييرات ولا تعدّل أبدًا مهارة Kete Loom مثبّتة في مكانها، لأن `update` سيستبدلها؛ وتتحول تلك التغييرات إلى مسودة تغيير للمصدر الأصلي (upstream)، ومعها قاعدة للمشروع عند الحاجة. ومع تثبيت الخطاف `load-session-context`، تبدأ كل جلسة وهي تعرف ما لا يزال مفتوحًا. والعنصران كلاهما ضمن `--profile method`.
+
+هذا النهج مقتبس من [Task Observer](https://github.com/rebelytics/one-skill-to-rule-them-all) من تأليف Eoghan Henn والمساهمين (CC BY 4.0).
 
 ## المهارات (Skills)
 

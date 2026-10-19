@@ -87,7 +87,7 @@
     ]
   },
   "method": {
-    "description": "A full development method: design before code, granular plans, a fresh subagent per task with spec and quality review, systematic debugging, rigorous responses to review, worktrees and a clean finish.",
+    "description": "A full development method: design before code, granular plans, a fresh subagent per task with spec and quality review, systematic debugging, rigorous responses to review, worktrees and a clean finish, and a log of what each session teaches, reviewed into approved skill changes.",
     "skills": [
       "design-brainstorming",
       "implementation-plans",
@@ -97,7 +97,8 @@
       "verification-loop",
       "responding-to-code-review",
       "git-worktrees",
-      "finishing-a-branch"
+      "finishing-a-branch",
+      "skill-observations"
     ],
     "agents": [
       "planner",
@@ -112,7 +113,8 @@
       "debug",
       "verify",
       "review",
-      "finish-branch"
+      "finish-branch",
+      "skill-review"
     ],
     "rules": [
       "use-skills",

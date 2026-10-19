@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source 61558eb01e7c -->
+<!-- translated from README.md, source accf287336e0 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -117,6 +117,25 @@ Für Arbeit, die größer ist als ein einzelnes Feature, ergänzt `--profile pro
 | Abnahmetests gemeinsam mit dir, ein Ergebnis nach dem anderen | `/uat` (`acceptance-testing`), `ui-auditor` |
 | Ideen und Todos festhalten, ohne die aktuelle Aufgabe zu unterbrechen | `/capture` (`idea-backlog`) |
 | Recovery: eine Liste von Review-Befunden abarbeiten, herausfinden, warum ein Vorhaben über mehrere Sessions schiefging, Arbeit sicher rückgängig machen | `/fix-findings`, `/forensics`, `/revert-work` |
+
+### Aus jeder Session lernen
+
+Skills werden besser durch Reibung, die bei echter Arbeit auftritt, deshalb führt Kete Loom ein Protokoll darüber. Der Skill `skill-observations` hält jeden Befund fest, sobald er auftritt: eine Korrektur, die du gegeben hast, eine Rule, die der Agent gebrochen hat, ein fehlender Schritt oder ein Workflow, der einen eigenen Skill verdient. Jeden Befund schreibt er als kleine Datei über `kete-loom observe`. `/skill-review` macht aus dem Protokoll später Änderungen, die du einzeln freigibst.
+
+```bash
+npx @ketecode/loom observe scan        # open findings, whether a review is due, rules broken twice
+npx @ketecode/loom observe list --skill tdd-workflow
+```
+
+Das Protokoll gehört dir und bleibt auf deinem Rechner, in `~/.kete-loom/observations/`. Es liegt im Benutzerbereich, sodass Befunde weder auf Projekte verteilt werden noch mit einem gelöschten Worktree verloren gehen. Die CLI erzwingt die Buchführung:
+- IDs wiederholen sich nie, und eine bestehende Datei wird nie überschrieben;
+- ein erneut formulierter Befund wird abgelehnt, stattdessen wird das Original erweitert;
+- jeder Befund muss festhalten, welche verwandten Skills geprüft wurden;
+- eine Rule, die zweimal gebrochen wurde, wird für einen Hook (`/hookify`) markiert statt für eine weitere Umformulierung.
+
+Reviews bereiten Änderungen vor und bearbeiten nie einen installierten Kete-Loom-Skill direkt, da `update` ihn überschreiben würde; daraus werden ein Entwurf für eine Änderung im Upstream und, falls nötig, eine Projekt-Rule. Mit installiertem Hook `load-session-context` beginnt jede Session mit dem Wissen, was offen ist. Beide sind in `--profile method` enthalten.
+
+Der Ansatz ist adaptiert von [Task Observer](https://github.com/rebelytics/one-skill-to-rule-them-all) von Eoghan Henn und Mitwirkenden (CC BY 4.0).
 
 ## Skills
 

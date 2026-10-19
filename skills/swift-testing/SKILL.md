@@ -1,10 +1,10 @@
 ---
 name: swift-testing
-description: Writes and fixes Swift unit, async and UI tests using Apple's Swift Testing framework (@Test, @Suite, #expect, #require, parameterized arguments, confirmation) alongside XCTest, with protocol-based fakes injected through initializers instead of mocking frameworks, and XCUITest basics for UI flows. Use when adding tests to a Swift package or Xcode project, testing async or actor code, replacing a live network or database dependency with a fake, converting XCTestCase classes to Swift Testing, or fixing a flaky Swift test.
+description: "Writes and fixes Swift unit, async and UI tests using Apple's Swift Testing framework (@Test, @Suite, #expect, #require, parameterized arguments, confirmation) alongside XCTest, with protocol-based fakes injected through initializers instead of mocking frameworks, and XCUITest basics for UI flows. Use when adding tests to a Swift package or Xcode project, testing async or actor code, replacing a live network or database dependency with a fake, converting XCTestCase classes to Swift Testing, or fixing a flaky Swift test."
 license: MIT
 compatibility: Any Agent Skills host. Swift Testing needs a Swift 6 toolchain or Xcode 16+; XCTest works with any Xcode. UI tests need Xcode and a simulator on macOS.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/requires: "swift"

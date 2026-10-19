@@ -1,10 +1,10 @@
 ---
 name: ios-platform-features
-description: Adopts recent Apple platform APIs in an existing app without dropping older OS versions, covering the Liquid Glass design (glassEffect, GlassEffectContainer, glass button styles, UIGlassEffect, UIDesignRequiresCompatibility), the on-device Foundation Models framework with SystemLanguageModel availability, LanguageModelSession, @Generable guided generation and the Tool protocol, #available checks with real fallbacks, and layered Icon Composer app icons. Use when an iOS, iPadOS or macOS app is moving to the iOS 26 or later SDK, adding an Apple Intelligence text feature that runs on device, gating a new API behind an availability check, or replacing an AppIcon asset catalog with an .icon file.
+description: "Adopts recent Apple platform APIs in an existing app without dropping older OS versions, covering the Liquid Glass design (glassEffect, GlassEffectContainer, glass button styles, UIGlassEffect, UIDesignRequiresCompatibility), the on-device Foundation Models framework with SystemLanguageModel availability, LanguageModelSession, @Generable guided generation and the Tool protocol, #available checks with real fallbacks, and layered Icon Composer app icons. Use when an iOS, iPadOS or macOS app is moving to the iOS 26 or later SDK, adding an Apple Intelligence text feature that runs on device, gating a new API behind an availability check, or replacing an AppIcon asset catalog with an .icon file."
 license: MIT
 compatibility: Any Agent Skills host. Needs Xcode 26 or later with the matching SDKs; Foundation Models features need an Apple Intelligence capable device or Mac to test on. APIs change between SDK releases, so every name must be checked against developer.apple.com for the SDK in use.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: coding
   kete-loom/risk: writes-files
   kete-loom/requires: "xcodebuild"
