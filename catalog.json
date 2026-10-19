@@ -1,6 +1,6 @@
 {
   "name": "kete-loom",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "skills": [
     {
       "name": "acceptance-testing",
@@ -1121,7 +1121,7 @@
     },
     {
       "name": "ios-platform-features",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "writes-files",
       "requires": [
@@ -1532,7 +1532,7 @@
     },
     {
       "name": "office-documents",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "docs",
       "risk": "runs-commands",
       "requires": [
@@ -2027,7 +2027,7 @@
     },
     {
       "name": "rust-testing",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [
@@ -2231,7 +2231,7 @@
     },
     {
       "name": "swift-testing",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [
@@ -2242,7 +2242,7 @@
     },
     {
       "name": "swiftui-patterns",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "runs-commands",
       "requires": [
