@@ -588,7 +588,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase read-only, Stripe), `mcp-design` (Figma). Claude Code servers are added with `claude mcp add-json --scope user` (or `.mcp.json` with `--project`); Codex gets them in a marked block of `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode and Kete Code in their MCP config files. A server you already configured under the same name is never replaced. Copilot CLI gets local servers only, because it has no documented way to sign in to remote ones.
+Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry, and `lsp` for language-server navigation), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Claude Code servers are added with `claude mcp add-json --scope user` (or `.mcp.json` with `--project`); Codex gets them in a marked block of `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode and Kete Code in their MCP config files. A server you already configured under the same name is never replaced. Copilot CLI gets local servers only, because it has no documented way to sign in to remote ones.
 
 <!-- mcp:start -->
 | Server | Kind | Sign-in | What it does |
@@ -629,7 +629,7 @@ npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale h
 
 `audit` checks the things that make agents work well in a repository: agent instructions (`AGENTS.md`/`CLAUDE.md`), the Kete Loom packs for the stack it detects, test and lint commands, CI, the safety hooks, and that `.env` files are ignored and not committed. It exits non-zero when a check fails, so it can run in CI.
 
-Inside your agent, `/loom` finds the right items for a task, `/checkpoint` saves a restorable snapshot without committing, `/sessions` lists and tidies handoff notes, `/codemap` writes a short architecture map, `/model-route` suggests a model tier, and `/aside` answers a side question without derailing the task.
+Inside your agent, `/loom` finds the right items for a task, `/checkpoint` saves a restorable snapshot without committing, `/sessions` lists and tidies handoff notes, `/codemap` writes a short architecture map, `/model-route` suggests a model tier, and `/aside` answers a side question without derailing the task. For your agent setup itself, `/lint-agent-config` checks AGENTS.md, skills, hooks, MCP configs and plugin manifests for broken or risky settings, `/rules-review` compares your recent sessions with your rules and suggests what to add, reword or retire, and `/usage-report` summarises token use and cost from local session logs.
 
 ## Where hosts look
 

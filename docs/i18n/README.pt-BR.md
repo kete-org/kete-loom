@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents e comandos selecionados e testados para agentes de programação.</strong><br/>
 Uma única fonte. Instala sem alterações no Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code e Kiro.</p>
 
-<!-- translated from README.md, source afc59924c2be -->
+<!-- translated from README.md, source 61558eb01e7c -->
 
 <!-- counts:start -->
 <!-- counts:end -->
@@ -170,7 +170,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Pacotes: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase somente leitura, Stripe), `mcp-design` (Figma). Os servidores do Claude Code são adicionados com `claude mcp add-json --scope user` (ou em `.mcp.json` com `--project`); o Codex os recebe em um bloco marcado do `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode e Kete Code, nos respectivos arquivos de configuração MCP. Um servidor que você já configurou com o mesmo nome nunca é substituído. O Copilot CLI recebe apenas servidores locais, porque não tem uma forma documentada de fazer login nos remotos.
+Pacotes: `mcp-web`, `mcp-code` (GitHub, Git, Sentry e `lsp` para navegação via servidor de linguagem), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase somente leitura, Stripe), `mcp-design` (Figma). Os servidores do Claude Code são adicionados com `claude mcp add-json --scope user` (ou em `.mcp.json` com `--project`); o Codex os recebe em um bloco marcado do `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode e Kete Code, nos respectivos arquivos de configuração MCP. Um servidor que você já configurou com o mesmo nome nunca é substituído. O Copilot CLI recebe apenas servidores locais, porque não tem uma forma documentada de fazer login nos remotos.
 
 A lista completa está no README em inglês: [Servidores MCP](../../README.md#mcp-servers), e em [`catalog.json`](../../catalog.json).
 
@@ -187,7 +187,7 @@ npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale h
 
 O `audit` verifica o que faz os agentes funcionarem bem em um repositório: instruções para o agente (`AGENTS.md`/`CLAUDE.md`), os pacotes do Kete Loom para a stack que ele detecta, comandos de teste e de lint, CI, os hooks de segurança e se os arquivos `.env` são ignorados e não estão no repositório. Ele sai com código diferente de zero quando uma verificação falha, então pode rodar no CI.
 
-Dentro do seu agente, `/loom` encontra os itens certos para uma tarefa, `/checkpoint` salva um snapshot restaurável sem fazer commit, `/sessions` lista e organiza as notas de passagem de contexto, `/codemap` escreve um mapa curto da arquitetura, `/model-route` sugere um nível de modelo e `/aside` responde a uma pergunta paralela sem desviar da tarefa.
+Dentro do seu agente, `/loom` encontra os itens certos para uma tarefa, `/checkpoint` salva um snapshot restaurável sem fazer commit, `/sessions` lista e organiza as notas de passagem de contexto, `/codemap` escreve um mapa curto da arquitetura, `/model-route` sugere um nível de modelo e `/aside` responde a uma pergunta paralela sem desviar da tarefa. Para a própria configuração do seu agente, `/lint-agent-config` verifica AGENTS.md, skills, hooks, configurações MCP e manifestos de plugin em busca de configurações quebradas ou arriscadas, `/rules-review` compara suas sessões recentes com suas regras e sugere o que adicionar, reformular ou aposentar, e `/usage-report` resume o uso de tokens e o custo a partir dos logs de sessão locais.
 
 ## Onde os hosts procuram
 

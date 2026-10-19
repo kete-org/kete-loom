@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source afc59924c2be -->
+<!-- translated from README.md, source 61558eb01e7c -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -169,7 +169,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Pakete: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase read-only, Stripe), `mcp-design` (Figma). Für Claude Code werden Server mit `claude mcp add-json --scope user` hinzugefügt (bzw. in `.mcp.json` mit `--project`); Codex erhält sie in einem markierten Block der `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode und Kete Code in ihren MCP-Konfigurationsdateien. Ein Server, den du bereits unter demselben Namen konfiguriert hast, wird nie ersetzt. Copilot CLI erhält nur lokale Server, weil es keinen dokumentierten Weg gibt, sich dort bei Remote-Servern anzumelden.
+Pakete: `mcp-web`, `mcp-code` (GitHub, Git, Sentry und `lsp` für die Navigation per Language-Server), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Für Claude Code werden Server mit `claude mcp add-json --scope user` hinzugefügt (bzw. in `.mcp.json` mit `--project`); Codex erhält sie in einem markierten Block der `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode und Kete Code in ihren MCP-Konfigurationsdateien. Ein Server, den du bereits unter demselben Namen konfiguriert hast, wird nie ersetzt. Copilot CLI erhält nur lokale Server, weil es keinen dokumentierten Weg gibt, sich dort bei Remote-Servern anzumelden.
 
 Die vollständige Liste findest du im englischen README: [MCP-Server](../../README.md#mcp-servers), sowie in [`catalog.json`](../../catalog.json).
 
@@ -186,7 +186,7 @@ npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale h
 
 `audit` prüft, was dafür sorgt, dass Agents in einem Repository gut arbeiten: Agent-Anweisungen (`AGENTS.md`/`CLAUDE.md`), die Kete-Loom-Pakete für den erkannten Stack, Test- und Lint-Befehle, CI, die Sicherheits-Hooks und dass `.env`-Dateien ignoriert und nicht committet sind. Schlägt eine Prüfung fehl, endet es mit einem Exit-Code ungleich null, sodass es in CI laufen kann.
 
-In deinem Agent findet `/loom` die passenden Bausteine für eine Aufgabe, `/checkpoint` speichert einen wiederherstellbaren Snapshot, ohne zu committen, `/sessions` listet Übergabenotizen auf und räumt sie auf, `/codemap` schreibt eine kurze Architekturübersicht, `/model-route` schlägt eine Modellstufe vor, und `/aside` beantwortet eine Nebenfrage, ohne die Aufgabe aus der Bahn zu werfen.
+In deinem Agent findet `/loom` die passenden Bausteine für eine Aufgabe, `/checkpoint` speichert einen wiederherstellbaren Snapshot, ohne zu committen, `/sessions` listet Übergabenotizen auf und räumt sie auf, `/codemap` schreibt eine kurze Architekturübersicht, `/model-route` schlägt eine Modellstufe vor, und `/aside` beantwortet eine Nebenfrage, ohne die Aufgabe aus der Bahn zu werfen. Für dein Agent-Setup selbst prüft `/lint-agent-config` AGENTS.md, Skills, Hooks, MCP-Konfigurationen und Plugin-Manifeste auf fehlerhafte oder riskante Einstellungen, `/rules-review` vergleicht deine letzten Sessions mit deinen Regeln und schlägt vor, was hinzugefügt, umformuliert oder entfernt werden sollte, und `/usage-report` fasst Token-Verbrauch und Kosten aus lokalen Session-Logs zusammen.
 
 ## Wo Hosts suchen
 

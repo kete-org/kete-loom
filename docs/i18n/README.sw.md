@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
 Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source afc59924c2be -->
+<!-- translated from README.md, source 61558eb01e7c -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -169,7 +169,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Supabase read-only, Stripe), `mcp-design` (Figma). Servers za Claude Code huongezwa kwa `claude mcp add-json --scope user` (au `.mcp.json` kwa `--project`); Codex huzipata ndani ya block iliyowekewa alama ya `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode na Kete Code ndani ya faili zao za MCP config. Server uliyokwisha kuisanidi kwa jina lilelile haibadilishwi kamwe. Copilot CLI hupata local servers pekee, kwa sababu haina njia iliyoandikwa rasmi ya kuingia kwenye remote servers.
+Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry, na `lsp` kwa urambazaji wa language-server), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Servers za Claude Code huongezwa kwa `claude mcp add-json --scope user` (au `.mcp.json` kwa `--project`); Codex huzipata ndani ya block iliyowekewa alama ya `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode na Kete Code ndani ya faili zao za MCP config. Server uliyokwisha kuisanidi kwa jina lilelile haibadilishwi kamwe. Copilot CLI hupata local servers pekee, kwa sababu haina njia iliyoandikwa rasmi ya kuingia kwenye remote servers.
 
 Orodha kamili iko kwenye README ya Kiingereza: [MCP servers](../../README.md#mcp-servers), na pia ndani ya `catalog.json`.
 
@@ -186,7 +186,7 @@ npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale h
 
 `audit` hukagua mambo yanayowawezesha agents kufanya kazi vizuri ndani ya repository: maelekezo ya agent (`AGENTS.md`/`CLAUDE.md`), packs za Kete Loom kwa ajili ya stack inayoitambua, commands za test na lint, CI, hooks za usalama, na kwamba faili za `.env` zimepuuzwa (ignored) na hazijafanyiwa commit. Hutoka na msimbo usio sifuri (non-zero) ukaguzi wowote unaposhindwa, kwa hivyo inaweza kuendeshwa ndani ya CI.
 
-Ndani ya agent wako, `/loom` hupata vipengele sahihi kwa kazi fulani, `/checkpoint` huhifadhi snapshot inayoweza kurejeshwa bila kufanya commit, `/sessions` huorodhesha na kupanga maelezo ya makabidhiano (handoff notes), `/codemap` huandika ramani fupi ya muundo (architecture map), `/model-route` hupendekeza kiwango (tier) cha model, na `/aside` hujibu swali la pembeni bila kuitoa kazi kwenye mkondo wake.
+Ndani ya agent wako, `/loom` hupata vipengele sahihi kwa kazi fulani, `/checkpoint` huhifadhi snapshot inayoweza kurejeshwa bila kufanya commit, `/sessions` huorodhesha na kupanga maelezo ya makabidhiano (handoff notes), `/codemap` huandika ramani fupi ya muundo (architecture map), `/model-route` hupendekeza kiwango (tier) cha model, na `/aside` hujibu swali la pembeni bila kuitoa kazi kwenye mkondo wake. Kwa usanidi wa agent wako wenyewe, `/lint-agent-config` hukagua AGENTS.md, skills, hooks, MCP configs na plugin manifests kutafuta mipangilio iliyoharibika au yenye hatari, `/rules-review` hulinganisha sessions zako za hivi karibuni na rules zako na kupendekeza cha kuongeza, kuandika upya au kuondoa, na `/usage-report` hufupisha matumizi ya tokens na gharama kutoka kwa session logs za ndani.
 
 ## Mahali hosts hutafuta
 

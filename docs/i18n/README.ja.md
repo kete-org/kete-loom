@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code、Kiro にそのままインストールできます。</p>
 
-<!-- translated from README.md, source afc59924c2be -->
+<!-- translated from README.md, source 61558eb01e7c -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -169,7 +169,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-パック: `mcp-web`、`mcp-code`(GitHub、Git、Sentry)、`mcp-team`(Linear、Notion、Atlassian)、`mcp-cloud`(Cloudflare、Supabase 読み取り専用、Stripe)、`mcp-design`(Figma)。Claude Code のサーバーは `claude mcp add-json --scope user`(`--project` を指定した場合は `.mcp.json`)で追加されます。Codex には `config.toml` のマーク付きブロックに、Gemini CLI、Cursor、Copilot CLI、OpenCode、Kete Code にはそれぞれの MCP 設定ファイルに追加されます。同じ名前ですでに設定済みのサーバーが置き換えられることはありません。Copilot CLI にはローカルサーバーだけが追加されます。リモートサーバーにサインインする方法が文書化されていないためです。
+パック: `mcp-web`、`mcp-code`(GitHub、Git、Sentry、言語サーバーによるコードナビゲーションの `lsp`)、`mcp-team`(Linear、Notion、Atlassian)、`mcp-cloud`(Cloudflare、Vercel、Supabase 読み取り専用、Stripe)、`mcp-design`(Figma)。Claude Code のサーバーは `claude mcp add-json --scope user`(`--project` を指定した場合は `.mcp.json`)で追加されます。Codex には `config.toml` のマーク付きブロックに、Gemini CLI、Cursor、Copilot CLI、OpenCode、Kete Code にはそれぞれの MCP 設定ファイルに追加されます。同じ名前ですでに設定済みのサーバーが置き換えられることはありません。Copilot CLI にはローカルサーバーだけが追加されます。リモートサーバーにサインインする方法が文書化されていないためです。
 
 全一覧は英語版 README の [MCP servers](../../README.md#mcp-servers) と `catalog.json` にあります。
 
@@ -186,7 +186,7 @@ npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale h
 
 `audit` は、リポジトリでエージェントがうまく動作するための条件をチェックします。対象は、エージェント向けの指示(`AGENTS.md`/`CLAUDE.md`)、検出したスタックに対応する Kete Loom のパック、テストと lint のコマンド、CI、安全用 hook、そして `.env` ファイルが無視されていてコミットされていないことです。チェックに失敗すると 0 以外の終了コードで終了するため、CI で実行できます。
 
-エージェント内では、`/loom` がタスクに適したアイテムを見つけ、`/checkpoint` がコミットせずに復元可能なスナップショットを保存し、`/sessions` が引き継ぎメモを一覧表示して整理し、`/codemap` が短いアーキテクチャマップを書き、`/model-route` がモデルのティアを提案し、`/aside` がタスクを脱線させずに横道の質問に答えます。
+エージェント内では、`/loom` がタスクに適したアイテムを見つけ、`/checkpoint` がコミットせずに復元可能なスナップショットを保存し、`/sessions` が引き継ぎメモを一覧表示して整理し、`/codemap` が短いアーキテクチャマップを書き、`/model-route` がモデルのティアを提案し、`/aside` がタスクを脱線させずに横道の質問に答えます。エージェントのセットアップ自体については、`/lint-agent-config` が AGENTS.md、skill、hook、MCP 設定、プラグインマニフェストに壊れた設定や危険な設定がないかをチェックし、`/rules-review` が最近のセッションとルールを比較して、追加・修正・廃止すべき点を提案し、`/usage-report` がローカルのセッションログからトークン使用量とコストをまとめます。
 
 ## ホストが参照する場所
 

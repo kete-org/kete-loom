@@ -7,7 +7,7 @@
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
 مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code وKiro.</p>
 
-<!-- translated from README.md, source afc59924c2be -->
+<!-- translated from README.md, source 61558eb01e7c -->
 
 <!-- counts:start -->
 <!-- counts:end -->
@@ -200,7 +200,7 @@ npx @ketecode/loom uninstall --mcp github
 
 </div>
 
-الحزم: `mcp-web`، و`mcp-code` (GitHub وGit وSentry)، و`mcp-team` (Linear وNotion وAtlassian)، و`mcp-cloud` (Cloudflare وSupabase للقراءة فقط وStripe)، و`mcp-design` (Figma). تُضاف خوادم Claude Code عبر `claude mcp add-json --scope user` (أو `.mcp.json` مع `--project`)؛ ويحصل عليها Codex في كتلة مُعلَّمة داخل `config.toml`؛ أما Gemini CLI وCursor وCopilot CLI وOpenCode وKete Code ففي ملفات إعدادات MCP الخاصة بها. ولا يُستبدَل أبدًا خادم سبق أن أعددته بالاسم نفسه. يحصل Copilot CLI على الخوادم المحلية فقط، لأنه لا يملك طريقة موثّقة لتسجيل الدخول إلى الخوادم البعيدة.
+الحزم: `mcp-web`، و`mcp-code` (GitHub وGit وSentry، و`lsp` للتنقّل عبر خادم اللغة)، و`mcp-team` (Linear وNotion وAtlassian)، و`mcp-cloud` (Cloudflare وVercel وSupabase للقراءة فقط وStripe)، و`mcp-design` (Figma). تُضاف خوادم Claude Code عبر `claude mcp add-json --scope user` (أو `.mcp.json` مع `--project`)؛ ويحصل عليها Codex في كتلة مُعلَّمة داخل `config.toml`؛ أما Gemini CLI وCursor وCopilot CLI وOpenCode وKete Code ففي ملفات إعدادات MCP الخاصة بها. ولا يُستبدَل أبدًا خادم سبق أن أعددته بالاسم نفسه. يحصل Copilot CLI على الخوادم المحلية فقط، لأنه لا يملك طريقة موثّقة لتسجيل الدخول إلى الخوادم البعيدة.
 
 القائمة الكاملة موجودة في ملف README الإنجليزي: [MCP servers](../../README.md#mcp-servers)، وفي `catalog.json`.
 
@@ -221,7 +221,7 @@ npx @ketecode/loom doctor --fix       # repair the hook runtime and drop stale h
 
 يفحص `audit` الأمور التي تجعل الوكلاء يعملون جيدًا في المستودع: تعليمات الوكيل (`AGENTS.md`/`CLAUDE.md`)، وحزم Kete Loom الخاصة بالتقنيات التي يكتشفها، وأوامر الاختبار والفحص (lint)، وCI، وخطافات الأمان، والتأكد من أن ملفات `.env` مُتجاهَلة وغير مُودَعة (committed). ويخرج برمز غير صفري عند فشل أي فحص، لذا يمكن تشغيله في CI.
 
-داخل وكيلك، يعثر `/loom` على العناصر المناسبة لمهمة ما، ويحفظ `/checkpoint` لقطة قابلة للاستعادة دون إيداع (commit)، ويعرض `/sessions` ملاحظات التسليم (handoff notes) وينظّمها، ويكتب `/codemap` خريطة معمارية قصيرة، ويقترح `/model-route` مستوى النموذج، ويجيب `/aside` عن سؤال جانبي دون أن يُخرج المهمة عن مسارها.
+داخل وكيلك، يعثر `/loom` على العناصر المناسبة لمهمة ما، ويحفظ `/checkpoint` لقطة قابلة للاستعادة دون إيداع (commit)، ويعرض `/sessions` ملاحظات التسليم (handoff notes) وينظّمها، ويكتب `/codemap` خريطة معمارية قصيرة، ويقترح `/model-route` مستوى النموذج، ويجيب `/aside` عن سؤال جانبي دون أن يُخرج المهمة عن مسارها. أما لإعداد وكيلك نفسه، فيفحص `/lint-agent-config` ملف AGENTS.md والمهارات (skills) والخطافات (hooks) وإعدادات MCP وملفات بيان الإضافات (plugin manifests) بحثًا عن إعدادات معطوبة أو خطرة، ويقارن `/rules-review` جلساتك الأخيرة بقواعدك ويقترح ما تضيفه أو تعيد صياغته أو تُلغيه، ويلخّص `/usage-report` استهلاك الرموز (tokens) والتكلفة من سجلات الجلسات المحلية.
 
 ## أين تبحث البيئات المضيفة
 
