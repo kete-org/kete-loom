@@ -39,10 +39,12 @@ function check(event) {
   const root = worktreeRoot(cwd);
   if (!root) return { block: false };
   const tmp = fs.realpathSync.native ? fs.realpathSync.native(os.tmpdir()) : os.tmpdir();
+  // The temp folder is fair game, unless the worktree itself lives there (then its neighbours are other checkouts).
+  const tmpOk = !inside(os.tmpdir(), root) && !inside(tmp, root);
   for (const f of event.files || []) {
     if (!f || typeof f.path !== 'string') continue;
     const target = path.resolve(cwd, f.path);
-    if (inside(root, target) || inside(os.tmpdir(), target) || inside(tmp, target)) continue;
+    if (inside(root, target) || (tmpOk && (inside(os.tmpdir(), target) || inside(tmp, target)))) continue;
     return {
       block: true,
       reason: `Blocked by kete-loom (stay-in-worktree): this session works in the worktree at \`${root}\`, but \`${target}\` is outside it, perhaps in the main checkout or another worktree. Make the change inside this worktree (the same relative path), or ask the user if it really belongs elsewhere.`,

@@ -14,4 +14,3 @@ site/
 .agents/*
 !.agents/plugins/
 !hooks/protect-lint-config/fixtures/.*
-!hooks/stay-in-worktree/fixtures/**/.git

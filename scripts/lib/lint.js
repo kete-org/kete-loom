@@ -150,14 +150,38 @@ function lintHook(hook) {
   const prevState = process.env.KETE_LOOM_STATE_DIR;
   const stateDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kete-loom-lint-'));
   process.env.KETE_LOOM_STATE_DIR = stateDir;
+  const fixtures = withFixtures(hook, cases);
   try {
-    lintCases(check, cases, errors);
+    lintCases(check, fixtures.cases, errors);
   } finally {
     if (prevState === undefined) delete process.env.KETE_LOOM_STATE_DIR;
     else process.env.KETE_LOOM_STATE_DIR = prevState;
     fs.rmSync(stateDir, { recursive: true, force: true });
+    if (fixtures.dir) fs.rmSync(fixtures.dir, { recursive: true, force: true });
   }
   return errors;
+}
+
+// Cases may run against files in the hook's fixtures/ folder. Git can't store a file named .git, so a
+// fixture saved as `dot-git` becomes `.git` in a temporary copy, and cases' cwd is pointed at it.
+function withFixtures(hook, cases) {
+  const src = path.join(hook.path, 'fixtures');
+  if (!fs.existsSync(src)) return { cases };
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kete-loom-fixtures-'));
+  fs.cpSync(src, dir, { recursive: true });
+  (function rename(d) {
+    for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) rename(p);
+      else if (e.name === 'dot-git') fs.renameSync(p, path.join(d, '.git'));
+    }
+  })(dir);
+  const remap = (c) => {
+    if (typeof c === 'string' || typeof c.cwd !== 'string') return c;
+    const rel = path.relative(src, path.resolve(c.cwd));
+    return rel.startsWith('..') || path.isAbsolute(rel) ? c : { ...c, cwd: path.join(dir, rel) };
+  };
+  return { dir, cases: { ...cases, should_block: (cases.should_block || []).map(remap), should_allow: (cases.should_allow || []).map(remap) } };
 }
 
 function lintCases(check, cases, errors) {
