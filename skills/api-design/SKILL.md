@@ -4,7 +4,7 @@ description: HTTP API contract design covering resource modelling, REST versus R
 license: MIT
 compatibility: Any Agent Skills host. Language and framework neutral; examples are HTTP and OpenAPI YAML.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: coding
   kete-loom/risk: writes-files
   kete-loom/owner: "Kete-org"
@@ -76,6 +76,15 @@ GraphQL costs: HTTP caching mostly lost, query cost limits and depth limits need
 3. Lint it (for example Spectral or Redocly CLI, whichever the repo already uses) and validate requests/responses against it in tests where possible.
 4. See `references/conventions.md` for a skeleton.
 
+## Misuse resistance
+
+Make the easy way the safe way. Check every option, parameter and config key the API exposes:
+
+1. **Callers never pick security mechanisms.** Algorithms, modes and key sizes are fixed by the server, never read from the request or the token: verify a JWT against an allow-list of algorithms you configured, never the `alg` in its header; no `cipher`, `hash` or `verify_ssl` parameter on a public endpoint.
+2. **Defaults are the safe choice.** Omitting an option gives the strict behaviour: TLS verification on, access private, validation on, the smallest scope. Unsafe behaviour needs an explicit, loudly named opt-in (`allowInsecure`, not `mode: 2`).
+3. **Reject dangerous combinations at load.** Config that is unsafe together (CORS that reflects any `Origin` while allowing credentials, auth disabled outside a dev environment, a webhook endpoint with no signing secret) fails at startup with a clear error, not at the first request.
+4. **"It's documented" is not a mitigation.** If a parameter is easy to misuse, change the design: split it into two operations, remove the option, or make the safe path the only one. Record any footgun you can't remove under Open questions.
+
 ## Never
 
 - Verbs in resource paths (`/getUser`), or `200` with `{"error": ...}` on REST endpoints.
@@ -92,5 +101,6 @@ Style: REST | RPC | GraphQL, and why (one line)
 Endpoints: METHOD path → status codes (one line each)
 Contract file: path to OpenAPI/schema written or changed
 Breaking changes: none | list
+Misuse resistance: footguns found and how each is closed, or none
 Open questions: what the user must decide
 ```

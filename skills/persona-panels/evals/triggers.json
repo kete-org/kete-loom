@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Test our new landing page headline on a few simulated customer personas",
+    "Create five synthetic buyer personas from these interview notes and have each react to the pricing concept",
+    "Before we pay for user research, can simulated users tell us what's confusing in this onboarding copy?",
+    "Run a persona panel on these two value propositions for small agency owners",
+    "Have a sceptical CFO persona and a busy ops manager persona each critique our product one-pager separately"
+  ],
+  "should_not_trigger": [
+    "Get three independent advisers to debate whether we should enter the Nigerian market",
+    "Write an interview guide so I can talk to real finance leads next week",
+    "Plan an A/B test for the pricing page with a proper sample size",
+    "Size the market for agency finance tools across West Africa",
+    "Write the buyer persona section of our go-to-market campaign plan"
+  ]
+}

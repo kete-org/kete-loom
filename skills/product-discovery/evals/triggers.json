@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "Write me an interview script for talking to accountants about how they chase late invoices",
+    "I have notes from 9 customer calls, help me pull out the main opportunities",
+    "Build an opportunity solution tree for our goal of improving week-4 retention",
+    "What's the riskiest assumption in our team-invites idea and how could we test it cheaply?",
+    "Score these 12 backlog ideas with RICE and show where each number came from",
+    "We can't agree which customer problem to tackle next quarter, help us run discovery"
+  ],
+  "should_not_trigger": [
+    "Write the PRD for the bulk invoice export feature we agreed to build",
+    "Estimate the TAM and SAM for invoicing software for freelancers in Kenya",
+    "Run a panel of five synthetic buyer personas reacting to our new tagline",
+    "Design the KPI dashboard the product team checks every Monday",
+    "Estimate how many engineer-weeks the invoice export will take",
+    "Set up an A/B test of the new pricing page headline"
+  ]
+}

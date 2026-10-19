@@ -5,13 +5,19 @@
     "Service account upload to Drive fails with storageQuotaExceeded even though the folder is shared with it",
     "Which OAuth scopes do we need to read files a user picks from their Google Drive without asking for full drive access?",
     "Generate a weekly Google Slides report deck from a template and swap the chart placeholders for images",
-    "Our Sheets sync keeps getting 429 Too many requests, how should we batch and back off?"
+    "Our Sheets sync keeps getting 429 Too many requests, how should we batch and back off?",
+    "Our support app should save a Gmail draft reply for each ticket and only send it after the agent clicks approve, which scope do we need?",
+    "Before our booking service creates a Google Calendar event it has to check both attendees are free, and the times keep coming out an hour off after the clock change",
+    "Post a message into our team's Google Chat space from the CI pipeline whenever a release build finishes",
+    "Search Gmail via the API for invoices from billing@ with attachments in the last week and label them processed"
   ],
   "should_not_trigger": [
     "Grant a Cloud Run service account the right IAM role to read from Cloud Storage",
     "Build a pivot table and VLOOKUP formulas in this Excel workbook",
     "Write the Apps Script for a custom menu inside our spreadsheet",
     "Our password reset emails sent through Amazon SES land in spam",
-    "Triage my Gmail inbox and draft replies for the important threads"
+    "Triage my Gmail inbox and draft replies for the important threads",
+    "Send password reset emails from our app through Postmark with a verified sending domain",
+    "Our Slack bot needs to post deploy notifications to a channel using slash commands"
   ]
 }

@@ -1,14 +1,15 @@
 'use strict';
 
-// Blocks shell commands that print or copy secret files into the agent's context: .env files,
-// private keys, .netrc, .npmrc, .pgpass and cloud credential files. Loading them without showing
+// Blocks shell commands that print or copy secrets into the agent's context: .env files, private
+// keys, .netrc, .npmrc, .pgpass and cloud credential files, secret-named environment variables,
+// whole-environment dumps, Kubernetes secrets and container environments. Loading them without showing
 // them (source .env, --env-file, dotenv runners) and naming them (ls, git check-ignore, rm) stay
 // allowed. check({ command }) -> verdict.
 
 const NON_SECRET_ENV = /\.(?:example|sample|template|dist|defaults|schema)$/i;
 const SECRET = [
   (b) => (b === '.env' || /^\.env\..+/.test(b)) && !NON_SECRET_ENV.test(b),
-  (b) => /^\.?secrets?(?:\.(?:json|ya?ml|toml|env))?$/i.test(b),
+  (b) => /^\.secrets?$|^\.?secrets?\.(?:json|ya?ml|toml|env)$/i.test(b),
   (b) => /^id_(?:rsa|dsa|ecdsa|ed25519)$/.test(b) || (/\.(?:pem|key|p12|pfx|jks|keystore)$/i.test(b) && !/\.pub$/.test(b)),
   (b) => /^\.(?:netrc|pgpass|npmrc|pypirc)$/.test(b),
 ];
@@ -19,6 +20,12 @@ const HARMLESS = new Set(['ls', 'stat', 'test', '[', '[[', 'touch', 'rm', 'chmod
 const PREFIX = new Set(['sudo', 'env', 'command', 'nice', 'nohup', 'time', 'doas', 'exec']);
 const GIT_HARMLESS = new Set(['check-ignore', 'ls-files', 'rm', 'mv', 'status', 'add', 'restore']);
 const SHELLS = new Set(['bash', 'sh', 'zsh', 'dash', 'ksh', 'fish']);
+
+// Environment variables whose names say they hold a secret.
+const SECRET_VAR = /^[A-Za-z_][A-Za-z0-9_]*(?:SECRET|TOKEN|PASSWORD|PASSWD|PASSPHRASE|API_?KEY|PRIVATE_?KEY|ACCESS_?KEY|CREDENTIALS?|AUTH|_PAT|_DSN)[A-Za-z0-9_]*$/i;
+const PRINTERS = new Set(['echo', 'printf', 'print']);
+// Commands that dump every variable, secrets included.
+const DUMPS = [['env'], ['printenv'], ['export'], ['export', '-p'], ['set'], ['declare', '-x'], ['declare', '-p'], ['typeset', '-x']];
 
 const unquote = (w) => w.replace(/^(['"])(.*)\1$/s, '$2');
 const words = (segment) => (segment.match(/'[^']*'|"(?:[^"\\]|\\.)*"|[^\s'"]+/g) || []).map(unquote);
@@ -57,7 +64,9 @@ function segments(command) {
 function readsSecret(command, depth = 0) {
   if (depth > 3) return null;
   for (const segment of segments(command)) {
-    let ws = words(segment.trim());
+    const raw = words(segment.trim());
+    if (DUMPS.some((d) => d.length === raw.length && d.every((x, i) => raw[i] === x))) return { verb: raw.join(' '), file: 'every environment variable' };
+    let ws = raw;
     while (ws.length && (PREFIX.has(ws[0]) || /^[A-Za-z_][A-Za-z0-9_]*=/.test(ws[0]))) ws = ws.slice(1);
     if (!ws.length) continue;
     const [verb, ...args] = ws;
@@ -69,6 +78,18 @@ function readsSecret(command, depth = 0) {
         if (inner) return inner;
       }
       continue;
+    }
+    if (PRINTERS.has(base)) {
+      const v = args.map((a) => /\$\{?([A-Za-z_][A-Za-z0-9_]*)/.exec(a)).find((m) => m && SECRET_VAR.test(m[1]));
+      if (v) return { verb: base, file: `$${v[1]}` };
+      continue;
+    }
+    if (base === 'printenv' && args.some((a) => SECRET_VAR.test(a))) return { verb: base, file: `$${args.find((a) => SECRET_VAR.test(a))}` };
+    if (base === 'kubectl' && args[0] === 'get' && /^secrets?$/.test(args[1] || '') && args[2] && !args[2].startsWith('-') && args.some((a, i) => /^-o|^--output/.test(a) || /^-o/.test(args[i - 1] || ''))) return { verb: 'kubectl get secret', file: `secret ${args[2]}` };
+    if (['docker', 'podman', 'nerdctl'].includes(base) && (args[0] === 'inspect' || (args[0] === 'container' && args[1] === 'inspect'))) {
+      const fmt = args.findIndex((a) => /^(?:-f|--format)(?:=|$)/.test(a));
+      const format = fmt < 0 ? null : args[fmt].includes('=') ? args[fmt].split('=').slice(1).join('=') : args[fmt + 1] || '';
+      if (format === null || /Env|\.Config\b|json \./.test(format)) return { verb: `${base} inspect`, file: 'the container environment' };
     }
     if (HARMLESS.has(base)) continue;
     if (base === 'git' && GIT_HARMLESS.has(args.find((a) => !a.startsWith('-')))) continue;
@@ -85,7 +106,7 @@ function check(event) {
   if (!hit) return { block: false };
   return {
     block: true,
-    reason: `Blocked by kete-loom (block-secret-reads): \`${hit.verb}\` would put the contents of \`${hit.file}\`, a secrets file, into this conversation. Don't read it. To learn which settings exist, read the matching .env.example (or the code that loads them) or ask the user; to use the values, load them without printing them (for example \`source .env\` before the command, or the tool's --env-file option).`,
+    reason: `Blocked by kete-loom (block-secret-reads): \`${hit.verb}\` would put ${/^\$|^every|^secret |^the container/.test(hit.file) ? hit.file : `the contents of \`${hit.file}\`, a secrets file,`} into this conversation. Don't read it. To learn which settings exist, read the matching .env.example (or the code that loads them) or ask the user; to use the values, load them without printing them (for example \`source .env\` before the command, or the tool's --env-file option).`,
   };
 }
 

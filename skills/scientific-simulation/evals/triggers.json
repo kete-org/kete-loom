@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "My explicit finite-difference heat equation solver blows up after a few hundred steps, what time step should I use?",
+    "Set up a grid convergence study for drag on this cylinder CFD case and compute the GCI",
+    "How do I verify my finite-volume advection code with the method of manufactured solutions?",
+    "The phase-field simulation gives different grain sizes when I halve the mesh spacing, which result do I trust?",
+    "Plan a parameter sweep over diffusivity and reaction rate for our reaction-diffusion model and keep runs reproducible"
+  ],
+  "should_not_trigger": [
+    "Track my PyTorch training runs and compare validation loss across learning rates",
+    "Write a Snakemake workflow that aligns FASTQ reads with bwa-mem2",
+    "Search arXiv and PubMed for papers on lithium dendrite growth and summarise them",
+    "Size safety stock and reorder points for our top 200 SKUs",
+    "Fix the dtype error in my pandas notebook merge"
+  ]
+}

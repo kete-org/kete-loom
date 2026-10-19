@@ -35,6 +35,32 @@ Tips:
 
 A breakpoint at the failing line with "step out" and the call stack panel is the same method, faster, when the code runs locally: Node `node --inspect-brk`, Python `breakpoint()` / `pdb`, Go `dlv test`, JVM IDE debuggers, Rust `rust-gdb` or `rust-lldb`. Use a conditional breakpoint (`dir === ''`) when the call happens many times.
 
+### Non-interactive recipes
+
+An agent can't type into a debugger prompt, so give the debugger its whole script up front and let it exit. Always end with a quit command and run it under a timeout, or a debugger left waiting for input will hang the session.
+
+| Debugger | One-shot command |
+|---|---|
+| gdb (C, C++, Rust) | `gdb -batch -ex 'break ledger.c:88 if balance < 0' -ex run -ex bt -ex 'info locals' --args ./app --flag` |
+| lldb (C, C++, Rust, Swift) | `lldb -b -o 'breakpoint set -f ledger.c -l 88 -c "balance < 0"' -o run -o bt -o 'frame variable' -- ./app --flag` |
+| pdb (Python) | `python -m pdb -c 'b ledger.py:88, balance < 0' -c c -c 'p balance' -c where -c q ledger.py` |
+| Delve (Go) | put `break ledger.go:88`, `condition 1 balance < 0`, `continue`, `print balance`, `stack`, `exit` in a file and run `dlv debug ./cmd/app --init dbg.txt`; for a remote or long-running process use `dlv debug --headless --listen=127.0.0.1:2345 --api-version=2` and connect a client |
+
+Read the output for the stack and the local values at the stop; if the program exits without stopping, the condition never became true on that run, which is itself evidence.
+
+### Invariant breakpoints
+
+Turn what must always be true into a breakpoint condition that fires when it breaks: `balance < 0`, `len(queue) > limit`, `user_id is None`, `total != sum(items)`. It works like a runtime assertion without editing the code, and it stops at the first moment the state goes wrong rather than where it crashes later.
+
+### Bisect with two breakpoints
+
+When a value is right at one point and wrong at a later one, set one breakpoint at each and print the value at both. Then move one of them halfway between and repeat. Each run halves the stretch of code that can contain the fault.
+
+Where to put them:
+
+- At **boundaries** where data crosses from one part to another: a function's entry and return, before and after a serialisation, parse, database read or network call, at a queue publish and consume.
+- In **your own code**, not inside library or framework internals. If the value is wrong coming out of a library call, break just before and just after that call and check what you passed in; step into the library only once your input is shown to be correct.
+
 ## Worked shape
 
 ```

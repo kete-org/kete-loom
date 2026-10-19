@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "This blog draft reads like ChatGPT wrote it. Can you strip out the AI-sounding phrases but keep my points?",
+    "Flag every machine-sounding pattern in this cover letter, don't change anything yet, just list them",
+    "Our docs are full of 'seamless', 'robust' and 'delve into'. De-slop the getting started page only.",
+    "Clean up the generic filler in this LinkedIn post: the 'in today's fast-paced world' opener and the hedging",
+    "Does this product description sound AI-generated? Tell me which lines give it away."
+  ],
+  "should_not_trigger": [
+    "Write a 1,200 word blog post about our new pricing model",
+    "Create a voice and tone guide for our support team with do and don't examples",
+    "Translate this help article from English into Brazilian Portuguese",
+    "Check whether the statistics in this article are actually true",
+    "Write the README for our CLI with install steps and examples"
+  ]
+}

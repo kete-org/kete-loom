@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Watch this 40-minute screen recording of the bug and tell me at what point the error dialog first appears",
+    "Summarise the conference talk in talk.mp4 with timestamps for each section",
+    "What does the presenter say about pricing in this product demo video, and what is on the slide at that moment?",
+    "Find every time the dashboard shows a red alert in this monitoring recording",
+    "Here's a lecture recording in Spanish, give me an English summary of the key points with times"
+  ],
+  "should_not_trigger": [
+    "Compress this MP4 so it's under 25MB for an email attachment",
+    "Cut the interview footage into a tight three-minute highlight reel with captions",
+    "Generate a 10-second product teaser video from a text prompt",
+    "Record a scripted walkthrough video of our signup flow with Playwright",
+    "Summarise the action items from this pasted Zoom transcript text"
+  ]
+}

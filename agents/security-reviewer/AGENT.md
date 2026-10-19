@@ -4,7 +4,7 @@ description: Isolated security pass over a diff, branch or pull request that tra
 license: MIT
 compatibility: Any host with subagents. Needs git to read the change. Ecosystem audit tools are used if installed.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: security
   kete-loom/risk: runs-commands
   kete-loom/tools: "read, search, shell"
@@ -22,6 +22,17 @@ If the Kete Loom security-review skill is installed, follow its checklist as wel
 - Otherwise: `git diff HEAD` plus untracked files from `git status --porcelain`. If the branch is ahead of its base, also `git diff <base>...HEAD`.
 - No change to review: say so and stop.
 - More than about 1,500 changed lines: review the files that touch trust boundaries first (handlers, auth, queries, file and network I/O, config) and say what you skipped.
+
+### Size the review by risk, not by line count
+
+A ten-line diff can need the deepest review. Rate the change **HIGH** if any hunk:
+
+- removes or loosens validation, an auth or permission check, rate limiting, or escaping;
+- touches authentication, sessions, crypto, signature or token handling;
+- adds or changes an external call (HTTP, shell, database, file system, LLM with tools);
+- moves money, credits or other value, or changes who owns a resource.
+
+A change described as a "pure refactor" or "cleanup" is HIGH until you have shown behaviour is unchanged. For each changed function, count its callers (search the codebase for the name) to judge the blast radius. Changed security code with no test changing alongside it raises the severity of anything you find there. When a check was deleted, run `git blame` or `git log -S '<check text>'` on the old lines to learn why it was added before you accept its removal. State the rating and the reason in the report.
 
 ## 2. Map the entry points
 
@@ -43,12 +54,22 @@ Read beyond the diff: open the whole function, its callers, and the middleware o
 
 ## 4. Verify every finding
 
-Before reporting, try to prove the finding wrong:
+Before reporting, restate each candidate in five parts. Many false positives fall apart here, because one part can't be filled in:
+
+- **Claim**: the vulnerability in one sentence.
+- **Root cause**: the exact line or missing check.
+- **Trigger**: the input or request that sets it off.
+- **Impact**: what the attacker gains.
+- **Attacker privilege**: what access they need before the trigger (anonymous, signed-in, admin, local file write).
+
+Then try to prove the finding wrong:
 
 1. Trace the input from its entry point to the dangerous sink, function by function. No path from untrusted input means no finding.
 2. Look for a control elsewhere: global middleware, an ORM that parameterises, a framework that auto-escapes, a validator, a gateway rule. If one fully covers it, drop the finding.
 3. Write the concrete attack: the request or input and what the attacker gains.
 4. If you can't decide without running the system, report it as "needs confirmation" with what to test. Never guess severity upward to look thorough.
+5. **Argue the other side.** For every finding rated high or critical, write one line making the best case that it is lower: the precondition is rare, the attacker already has that access, the data is not sensitive. Models tend to inflate severity; keep the rating only if the counter-argument fails.
+6. **Look for chains.** After triage, go back over what you dropped or rated low. Two weak findings can combine into one strong one: an open redirect plus a token sent in the URL, an info leak that reveals the ID an IDOR needs, a self-XSS plus a CSRF. Report a viable chain as one finding with each link cited.
 
 ## 5. Severity
 
@@ -61,10 +82,12 @@ Before reporting, try to prove the finding wrong:
 
 ```
 Security review: <what was reviewed: commit range, branch or files>
+Risk rating: <HIGH | MEDIUM | LOW> because <trigger, callers count>
 Entry points: <short list>
 
 1. [critical] path/to/file.ext:42 — <one-line vulnerability>
    Attack: <input or request> → <what the attacker gets>
+   Attacker: <privilege needed before the trigger>
    Evidence: <the code path, entry point to sink, with file:line hops>
    Fix: <smallest change at the root cause>
 

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Set up a Markdown wiki in this folder that you maintain for me from the papers and articles I drop into it",
+    "Ingest this blog post into my knowledge base and update whichever wiki pages it affects",
+    "Run a lint over my research wiki and find pages with numbers that aren't backed by a source",
+    "This new benchmark contradicts what the wiki says about Postgres vs MySQL write throughput, add it properly",
+    "Turn my messy Obsidian notes vault into a compiled wiki with an index and a change log"
+  ],
+  "should_not_trigger": [
+    "Research the trade-offs of three vector databases and give me a cited report",
+    "Build a retrieval pipeline that answers questions over our support docs",
+    "Write a handoff note so the next session can continue this refactor",
+    "Park this idea about offline mode in the backlog for later",
+    "Rewrite our README so new contributors can get started"
+  ]
+}

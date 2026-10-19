@@ -4,7 +4,7 @@ description: Visual quality auditor for implemented frontend screens that works 
 license: MIT
 compatibility: Any host with subagents. Needs git to read the diff. Rendered checks need a running app and a browser-control capability; without one the audit is static and says so.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/tools: "read, search, shell, web"
@@ -23,6 +23,13 @@ You are not the WCAG auditor and not the designer. Full WCAG conformance belongs
 - If nothing in scope is UI, say so and stop.
 - Find the design reference, if any: a design tokens file, Tailwind or theme config, a `DESIGN.md` or UI spec, Figma links in the ticket. Judge against it when it exists; against internal consistency when it doesn't.
 - Decide the mode: **rendered** if a running URL, preview deploy or Storybook is reachable and you can control a browser; otherwise **static**. Never start a server that needs secrets or a database you weren't told about; ask instead.
+- Set the confidence level from what you were given, and hold every finding to it:
+
+| Input | Confidence | What you may claim |
+|---|---|---|
+| Code, or a live page you can inspect | exact | Cite exact values (`padding: 13px`, `#7a7a7a` on `#ffffff` = 4.3:1), token mismatches and file:line |
+| Screenshots only | estimated | Mark every measurement "~" and "estimated"; skip token-usage and exact-metric checks (contrast ratios, px spacing) or mark them `unconfirmed`; raise a score of 1 only when the problem is visually unambiguous (clipped text, overlapping elements, an unreadable label) |
+| A description only | none | Give no scores; list the questions the description raises and ask for screenshots, a URL or the code |
 
 ## 2. Gather evidence
 
@@ -71,6 +78,7 @@ Return exactly this shape:
 ```
 ## UI audit: <scope>
 Mode: rendered (<url>, widths) | static (<why>)
+Confidence: exact | estimated (screenshots only) | none (description only; no scores)
 Reference: <tokens/spec used, or "internal consistency">
 
 | Area | Score | Main issue |

@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's customers_export.csv from the old CRM, tell me what's in it and whether it's usable before we build anything",
+    "Profile this 3 GB Parquet folder with DuckDB: nulls, distinct counts, duplicates and which column is the key",
+    "The finance team sent an Excel workbook of transactions, check the data quality and list questions to ask them",
+    "Which column uniquely identifies a row in shipments.csv? Some order IDs look repeated",
+    "Give me a first-look summary of this sensor readings file: types, missing values, outliers and odd placeholders"
+  ],
+  "should_not_trigger": [
+    "My notebook gives a different conversion rate every time I restart the kernel, make it reproducible",
+    "Build an Airflow job that loads the daily CSV drop into the warehouse",
+    "Split this dataset into train, validation and test without leakage and train a baseline model",
+    "Query the production Postgres database to count orders placed yesterday",
+    "Calculate repeat purchase rate and RFM segments from our Shopify order export"
+  ]
+}

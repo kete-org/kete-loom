@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Redact the credit card numbers and emails from this log file before I paste it into a ticket",
+    "Scrub PII from this customer CSV locally but keep the same person mapped to the same token so joins work",
+    "Strip personal data from this dataset before we send it to the vendor, and show me what was removed",
+    "Find and mask national ID numbers and phone numbers in this export, validating them first",
+    "Pseudonymise the emails in these records consistently and re-scan to confirm nothing leaked"
+  ],
+  "should_not_trigger": [
+    "Which GDPR lawful basis applies to collecting these emails for marketing?",
+    "Build an account-deletion job to satisfy data subject erasure requests",
+    "Redact the Authorization tokens from this HAR capture of our API",
+    "Write a retention policy for how long we keep customer records",
+    "Reconstruct the API calls from this traffic capture and generate tests"
+  ]
+}

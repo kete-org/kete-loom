@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We have 7 config flags and can't test every combination - design a pairwise suite with PICT",
+    "What equivalence classes and boundary values should cover this date-range validator?",
+    "Replace these 30 example tests for the serializer with property-based tests",
+    "Help me pick good Hypothesis properties for the pricing engine instead of guessing inputs",
+    "Build a PICT model with constraints so we never generate the iOS+Edge combination"
+  ],
+  "should_not_trigger": [
+    "Add the feature test-first using red-green-refactor",
+    "Our branch coverage is at 54%, raise it above the CI threshold",
+    "Set up a libFuzzer harness for the image decoder",
+    "Write Playwright end-to-end tests for the checkout flow",
+    "Run mutation testing to see if our tests actually catch bugs"
+  ]
+}

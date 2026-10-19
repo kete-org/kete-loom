@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Translate this onboarding guide into German, informal du, and keep our product names in English",
+    "Here's a machine translation of our landing page into Japanese. Make it read naturally, not like a translation.",
+    "Review this Spanish translation of our privacy FAQ against the English source and list anything wrong",
+    "Translate these release notes into Simplified Chinese and give me a side-by-side table so my colleague can check it",
+    "Put this blog article into Brazilian Portuguese, keep the code blocks and links untouched"
+  ],
+  "should_not_trigger": [
+    "Set up i18next in our React app and move the hard-coded strings into JSON catalogs",
+    "Fix the plural rules in our French messages file, it says '1 fichiers'",
+    "Make this English paragraph sound less robotic and AI-generated",
+    "Write a voice guide for how our brand should sound in marketing emails",
+    "Check whether the figures in this German news article are accurate"
+  ]
+}

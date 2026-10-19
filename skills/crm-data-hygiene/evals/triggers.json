@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Our HubSpot has thousands of duplicate contacts, help me find and merge them safely",
+    "Find all Salesforce accounts owned by people who have left the company and reassign them",
+    "Audit our Pipedrive custom fields and tell me which ones nobody uses",
+    "Lifecycle stages in HubSpot are a mess, half our customers show as leads, can we bulk fix it?",
+    "Before we migrate CRMs, run a data quality audit on contacts and companies with a rollback plan"
+  ],
+  "should_not_trigger": [
+    "Build a list of 50 target accounts in fintech and score their fit",
+    "Write a four-step cold email sequence for CFOs at logistics firms",
+    "Create a Jira issue automatically when a deal closes",
+    "Design a sales pipeline dashboard showing win rate by rep",
+    "Run a data profile on this CSV to see null rates and outliers before analysis"
+  ]
+}

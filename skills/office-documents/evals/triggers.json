@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Generate a monthly budget .xlsx from this CSV with real SUM formulas and a totals row, not pasted numbers",
+    "Our quarterly report.docx needs 'Acme Ltd' replaced with 'Acme Group' everywhere but find and replace in python-docx misses half of them",
+    "Propose my contract edits as tracked changes in the Word file so legal can accept or reject each one",
+    "openpyxl gives me None for every formula cell when I read the values, how do I get the computed numbers?",
+    "Turn my novel manuscript in Markdown into an EPUB with a cover and a table of contents",
+    "Convert these Markdown meeting notes into a Word document that uses our company template's styles"
+  ],
+  "should_not_trigger": [
+    "Extract the tables from these scanned invoice PDFs into a CSV",
+    "Build a 10-slide PowerPoint deck for the board meeting from this outline",
+    "Read and update cells in our team's Google Sheet from a Node service using the Sheets API",
+    "Write the getting-started guide for our command-line tool",
+    "Build a cohort retention analysis in a Jupyter notebook from the events table"
+  ]
+}

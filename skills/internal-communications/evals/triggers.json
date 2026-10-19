@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write my weekly 3P update for the payments team from these Jira tickets and Slack notes",
+    "Draft a one-paragraph status update for the VP on the data migration, it slipped two weeks",
+    "Put together this month's engineering newsletter from these bullet points",
+    "We're moving everyone to a new expense tool on 1 April. Write the announcement email and an FAQ for staff.",
+    "Turn these notes into a project status report with milestones, risks and the decisions we need"
+  ],
+  "should_not_trigger": [
+    "Write the postmortem for yesterday's checkout outage with a timeline and action items",
+    "Write a 1,500 word blog post announcing our Series B to customers",
+    "Set up rules for our Slack bot so it can't @channel without approval",
+    "Pull out the action items and owners from this meeting recording transcript",
+    "Write a PRD for the new team calendar feature"
+  ]
+}

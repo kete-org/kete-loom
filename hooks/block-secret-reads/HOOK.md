@@ -3,7 +3,7 @@ name: block-secret-reads
 description: Stops the agent from printing or copying secrets files into the conversation through shell commands, such as cat .env, git show HEAD:.env or reading SSH keys and cloud credentials, while still letting it load them with source or --env-file.
 license: MIT
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: security
   kete-loom/risk: read-only
   kete-loom/event: "pre-shell"
@@ -20,6 +20,14 @@ Runs before every shell command. Once a secret is in the conversation, it is in 
 - `.netrc`, `.npmrc`, `.pgpass`, `.pypirc`;
 - `~/.aws/credentials`, gcloud credential files, `~/.docker/config.json`, `~/.kube/config`;
 - `~/.ssh/` (except `.pub` files).
+
+It also blocks printing secrets that never touch a file:
+- secret-named environment variables (`echo $GITHUB_TOKEN`, `printenv AWS_SECRET_ACCESS_KEY`);
+- dumps of the whole environment (bare `env`, `printenv`, `export -p`, `set`);
+- `kubectl get secret <name> -o yaml|json|jsonpath`;
+- `docker inspect` output that includes the container's environment.
+
+Using a secret without printing it, as in `curl -H "Authorization: Bearer $TOKEN"` or `env NODE_ENV=test npm test`, is allowed.
 
 It looks inside pipelines, `&&` chains and `bash -c '…'`, and catches `git show <ref>:.env` and `< .env` redirections.
 

@@ -4,7 +4,7 @@ description: Creates or improves an Agent Skill (a SKILL.md folder) so it loads 
 license: MIT
 compatibility: Any Agent Skills host.
 metadata:
-  kete-loom/version: "0.2.0"
+  kete-loom/version: "0.2.1"
   kete-loom/category: meta
   kete-loom/risk: writes-files
   kete-loom/owner: "Kete-org"
@@ -62,6 +62,14 @@ The description is the only thing a host reads before deciding to load the skill
 
 Create `evals/triggers.json` with at least 3 `should_trigger` and 3 `should_not_trigger` prompts. Make the negatives **near misses**: same domain, different job. These are what catch an over-broad description.
 
+Write prompts the way users actually type them, not as tidy restatements of the description:
+
+- Real detail: file names, column or table names, an error message, a line of backstory ("our finance team exports this every Monday...").
+- Real register: casual phrasing, abbreviations, the odd typo, no mention of the word "skill".
+- Real size: a task with several steps. A one-step request ("read this PDF", "what does this regex do") is often handled directly without consulting any skill, however good the description is, so it measures nothing.
+
+If the skill must trigger reliably, tune the description against these prompts with a train and held-out split, as in `references/description-tuning.md`.
+
 ## 5. Check it
 
 In a Kete Loom checkout:
@@ -89,7 +97,17 @@ Trigger evals prove the skill loads; they don't prove the agent obeys it when ob
 
 Keep the scenarios in `evals/behavior.json` so `node scripts/run-behavior-evals.js --live --skill <name>` re-runs them with and without the skill. Scenario templates, the pressure list and the table format are in `references/pressure-testing.md`. Skip this for pure reference skills (API tables, syntax guides).
 
-## 7. Iterate on misses
+## 7. Improving an existing skill
+
+1. Snapshot the current version before editing (copy the folder somewhere outside the repo, or keep the commit hash). The baseline for an improvement is **the old version**, not "no skill".
+2. Run the old and the new version on the same scenarios in the same batch, so model and date differences don't masquerade as an improvement.
+3. Read the transcripts, not only the final outputs:
+   - Every run wrote the same helper script or command sequence → bundle it in `scripts/` and tell the body to call it.
+   - Runs spent steps on an instruction that changed nothing in the result → cut that instruction.
+   - Runs ignored or over-applied a rule written as ALL-CAPS "MUST" or "NEVER" → rewrite it as a plain rule with the reason ("Use `RAW`, because user text starting with `=` becomes a formula"). A reason generalises to cases the rule didn't name; shouting doesn't.
+4. Keep the change only if the new version does at least as well as the old one on every scenario. Otherwise revert that part.
+
+## 8. Iterate on misses
 
 - Skill didn't load → the description is missing the user's words or the situation. Add them.
 - Loaded when it shouldn't → the description is too broad. Narrow it and add the prompt as a negative eval.

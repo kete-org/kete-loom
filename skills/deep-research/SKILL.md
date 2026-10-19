@@ -4,7 +4,7 @@ description: Investigates a technical question across many sources and produces 
 license: MIT
 compatibility: Any Agent Skills host with web search or web fetch. Works offline only for questions answerable from local code and docs.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: meta
   kete-loom/risk: network
   kete-loom/owner: "Kete-org"
@@ -69,6 +69,29 @@ For each sub-question:
 - If you can test a claim cheaply (run a snippet, read the source, check a package registry), do it and say you did.
 - Anything you couldn't confirm goes in **Unverified**, never in **Findings**.
 
+### Verdict per claim
+
+Give every load-bearing claim exactly one verdict from this scale, and keep the three "not settled" verdicts apart, because they call for different next steps:
+
+| Verdict | Meaning |
+|---|---|
+| Confirmed | Tier 1 source, or two independent sources, say it |
+| Mostly confirmed | Confirmed with a caveat (older version, narrower scope, rounded figure); state the caveat |
+| Contested | Credible sources disagree; cite both sides |
+| Contradicted | The best available source says otherwise |
+| Unverified: searched | You looked and found nothing that settles it; list where you looked |
+| Unverified: by construction | No source could settle it (a forecast, a private figure, a counterfactual) |
+| Unreachable | The source exists but you could not read it (paywall, login, dead link); give the URL so the user can check |
+
+### Computed figures
+
+When the answer includes a number you derived (cost per month, throughput, totals):
+
+1. Show the arithmetic with each input and its source: `10k jobs/min x 60 x 730 h x $0.40 per million [S2] = $175/month`.
+2. Keep ranges where the inputs are ranges; carry low and high through instead of picking a midpoint (`$140 to $210/month`).
+3. Say which input dominates the result.
+4. Checking the arithmetic does not confirm the inputs. Each input gets its own verdict; the result is no stronger than its weakest input.
+
 ## 6. Report format
 
 ```markdown
@@ -80,7 +103,7 @@ For each sub-question:
 - <constraints used, assumptions made>
 
 ## Findings
-1. <Finding> [S1][S4]
+1. <Finding> [S1][S4] (Confirmed | Mostly confirmed: <caveat> | Contested | Contradicted)
 2. ...
 
 ## Comparison (when comparing options)
@@ -91,7 +114,10 @@ For each sub-question:
 - <where sources disagree, version-specific caveats>
 
 ## Unverified
-- <claims you could not confirm and why>
+- <claim> (Unverified: searched <where> | Unverified: by construction | Unreachable: <url>)
+
+## Calculations (when the answer includes a computed figure)
+- <formula with inputs, sources and ranges> = <result range>
 
 ## Sources
 - [S1] <title>, <url>, accessed <date>, <version/date it covers>

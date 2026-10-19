@@ -4,7 +4,7 @@ description: Root-cause investigation for any bug, failing test, crash or surpri
 license: MIT
 compatibility: Any Agent Skills host. Needs git and the project's test runner.
 metadata:
-  kete-loom/version: "0.1.1"
+  kete-loom/version: "0.1.2"
   kete-loom/category: coding
   kete-loom/risk: runs-commands
   kete-loom/requires: "git"
@@ -27,7 +27,7 @@ Use it for test failures, production bugs, build breaks, wrong output, performan
 
 ## 2. Locate where it goes wrong
 
-- **Deep in a call stack?** Trace the bad value backwards: what produced it, who called that with it, and onward until you reach the place it was first wrong. Fix there, not where it crashed. Method and instrumentation tips in `references/root-cause-tracing.md`.
+- **Deep in a call stack?** Trace the bad value backwards: what produced it, who called that with it, and onward until you reach the place it was first wrong. Fix there, not where it crashed. Method, instrumentation tips and non-interactive debugger recipes in `references/root-cause-tracing.md`.
 - **Several components (CI → build → deploy, API → service → database, client → queue → worker)?** Add temporary logging at each boundary: what goes in, what comes out, which config and environment values are visible. Run once and read where the data stops being right. Then dig into that one component.
 - **A file, row or global appears and you don't know which test made it, or a test passes alone but fails in the suite?** Bisect the tests; see `references/test-pollution.md`.
 - **It worked last week?** Bisect history with `git bisect start <bad> <good>` and `git bisect run <script>`. Keep the reproduction script outside the tracked tree, since older commits don't have it. See `references/test-pollution.md`.

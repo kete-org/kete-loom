@@ -4,7 +4,7 @@ description: Exploratory, manual-style QA session on a running web app through a
 license: MIT
 compatibility: Any Agent Skills host with a browser-control capability (a browser automation tool or MCP server). Without one, produce the test plan and ask the user to run it.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/owner: "Kete-org"
@@ -24,6 +24,25 @@ Before opening the browser, confirm:
 4. **What is off limits**: sending emails or SMS, real payments, deleting shared data. When an action would have an external effect you weren't cleared for, stop and ask.
 
 If you have no way to control a browser, write the checklist from steps 1 to 5 and hand it to the user.
+
+## 0.5 Start the app if it isn't running
+
+Check first: request the URL (or each port) and see whether it answers. If it doesn't, and the target is local:
+
+1. Find the start commands in the README, `package.json` scripts, `Makefile`, `Procfile` or `docker-compose.yml`. If the app needs secrets, a database or seed data you weren't given, **stop and ask** rather than guessing.
+2. Start each process (backend first, then frontend) **in the background**, with its output going to a log file in a temporary folder. Never run a dev server in the foreground: it never exits and blocks the session.
+3. Wait until each port answers (poll it with a timeout of about 60 seconds). If it doesn't come up, read the log, report the error and stop; don't test a half-started app.
+4. Note the process IDs. When the session ends, pass or fail, stop every process you started and only those, and say so in the summary.
+
+## Look before you act
+
+On every new page or after any action that changes the page:
+
+1. Wait for it to settle: network idle or the key element visible, not a fixed sleep.
+2. Take a screenshot and read the DOM or the accessibility tree.
+3. Choose what to click or type from what actually rendered: prefer role and accessible name ("button, Save invoice"), then label or visible text, then a stable test ID. Avoid selectors guessed from the source code or from position.
+
+If the element you expected isn't there, that is either a finding or a sign the page hasn't loaded; check which before acting.
 
 ## 1. Map the critical journeys
 
@@ -91,7 +110,7 @@ Severity guide: **blocker** stops a critical journey or loses data or money; **m
 
 End with:
 
-1. Environment, browser and build tested, and the time.
+1. Environment, browser and build tested, and the time; processes you started and confirmed stopped.
 2. A table of journeys with pass / fail / not tested.
 3. Bugs ordered by severity (the blocks above).
 4. What you did not cover (browsers, roles, screens, payments), stated plainly.

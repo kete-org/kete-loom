@@ -2,9 +2,9 @@
 name: literature-review
 description: Scientific literature review that plans a reproducible search across PubMed, Google Scholar and arXiv, screens papers against written inclusion and exclusion criteria, appraises study design and risk of bias, extracts effect sizes into a table, cites each claim to a DOI or PMID, and states how certain the evidence is. Use when someone needs a literature review, a background or related-work section for a paper or grant, an evidence summary on a scientific or clinical question, or a PRISMA-style record of how studies were found and screened.
 license: MIT
-compatibility: Any Agent Skills host. Searching needs network access to PubMed (NCBI E-utilities), arXiv and Google Scholar; without it, work only from papers the user supplies.
+compatibility: Any Agent Skills host. Searching needs network access to PubMed (NCBI E-utilities), arXiv, OpenAlex, Crossref and Google Scholar; without it, work only from papers the user supplies.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: data
   kete-loom/risk: network
   kete-loom/owner: "Kete-org"
@@ -38,9 +38,11 @@ Decide now how preprints are handled (included but flagged is the usual choice).
 
 1. List synonyms and controlled vocabulary for each concept. Combine synonyms with `OR`, concepts with `AND`.
 2. Run the strategy in each source and record the exact query string, the date run and the hit count. Source-specific syntax, field tags and API endpoints are in `references/search-sources.md`.
-3. Use at least two sources. PubMed for biomedicine, arXiv for physics, maths, CS and quantitative fields, Google Scholar for breadth and grey literature (its results are not reproducible, so record it as supplementary).
-4. Snowball: check the reference lists of key included papers (backward) and papers that cite them (forward).
-5. Respect source limits: NCBI E-utilities allow 3 requests per second without an API key and 10 with one; the arXiv API asks for no more than one request every three seconds on a single connection. Do not scrape Google Scholar programmatically.
+3. Use at least two sources. PubMed for biomedicine, arXiv for physics, maths, CS and quantitative fields, OpenAlex for a reproducible cross-disciplinary index with a citation graph, Google Scholar for breadth and grey literature (its results are not reproducible, so record it as supplementary).
+4. Find landmark papers: in OpenAlex, sort the topic query by citation count, then read the top results' abstracts to confirm they are on topic. High citation counts favour older papers; also sort recent years separately.
+5. Snowball: check the reference lists of key included papers (backward) and papers that cite them (forward). OpenAlex gives both directions and a list of related works for each record; Crossref resolves a DOI to its metadata and, where the publisher deposited them, its references.
+6. For each included paper, take the open-access full-text link from its OpenAlex record when one exists, and read the full text before extracting numbers.
+7. Respect source limits: NCBI E-utilities allow 3 requests per second without an API key and 10 with one; the arXiv API asks for no more than one request every three seconds on a single connection; OpenAlex and Crossref rate-limit with 429 responses, so back off and retry (details in `references/search-sources.md`). Do not scrape Google Scholar programmatically.
 
 ## 4. Screen
 

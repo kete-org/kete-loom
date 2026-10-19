@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Connect to our reporting Postgres and tell me how many accounts signed up last week by country",
+    "Set up a read-only MySQL user so the agent can explore the production replica safely",
+    "Look up order 88213 in the SQL Server database and tell me why its status is stuck",
+    "We have three databases described in databases.md, find which one holds invoices and query the unpaid total",
+    "Can you run a few SELECTs against prod to check whether any users have a null email? Use the credentials in my .pgpass"
+  ],
+  "should_not_trigger": [
+    "This Postgres query takes 4 seconds with a seq scan, what index should I add?",
+    "Review this migration for locking hazards before we deploy it",
+    "Write the dbt staging model for the orders source table",
+    "Profile this exported CSV and tell me which column is the primary key",
+    "Design the MySQL schema for a multi-tenant booking app"
+  ]
+}

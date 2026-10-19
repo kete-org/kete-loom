@@ -11,7 +11,17 @@
     "awk -F= '{print $1}' < .env",
     "sudo cat /etc/app/server.key",
     "cat ~/.npmrc",
-    "rg -n SECRET .env.staging"
+    "rg -n SECRET .env.staging",
+    "echo $GITHUB_TOKEN",
+    "printf '%s' \"${STRIPE_SECRET_KEY}\"",
+    "printenv AWS_SECRET_ACCESS_KEY",
+    "env",
+    "env | grep -i aws",
+    "export -p",
+    "kubectl get secret db-creds -o yaml",
+    "kubectl get secrets api -o jsonpath='{.data.password}'",
+    "docker inspect web-1",
+    "docker inspect --format '{{json .Config.Env}}' web-1"
   ],
   "should_allow": [
     "cat .env.example",
@@ -25,6 +35,14 @@
     "cat ~/.ssh/id_ed25519.pub",
     "grep -r process.env src/",
     "echo 'remember to set .env' > notes.md",
-    "git ls-files .env"
+    "git ls-files .env",
+    "echo $HOME",
+    "printenv PATH",
+    "env NODE_ENV=test npm test",
+    "curl -H \"Authorization: Bearer $GITHUB_TOKEN\" https://api.github.com/user",
+    "kubectl get secrets",
+    "kubectl describe secret db-creds",
+    "docker inspect --format '{{.State.Status}}' web-1",
+    "echo \"set the API key in .env.example\""
   ]
 }

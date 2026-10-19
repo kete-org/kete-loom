@@ -52,3 +52,49 @@ Apply the sections that match the code in scope. Each item is a question; a "no"
 - Does the dependency audit pass, or are remaining issues justified?
 - Are new dependencies maintained and pinned in a lockfile?
 - Is debug mode off and are default credentials removed in production config?
+
+## Filter bypasses to test
+
+A filter is only as good as the inputs it was tested against. When the code validates a URL, host or document, check that each of these is handled.
+
+### SSRF (server fetches a user-supplied URL)
+- Alternate IP encodings of loopback and private ranges: decimal (`2130706433`), octal (`0177.0.0.1`), hex (`0x7f000001`), short forms (`127.1`, `0`), and IPv4-mapped IPv6 (`[::ffff:127.0.0.1]`, `[::1]`).
+- Redirects: an allowed public host that answers with a `3xx` to an internal address. Either turn redirects off or re-validate every hop.
+- DNS rebinding: a name that resolves to a public IP at check time and a private one at fetch time. The safe pattern is resolve once, validate the resolved IP against the deny ranges, then connect to that pinned IP (sending the original Host header).
+- Cloud metadata: `169.254.169.254`, `fd00:ec2::254`, and provider metadata host names. Blocked by IP range, not by string match.
+- Schemes other than `http`/`https` (`file:`, `gopher:`, `ftp:`, `dict:`) refused before the fetch.
+
+### Open redirects (user-supplied return or next URL)
+- `https://trusted.example@evil.example` (userinfo), `https://evil.example\@trusted.example` and `/\evil.example` (backslash treated as slash by browsers).
+- Protocol-relative `//evil.example` and `///evil.example`, which pass a "starts with `/`" check.
+- `javascript:` and `data:` schemes, including mixed case and leading whitespace or control characters.
+- Double URL encoding (`%252f%252fevil.example`) decoded after validation.
+- Look-alike internationalised domains: compare hosts after converting to punycode (`xn--...`), not as displayed Unicode.
+- Safest fix: accept only a relative path from an allow-list, or an ID that maps to a stored URL.
+
+### XML parsing (XXE)
+- External entities and DTD loading are disabled in every parser the code uses, including SVG, DOCX/XLSX and SAML handling.
+- Entity expansion is limited (no "billion laughs").
+
+### GraphQL
+- Introspection is off in production unless the API is public by design.
+- Query depth, complexity or cost limits are enforced on the server.
+- Batched queries and aliases are limited, so one request can't run thousands of login or lookup attempts.
+- Authorization runs in each resolver or field, not only at the entry point.
+
+## LLM and agent code
+
+When the code sends text to an LLM or lets a model call tools, check the OWASP LLM Top 10 (current edition on genai.owasp.org) and, for agents, the OWASP Top 10 for Agentic Applications:
+
+| ID | Category | Ask |
+|---|---|---|
+| ASI01 | Agent goal hijack | Can content the agent reads (pages, files, emails, tool output) change its objective? |
+| ASI02 | Tool misuse and exploitation | Can the agent be steered into calling a legitimate tool with harmful arguments? |
+| ASI03 | Identity and privilege abuse | Does the agent act with broader credentials than the user who asked? |
+| ASI04 | Agentic supply chain | Are tools, plugins, MCP servers, prompts and models pinned and from trusted sources? |
+| ASI05 | Unexpected code execution | Can model output reach `eval`, a shell or an interpreter outside a sandbox? |
+| ASI06 | Memory and context poisoning | Can untrusted input be written into memory or retrieval stores that later steer the agent? |
+| ASI07 | Insecure inter-agent communication | Are messages between agents authenticated and checked, or trusted blindly? |
+| ASI08 | Cascading failures | Can one bad step or agent propagate through others without a check or limit? |
+| ASI09 | Human-agent trust exploitation | Could the agent talk a user into approving something harmful? Do approvals show the real action? |
+| ASI10 | Rogue agents | Is there monitoring, a scope limit and a kill switch for an agent acting outside its task? |

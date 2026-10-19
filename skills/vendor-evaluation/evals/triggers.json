@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We're choosing between three helpdesk tools, help me build weighted criteria and a scorecard before the demos",
+    "The sales rep says their platform has 99.99% uptime and SOC 2, check that against public sources before we sign",
+    "Write an RFP shortlist for an HR information system for 400 employees and tell me what to ask about data export and exit",
+    "Compare these two observability vendors on total three-year cost, security and lock-in, and recommend one",
+    "Document why we picked our new CRM vendor so procurement and security can sign off"
+  ],
+  "should_not_trigger": [
+    "Build a competitor feature and pricing matrix for our own invoicing product's market",
+    "Qualify this enterprise deal we're selling: who is the economic buyer and is the champion real?",
+    "Review our electricity supply contract options for the three warehouses",
+    "Draft a master services agreement for our consulting clients",
+    "Run a security review of the pull request that adds the vendor's SDK"
+  ]
+}

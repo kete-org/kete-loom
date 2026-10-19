@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "My Unity game stutters every few seconds and the Profiler shows GC.Alloc in Update",
+    "Set up Play Mode tests for my Unity player controller and run them in CI",
+    "Build our Unity project for Android from the command line in batch mode",
+    "Should this enemy config be a ScriptableObject or a MonoBehaviour field?",
+    "Add an in-game debug console to our Unity project with commands like teleport and timescale",
+    "Why is my Unity Rigidbody jittery when I apply forces in Update?"
+  ],
+  "should_not_trigger": [
+    "Refactor this ASP.NET Core service to use records and nullable reference types",
+    "Write xUnit tests for our .NET payment library",
+    "Create a 3D model and render it with a Python script in Blender",
+    "Fix the build errors in our .NET 8 solution after upgrading packages",
+    "Build a Flutter mobile game menu screen with animations"
+  ]
+}

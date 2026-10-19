@@ -4,7 +4,7 @@ description: Software supply-chain audit of a project's third-party packages acr
 license: MIT
 compatibility: Any Agent Skills host. Needs the project's package manager; audit tools such as pip-audit, cargo-audit, govulncheck or osv-scanner are used when installed. Advisory lookups need network access.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: security
   kete-loom/risk: network
   kete-loom/owner: "Kete-org"
@@ -49,10 +49,21 @@ Do this for packages added in the change under review, and for any package the s
 
 1. **Typosquatting**: compare the name against the well-known package it resembles (`reqeusts` vs `requests`, `lodahs` vs `lodash`, scope swaps like `@type/node`). Check the registry page: download count, repository link, first publish date, maintainer.
 2. **Install scripts**: look for `preinstall`, `install`, `postinstall` in the package's `package.json`, or `setup.py` / build backends that run code at install. Network calls, obfuscated code, or reading env vars in an install script is a **stop and tell the user** finding.
-3. **Health**: last release, open security issues, single maintainer, archived repository, recent maintainer change followed by a new major or patch with unexplained binary or minified code.
+3. **Health**: last release, open security issues, single maintainer, archived repository, recent maintainer change followed by a new major or patch with unexplained binary or minified code. Take each number from the right source:
+   - **Maintainers**: the people who can publish, from the registry (`npm owner ls <pkg>`, the Maintainers list on the PyPI project page, `cargo owner --list <crate>` for crates.io), not GitHub contributors. A busy repo can still have one person holding the publish key.
+   - **Downloads**: registry statistics (`https://api.npmjs.org/downloads/point/last-week/<pkg>`, pypistats.org for PyPI, the crates.io page), not GitHub stars or forks.
+   - **Release history**: `npm view <pkg> time`, the `releases` upload times in `https://pypi.org/pypi/<pkg>/json`, the versions list on the crates.io page (`cargo search` shows only the latest version).
 4. **Necessity**: can a few lines of standard library replace it? Fewer dependencies is the best mitigation.
 
 Never install, import or run a suspect package to "see what it does".
+
+**Three states per criterion.** Record every health criterion (typosquat, install scripts, maintainers, release recency, downloads, repository) as one of:
+
+- **clean**: measured, and nothing wrong;
+- **flagged**: measured, and a problem found, with the evidence;
+- **unassessable**: could not be measured, with the reason (registry unreachable, no repository link, private package, tool missing).
+
+Missing data is never evidence of risk: don't flag a package just because a lookup failed. And missing data is never evidence of safety either: if most criteria are unassessable, the package's verdict is **unassessed**, not clean. A run that measured nothing for any package must say so plainly instead of reporting a clean audit.
 
 ## 4. Fix
 
@@ -96,7 +107,9 @@ Scanned: <ecosystems, lockfiles, tools and versions>   Not scanned: <what and wh
    Fix: <exact version or action>   Breaking: <yes/no>
 
 ### Supply-chain risks
-- <typosquat / install script / unmaintained / no lockfile / unpinned CI action>
+- <package>: <criterion> flagged: <evidence>   (or: <criterion> unassessable: <reason>)
+- <no lockfile / unpinned CI action>
+Unassessed packages: <list, or none>
 
 ### Policy gaps
 - <missing item from section 5, one line each>

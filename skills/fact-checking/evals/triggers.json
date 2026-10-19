@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Fact-check this article before we share it with the board, especially the market size numbers",
+    "Is the claim in this YouTube transcript that 70% of startups fail because of cofounder conflict actually true?",
+    "Go through my op-ed draft and verify every statistic and quote before I submit it",
+    "This press release says they're the largest solar installer in Europe. Can you check that and the other claims?",
+    "A colleague sent me this slide deck; tell me which of its figures are misleading or false"
+  ],
+  "should_not_trigger": [
+    "Research the current state of WebAssembly component model support and write a cited report",
+    "Make this essay sound less like it was written by AI",
+    "Write a blog post about why our customers switched from spreadsheets",
+    "Review the academic literature on remote work and productivity since 2020",
+    "Summarise the decisions and action items from this meeting transcript"
+  ]
+}

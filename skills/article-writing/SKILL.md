@@ -4,7 +4,7 @@ description: Long-form article and blog post writing, from choosing a sharp angl
 license: MIT
 compatibility: Any Agent Skills host. Web access helps when the article needs facts checked; otherwise works from the user's material.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: business
   kete-loom/risk: read-only
   kete-loom/owner: "Kete-org"
@@ -76,7 +76,10 @@ Go through the draft in this order, one pass per item:
 4. **Clarity**: split sentences over about 25 words; replace abstractions with examples.
 5. **Accuracy**: every number, name, quote and link checked against its source.
 6. **Consistency**: terms, capitalisation, spelling variant (US or UK) and voice.
-7. **Read aloud** test: flag anything awkward.
+7. **Machine-prose sweep**, in two tiers (patterns and fixes in `references/ai-tells.md`):
+   - **P0, always fix**: leftover chatbot text ("Certainly! Here is...", "I hope this helps"), knowledge-cutoff or "as an AI" disclaimers, unattributed authority ("experts say", "studies show" with no source), and routine events inflated into turning points.
+   - **P1, fix unless the author's voice needs it**: stock words (delve, leverage, robust, seamless, tapestry), "in the rapidly evolving world of" openers, "let's dive in" transitions, cycling synonyms for the same thing, stacked hedges ("could potentially"), bold scattered through paragraphs, and bullet lists of bare noun phrases where an argument belongs.
+8. **Read aloud** test: flag anything awkward.
 
 ## 6. Headline, summary and metadata
 

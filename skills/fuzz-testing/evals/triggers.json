@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Write a libFuzzer harness with ASan for our C image decoder",
+    "Our JSON parser handles untrusted input - set up coverage-guided fuzzing for it",
+    "Add a Go native fuzz test for the URL-rewriting function and run it in CI",
+    "The fuzzer stalls because every input fails a CRC check, how do I get past it?",
+    "Minimise and triage this cargo-fuzz crash and turn it into a regression test"
+  ],
+  "should_not_trigger": [
+    "Design a pairwise test suite for our seven configuration flags",
+    "Write unit tests for the parser with GoogleTest",
+    "Raise branch coverage on the decoder above 80%",
+    "Do a security code review of the file-upload handler",
+    "Run Semgrep across the repo and triage the SARIF results"
+  ]
+}

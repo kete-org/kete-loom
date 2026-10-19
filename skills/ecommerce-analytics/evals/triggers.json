@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here are our Shopify orders and line items for the last 18 months, tell me how the store is really doing",
+    "Repeat customers dropped this quarter on our WooCommerce shop, work out why from the order export",
+    "Build cohort retention and RFM segments from this customer and order CSV for our skincare store",
+    "Which products and traffic sources actually make us money, and how much are discount codes and refunds costing us?",
+    "Do a business review of our online store with a prioritised action plan for next quarter"
+  ],
+  "should_not_trigger": [
+    "Design a KPI dashboard in Looker for the e-commerce team's weekly meeting",
+    "Size safety stock and reorder points for our best-selling SKUs before the holiday season",
+    "Integrate Paystack checkout into our online shop",
+    "Run an A/B test on the product page and tell me if the new layout converts better",
+    "How big is the market for online furniture sales in Nigeria?"
+  ]
+}

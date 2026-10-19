@@ -23,6 +23,26 @@ Read this when building or running the search in step 3.
 - Terms of use: no more than one request every three seconds, one connection at a time.
 - arXiv papers are preprints and are not peer reviewed. Check whether a later published version exists (the arXiv page often lists a journal reference or DOI).
 
+## OpenAlex
+
+- Open index of scholarly works (over 300 million records when checked in October 2026), CC0 metadata, REST API at `https://api.openalex.org/`. No key is needed for basic queries; a free key (`api_key=` parameter, from openalex.org account settings) raises the daily budget and is required for cursor paging past the first page. Keyless use is limited to 10 requests per second and a small shared daily budget. Ask the user before creating an account or a key on their behalf.
+- Search and sort: `https://api.openalex.org/works?search=sleep+deprivation+working+memory&filter=publication_year:>2014&sort=cited_by_count:desc&per_page=50`
+- Filters combine with commas (AND); `|` gives OR within one filter: `filter=type:article|preprint,open_access.is_oa:true`.
+- Lookup by DOI: `https://api.openalex.org/works/doi:10.7717/peerj.4375`
+- Snowballing from a work ID such as `W2741809807`:
+  - backward: the record's `referenced_works` list, or `filter=cited_by:W2741809807`;
+  - forward: `filter=cites:W2741809807` (sort by `cited_by_count:desc` or `publication_year:desc`);
+  - sideways: the record's `related_works`, or `filter=related_to:W2741809807`.
+- Useful fields: `doi`, `ids` (PMID, PMCID when known), `cited_by_count`, `is_retracted` (from Retraction Watch), `type`, `open_access.is_oa`, `open_access.oa_url`, `best_oa_location.pdf_url` and `.landing_page_url`. Use `select=` to fetch only these.
+- `per_page` is at most 100; basic paging stops at 10,000 results. A 429 means slow down or the daily budget is spent.
+- Coverage and metadata are machine-built: confirm titles, authors and years against the publisher page or DOI before citing.
+
+## Crossref
+
+- DOI metadata from publishers: `https://api.crossref.org/works/<doi>` (for example `/works/10.7717/peerj.4375`). Fields include `title`, `author`, `issued`, `container-title`, `is-referenced-by-count`, `reference` (only when the publisher deposited references) and `link`.
+- No key needed. Add `mailto=<your email>` (or identify yourself in the `User-Agent`) to use the "polite" pool, which allows more requests and concurrency than the anonymous one; current limits are returned in the `x-rate-limit-*` response headers. Back off on 429.
+- Use it to resolve DOIs found in reference lists and to check that a DOI you are about to cite exists and matches the paper.
+
 ## Google Scholar
 
 - Useful for breadth, citations ("Cited by" for forward snowballing) and grey literature.
@@ -31,7 +51,7 @@ Read this when building or running the search in step 3.
 
 ## Other sources worth naming to the user
 
-- Europe PMC (includes preprints and full text, has a REST API), Semantic Scholar (API with citation graph), Crossref (DOI metadata), bioRxiv / medRxiv (life-science preprints), Cochrane Library (systematic reviews), ClinicalTrials.gov (registered and unpublished trials), field databases such as Embase, Web of Science, Scopus, PsycINFO, IEEE Xplore, ACM DL (often need an institutional subscription).
+- Europe PMC (includes preprints and full text, has a REST API), Semantic Scholar (API with citation graph), bioRxiv / medRxiv (life-science preprints), Cochrane Library (systematic reviews), ClinicalTrials.gov (registered and unpublished trials), field databases such as Embase, Web of Science, Scopus, PsycINFO, IEEE Xplore, ACM DL (often need an institutional subscription).
 
 ## Search log template
 

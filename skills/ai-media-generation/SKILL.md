@@ -4,7 +4,7 @@ description: Product features built on hosted generative image, video, speech an
 license: MIT
 compatibility: Any Agent Skills host. Live calls need network access and an API key for the chosen provider. Examples are provider-neutral; check the provider's current API reference for model names and parameters.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: ai
   kete-loom/risk: network
   kete-loom/owner: "Kete-org"
@@ -27,6 +27,14 @@ Generation APIs are slow, priced per output, change model names often, and can p
 - Store the **full request** (template version, final prompt, parameters, seed if supported) with each job, so results can be reproduced and audited.
 - Validate inputs at the boundary: prompt length, uploaded image type/size/dimensions, audio length. Strip metadata (EXIF GPS) from user uploads before sending them.
 - For edits with masks or reference images, check the provider's format rules (same size, alpha channel, size limit) before submitting, not after a failed job.
+
+### Video prompts
+
+- Send model, duration, aspect ratio and resolution as **API parameters**, never as words in the prompt ("8 seconds, 16:9, 1080p"). Prompt text doesn't set them reliably, and it spends the prompt on things the API already controls. Validate them against the model's allowed values server-side.
+- Scale the action to the clip: roughly one main action or camera move per few seconds. A short clip with five events comes out rushed or drops some; a long clip with one event drifts.
+- Image-to-video: the input image is the anchor for subject, composition and style. Describe only what changes: subject motion, camera movement, timing. Re-describing the image fights it.
+- Consistent characters across clips: generate a reference or character sheet first (front, side, key expressions, outfit on a plain background), get it approved, then pass it as the reference image to every clip and keep the same descriptive wording for the character in each prompt.
+- Templates and examples are in `references/video-prompts.md`.
 
 ## 2. Job flow
 

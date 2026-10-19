@@ -4,7 +4,7 @@ description: Raises meaningful test coverage by measuring line and branch covera
 license: MIT
 compatibility: Any Agent Skills host. Needs the project's test runner and its coverage tool; mutation testing tools are optional.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/owner: "Kete-org"
@@ -79,7 +79,9 @@ Mutation testing changes the code (flips `>` to `>=`, removes a call, returns a 
 | C# | Stryker.NET | `dotnet stryker` |
 
 - Scope it to the files you just tested; a full-repo run can take hours.
-- For each surviving mutant: add or sharpen an assertion that kills it, or note it as equivalent (the change cannot alter behaviour).
+- For each surviving mutant, first ask which version is right. In risky code (money, auth, permissions, data deletion) a survivor may mean the **original code is the bug**: compare the mutated behaviour with the spec, docs, issue or the user's stated intent. If the mutant's behaviour is what the spec wants, don't write a test that pins the original; report it under "Bugs found" (or fix it if the user agrees) and follow the bug rule below.
+- Otherwise add or sharpen an assertion that kills it.
+- If the mutant cannot change observable behaviour (equivalent mutant), record it with the reason, for example "`i < 10` vs `i != 10` in a loop that starts at 0 and steps by 1". Don't write a test for it.
 - If no tool exists for the stack, do it by hand for the riskiest function: break one condition, run the tests, confirm one fails, revert.
 
 ## 5. Re-measure and lock in
@@ -101,6 +103,7 @@ Mutation testing changes the code (flips `>` to `>=`, removes a call, returns a 
 Coverage: <line>% → <line>% lines, <branch>% → <branch>% branches (files touched)
 Tests added: <file>: <test names>
 Mutation: <killed>/<total> killed in <files>; survivors: <list or none>
+Equivalent mutants: <mutant: reason, or none>
 Bugs found: <list or none>
 Not covered, on purpose: <items and why>
 Command: <exact commands run>

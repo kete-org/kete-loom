@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Shrink the 8MB product photos in public/img to AVIF and WebP with srcset sizes for the shop pages",
+    "Remove the GPS location and camera data from these photos before I post them on the blog",
+    "Batch resize this folder of 300 JPEGs to 1200px wide without touching the originals",
+    "Cut the background out of these product shots locally, I can't upload them to an online tool",
+    "These docs screenshots are huge and a bit blurry, crop and compress them without making the text fuzzy",
+    "My iPhone photos come out sideways after I resize them with Pillow, fix the script"
+  ],
+  "should_not_trigger": [
+    "Generate a hero illustration for the landing page with an image model",
+    "Extract a thumbnail frame from each uploaded video at the 10 second mark",
+    "OCR this folder of scanned receipts into searchable PDFs",
+    "Put a CDN in front of our S3 bucket so images load faster worldwide",
+    "Draw an architecture diagram of our image upload pipeline"
+  ]
+}

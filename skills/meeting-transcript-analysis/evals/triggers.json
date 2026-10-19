@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's the VTT file from our sprint planning call. Pull out the decisions and who owns which action items.",
+    "From this Zoom transcript, list the action items with owners, due dates and timestamps",
+    "I talk too much in one-on-ones. Analyse this transcript and tell me my talk ratio and when I interrupted.",
+    "What did we actually decide in this customer call transcript, and what questions are still open?",
+    "Speaker 1 and Speaker 2 are me and our CTO. Summarise the outcomes of this recorded meeting with quotes."
+  ],
+  "should_not_trigger": [
+    "Write my weekly progress update for the team from these Jira tickets",
+    "Burn captions into this mp4 and cut the first two minutes",
+    "Fact-check the statistics our CEO quoted in the all-hands transcript against public sources",
+    "Translate this meeting agenda into French for the Paris office",
+    "Write the incident postmortem from the war-room chat log"
+  ]
+}

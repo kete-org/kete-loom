@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We need a name for our new invoicing app for freelancers, something short with a .com available",
+    "Help me name this open-source Rust CLI, and check the crate name and GitHub org are free",
+    "Is 'Lumora' already taken as an npm package or trademark? We want it for our design tool.",
+    "Give me name ideas for a coffee subscription startup and check which ones we could actually use",
+    "Pick between these four codename candidates for our analytics product and tell me which is safest"
+  ],
+  "should_not_trigger": [
+    "Define our brand positioning, audience and values before we redesign the website",
+    "Write a voice and tone guide so our product copy sounds consistent",
+    "Rename the getUserData function to something clearer across the codebase",
+    "Research the market size for subscription coffee in the UK",
+    "Draft the company-wide announcement about our rebrand going live on Monday"
+  ]
+}

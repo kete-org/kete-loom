@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here's a HAR export from DevTools - reconstruct which API calls the dashboard makes",
+    "Diff these two Charles .chlsj captures and tell me what changed between the working and broken run",
+    "Turn this HAR file of the login flow into replayable API tests",
+    "Which requests in this capture are the slowest and why is the page sluggish?",
+    "Parse this mitmproxy flow dump and list every failing request with its error"
+  ],
+  "should_not_trigger": [
+    "Run a manual QA pass through the staging site in a real browser",
+    "Design the REST contract and pagination for our new orders API",
+    "Fuzz the HTTP header parser for memory bugs",
+    "Do authorised path discovery against our web app with ffuf",
+    "Redact the PII from these customer CSV exports before we share them"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "lsp",
+  "description": "agent-lsp: a local MCP server over your installed language servers (gopls, pyright, typescript-language-server, rust-analyzer…) for go-to-definition, references, callers, blast radius, rename and diagnostics. Needs no key; version pinned.",
+  "version": "0.1.0",
+  "category": "coding",
+  "risk": "writes-files",
+  "transport": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@blackwell-systems/agent-lsp@0.23.0"
+  ],
+  "auth": "none",
+  "requires": [
+    "npx"
+  ],
+  "homepage": "https://github.com/blackwell-systems/agent-lsp"
+}

@@ -4,7 +4,7 @@ description: Security review of a code change or module covering secrets, inject
 license: MIT
 compatibility: Any Agent Skills host. The secret scanner needs Node 18+ and git.
 metadata:
-  kete-loom/version: "0.1.2"
+  kete-loom/version: "0.1.3"
   kete-loom/category: security
   kete-loom/risk: read-only
   kete-loom/requires: "git, node"
@@ -44,15 +44,26 @@ Read `references/checklist.md` and apply each section that matches the code in s
 7. **Dependencies**: run the ecosystem's audit (`npm audit`, `pip-audit`, `govulncheck`, `cargo audit`) if available; flag new dependencies that are unmaintained or unpinned.
 8. **Config**: debug mode off in production, no default credentials, secrets read from the environment or a secret manager.
 
-Trace each suspicious input from where it enters to where it is used before calling it a finding. No path from untrusted input means no finding.
+Trace each suspicious input from where it enters to where it is used before calling it a finding. No path from untrusted input means no finding. For SSRF, open redirects, XXE and GraphQL, check the filter against the bypass lists in `references/checklist.md`; a deny-list that misses one of them is still a finding.
 
-## 4. Report
+## 4. Prove it before you rank it
 
-Order findings by severity: **Critical** (exploitable now, data or money at risk), **High**, **Medium**, **Low**. For each finding give:
+For every candidate, before it goes in the report:
+
+1. **Name the attacker and their position**: anonymous internet user, signed-in user, another tenant, someone who can edit a file the code reads, a page an LLM agent browses.
+2. **Walk every step of the exploit from that position.** Each step must be something this attacker can actually do: reach the endpoint, control the parameter, pass the earlier checks, observe the result. If a step needs access this attacker doesn't have, either redo the walk with the attacker who does have it (and rate for that position) or drop the finding. If you can't tell whether a step works, report it as **Needs verification** with the step you could not confirm, never as High or Critical.
+3. **State the blast radius in concrete terms**, not by bug class. "SSRF that reaches the cloud metadata endpoint and returns instance credentials" is Critical; "SSRF limited to `localhost:8080/health` with no response body returned" may be Low. Say what the attacker gets: whose data, which systems, what action.
+
+When the code calls an LLM or runs an agent with tools, also tag each finding with the matching OWASP Top 10 for LLM Applications ID and, for agents, the OWASP Top 10 for Agentic Applications ID (ASI01-ASI10). Use the current edition listed on genai.owasp.org and name the edition year in the report; the agentic categories are summarised in `references/checklist.md`.
+
+## 5. Report
+
+Order findings by severity: **Critical** (exploitable now, data or money at risk), **High**, **Medium**, **Low**, then **Needs verification** (a step of the exploit you could not confirm). For each finding give:
 
 - **Where:** `file:line`
 - **What:** one sentence on the flaw.
-- **Exploit:** how an attacker would trigger it.
+- **Exploit:** who the attacker is and each step they take from their position.
+- **Impact:** the concrete blast radius (and the OWASP LLM / ASI ID when it applies).
 - **Fix:** a concrete code change.
 
 Finish with what you checked and found clean, and anything you couldn't assess (for example infrastructure you can't see). Don't pad the report with generic advice; if the change is clean, say so.

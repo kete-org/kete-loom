@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Bundle our three skills and the deploy command into a Claude Code plugin with a marketplace.json so the team can install it",
+    "I installed my plugin with /plugin install but none of its slash commands show up",
+    "Ship the same skills folder as a Codex plugin and a Gemini CLI extension, what manifests do I need?",
+    "Our plugin.json says 1.2.0 but the marketplace entry says 1.1.0, which one wins and how do I keep them aligned?",
+    "Package this MCP server and a pre-commit hook as one installable plugin using CLAUDE_PLUGIN_ROOT paths"
+  ],
+  "should_not_trigger": [
+    "Write a SKILL.md that teaches the agent our changelog conventions",
+    "Build an MCP server in TypeScript that exposes our Postgres read replica as tools",
+    "Write a VS Code extension that adds a sidebar panel",
+    "Turn 'never force push to main' into a hook that blocks it",
+    "Lint the CLAUDE.md and hooks config in this repo for broken paths and risky settings"
+  ]
+}

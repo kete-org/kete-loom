@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Write a WIQL query that pulls all active bugs changed this week in our Azure Boards project",
+    "Our script calling dev.azure.com gets a 203 with an HTML login page instead of JSON",
+    "Create an Azure Repos pull request from code and link it to work item 4512",
+    "Trigger an Azure Pipelines run with template parameters and download the failed step's log",
+    "Replace the PAT in our Azure DevOps sync tool with a managed identity",
+    "Bulk update the area path on 3,000 Azure Boards work items without getting throttled"
+  ],
+  "should_not_trigger": [
+    "Move our web app from App Service to Azure Container Apps",
+    "Search Jira for open bugs with JQL and move them to In Progress",
+    "Set up a GitHub Actions workflow that runs tests on every pull request",
+    "Open a pull request on GitHub with gh and request two reviewers",
+    "Create Linear issues from our error tracker through the GraphQL API"
+  ]
+}

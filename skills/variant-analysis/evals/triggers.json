@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "We just fixed an SSRF in the image proxy - find every other place with the same root cause",
+    "Write a Semgrep rule that catches this missing-authorization pattern everywhere, then add it to CI",
+    "After this use-after-free fix, hunt for sibling instances across the codebase",
+    "Generalise this one SQL-string-concatenation bug into a lint rule without drowning in false positives",
+    "Run CodeQL taint analysis and triage the SARIF for more cases like the one we patched"
+  ],
+  "should_not_trigger": [
+    "Do a full security review of this pull request",
+    "Run STRIDE threat modelling on the new upload feature",
+    "Set up a libFuzzer harness to find memory bugs in the parser",
+    "Audit our npm dependencies for known vulnerabilities",
+    "Review the payment webhook code for missing signature checks"
+  ]
+}

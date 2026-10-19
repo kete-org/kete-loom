@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our trial sign-ups dropped and the landing page converts at 1.2%, can you review it?",
+    "How many visitors do we need to A/B test the new pricing page headline?",
+    "Our checkout form loses half of mobile users at the address step, what should we change?",
+    "We stopped our A/B test after 3 days because B was winning, is that result valid?",
+    "Audit the pricing page for friction and plan an experiment to fix it",
+    "The Google ad promises a free plan but the page leads with paid tiers, how bad is that for conversions?"
+  ],
+  "should_not_trigger": [
+    "Why isn't our landing page showing up in Google search results?",
+    "Plan the launch campaign for our new product across email and LinkedIn",
+    "Design a weekly dashboard for sign-ups, activation and churn",
+    "Ask five simulated customer personas what they think of our pricing copy",
+    "Our marketing emails are landing in spam, fix our DNS records"
+  ]
+}

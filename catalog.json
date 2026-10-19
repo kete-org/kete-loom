@@ -50,6 +50,15 @@
       "path": "skills/agent-outbound-messaging"
     },
     {
+      "name": "agent-plugin-authoring",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Packages existing skills, slash commands, subagents, hooks and MCP servers into an installable plugin for Claude Code, Codex and Gemini CLI, covering each host's manifest file and component layout, marketplace catalog entries, keeping versions in step across manifests, testing a local install before publishing, and diagnosing a plugin that installs but loads nothing. Use when bundling agent components into a plugin or extension, writing plugin.json, marketplace.json or gemini-extension.json, publishing a plugin marketplace from a repo, or fixing a plugin whose skills or commands don't show up.",
+      "path": "skills/agent-plugin-authoring"
+    },
+    {
       "name": "agent-security",
       "version": "0.1.0",
       "category": "security",
@@ -62,12 +71,21 @@
     },
     {
       "name": "ai-media-generation",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "ai",
       "risk": "network",
       "requires": [],
       "description": "Product features built on hosted generative image, video, speech and music models, including prompt templates with fixed parameters and seeds, long-running jobs submitted then polled or confirmed by signed webhooks, per-user quotas and cost estimates before submission, input and output moderation, C2PA content credentials and AI-generated labels, and copying results to your own storage before provider URLs expire. Use when adding text-to-image, image editing, text-to-video or text-to-speech generation to an app, wiring up a generation provider's async job API, or controlling the cost, safety and storage of generated media.",
       "path": "skills/ai-media-generation"
+    },
+    {
+      "name": "ai-prose-cleanup",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Machine-sounding prose audit and rewrite that ranks tells by severity tier (leftover chatbot artifacts and unsourced attributions first, then overused vocabulary, stock openers and closers, stacked hedges and synonym cycling, then rhythm polish), offers a detect-only report, keeps every edit inside the scope the user asked for, and adjusts strictness by genre. Use when text reads as AI-generated, generic or padded and someone wants it flagged or de-slopped while keeping the author's meaning, facts and voice.",
+      "path": "skills/ai-prose-cleanup"
     },
     {
       "name": "angular-patterns",
@@ -91,7 +109,7 @@
     },
     {
       "name": "api-design",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "writes-files",
       "requires": [],
@@ -108,8 +126,17 @@
       "path": "skills/architecture-decision-records"
     },
     {
-      "name": "article-writing",
+      "name": "architecture-diagrams",
       "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "System and cloud architecture drawn as diagrams-as-code in Mermaid, D2, PlantUML or draw.io XML, derived from what the code, Terraform, Kubernetes manifests and Compose files actually declare rather than from memory, organised by C4 level (context, container, component) plus sequence and deployment views, using official AWS, Azure and Google Cloud icon sets where icons help, with the source kept editable in the repo and exported to SVG or PNG, and optional step-by-step animated diagrams for a request flow. Use when someone wants an architecture or infrastructure diagram of this system, a sequence diagram of a request path, a cloud topology drawn from IaC, or stale diagrams brought back in line with the code.",
+      "path": "skills/architecture-diagrams"
+    },
+    {
+      "name": "article-writing",
+      "version": "0.1.1",
       "category": "business",
       "risk": "read-only",
       "requires": [],
@@ -157,6 +184,18 @@
       ],
       "description": "Designs and reviews workloads on Amazon Web Services, covering least-privilege IAM roles and policies, picking Lambda versus ECS Fargate versus EC2, S3 bucket hardening, RDS and Aurora setup, VPC subnets and security groups, Secrets Manager and Parameter Store, and the bill surprises that come from NAT gateways, public IPv4 and idle resources. Use when building or changing something on AWS, writing an IAM policy, choosing an AWS compute service, or asking why an AWS account costs more than expected.",
       "path": "skills/aws-patterns"
+    },
+    {
+      "name": "azure-devops-integration",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [
+        "az",
+        "curl"
+      ],
+      "description": "Drives Azure DevOps Services (dev.azure.com) from scripts and services through its REST API and the az devops CLI extension - Boards work items queried with WIQL and fetched in batches of 200, created and updated with JSON Patch, Azure Repos branches and pull requests with reviewers, votes and linked work items, Azure Pipelines runs, logs and artifacts - choosing Microsoft Entra ID tokens, managed identities or service principals over personal access tokens, pinning api-version, and handling continuation tokens, the 20,000-result WIQL limit and TSTU-based throttling. Use when automating Azure Boards, Azure Repos or Azure Pipelines, writing a WIQL query, triggering or reading a pipeline run from code, or fixing 401, 203 or 429 responses from the Azure DevOps API.",
+      "path": "skills/azure-devops-integration"
     },
     {
       "name": "azure-patterns",
@@ -230,7 +269,7 @@
     },
     {
       "name": "browser-qa",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [],
@@ -367,6 +406,15 @@
       "path": "skills/conventional-commits"
     },
     {
+      "name": "conversion-optimization",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Conversion rate optimisation for landing pages, sign-up and checkout funnels - finding the leaking funnel step from analytics, auditing message match between ad or email and page, friction in forms and pricing pages, trust and clarity problems, then turning fixes into A/B tests with one pre-registered primary metric, guardrail metrics, a sample size and run length computed before launch, a sample-ratio check, and no peeking or stopping early on a lucky day. Use when sign-ups, trials or purchases are lower than expected, a landing or pricing page needs a conversion review, someone wants to A/B test a page change, or needs to read an experiment result honestly.",
+      "path": "skills/conversion-optimization"
+    },
+    {
       "name": "cpp-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -388,6 +436,17 @@
       ],
       "description": "Writes and runs C++ unit tests with GoogleTest or Catch2 - test fixtures, parameterised cases, gMock mocks behind interfaces, CTest registration via gtest_discover_tests or catch_discover_tests, and running the suite under AddressSanitizer and UBSan. Use when adding tests to a C++ codebase, wiring a test framework into CMake and CTest, mocking a C++ dependency, or chasing a flaky or crashing C++ test.",
       "path": "skills/cpp-testing"
+    },
+    {
+      "name": "crm-data-hygiene",
+      "version": "0.1.0",
+      "category": "integrations",
+      "risk": "network",
+      "requires": [
+        "curl"
+      ],
+      "description": "Audits and cleans CRM records in HubSpot, Salesforce or Pipedrive through their APIs - unowned and orphaned records, duplicate contacts, companies and deals with explicit match and survivor rules, unused or overlapping custom properties, broken lifecycle stages and stale pipelines - always taking a before snapshot, producing a dry-run change list for approval, executing in small rate-limited batches with a per-record log, and keeping a rollback path for every change, including merges that cannot be undone. Use when a CRM is full of duplicates or records with no owner, a sales or marketing ops person wants a data quality audit, property cleanup or bulk lifecycle fix, or before migrating or connecting a CRM to another system.",
+      "path": "skills/crm-data-hygiene"
     },
     {
       "name": "csharp-patterns",
@@ -479,6 +538,17 @@
       "path": "skills/database-migrations"
     },
     {
+      "name": "dataset-profiling",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [
+        "python3"
+      ],
+      "description": "First-look profiling of an unfamiliar CSV, Parquet or Excel file with pandas, polars or DuckDB before any analysis is attempted - row and column counts, inferred versus intended types, missing values, cardinality, duplicate rows and keys, value distributions, outliers, candidate primary keys and strong correlations - reported as data-quality findings plus the questions to ask the data owner. Use when someone hands over a new data file or export and asks what is in it, whether it can be trusted, which column identifies a row, or what needs cleaning before modelling or reporting.",
+      "path": "skills/dataset-profiling"
+    },
+    {
       "name": "dbt-patterns",
       "version": "0.1.0",
       "category": "data",
@@ -488,6 +558,15 @@
       ],
       "description": "dbt project conventions for analytics engineering, laying models out in staging, intermediate and marts layers, declaring sources with freshness, using ref and source instead of hard-coded tables, adding data tests, unit tests and enforced model contracts, choosing an incremental strategy, building snapshots for slowly changing history, documenting columns, and running slim CI on only the modified nodes. Use when creating or restructuring a dbt project, writing or refactoring a dbt model, an incremental model gives duplicates, adding dbt tests or snapshots, or setting up dbt CI with state:modified and defer.",
       "path": "skills/dbt-patterns"
+    },
+    {
+      "name": "deal-qualification",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Seller-side qualification and coaching of B2B opportunities already in the pipeline, using MEDDICC or BANT evidence - quantified pain and metrics, the economic buyer, decision criteria and decision process, paper process, a tested champion, competition, and a dated mutual next step - scoring each element by the evidence behind it, raising risk flags, and running a deal review that separates what the buyer has said or done from what the rep hopes. Use when a sales rep, founder or manager wants to know whether a deal is real, prepare a pipeline or forecast review, decide whether to keep pursuing an opportunity, or plan the next call to close evidence gaps.",
+      "path": "skills/deal-qualification"
     },
     {
       "name": "decision-council",
@@ -500,7 +579,7 @@
     },
     {
       "name": "deep-research",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "meta",
       "risk": "network",
       "requires": [],
@@ -509,7 +588,7 @@
     },
     {
       "name": "dependency-audit",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "security",
       "risk": "network",
       "requires": [],
@@ -593,6 +672,17 @@
       "path": "skills/e2e-testing-playwright"
     },
     {
+      "name": "ecommerce-analytics",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "runs-commands",
+      "requires": [
+        "python3"
+      ],
+      "description": "Business health review of an online shop from its order, line-item and customer exports (Shopify, WooCommerce, Amazon seller reports or a custom store database) - net revenue, orders, average order value, new versus returning customers, repeat purchase rate, monthly acquisition cohorts and RFM segments, product and channel mix, and leakage through refunds, discounts and shipping - ending in diagnosed causes and a ranked action plan. Use when a store owner or merchandiser asks how the shop is really doing, why sales or repeat customers dropped, which products and channels make money, or where discounts and returns are eating margin.",
+      "path": "skills/ecommerce-analytics"
+    },
+    {
       "name": "ef-core-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -649,6 +739,15 @@
       "requires": [],
       "description": "Connects web frontends and backends to Ethereum and EVM chains with viem (optionally wagmi) or ethers v6, covering EIP-1193 and EIP-6963 wallet discovery and connection, checking and switching chain IDs, typed contract reads, simulating before writes, token amounts kept as bigint with parseUnits and formatUnits against each token's decimals, the transaction lifecycle from signature to receipt status and confirmations, replaced or dropped transactions, event logs, and RPC rate limits and block-range caps. Use when adding a connect-wallet button, calling a deployed contract from a dapp or Node service, displaying or sending ERC-20 amounts, or debugging stuck transactions and RPC errors.",
       "path": "skills/evm-dapp-integration"
+    },
+    {
+      "name": "fact-checking",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "network",
+      "requires": [],
+      "description": "Claim-by-claim verification of an existing article, video transcript, slide deck, press release or the user's own draft, pulling out every checkable statement, ranking them by how much the piece depends on each, testing them against independent sources, and grading each on a fixed verdict scale with the arithmetic shown and the strongest reading tried before anything is called false. Use when someone asks whether a piece of content is accurate, wants a draft checked before publishing, or doubts a specific statistic, quote or claim.",
+      "path": "skills/fact-checking"
     },
     {
       "name": "fastapi-patterns",
@@ -765,6 +864,15 @@
       "path": "skills/fsharp-testing"
     },
     {
+      "name": "fuzz-testing",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Sets up coverage-guided fuzzing for parsers, decoders and native code: writing harnesses for libFuzzer, AFL++, cargo-fuzz, Go's built-in go test -fuzz and Python atheris, wiring the right sanitizer, seeding a corpus and dictionary, defeating coverage walls like checksums and magic bytes, then minimising and triaging crashes and wiring the fuzzer into CI or OSS-Fuzz. Use when hardening code that parses untrusted or attacker-controlled input, reproducing and shrinking a fuzzer-found crash, or adding continuous fuzzing to a build.",
+      "path": "skills/fuzz-testing"
+    },
+    {
       "name": "gcp-patterns",
       "version": "0.1.0",
       "category": "devops",
@@ -844,11 +952,11 @@
     },
     {
       "name": "google-workspace-integration",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "integrations",
       "risk": "network",
       "requires": [],
-      "description": "Calls the Google Drive v3, Docs, Sheets and Slides REST APIs from application code, covering the choice between user OAuth, a service account and domain-wide delegation, the narrowest scopes (drive.file before restricted drive), files.list queries with shared-drive flags, documents and presentations batchUpdate requests applied in descending index order, Sheets A1 ranges with valueInputOption, and per-minute quotas handled with truncated exponential backoff on 429 and 403 rate errors. Use when code must create, read, fill or export Google Docs, Sheets, Slides or Drive files, a service account gets 403 or storageQuotaExceeded, or a Workspace sync hits rate limits.",
+      "description": "Calls the Google Drive v3, Docs, Sheets, Slides, Gmail, Calendar and Chat REST APIs from application code, covering the choice between user OAuth, a service account and domain-wide delegation, the narrowest scope per API (drive.file before restricted drive, gmail.send or gmail.compose rather than full mail access), files.list queries with shared-drive flags, batchUpdate requests applied in descending index order, Sheets A1 ranges with valueInputOption, Gmail drafts created by default and sent only on explicit approval, Calendar freeBusy checks and IANA time zones before inserting events, Chat messages posted as an app or as a user, and per-minute quotas handled with truncated exponential backoff on 429 and 403 rate errors. Use when code must create, read, fill or export Google Docs, Sheets, Slides or Drive files, draft, label or search Gmail messages, book Google Calendar events, post to Google Chat spaces, a service account gets 403 or storageQuotaExceeded, or a Workspace sync hits rate limits.",
       "path": "skills/google-workspace-integration"
     },
     {
@@ -900,6 +1008,26 @@
       "path": "skills/homelab-network-setup"
     },
     {
+      "name": "html-email-templates",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [
+        "node"
+      ],
+      "description": "Markup for responsive HTML email that holds up in classic Outlook for Windows, Gmail and Apple Mail, authored in MJML or React Email - section and column layout on a 600px grid, table fallbacks, VML background images and font fallbacks for Outlook's Word engine, inlined CSS, staying under Gmail's roughly 102KB clipping point, dark-mode color-scheme meta and colours that survive forced inversion, accessible structure with lang, alt text and real link text, no scripts or forms, and previewing in real inboxes before anything ships. Use when designing or coding a newsletter, receipt or notification email template, converting a design into email-safe HTML, or fixing a template that breaks in Outlook, gets clipped in Gmail or looks wrong in dark mode.",
+      "path": "skills/html-email-templates"
+    },
+    {
+      "name": "http-traffic-analysis",
+      "version": "0.1.0",
+      "category": "testing",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Reconstructs and tests an API from captured HTTP traffic - browser HAR exports, Charles .chlsj session files and mitmproxy flow dumps - by mapping the request sequence and auth flow, surfacing failing and slow calls, diffing two captures to spot what changed, and emitting replayable tests or a typed client, always stripping tokens, cookies, auth headers and other secrets before any excerpt is shown. Use when you have a traffic capture and need to understand, compare, debug or codify the HTTP calls an app or page actually makes.",
+      "path": "skills/http-traffic-analysis"
+    },
+    {
       "name": "hubtel-integration",
       "version": "0.1.0",
       "category": "integrations",
@@ -927,6 +1055,15 @@
       "path": "skills/idea-backlog"
     },
     {
+      "name": "image-processing",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Local raster image work with ImageMagick, libvips or sharp, and Pillow - resizing, cropping and format conversion with EXIF orientation applied first, compressing for the web as AVIF, WebP or optimised JPEG and PNG with responsive srcset widths, sharpening and tidying screenshots, stripping EXIF and GPS metadata before publishing, batch jobs that never overwrite originals, and local background removal, each followed by a before-and-after check of size, dimensions and visible quality. Use when someone needs images shrunk or converted for a website, a folder of photos resized or renamed in bulk, screenshots cleaned up for docs, location data removed from photos, or a product photo cut out from its background without an online service.",
+      "path": "skills/image-processing"
+    },
+    {
       "name": "implementation-plans",
       "version": "0.1.0",
       "category": "coding",
@@ -945,6 +1082,15 @@
       "requires": [],
       "description": "Blameless post-incident review writing that rebuilds a timestamped timeline from alerts, chat and deploy logs, quantifies customer and business impact, separates the trigger from root causes and contributing factors, records what went well and where the team got lucky, and turns findings into a short list of owned, dated action items with a follow-up review. Use when an outage, data loss, security event or near miss is over and someone needs the postmortem, incident report or retrospective written, reviewed or its action items tracked.",
       "path": "skills/incident-postmortem"
+    },
+    {
+      "name": "internal-communications",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Short workplace updates that colleagues finish reading, such as weekly progress-plans-problems (3P) notes, project status reports, leadership briefs, team or company newsletters, internal FAQs and change announcements, built by collecting facts from the tracker, chat threads and docs before writing, then fitting each to a fixed, skimmable template with the ask and the bad news up top. Use when someone needs a status update, weekly report, exec summary, staff newsletter, reorg or policy-change announcement, or internal FAQ drafted for people inside their organisation.",
+      "path": "skills/internal-communications"
     },
     {
       "name": "inventory-demand-planning",
@@ -1049,6 +1195,15 @@
       "path": "skills/jvm-sql-mappers"
     },
     {
+      "name": "knowledge-wiki",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Agent-curated Markdown knowledge base kept in a folder or repo, with untouched source captures in raw/, compiled topic articles in wiki/, an index page and an append-only log, every new source triaged as new topic, update, disputed claim or nothing new, a grounding rule that each figure and quotation appears word for word in a linked raw source, cascading edits to every page a change touches, and a periodic lint for stale, orphaned, contradictory or unsourced pages. Use when someone wants a personal or team wiki the agent builds and maintains from articles, papers, notes and transcripts they drop in, asks to ingest new material into it, or wants an existing notes folder cleaned up and kept consistent.",
+      "path": "skills/knowledge-wiki"
+    },
+    {
       "name": "kotlin-multiplatform",
       "version": "0.1.0",
       "category": "coding",
@@ -1122,12 +1277,25 @@
     },
     {
       "name": "literature-review",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "data",
       "risk": "network",
       "requires": [],
       "description": "Scientific literature review that plans a reproducible search across PubMed, Google Scholar and arXiv, screens papers against written inclusion and exclusion criteria, appraises study design and risk of bias, extracts effect sizes into a table, cites each claim to a DOI or PMID, and states how certain the evidence is. Use when someone needs a literature review, a background or related-work section for a paper or grant, an evidence summary on a scientific or clinical question, or a PRISMA-style record of how studies were found and screened.",
       "path": "skills/literature-review"
+    },
+    {
+      "name": "live-database-queries",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "network",
+      "requires": [
+        "psql",
+        "mysql",
+        "sqlcmd"
+      ],
+      "description": "Safe ad-hoc querying of a real PostgreSQL, MySQL or SQL Server database by the agent itself - connecting as a dedicated read-only login, opening read-only sessions or transactions, allowing one SELECT statement per call, enforcing a statement timeout and a row cap, keeping credentials in environment variables, .pgpass or option files rather than the chat, choosing the right database from a described inventory, and running EXPLAIN before anything heavy. Use when asked to look something up in a live or production database, answer a question from real tables, connect the agent to a database for exploration, or set up a least-privilege account for agent queries.",
+      "path": "skills/live-database-queries"
     },
     {
       "name": "llm-app-patterns",
@@ -1197,6 +1365,15 @@
       ],
       "description": "Model Context Protocol server construction, from naming tools and writing their JSON Schema inputs to returning isError results, structured output, tool annotations, OAuth-protected Streamable HTTP or local stdio transports, and testing with the MCP Inspector. Use when creating an MCP server, exposing an API or database to agents as MCP tools, or debugging why a client can't connect to, list or call a server's tools.",
       "path": "skills/mcp-server-patterns"
+    },
+    {
+      "name": "meeting-transcript-analysis",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Meeting transcript and call recording analysis that normalises speaker labels, then extracts decisions, action items with owners and due dates, open questions and risks, each tied to a timestamp and a short quote, and on request gives one participant evidence-backed feedback on how they communicated (share of talking time, interruptions, softened hard messages, questions asked). Use when someone has a transcript, captions file or call notes and wants the outcomes and follow-ups pulled out, or wants coaching on their own meeting behaviour.",
+      "path": "skills/meeting-transcript-analysis"
     },
     {
       "name": "metrics-dashboards",
@@ -1354,6 +1531,19 @@
       "path": "skills/observability"
     },
     {
+      "name": "office-documents",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "runs-commands",
+      "requires": [
+        "python3",
+        "pandoc",
+        "soffice"
+      ],
+      "description": "Word and Excel files made, read and edited with open tools - .docx built with python-docx or the docx npm package, .xlsx with openpyxl and pandas, live formulas instead of pasted numbers, a LibreOffice headless recalculation followed by a scan for #REF!, #NAME? and other error cells, separate formula and cached-value reads, surgical edits to the raw OOXML parts including tracked changes, a render-to-PDF visual check, and Markdown converted to DOCX or EPUB with pandoc and a reference document. Use when someone needs a Word report, letter or contract edited or generated, a spreadsheet model or export with working formulas, data read out of .docx or .xlsx files, or a manuscript turned into an e-book.",
+      "path": "skills/office-documents"
+    },
+    {
       "name": "open-source-release",
       "version": "0.1.0",
       "category": "devops",
@@ -1428,6 +1618,15 @@
       "path": "skills/perl-testing"
     },
     {
+      "name": "persona-panels",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Synthetic customer persona panels for early concept, message and naming checks - builds each persona from the user's real research (interviews, reviews, support tickets, CRM segments) where it exists and labels anything invented, asks every persona the same stimulus in a separate isolated run so answers cannot echo each other, collects reactions, objections and confusion points, and reports them as hypotheses to confirm with real users, never as evidence or predicted conversion. Use when someone wants simulated buyers or users to react to a landing page draft, value proposition, feature concept or ad copy before spending money on real research, or asks to \"test this on a few personas\".",
+      "path": "skills/persona-panels"
+    },
+    {
       "name": "php-patterns",
       "version": "0.1.0",
       "category": "coding",
@@ -1450,6 +1649,15 @@
       ],
       "description": "Writing and fixing PHP test suites with PHPUnit or Pest, including attribute-based data providers and Pest datasets, test doubles via createMock/createStub or Mockery, database tests isolated by transactions, HTTP controller and client tests, and coverage with Xdebug or PCOV. Use when adding PHP unit or integration tests, converting PHPUnit annotations to attributes, deciding what to mock in PHP, or making a flaky PHP test deterministic.",
       "path": "skills/php-testing"
+    },
+    {
+      "name": "pii-redaction",
+      "version": "0.1.0",
+      "category": "compliance",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Detects and removes personal data from text, logs, CSVs and datasets on your own machine before they go to a model, vendor or support ticket, combining regular expressions with checksum validation (Luhn for card numbers, mod-97 for IBANs, country formats for national IDs) to cut false positives, pseudonymising values consistently so joins and keys still line up, writing an audit of every replacement, and re-scanning the output to prove nothing leaked. Use when you must share, paste or upload data that may contain names, emails, phone numbers, card or account numbers or other personal identifiers.",
+      "path": "skills/pii-redaction"
     },
     {
       "name": "postgres-patterns",
@@ -1493,6 +1701,26 @@
       "path": "skills/privacy-compliance"
     },
     {
+      "name": "product-discovery",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "writes-files",
+      "requires": [],
+      "description": "Product discovery work that happens before anyone writes a PRD - drafting customer interview guides built on past behaviour rather than opinions, synthesising interview notes into evidenced opportunities, mapping an opportunity solution tree from one outcome, naming and testing the riskiest assumption first, and ranking ideas with RICE, ICE or cost of delay with every score's inputs and source written down. Use when a team is unsure which customer problem to solve next, needs an interview script or a synthesis of user calls, wants an opportunity tree or assumption test, or must prioritise a backlog of ideas in a way others can check.",
+      "path": "skills/product-discovery"
+    },
+    {
+      "name": "product-naming",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [
+        "curl"
+      ],
+      "description": "Name generation for products, open-source projects, packages, features and companies, working from a written naming brief through metaphor and root-word exploration to a long candidate list, screening it for sound, spelling, meaning in other languages and confusion with rivals, then running a required availability gate (domains, npm, PyPI and crates.io names, GitHub organisation, trademark registers) before presenting a ranked shortlist with reasons. Use when someone needs a name for something new, is choosing between candidate names, or wants to know whether a name is taken.",
+      "path": "skills/product-naming"
+    },
+    {
       "name": "production-scheduling",
       "version": "0.1.0",
       "category": "business",
@@ -1520,6 +1748,15 @@
       "requires": [],
       "description": "Writes, diagnoses and rewrites production prompts for language models, using clear task instructions with the context the model lacks, a few well-chosen examples, an explicit output format, splitting a hard job into chained steps, and proving each revision against a fixed set of test inputs before it ships. Use when drafting a system prompt for a new feature, fixing a prompt that gives inconsistent or off-format answers, shortening a bloated prompt, or comparing two prompt versions.",
       "path": "skills/prompt-engineering"
+    },
+    {
+      "name": "prose-translation",
+      "version": "0.1.0",
+      "category": "docs",
+      "risk": "read-only",
+      "requires": [],
+      "description": "Idiomatic translation of documents, articles, help content and UI strings between human languages, building a glossary and a do-not-translate list first, fixing register and audience, rewriting translationese so the result reads as if written in the target language, returning a paragraph-by-paragraph bilingual review, and back-checking every number, name, link and placeholder against the source. Use when someone wants text translated, a machine translation polished, or a translation reviewed for accuracy and naturalness.",
+      "path": "skills/prose-translation"
     },
     {
       "name": "prospect-research",
@@ -1800,6 +2037,15 @@
       "path": "skills/rust-testing"
     },
     {
+      "name": "scientific-simulation",
+      "version": "0.1.0",
+      "category": "data",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Numerical simulation discipline for physics, chemistry, materials and engineering codes - checking stability limits such as the CFL and explicit diffusion conditions, choosing explicit or implicit time stepping and linear or nonlinear solvers with stated tolerances, running grid and time-step convergence studies with observed order and Richardson extrapolation, keeping code verification against analytic or manufactured solutions separate from validation against experiment, planning parameter sweeps, and making runs and post-processing reproducible. Use when writing or debugging a PDE, ODE, finite-difference, finite-volume, finite-element, molecular dynamics or phase-field simulation, when a simulation blows up or results change with resolution, or when results need defending in a paper or design review.",
+      "path": "skills/scientific-simulation"
+    },
+    {
       "name": "search-first",
       "version": "0.1.0",
       "category": "meta",
@@ -1810,7 +2056,7 @@
     },
     {
       "name": "security-review",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "category": "security",
       "risk": "read-only",
       "requires": [
@@ -1844,7 +2090,7 @@
     },
     {
       "name": "skill-authoring",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "category": "meta",
       "risk": "writes-files",
       "requires": [],
@@ -1996,7 +2242,7 @@
     },
     {
       "name": "systematic-debugging",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "category": "coding",
       "risk": "runs-commands",
       "requires": [
@@ -2037,8 +2283,19 @@
       "path": "skills/terraform-patterns"
     },
     {
-      "name": "test-coverage-improvement",
+      "name": "test-case-design",
       "version": "0.1.0",
+      "category": "testing",
+      "risk": "read-only",
+      "requires": [
+        "pict"
+      ],
+      "description": "Chooses test inputs on purpose rather than by habit: equivalence partitions and boundary values, pairwise and N-wise combinatorial suites generated from a PICT model with constraints and weights, and property-based tests (Hypothesis, fast-check, proptest, jqwik) picked from a strength-ordered catalogue of roundtrip, oracle, idempotence and invariant properties while rejecting tautological and vacuous ones. Use when deciding which inputs a test suite should cover, taming a combinatorial explosion of parameters, or replacing a pile of hand-picked example tests with properties.",
+      "path": "skills/test-case-design"
+    },
+    {
+      "name": "test-coverage-improvement",
+      "version": "0.1.1",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [],
@@ -2135,6 +2392,35 @@
       "path": "skills/unicode-text-processing"
     },
     {
+      "name": "unity-development",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Unity game development in C# - MonoBehaviour lifecycle order (Awake, OnEnable, Start, Update, FixedUpdate, LateUpdate, OnDisable, OnDestroy), per-frame allocation traps found with the Profiler's GC.Alloc column, cached component lookups, ScriptableObjects for shared data and settings, coroutines versus Awaitable with destroyCancellationToken, structured runtime logging and in-game debug console commands, Edit Mode and Play Mode tests with the Unity Test Framework, and headless batch-mode builds and test runs from the command line for CI. Use when writing or debugging Unity scripts, a Unity game stutters from garbage collection, setting up Unity tests, or running Unity builds and tests without the Editor UI.",
+      "path": "skills/unity-development"
+    },
+    {
+      "name": "variant-analysis",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "runs-commands",
+      "requires": [
+        "semgrep"
+      ],
+      "description": "Finds the siblings of a bug you already have by pinning its root cause, writing a Semgrep, CodeQL or grep pattern that matches only the known instance, then loosening that pattern one element at a time until false positives pass half, triaging every hit, and committing the surviving rule to CI so the mistake cannot recur. Also covers running Semgrep and CodeQL scans and triaging their SARIF output. Use when a vulnerability or defect has been fixed and you need to catch the same mistake elsewhere, or to turn a one-off finding into a lasting lint rule.",
+      "path": "skills/variant-analysis"
+    },
+    {
+      "name": "vendor-evaluation",
+      "version": "0.1.0",
+      "category": "business",
+      "risk": "network",
+      "requires": [],
+      "description": "Buyer-side selection of a SaaS or software vendor - agreeing weighted must-have and scored criteria with stakeholders before any demo, checking each vendor's claims against its documentation, public status history, pricing pages, security reports and customer references, logging contradictions and unanswered questions, asking about security, data processing, lock-in and exit costs, and producing a scored comparison with a recommendation and its risks. Use when a team is choosing between software tools or platforms, writing an RFP or shortlist, sanity-checking a sales pitch, or needs a defensible record of why one vendor was picked.",
+      "path": "skills/vendor-evaluation"
+    },
+    {
       "name": "verification-loop",
       "version": "0.1.1",
       "category": "testing",
@@ -2157,6 +2443,18 @@
       ],
       "description": "Editorial workflow for turning raw footage into a finished cut - logging clips and pulling selects, building a paper edit, rough cut then fine cut, pacing and J/L cuts, matching the rhythm of a reference edit, subtitles and captions in SRT or WebVTT, loudness to a delivery target, basic colour correction, and conforming from an edit decision list with FFmpeg or DaVinci Resolve's Python scripting API. Use when someone hands you interviews, B-roll or screen footage and wants a finished video, asks to tighten a rough cut, wants subtitles and levels fixed before delivery, or needs a timeline assembled or rendered from a script.",
       "path": "skills/video-editing"
+    },
+    {
+      "name": "video-understanding",
+      "version": "0.1.0",
+      "category": "ai",
+      "risk": "runs-commands",
+      "requires": [
+        "ffmpeg",
+        "ffprobe"
+      ],
+      "description": "Lets the agent watch a local video or one the user is allowed to download, by probing it, pulling scene-change keyframes with FFmpeg and tiling them into timestamped contact sheets, producing a timestamped transcript with a local Whisper model or existing captions, reading the whole transcript before answering, zooming into a time range with denser frames, citing answers as timestamps, and treating any text spoken or shown on screen as untrusted data rather than instructions. Use when someone asks what happens in a recording, wants a meeting, lecture, demo or bug-repro video summarised or searched, needs the moment something appears located, or asks questions about a clip's visuals or speech.",
+      "path": "skills/video-understanding"
     },
     {
       "name": "vite-patterns",
@@ -2186,6 +2484,17 @@
       "requires": [],
       "description": "Builds and fixes web UI so it meets WCAG 2.2 Level AA, starting from semantic HTML and adding keyboard support, focus management, labelled forms with announced errors, sufficient colour contrast and ARIA only where native elements fall short, then checks the result with axe and a screen reader. Use when writing or changing components, forms, dialogs, menus or pages that people must be able to use with a keyboard, screen reader, zoom or voice control.",
       "path": "skills/web-accessibility"
+    },
+    {
+      "name": "web-pentest",
+      "version": "0.1.0",
+      "category": "security",
+      "risk": "network",
+      "requires": [
+        "ffuf"
+      ],
+      "description": "Runs authorised black-box discovery against a web application you own or are contracted in writing to test, requiring an explicit scope, target list and rate limit up front and refusing anything without them, then performing content and parameter discovery with ffuf - auto-calibration, status and size filters, recursion and raw authenticated requests - reading the hits in context, and confirming findings without mutating or destroying data. Use when you have signed authorisation to probe a specific web target for hidden paths, parameters, endpoints or virtual hosts.",
+      "path": "skills/web-pentest"
     },
     {
       "name": "web-performance",
@@ -3047,7 +3356,7 @@
     },
     {
       "name": "security-reviewer",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "security",
       "risk": "runs-commands",
       "requires": [
@@ -3197,7 +3506,7 @@
     },
     {
       "name": "ui-auditor",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "testing",
       "risk": "runs-commands",
       "requires": [
@@ -3395,7 +3704,7 @@
     },
     {
       "name": "fix-bug",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "coding",
       "risk": "runs-commands",
       "requires": [
@@ -3474,6 +3783,15 @@
       "requires": [],
       "description": "Turn a lesson from this session into a lasting project rule, in AGENTS.md or a Kete Loom rule, so future sessions don't repeat the mistake.",
       "path": "commands/learn.md"
+    },
+    {
+      "name": "lint-agent-config",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Lint a project's agent setup (AGENTS.md and CLAUDE.md, skills, agents, commands, rules, hooks, MCP configs, plugin manifests) for broken references, invalid frontmatter, bloat, conflicts and risky settings.",
+      "path": "commands/lint-agent-config.md"
     },
     {
       "name": "loom",
@@ -3648,6 +3966,15 @@
       ],
       "description": "Review the current changes for bugs, risky patterns and missing tests, routed to the reviewer for the language that changed.",
       "path": "commands/review.md"
+    },
+    {
+      "name": "rules-review",
+      "version": "0.1.0",
+      "category": "meta",
+      "risk": "runs-commands",
+      "requires": [],
+      "description": "Review recent local agent session logs, read-only, against AGENTS.md, CLAUDE.md, rules and installed skills; report broken, missing, stale and untriggered guidance, and edit only what you approve.",
+      "path": "commands/rules-review.md"
     },
     {
       "name": "save-session",
@@ -4033,7 +4360,7 @@
     },
     {
       "name": "block-secret-reads",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "security",
       "risk": "read-only",
       "requires": [],
@@ -4334,6 +4661,17 @@
       "description": "Linear's remote MCP server: read and update issues, projects and comments, signed in with Linear OAuth.",
       "homepage": "https://linear.app/docs/mcp",
       "path": "mcp/linear.json"
+    },
+    {
+      "name": "lsp",
+      "version": "0.1.0",
+      "category": "coding",
+      "risk": "writes-files",
+      "transport": "stdio",
+      "auth": "none",
+      "description": "agent-lsp: a local MCP server over your installed language servers (gopls, pyright, typescript-language-server, rust-analyzer…) for go-to-definition, references, callers, blast radius, rename and diagnostics. Needs no key; version pinned.",
+      "homepage": "https://github.com/blackwell-systems/agent-lsp",
+      "path": "mcp/lsp.json"
     },
     {
       "name": "memory",

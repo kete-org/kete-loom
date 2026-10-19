@@ -218,11 +218,12 @@
     ]
   },
   "mcp-code": {
-    "description": "MCP pack for code hosting and errors: GitHub, local Git and Sentry.",
+    "description": "MCP pack for code hosting and errors: GitHub, local Git, Sentry and language-server navigation (lsp).",
     "mcp": [
       "github",
       "git",
-      "sentry"
+      "sentry",
+      "lsp"
     ]
   },
   "mcp-team": {

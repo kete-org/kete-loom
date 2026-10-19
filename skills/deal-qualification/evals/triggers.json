@@ -1,0 +1,16 @@
+{
+  "should_trigger": [
+    "Here are my notes from three calls with Acme Logistics, run a MEDDICC review and tell me if this deal is real",
+    "My rep says the Globex opportunity will close this quarter, check the evidence before our forecast call",
+    "Is our contact at the bank actually a champion or just friendly? Here's the email thread",
+    "Prepare the questions for my next call so I can find the economic buyer and the decision process",
+    "Score my top five pipeline deals on BANT and tell me which ones I should disqualify"
+  ],
+  "should_not_trigger": [
+    "Build a list of 40 target accounts in Kenyan fintech that match our ICP",
+    "Write a four-step cold email sequence to heads of operations at logistics companies",
+    "We're the buyer: compare three CRM vendors and recommend one with a weighted scorecard",
+    "Clean up duplicate contacts and stale opportunities in our HubSpot",
+    "Draft a statement of work for the client who just signed"
+  ]
+}

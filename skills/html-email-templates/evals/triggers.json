@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Our newsletter's hero background image disappears in Outlook 2019 on Windows, fix the template",
+    "Convert this Figma design for the monthly product update into responsive MJML",
+    "Gmail cuts off our order receipt with 'View entire message' and hides the unsubscribe link",
+    "The logo and text become unreadable in dark mode in the Gmail app, how should the email HTML handle that?",
+    "Write a React Email component for the invoice email with line items and a plain-text version",
+    "Make the two-column email layout stack on phones without breaking classic Outlook"
+  ],
+  "should_not_trigger": [
+    "Send the password reset email through Postmark from our Express backend",
+    "Our marketing emails land in the Outlook junk folder, check our DMARC setup",
+    "Write the copy for a three-email onboarding sequence for new trial users",
+    "Build a responsive pricing page with CSS grid for our website",
+    "Draft a company-wide announcement about the office move"
+  ]
+}

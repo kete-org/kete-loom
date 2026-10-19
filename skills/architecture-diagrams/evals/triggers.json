@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "Draw an architecture diagram of our AWS setup from the Terraform in infra/ using the official AWS icons",
+    "Make a Mermaid sequence diagram of what happens when a user checks out, including the payment timeout path",
+    "Our docs/architecture.png is two years out of date, redraw it from the current docker-compose and k8s manifests",
+    "Create a C4 container diagram of this monorepo in PlantUML and export it to SVG",
+    "Turn the request flow through our gateway, auth service and queue into an animated D2 diagram for a talk",
+    "Build an editable draw.io diagram of our Azure topology that the ops team can update later"
+  ],
+  "should_not_trigger": [
+    "Write a short architecture overview of the codebase in docs/CODEMAP.md",
+    "Record why we chose Kafka over RabbitMQ as an architecture decision",
+    "Plot monthly active users as a line chart for the board report",
+    "Design the database schema for the new invoicing feature",
+    "Review our Terraform for security misconfigurations before we apply it"
+  ]
+}
