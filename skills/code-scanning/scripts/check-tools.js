@@ -33,7 +33,7 @@ const TOOLS = [
   },
   {
     name: 'bandit', category: 'sast', bin: 'bandit', version: ['--version'], applies: (r) => r.python,
-    install: { macos: 'pipx install "bandit[sarif]==1.9.4"', linux: 'pipx install "bandit[sarif]==1.9.4"', windows: 'pipx install "bandit[sarif]==1.9.4"' },
+    install: { macos: 'brew install bandit', linux: 'pipx install bandit==1.9.4', windows: 'pipx install bandit==1.9.4' },
   },
   {
     name: 'gosec', category: 'sast', bin: 'gosec', version: ['-version'], applies: (r) => r.go,
@@ -108,7 +108,9 @@ function detectRepo(root) {
 
 function version(tool) {
   if (!tool.bin) return null;
-  const r = spawnSync(tool.bin, tool.version, { encoding: 'utf8', timeout: 15000 });
+  const r = spawnSync(tool.bin, tool.version, { encoding: 'utf8', timeout: 60000 });
+  // Python tools can take longer than that on their first launch; a slow tool is still installed.
+  if (r.error && r.error.code === 'ETIMEDOUT') return 'unknown (version check timed out)';
   if (r.error || r.status !== 0) return null;
   const m = `${r.stdout}\n${r.stderr}`.match(/\d+\.\d+\.\d+/);
   return m ? m[0] : 'unknown';

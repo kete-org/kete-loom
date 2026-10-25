@@ -329,7 +329,7 @@
     },
     {
       "name": "code-scanning",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "category": "security",
       "risk": "runs-commands",
       "requires": [

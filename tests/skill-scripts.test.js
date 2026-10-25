@@ -323,6 +323,16 @@ test('normalise strips the local rules path from rule ids and makes file URIs re
   assert.ok(!fs.readFileSync(path.join(out, 'results.sarif'), 'utf8').includes(root), 'no local paths in the combined SARIF');
 });
 
+test('normalise keeps unrelated IaC issues on one line apart and pulls the finding out of Trivy messages', () => {
+  const root = tmp();
+  const trivy = hit('DS-0001', 'Dockerfile', 1);
+  trivy.message.text = "Artifact: Dockerfile\nType: dockerfile\nMessage: Specify a tag in the 'FROM' statement\nLink: x";
+  const { normalise } = require(path.join(CS, 'normalise.js'));
+  const s = normalise(scanFixture(root, { checkov: sarifRun('checkov', [hit('CKV_DOCKER_3', 'Dockerfile', 1)]), trivy: sarifRun('trivy', [trivy]) }));
+  assert.strictEqual(s.findings.length, 2);
+  assert.ok(s.findings.some((f) => f.message === "Specify a tag in the 'FROM' statement"));
+});
+
 test('normalise ranks by security-severity, gates with --fail-on and rejects bad input', () => {
   const root = tmp();
   const out = scanFixture(root, { checkov: sarifRun('checkov', [{ ...hit('CKV_1', 'main.tf', 1), level: 'note', properties: { 'security-severity': '9.1' } }]) });
@@ -380,4 +390,17 @@ test('run-scanners rejects option-like refs and unknown arguments', () => {
   assert.strictEqual(run('.', '--diff', '--output=/etc/x').status, 2);
   assert.strictEqual(run('.', '--frobnicate').status, 2);
   assert.strictEqual(run('.', '--timeout', '0').status, 2);
+});
+
+test('bandit JSON becomes SARIF with hard-coded values masked and parse errors kept', () => {
+  const { banditToSarif } = require(path.join(CS, 'run-scanners.js'));
+  const value = `AKIA${'Q'.repeat(16)}`;
+  const report = banditToSarif(JSON.stringify({
+    results: [{ filename: './app/settings.py', line_number: 3, test_id: 'B105', test_name: 'hardcoded_password_string', issue_severity: 'LOW', issue_text: `Possible hardcoded password: '${value}'` }],
+    errors: [{ filename: './bad.py', reason: 'syntax error' }],
+  }), '/repo', '1.9.4');
+  const r = report.runs[0].results[0];
+  assert.strictEqual(r.message.text, "Possible hardcoded password: 'AKIA… (20 chars)'");
+  assert.deepStrictEqual([r.ruleId, r.level, r.locations[0].physicalLocation.artifactLocation.uri], ['B105:hardcoded_password_string', 'note', 'app/settings.py']);
+  assert.strictEqual(report.runs[0].invocations[0].toolExecutionNotifications[0].level, 'error');
 });

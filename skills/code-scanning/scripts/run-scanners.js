@@ -21,7 +21,8 @@ const COMMANDS = {
   opengrep: (c) => c.rules && { cmd: 'opengrep', args: ['scan', '--config', c.rules, '--sarif-output', c.file, '--timeout', '30', '--quiet', c.root] },
   semgrep: (c) => c.rules && { cmd: 'semgrep', args: ['scan', '--config', c.rules, '--sarif', '--output', c.file, '--metrics', 'off', '--timeout', '30', '--quiet', c.root] },
   eslint: (c) => ({ cmd: process.execPath, args: [path.join(c.root, 'node_modules', 'eslint', 'bin', 'eslint.js'), '--format', 'json', '--no-error-on-unmatched-pattern', '.'], cwd: c.root, convert: eslintToSarif }),
-  bandit: (c) => ({ cmd: 'bandit', args: ['-r', c.root, '-f', 'sarif', '-o', c.file, '-q', '-x', 'node_modules,.venv,venv,vendor,build,dist'] }),
+  // JSON, not SARIF: the sarif formatter is an optional extra that Homebrew's bandit lacks.
+  bandit: () => ({ cmd: 'bandit', args: ['-r', '.', '-f', 'json', '-q', '-x', './node_modules,./.venv,./venv,./vendor,./build,./dist'], convert: banditToSarif }),
   gosec: (c) => ({ cmd: 'gosec', args: ['-fmt', 'sarif', '-out', c.file, '-no-fail', '-quiet', './...'], cwd: c.root }),
   gitleaks: (c) => ({ cmd: 'gitleaks', args: ['git', '--report-format', 'sarif', '--report-path', c.file, '--redact', '--exit-code', '0', '--no-banner', ...(c.diff ? ['--log-opts', `${c.diff}..HEAD`] : []), c.root] }),
   'osv-scanner': (c) => ({ cmd: 'osv-scanner', args: ['scan', 'source', '-r', '--format', 'sarif', '--output', c.file, c.root] }),
@@ -52,6 +53,23 @@ function eslintToSarif(stdout, root, version) {
     }
   }
   return sarif('eslint', version, results);
+}
+
+const BANDIT_LEVEL = { HIGH: 'error', MEDIUM: 'warning', LOW: 'note' };
+
+function banditToSarif(stdout, root, version) {
+  const data = JSON.parse(stdout);
+  const results = data.results.map((r) => ({
+    ruleId: `${r.test_id}:${r.test_name}`,
+    level: BANDIT_LEVEL[r.issue_severity] || 'warning',
+    // B105-B107 quote the hard-coded value itself; keep only its first 4 characters.
+    message: { text: r.issue_text.replace(/'([^']{5,})'/g, (_, v) => `'${v.slice(0, 4)}… (${v.length} chars)'`) },
+    locations: at(path.relative(root, path.resolve(root, r.filename)), r.line_number),
+  }));
+  const report = sarif('bandit', version, results);
+  const errors = (data.errors || []).map((e) => ({ level: 'error', message: { text: `${e.filename}: ${e.reason}` } }));
+  if (errors.length) report.runs[0].invocations = [{ executionSuccessful: true, toolExecutionNotifications: errors }];
+  return report;
 }
 
 // scan-secrets.js prints "file:line  rule  masked" lines; the values are already masked.
@@ -192,6 +210,6 @@ function main(argv) {
   return 0;
 }
 
-module.exports = { parseArgs, plan, eslintToSarif, scanSecretsToSarif };
+module.exports = { parseArgs, plan, eslintToSarif, banditToSarif, scanSecretsToSarif };
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));

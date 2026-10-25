@@ -53,8 +53,8 @@ Only when the project already lists both `eslint` and `eslint-plugin-security` a
 
 ## Bandit 1.9.4 (Python)
 
-- `pipx install "bandit[sarif]==1.9.4"` (the `sarif` extra adds the formatter).
-- Flags: `bandit -r <repo> -f sarif -o <file> -q -x node_modules,.venv,venv,vendor,build,dist`
+- macOS `brew install bandit`; any OS `pipx install bandit==1.9.4`.
+- Flags (run in the repository root): `bandit -r . -f json -q -x ./node_modules,./.venv,./venv,./vendor,./build,./dist`. JSON rather than SARIF, because the SARIF formatter is an optional extra that Homebrew's build lacks. `run-scanners.js` converts it to SARIF and masks hard-coded values that B105-B107 quote in their messages.
 
 ## gosec 2.30.0 (Go)
 

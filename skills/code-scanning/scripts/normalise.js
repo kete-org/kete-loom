@@ -24,6 +24,13 @@ function severityOf(result, rule) {
   return { error: 'high', warning: 'medium', note: 'low', none: 'info' }[level] || 'medium';
 }
 
+function messageOf(result, rule) {
+  const text = ((result.message && result.message.text) || (rule && rule.shortDescription && rule.shortDescription.text) || '').trim();
+  // Trivy puts "Artifact: ...\nType: ...\nMessage: <the finding>" in the message; keep the finding.
+  const m = text.match(/^Message: (.+)$/m);
+  return m ? m[1].trim() : text;
+}
+
 function relPath(uri, root, base) {
   if (!uri) return null;
   let p = uri;
@@ -100,7 +107,7 @@ function normalise(outDir) {
         findings.push({
           id: fingerprint.slice(0, 12), fingerprint, tool, tools: [tool], category, rule: ruleId,
           severity: severityOf(result, rules[ruleId]), file, line,
-          message: ((result.message && result.message.text) || (rules[ruleId] && rules[ruleId].shortDescription && rules[ruleId].shortDescription.text) || '').trim(),
+          message: messageOf(result, rules[ruleId]),
         });
       }
       runs.push({ ...sr, results: kept });
@@ -109,11 +116,14 @@ function normalise(outDir) {
 
   // The same issue from two tools (gitleaks and scan-secrets, opengrep and bandit) becomes one finding;
   // two rules from one tool on the same line stay separate, and one rule matching a line twice is one finding.
+  // IaC, Dockerfile and workflow tools pin many unrelated issues to one resource line, so only SAST and
+  // secret hits are merged across tools.
+  const MERGE_ACROSS_TOOLS = new Set(['sast', 'secrets']);
   const list = [];
   const byLine = new Map();
   for (const f of findings) {
     const key = `${f.category}|${f.file}|${f.line}`;
-    const prev = f.file && (byLine.get(key) || []).find((p) => !p.tools.includes(f.tool) || p.fingerprint === f.fingerprint);
+    const prev = f.file && (byLine.get(key) || []).find((p) => p.fingerprint === f.fingerprint || (MERGE_ACROSS_TOOLS.has(f.category) && !p.tools.includes(f.tool)));
     if (!prev) {
       list.push(f);
       byLine.set(key, [...(byLine.get(key) || []), f]);

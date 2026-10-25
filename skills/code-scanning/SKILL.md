@@ -4,7 +4,7 @@ description: Tool-driven security scan of a whole repository or a pull request d
 license: MIT
 compatibility: Any Agent Skills host that can run commands. Scripts need Node 18+ and git; each scanner is optional and used only if installed. Scanners may update their vulnerability databases over the network.
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: security
   kete-loom/risk: runs-commands
   kete-loom/requires: "node, git"
@@ -83,7 +83,7 @@ Dependencies: follow the `dependency-audit` skill for the dependency part if it 
 node <skill-dir>/scripts/normalise.js <dir> [--fail-on high]
 ```
 
-It writes `<dir>/findings.json` and `<dir>/results.sarif`. Each finding has tool, rule, severity, file, line, message and a fingerprint built from the line's text, so it keeps its id when code above it moves. It drops vendored, generated and build-output paths (`node_modules`, `vendor`, `dist`, `build`, `*.min.js`, `*.pb.go` and similar), keeps only changed files in a diff scan, and merges the same issue reported by two tools. `--fail-on` exits 1 when any finding is at or above that severity. It is meant for CI gates and is applied before triage.
+It writes `<dir>/findings.json` and `<dir>/results.sarif`. Each finding has tool, rule, severity, file, line, message and a fingerprint built from the line's text, so it keeps its id when code above it moves. It drops vendored, generated and build-output paths (`node_modules`, `vendor`, `dist`, `build`, `*.min.js`, `*.pb.go` and similar), keeps only changed files in a diff scan, and merges the same SAST or secret hit reported by two tools. IaC, Dockerfile and workflow findings are never merged across tools, because those tools pin many unrelated issues to one resource line. `--fail-on` exits 1 when any finding is at or above that severity. It is meant for CI gates and is applied before triage.
 
 ## 5. Triage every finding
 
