@@ -260,3 +260,124 @@ test('post-metrics exits 2 on missing columns, unknown group columns and bad opt
   assert.strictEqual(run(csv, '--followers', '0').status, 2);
   assert.strictEqual(run().status, 2);
 });
+
+const CS = path.join(SKILLS, 'code-scanning', 'scripts');
+
+function sarifRun(name, results) {
+  return { version: '2.1.0', runs: [{ tool: { driver: { name } }, results }] };
+}
+const hit = (ruleId, file, line, extra = {}) => ({ ruleId, level: 'error', message: { text: ruleId }, locations: [{ physicalLocation: { artifactLocation: { uri: file }, region: { startLine: line, ...extra } } }], ...extra.result });
+
+function scanFixture(root, files, scope = {}) {
+  const out = tmp();
+  fs.writeFileSync(path.join(out, 'run.json'), JSON.stringify({ scope: { root, mode: 'full', files: null, ...scope }, tools: [] }));
+  for (const [name, report] of Object.entries(files)) fs.writeFileSync(path.join(out, `${name}.sarif`), JSON.stringify(report));
+  return out;
+}
+
+test('normalise merges one issue found by two tools but keeps two rules from one tool apart', () => {
+  const root = tmp();
+  fs.writeFileSync(path.join(root, 'a.js'), 'const k = 1;\nconst t = 2;\nconst t = 2;\n');
+  const out = scanFixture(root, {
+    gitleaks: sarifRun('gitleaks', [hit('generic-api-key', 'a.js', 1, { snippet: { text: 'REDACTED' } })]),
+    'scan-secrets': sarifRun('scan-secrets', [hit('Hard-coded secret assignment', 'a.js', 1)]),
+    zizmor: sarifRun('zizmor', [hit('zizmor/artipacked', 'a.js', 2), hit('zizmor/unpinned-uses', 'a.js', 2), hit('zizmor/unpinned-uses', 'a.js', 2), hit('zizmor/unpinned-uses', 'a.js', 3)]),
+  });
+  const { normalise } = require(path.join(CS, 'normalise.js'));
+  const s = normalise(out);
+  assert.strictEqual(s.findings.length, 4, 'an identical line elsewhere is its own finding');
+  assert.deepStrictEqual(s.findings.find((f) => f.category === 'secrets').tools, ['gitleaks', 'scan-secrets']);
+  assert.strictEqual(s.dropped.duplicates, 2);
+  assert.strictEqual(new Set(s.findings.map((f) => f.id)).size, s.findings.length, 'ids are unique');
+  const combined = fs.readFileSync(path.join(out, 'results.sarif'), 'utf8');
+  assert.doesNotMatch(combined, /REDACTED/, 'secret snippets never reach the combined SARIF');
+  assert.match(combined, /keteLoom\/v1/);
+});
+
+test('normalise drops vendored, generated and out-of-diff paths, and the fingerprint survives a line shift', () => {
+  const root = tmp();
+  fs.writeFileSync(path.join(root, 'a.js'), 'eval(x);\n');
+  const report = sarifRun('opengrep', [hit('eval', 'a.js', 1), hit('eval', 'node_modules/x/i.js', 3), hit('eval', 'public/app.min.js', 1), hit('eval', 'b.js', 1)]);
+  const { normalise } = require(path.join(CS, 'normalise.js'));
+  const first = normalise(scanFixture(root, { opengrep: report }, { mode: 'diff', files: ['a.js', 'node_modules/x/i.js'] }));
+  assert.deepStrictEqual(first.findings.map((f) => f.file), ['a.js']);
+  assert.deepStrictEqual(first.dropped, { excluded: 2, outsideDiff: 1, duplicates: 0 });
+  fs.writeFileSync(path.join(root, 'a.js'), '// new header\n\neval(x);\n');
+  const shifted = normalise(scanFixture(root, { opengrep: sarifRun('opengrep', [hit('eval', 'a.js', 3)]) }));
+  assert.strictEqual(shifted.findings[0].fingerprint, first.findings[0].fingerprint);
+});
+
+test('normalise strips the local rules path from rule ids and makes file URIs repo-relative', () => {
+  const root = tmp();
+  fs.writeFileSync(path.join(root, 'a.js'), 'eval(x);\n');
+  const rules = path.join(root, '.cache', 'rules', 'javascript');
+  const id = `${path.dirname(rules).replace(/^[A-Za-z]:/, '').split(path.sep).join('.').replace(/^\./, '')}.javascript.eval`;
+  const report = sarifRun('opengrep', [hit(id, path.join(root, 'a.js'), 1)]);
+  report.runs[0].tool.driver.rules = [{ id, name: id, properties: { 'security-severity': '7.5' } }];
+  const out = scanFixture(root, { opengrep: report });
+  const run = JSON.parse(fs.readFileSync(path.join(out, 'run.json'), 'utf8'));
+  fs.writeFileSync(path.join(out, 'run.json'), JSON.stringify({ ...run, rules }));
+  const { normalise } = require(path.join(CS, 'normalise.js'));
+  const f = normalise(out).findings[0];
+  assert.deepStrictEqual([f.rule, f.severity, f.file], ['javascript.eval', 'high', 'a.js']);
+  assert.ok(!fs.readFileSync(path.join(out, 'results.sarif'), 'utf8').includes(root), 'no local paths in the combined SARIF');
+});
+
+test('normalise ranks by security-severity, gates with --fail-on and rejects bad input', () => {
+  const root = tmp();
+  const out = scanFixture(root, { checkov: sarifRun('checkov', [{ ...hit('CKV_1', 'main.tf', 1), level: 'note', properties: { 'security-severity': '9.1' } }]) });
+  const run = (...a) => spawnSync(process.execPath, [path.join(CS, 'normalise.js'), ...a], { encoding: 'utf8' });
+  const ok = run(out);
+  assert.strictEqual(ok.status, 0, ok.stderr);
+  assert.match(ok.stdout, /\[critical\] main\.tf:1/);
+  assert.strictEqual(run(out, '--fail-on', 'high').status, 1);
+  assert.strictEqual(run(out, '--fail-on', 'urgent').status, 2);
+  assert.strictEqual(run(tmp()).status, 2, 'no run.json');
+});
+
+test('check-tools detects which scanner categories apply and gives install commands for every OS', () => {
+  const root = tmp();
+  fs.mkdirSync(path.join(root, '.github', 'workflows'), { recursive: true });
+  fs.writeFileSync(path.join(root, '.github', 'workflows', 'ci.yml'), 'on: push\n');
+  fs.writeFileSync(path.join(root, 'app.py'), 'print(1)\n');
+  fs.writeFileSync(path.join(root, 'Dockerfile'), 'FROM node:22\n');
+  const r = spawnSync(process.execPath, [path.join(CS, 'check-tools.js'), root, '--json'], { encoding: 'utf8' });
+  assert.strictEqual(r.status, 0, r.stderr);
+  const out = JSON.parse(r.stdout);
+  const applies = Object.fromEntries(out.tools.map((t) => [t.name, t.applies]));
+  assert.deepStrictEqual([applies.bandit, applies.hadolint, applies.zizmor, applies.gosec, applies.checkov], [true, true, true, false, false]);
+  for (const t of out.tools) assert.deepStrictEqual(Object.keys(t.install).sort(), ['linux', 'macos', 'windows']);
+  assert.strictEqual(spawnSync(process.execPath, [path.join(CS, 'check-tools.js'), '--nope'], { encoding: 'utf8' }).status, 2);
+});
+
+// Fake scanners are shell scripts, which Windows can't spawn without a shell.
+test('run-scanners keeps going when one tool fails or times out, and fails a SAST run with no rules', { skip: process.platform === 'win32' }, () => {
+  const repo = tmp();
+  execFileSync('git', ['init', '-q'], { cwd: repo });
+  fs.writeFileSync(path.join(repo, 'a.js'), 'x\n');
+  const bin = tmp();
+  const fake = (name, body) => {
+    fs.writeFileSync(path.join(bin, name), `#!/bin/sh\nif [ "$1" = version ] || [ "$1" = --version ]; then echo "${name} 1.2.3"; exit 0; fi\n${body}\n`);
+    fs.chmodSync(path.join(bin, name), 0o755);
+  };
+  fake('gitleaks', `while [ $# -gt 0 ]; do [ "$1" = --report-path ] && out="$2"; shift; done\necho '${JSON.stringify(sarifRun('gitleaks', [hit('k', 'a.js', 1)]))}' > "$out"`);
+  fake('zizmor', 'echo "not sarif"; exit 3');
+  fake('opengrep', 'exec sleep 5');
+  // A rejected rule config: exit 0, valid SARIF, no rules.
+  fake('semgrep', `while [ $# -gt 0 ]; do [ "$1" = --output ] && out="$2"; shift; done\necho '${JSON.stringify(sarifRun('semgrep', []))}' > "$out"`);
+  const out = path.join(tmp(), 'scan');
+  const r = spawnSync(process.execPath, [path.join(CS, 'run-scanners.js'), repo, '--out', out, '--tools', 'zizmor,opengrep,semgrep,gitleaks', '--rules', bin, '--timeout', '1'], {
+    encoding: 'utf8', env: { ...process.env, PATH: `${bin}${path.delimiter}${process.env.PATH}` },
+  });
+  assert.strictEqual(r.status, 0, r.stderr);
+  const status = Object.fromEntries(JSON.parse(fs.readFileSync(path.join(out, 'run.json'), 'utf8')).tools.map((t) => [t.name, t.status]));
+  assert.deepStrictEqual(status, { zizmor: 'failed', opengrep: 'timeout', semgrep: 'failed', gitleaks: 'ok' });
+  assert.ok(fs.existsSync(path.join(out, 'gitleaks.sarif')));
+});
+
+test('run-scanners rejects option-like refs and unknown arguments', () => {
+  const run = (...a) => spawnSync(process.execPath, [path.join(CS, 'run-scanners.js'), ...a], { encoding: 'utf8' });
+  assert.strictEqual(run('.', '--diff', '--output=/etc/x').status, 2);
+  assert.strictEqual(run('.', '--frobnicate').status, 2);
+  assert.strictEqual(run('.', '--timeout', '0').status, 2);
+});

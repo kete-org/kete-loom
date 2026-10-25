@@ -1,0 +1,18 @@
+{
+  "should_trigger": [
+    "scan the whole repo for vulnerabilities, it's a node + python monorepo and we've never run any SAST on it",
+    "run semgrep and gitleaks over everything and give me one list of what's actually real, not 400 warnings",
+    "set up security scanning in CI so every PR gets SAST + secret scanning and the results show up in the github security tab as sarif",
+    "can you check our entire git history for leaked api keys? someone said a stripe key was committed a couple of years ago",
+    "we've got terraform, a bunch of Dockerfiles and github workflows. run checkov, hadolint and zizmor and triage the findings",
+    "opengrep is installed now, run a full codebase scan and fix the high severity stuff it confirms"
+  ],
+  "should_not_trigger": [
+    "review this PR for security issues before I merge, it adds a password reset endpoint in src/auth/reset.ts",
+    "is the npm package 'event-stream-utils' safe to add? it has like 200 weekly downloads",
+    "threat model the new file-sharing feature before we start building it, it lets users share links to private docs",
+    "harden my agent's MCP config, it has filesystem and github servers with full access right now",
+    "our dependabot opened 14 PRs for vulnerable transitive deps, which ones actually matter?",
+    "add a security headers middleware (CSP, HSTS) to our express app"
+  ]
+}

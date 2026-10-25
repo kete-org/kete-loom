@@ -4,7 +4,7 @@ description: Security review of a code change or module covering secrets, inject
 license: MIT
 compatibility: Any Agent Skills host. The secret scanner needs Node 18+ and git.
 metadata:
-  kete-loom/version: "0.1.3"
+  kete-loom/version: "0.1.4"
   kete-loom/category: security
   kete-loom/risk: read-only
   kete-loom/requires: "git, node"
@@ -13,7 +13,7 @@ metadata:
 
 # Security review
 
-Find real, exploitable problems in the code in front of you and explain how to fix them. This skill is **read-only**: report findings, and change code only if the user asks.
+Find real, exploitable problems in the code in front of you and explain how to fix them. This skill is **read-only**: report findings, and change code only if the user asks. For a scanner-driven scan of a whole repository or its git history, use the `code-scanning` skill instead.
 
 ## 1. Set the scope
 

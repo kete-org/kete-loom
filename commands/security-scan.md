@@ -3,7 +3,7 @@ name: security-scan
 description: Scan the current change for vulnerabilities, leaked secrets and unsafe dependencies, and report findings by severity.
 license: MIT
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.2.0"
   kete-loom/category: security
   kete-loom/risk: runs-commands
   kete-loom/argument-hint: "[files, commit range or area]"
@@ -11,6 +11,8 @@ metadata:
 ---
 
 Run a security review of the current change. Do not edit files; report only.
+
+If the scope below is the whole repository ("everything", "the repo", "full scan", git history) or scanners such as Opengrep, Semgrep, Gitleaks, Checkov or zizmor are installed, and the `code-scanning` skill is available, follow it, and stop at its report: skip its fix step and ask before installing any scanner. Otherwise use the review below.
 
 If the `security-reviewer` agent is available, delegate to it with the scope below. Otherwise, if the `security-review` skill is available, follow it. If neither is available:
 
