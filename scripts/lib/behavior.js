@@ -18,7 +18,8 @@ function loadBehavior(item) {
   if (!fs.existsSync(file)) return null;
   let data;
   try {
-    data = JSON.parse(fs.readFileSync(file, 'utf8'));
+    // Fake secrets are written as {{repeat:c:n}}, as in hook cases, so the repository never holds key-shaped strings.
+    data = JSON.parse(fs.readFileSync(file, 'utf8').replace(/\{\{repeat:(.):(\d+)\}\}/g, (_, c, n) => c.repeat(Number(n))));
   } catch (e) {
     return { scenarios: [], problems: [`evals/behavior.json is not valid JSON: ${e.message}`] };
   }

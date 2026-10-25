@@ -109,3 +109,14 @@ test('offline mode validates every behaviour file', async () => {
   }
   assert.match(logs.join('\n'), /behaviour eval file\(s\), \d+ scenario\(s\), 0 problem/);
 });
+
+test('behavior.json expands {{repeat:c:n}} so fake secrets need not be stored key-shaped', () => {
+  const { loadBehavior } = require('../scripts/lib/behavior');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kl-behavior-'));
+  fs.mkdirSync(path.join(dir, 'evals'));
+  const s = { ...scenario, files: { 'k.js': "k = 'sk_live_{{repeat:a:40}}'" } };
+  fs.writeFileSync(path.join(dir, 'evals', 'behavior.json'), JSON.stringify({ scenarios: [s, { ...s, name: 'second' }] }));
+  const loaded = loadBehavior({ path: dir });
+  assert.deepStrictEqual(loaded.problems, []);
+  assert.strictEqual(loaded.scenarios[0].files['k.js'], `k = 'sk_live_${'a'.repeat(40)}'`);
+});
