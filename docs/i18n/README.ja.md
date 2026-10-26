@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code、Kiro にそのままインストールできます。</p>
 
-<!-- translated from README.md, source 7d6e1539b4a9 -->
+<!-- translated from README.md, source f072ba777c4f -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -91,7 +91,7 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 プラグインとしてインストールした場合は、ホスト自身のプラグインマネージャーで更新されます。1 つのホストに対しては、プラグインインストールと `npx` インストーラーのどちらか一方だけを使ってください。両方を使うと、ホストに各 skill が二重に表示されることがあります。
 
-Claude Code プラグインは、`developer` プロファイルの 4 つの安全フック (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`) も有効にします。これらは読み取り専用で、危険なシェルコマンドと編集をブロックするだけです。`PATH` 上に Node.js が必要です。その他のフックは引き続き `npx` インストーラーで導入します。
+Claude Code プラグインは、`developer` プロファイルの 4 つの安全フック (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`) も有効にします。これらは読み取り専用で、危険なシェルコマンドと編集をブロックするだけです。`PATH` 上に Node.js が必要です。すでに `npx` でいずれかをインストールしている場合は、そのコピーをアンインストールしてください（`npx @ketecode/loom uninstall --hook <name>`）。そうしないと 2 回実行されます。その他のフックは引き続き `npx` インストーラーで導入します。
 
 ## 開発手法
 

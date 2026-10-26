@@ -82,7 +82,7 @@ function grouped(host, timeoutUnit = 1) {
   };
 }
 
-// The Claude Code plugin's hooks/hooks.json, for /plugin installs: the same runner and event map as the
+// The Claude Code plugin's hooks file (hooks/claude-code.json), for /plugin installs: the same runner and event map as the
 // installer, run from the plugin's own folder. Its commands don't match RUNNER_RE, so `uninstall` never
 // touches them, and a hook installed both ways runs twice until the npx copy is removed.
 function pluginHooks(hooks) {

@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { REPO_ROOT, SKILLS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('./lib/skills');
-const { pluginAgents, pluginHooksText } = require('./lint-skills');
+const { pluginAgents, pluginHooksText, PLUGIN_HOOKS_FILE } = require('./lint-skills');
 const { switcher, translations, SWITCHER_RE } = require('./lib/i18n');
 const { listMcp } = require('./lib/mcp-install');
 
@@ -85,7 +85,8 @@ for (const t of translations()) {
 const pluginPath = path.join(REPO_ROOT, '.claude-plugin', 'plugin.json');
 const plugin = JSON.parse(fs.readFileSync(pluginPath, 'utf8'));
 plugin.agents = pluginAgents();
+plugin.hooks = PLUGIN_HOOKS_FILE;
 fs.writeFileSync(pluginPath, JSON.stringify(plugin, null, 2) + '\n');
-fs.writeFileSync(path.join(REPO_ROOT, 'hooks', 'hooks.json'), pluginHooksText());
+fs.writeFileSync(path.join(REPO_ROOT, PLUGIN_HOOKS_FILE), pluginHooksText());
 
 console.log(`catalog.json, README tables, Claude plugin agents and hooks updated (${skills.length} skills, ${agents.length} agents, ${commands.length} commands, ${rules.length} rules, ${hooks.length} hooks, ${mcp.length} MCP servers)`);

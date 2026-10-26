@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source 7d6e1539b4a9 -->
+<!-- translated from README.md, source f072ba777c4f -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -91,7 +91,7 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 Les installations par plugin se mettent à jour via le gestionnaire de plugins de l'hôte. Pour un hôte donné, utilisez soit l'installation par plugin, soit l'installateur `npx`, mais pas les deux : sinon l'hôte risque d'afficher chaque skill en double.
 
-Le plugin Claude Code active aussi les quatre hooks de sécurité du profil `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). Ils sont en lecture seule et ne font que bloquer les commandes shell et les modifications risquées ; ils ont besoin de Node.js dans votre `PATH`. Les autres hooks s'installent toujours avec l'installateur `npx`.
+Le plugin Claude Code active aussi les quatre hooks de sécurité du profil `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). Ils sont en lecture seule et ne font que bloquer les commandes shell et les modifications risquées ; ils ont besoin de Node.js dans votre `PATH`. Si vous en avez déjà installé avec `npx`, désinstallez cette copie (`npx @ketecode/loom uninstall --hook <name>`), sinon ils s'exécutent deux fois. Les autres hooks s'installent toujours avec l'installateur `npx`.
 
 ## Une méthode de développement
 

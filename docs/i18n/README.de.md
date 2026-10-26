@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source 7d6e1539b4a9 -->
+<!-- translated from README.md, source f072ba777c4f -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -91,7 +91,7 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 Plugin-Installationen werden über den Plugin-Manager des jeweiligen Hosts aktualisiert. Nutze für einen Host entweder die Plugin-Installation oder den `npx`-Installer, nicht beides, sonst listet der Host jeden Skill womöglich doppelt.
 
-Das Claude-Code-Plugin aktiviert außerdem die vier Sicherheits-Hooks des Profils `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). Sie ändern nichts und blockieren nur riskante Shell-Befehle und Bearbeitungen; sie brauchen Node.js im `PATH`. Die übrigen Hooks kommen weiterhin über den `npx`-Installer.
+Das Claude-Code-Plugin aktiviert außerdem die vier Sicherheits-Hooks des Profils `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). Sie ändern nichts und blockieren nur riskante Shell-Befehle und Bearbeitungen; sie brauchen Node.js im `PATH`. Wenn du einen davon schon mit `npx` installiert hast, entferne diese Kopie (`npx @ketecode/loom uninstall --hook <name>`), sonst läuft er doppelt. Die übrigen Hooks kommen weiterhin über den `npx`-Installer.
 
 ## Eine Entwicklungsmethode
 

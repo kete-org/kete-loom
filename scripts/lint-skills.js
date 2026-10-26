@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { REPO_ROOT, SKILLS_DIR, AGENTS_DIR, HOOKS_DIR, listSkills, listAgents, listCommands, listHooks, listRules } = require('./lib/skills');
 const { lintItem, words, jaccard, NAME_RE, SEMVER_RE, CATEGORIES, RISKS } = require('./lib/lint');
-const { loadProfiles, DETECT } = require('./lib/profiles');
+const { loadProfiles, resolveProfiles, DETECT } = require('./lib/profiles');
 const { translations } = require('./lib/i18n');
 const { listMcp } = require('./lib/mcp-install');
 const { pluginHooks: hookConfig } = require('./lib/hooks-install');
@@ -91,18 +91,24 @@ function lintManifests() {
     // Claude Code only auto-discovers agents/*.md; ours live in folders, so the plugin lists them.
     const want = JSON.stringify(pluginAgents());
     if (JSON.stringify(claude.agents || []) !== want) errors.push(`.claude-plugin/plugin.json: "agents" must be ${want}. Run "npm run catalog".`);
-    const hooksPath = path.join(REPO_ROOT, 'hooks', 'hooks.json');
+    if (claude.hooks !== PLUGIN_HOOKS_FILE) errors.push(`.claude-plugin/plugin.json: "hooks" must be "${PLUGIN_HOOKS_FILE}". Run "npm run catalog".`);
+    const hooksPath = path.join(REPO_ROOT, PLUGIN_HOOKS_FILE);
     const current = fs.existsSync(hooksPath) ? fs.readFileSync(hooksPath, 'utf8') : '';
-    if (current !== pluginHooksText()) errors.push('hooks/hooks.json is out of date with the developer profile. Run "npm run catalog".');
+    if (current !== pluginHooksText()) errors.push(`${PLUGIN_HOOKS_FILE.slice(2)} is out of date with the developer profile. Run "npm run catalog".`);
+    if (fs.existsSync(path.join(REPO_ROOT, 'hooks', 'hooks.json'))) errors.push('hooks/hooks.json must not exist: Gemini CLI and Codex would read it as their own hooks file.');
   }
   return errors;
 }
 
 const pluginAgents = () => listAgents().map((a) => `./agents/${a.dir}/AGENT.md`);
-// The plugin turns on the developer profile's hooks: read-only checks that only block risky commands and edits.
+// The plugin turns on the developer profile's hooks (read-only checks that only block risky commands and
+// edits), resolved like the installer's `--profile developer` so `extends` and `categories` count too.
+// Not hooks/hooks.json: Gemini CLI and Codex read that path in their own format from this same folder.
+const PLUGIN_HOOKS_FILE = './hooks/claude-code.json';
 const pluginHooks = () => {
-  const names = loadProfiles().developer.hooks;
-  return hookConfig(listHooks().filter((h) => names.includes(h.dir)));
+  const hooks = listHooks();
+  const names = resolveProfiles(['developer'], { catalog: { hooks } }).hooks;
+  return hookConfig(hooks.filter((h) => names.has(h.dir)));
 };
 const pluginHooksText = () => JSON.stringify(pluginHooks(), null, 2) + '\n';
 
@@ -166,4 +172,4 @@ function main() {
 
 if (require.main === module) process.exitCode = main();
 
-module.exports = { lintItem, lintSkill: lintItem, lintManifests, pluginAgents, pluginHooks, pluginHooksText };
+module.exports = { lintItem, lintSkill: lintItem, lintManifests, pluginAgents, pluginHooks, pluginHooksText, PLUGIN_HOOKS_FILE };

@@ -7,7 +7,7 @@
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
 مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code وKiro.</p>
 
-<!-- translated from README.md, source 7d6e1539b4a9 -->
+<!-- translated from README.md, source f072ba777c4f -->
 
 <!-- counts:start -->
 <!-- counts:end -->
@@ -110,7 +110,7 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 تُحدَّث الإضافات المثبّتة عبر مدير الإضافات الخاص بالبيئة المضيفة. استخدم لكل بيئة مضيفة إما التثبيت كإضافة أو مثبّت `npx`، لا الاثنين معًا، وإلا فقد تعرض البيئة كل مهارة مرتين.
 
-تُفعِّل إضافة Claude Code أيضًا خطافات الأمان الأربعة من ملف التعريف `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). وهي للقراءة فقط ولا تفعل سوى منع أوامر shell والتعديلات الخطرة، وتحتاج إلى Node.js في `PATH`. أما بقية الخطافات فما زالت تأتي من مثبّت `npx`.
+تُفعِّل إضافة Claude Code أيضًا خطافات الأمان الأربعة من ملف التعريف `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). وهي للقراءة فقط ولا تفعل سوى منع أوامر shell والتعديلات الخطرة، وتحتاج إلى Node.js في `PATH`. إذا كنت قد ثبّت أيًّا منها مسبقًا عبر `npx` فأزل تلك النسخة (`npx @ketecode/loom uninstall --hook <name>`) وإلا فستعمل مرتين. أما بقية الخطافات فما زالت تأتي من مثبّت `npx`.
 
 ## منهجية للتطوير
 

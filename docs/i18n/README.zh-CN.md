@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source 7d6e1539b4a9 -->
+<!-- translated from README.md, source f072ba777c4f -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -91,7 +91,7 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 通过插件安装的内容由宿主自身的插件管理器负责更新。对同一个宿主，请只选择插件安装或 `npx` 安装器中的一种，不要同时使用，否则宿主可能会把每个 skill 列出两次。
 
-Claude Code 插件还会启用 `developer` 配置中的四个安全 hook (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`)。它们是只读的，只会拦截有风险的 shell 命令和编辑；需要 `PATH` 中有 Node.js。其他 hook 仍需通过 `npx` 安装器安装。
+Claude Code 插件还会启用 `developer` 配置中的四个安全 hook (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`)。它们是只读的，只会拦截有风险的 shell 命令和编辑；需要 `PATH` 中有 Node.js。如果你已经用 `npx` 安装过其中任何一个，请卸载那份副本（`npx @ketecode/loom uninstall --hook <name>`），否则它会运行两次。其他 hook 仍需通过 `npx` 安装器安装。
 
 ## 一套开发方法
 

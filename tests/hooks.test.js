@@ -408,10 +408,10 @@ test('post-read and post-tool hooks register only where the host supports them',
   assert.match(out, /kete has no post-tool hook/);
 });
 
-// The Claude Code plugin (/plugin install) runs hooks/hooks.json's commands through a shell, with
+// The Claude Code plugin (/plugin install) runs hooks/claude-code.json's commands through a shell, with
 // CLAUDE_PLUGIN_ROOT set to the installed plugin folder.
 test('the plugin hooks block from the plugin folder and allow ordinary work', { skip: process.platform === 'win32' && 'POSIX shell' }, () => {
-  const config = readJson(path.join(HOOKS, 'hooks.json'));
+  const config = readJson(path.join(HOOKS, 'claude-code.json'));
   const root = path.join(__dirname, '..');
   const commands = Object.fromEntries(
     config.hooks.PreToolUse.flatMap((group) => group.hooks.map((h) => [h.command.split(' ').at(-2), { matcher: group.matcher, command: h.command }])),
@@ -429,5 +429,8 @@ test('the plugin hooks block from the plugin folder and allow ordinary work', { 
   assert.strictEqual(runHook('guard-secrets', write('/tmp/pay.ts', 'const key = process.env.KEY')).status, 0);
   assert.strictEqual(runHook('protect-files', write('/tmp/.env', 'DB_URL=postgres://x')).status, 2);
   assert.strictEqual(runHook('protect-files', write('/tmp/src/app.ts', 'export {}')).status, 0);
-  assert.strictEqual(commands['guard-secrets'].matcher, 'Edit|Write|NotebookEdit');
+  assert.deepStrictEqual(Object.keys(config.hooks), ['PreToolUse']);
+  for (const name of ['block-dangerous-commands', 'block-no-verify']) assert.strictEqual(commands[name].matcher, 'Bash', name);
+  for (const name of ['guard-secrets', 'protect-files']) assert.strictEqual(commands[name].matcher, 'Edit|Write|NotebookEdit', name);
+  assert.strictEqual(readJson(path.join(__dirname, '..', '.claude-plugin', 'plugin.json')).hooks, './hooks/claude-code.json');
 });

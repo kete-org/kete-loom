@@ -85,5 +85,6 @@
     "./agents/typescript-reviewer/AGENT.md",
     "./agents/ui-auditor/AGENT.md",
     "./agents/vue-reviewer/AGENT.md"
-  ]
+  ],
+  "hooks": "./hooks/claude-code.json"
 }
