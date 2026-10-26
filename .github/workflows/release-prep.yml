@@ -1,0 +1,84 @@
+name: Release prep
+
+# Every other Saturday at 09:00 UTC, opens a `chore(release): vX.Y.Z` pull request that bumps
+# package.json and every plugin manifest (scripts/release-bump.js), refreshes the catalog and
+# runs the full check. Publishing stays manual: merge the PR, then tag and push (docs/RELEASING.md).
+# Skips when nothing was committed since the last tag, or when that release PR is already open.
+# Needs Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests".
+
+on:
+  schedule:
+    - cron: '0 9 * * 6'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: release-prep
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every other Saturday
+        id: week
+        if: github.event_name == 'schedule'
+        run: |
+          # cron has no "every two weeks": run when a whole number of fortnights has passed since 2026-10-31.
+          days=$(( ( $(date -u +%s) - $(date -u -d 2026-10-31 +%s) ) / 86400 ))
+          if [ $(( days % 14 )) -ne 0 ]; then
+            echo "::notice::Off week, no release prep."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.week.outputs.skip != 'true'
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        if: steps.week.outputs.skip != 'true'
+        with:
+          node-version: 22
+      - name: Bump version
+        id: bump
+        if: steps.week.outputs.skip != 'true'
+        run: |
+          version="$(node scripts/release-bump.js)"
+          if [ -z "$version" ]; then
+            echo "::notice::Nothing committed since the last tag, no release."
+          elif git ls-remote --exit-code origin "refs/heads/release/v$version" > /dev/null; then
+            echo "::notice::release/v$version already exists; merge or close its pull request first."
+          else
+            node scripts/release-bump.js --write > /dev/null
+            echo "version=$version" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.bump.outputs.version
+        run: npm ci
+      - if: steps.bump.outputs.version
+        run: npm run catalog
+      - if: steps.bump.outputs.version
+        run: npm run check
+      - name: Open the release pull request
+        if: steps.bump.outputs.version
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "release/v$VERSION"
+          git add package.json .claude-plugin .codex-plugin .agents/plugins gemini-extension.json catalog.json README.md
+          git commit -m "chore(release): v$VERSION"
+          git push origin "release/v$VERSION"
+          gh pr create --base main --head "release/v$VERSION" --title "chore(release): v$VERSION" --body "$(cat <<EOF
+          Scheduled release prep. Version, catalog and \`npm run check\` were updated and run by the Release prep workflow.
+
+          Commits since the last tag:
+
+          $(git log --format='- %s' "$(git describe --tags --abbrev=0 --match 'v[0-9]*')..HEAD~1")
+
+          To publish after merging: \`git tag v$VERSION && git push origin v$VERSION\` (docs/RELEASING.md).
+          EOF
+          )"

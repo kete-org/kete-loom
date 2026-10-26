@@ -44,6 +44,8 @@ Then, under the same Settings page, set **Publishing access** to require 2FA or 
 
 ## Every release
 
+Every other Saturday at 09:00 UTC, `.github/workflows/release-prep.yml` does steps 1 to 3 and opens a `chore(release): vX.Y.Z` pull request (run it any time from the Actions tab). Review and merge it, then do steps 4 to 6 from `main`. `node scripts/release-bump.js` prints the version it would pick; `--write` applies it.
+
 1. Decide the version: patch for fixes and content wording, minor for new skills, agents, commands, rules, hooks, MCP servers or CLI features, major for breaking changes to the CLI or install layout.
 2. Bump it everywhere at once: `package.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `.agents/plugins/marketplace.json` and `gemini-extension.json`. `npm run lint` fails if they disagree.
 3. `npm run catalog` and `npm run check`; everything must pass.
