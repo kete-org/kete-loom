@@ -407,3 +407,27 @@ test('post-read and post-tool hooks register only where the host supports them',
   assert.match(out, /cursor has no post-read hook/);
   assert.match(out, /kete has no post-tool hook/);
 });
+
+// The Claude Code plugin (/plugin install) runs hooks/hooks.json's commands through a shell, with
+// CLAUDE_PLUGIN_ROOT set to the installed plugin folder.
+test('the plugin hooks block from the plugin folder and allow ordinary work', { skip: process.platform === 'win32' && 'POSIX shell' }, () => {
+  const config = readJson(path.join(HOOKS, 'hooks.json'));
+  const root = path.join(__dirname, '..');
+  const commands = Object.fromEntries(
+    config.hooks.PreToolUse.flatMap((group) => group.hooks.map((h) => [h.command.split(' ').at(-2), { matcher: group.matcher, command: h.command }])),
+  );
+  assert.deepStrictEqual(Object.keys(commands).sort(), ['block-dangerous-commands', 'block-no-verify', 'guard-secrets', 'protect-files']);
+  const runHook = (name, payload) =>
+    spawnSync('sh', ['-c', commands[name].command], { input: JSON.stringify(payload), env: { ...process.env, CLAUDE_PLUGIN_ROOT: root }, encoding: 'utf8' });
+  const shell = (c) => PAYLOADS.claude(c);
+  const write = (file, content) => ({ tool_name: 'Write', tool_input: { file_path: file, content }, cwd: '/tmp' });
+  assert.strictEqual(runHook('block-dangerous-commands', shell('rm -rf ~')).status, 2);
+  assert.strictEqual(runHook('block-dangerous-commands', shell('npm test')).status, 0);
+  assert.strictEqual(runHook('block-no-verify', shell("git commit --no-verify -m 'wip'")).status, 2);
+  assert.strictEqual(runHook('block-no-verify', shell("git commit -m 'wip'")).status, 0);
+  assert.strictEqual(runHook('guard-secrets', write('/tmp/pay.ts', `const key = 'sk_live_${'a'.repeat(40)}';`)).status, 2);
+  assert.strictEqual(runHook('guard-secrets', write('/tmp/pay.ts', 'const key = process.env.KEY')).status, 0);
+  assert.strictEqual(runHook('protect-files', write('/tmp/.env', 'DB_URL=postgres://x')).status, 2);
+  assert.strictEqual(runHook('protect-files', write('/tmp/src/app.ts', 'export {}')).status, 0);
+  assert.strictEqual(commands['guard-secrets'].matcher, 'Edit|Write|NotebookEdit');
+});

@@ -91,6 +91,8 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 
 Plugin installs update through the host's own plugin manager. Use either a plugin install or the `npx` installer for a given host, not both, or the host may list each skill twice.
 
+The Claude Code plugin also turns on the `developer` profile's four safety hooks (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). They are read-only and only block risky shell commands and edits; they need Node.js on your `PATH`. The other hooks still come from the `npx` installer.
+
 ## A development method
 
 Install `--profile method` for a complete way of working, from idea to merged branch, with a review gate at each step:

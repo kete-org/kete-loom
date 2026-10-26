@@ -10,6 +10,7 @@ const { lintItem, words, jaccard, NAME_RE, SEMVER_RE, CATEGORIES, RISKS } = requ
 const { loadProfiles, DETECT } = require('./lib/profiles');
 const { translations } = require('./lib/i18n');
 const { listMcp } = require('./lib/mcp-install');
+const { pluginHooks: hookConfig } = require('./lib/hooks-install');
 
 // profiles.json: known keys, existing names, valid categories, and extends that resolve.
 function lintProfiles(items) {
@@ -90,11 +91,20 @@ function lintManifests() {
     // Claude Code only auto-discovers agents/*.md; ours live in folders, so the plugin lists them.
     const want = JSON.stringify(pluginAgents());
     if (JSON.stringify(claude.agents || []) !== want) errors.push(`.claude-plugin/plugin.json: "agents" must be ${want}. Run "npm run catalog".`);
+    const hooksPath = path.join(REPO_ROOT, 'hooks', 'hooks.json');
+    const current = fs.existsSync(hooksPath) ? fs.readFileSync(hooksPath, 'utf8') : '';
+    if (current !== pluginHooksText()) errors.push('hooks/hooks.json is out of date with the developer profile. Run "npm run catalog".');
   }
   return errors;
 }
 
 const pluginAgents = () => listAgents().map((a) => `./agents/${a.dir}/AGENT.md`);
+// The plugin turns on the developer profile's hooks: read-only checks that only block risky commands and edits.
+const pluginHooks = () => {
+  const names = loadProfiles().developer.hooks;
+  return hookConfig(listHooks().filter((h) => names.includes(h.dir)));
+};
+const pluginHooksText = () => JSON.stringify(pluginHooks(), null, 2) + '\n';
 
 function strayFolders(root, file) {
   if (!fs.existsSync(root)) return [];
@@ -156,4 +166,4 @@ function main() {
 
 if (require.main === module) process.exitCode = main();
 
-module.exports = { lintItem, lintSkill: lintItem, lintManifests, pluginAgents };
+module.exports = { lintItem, lintSkill: lintItem, lintManifests, pluginAgents, pluginHooks, pluginHooksText };

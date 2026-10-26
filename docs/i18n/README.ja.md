@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code、Kiro にそのままインストールできます。</p>
 
-<!-- translated from README.md, source 5fdefea7ddee -->
+<!-- translated from README.md, source 7d6e1539b4a9 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -90,6 +90,8 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | 任意の skills CLI | `npx skills add Kete-org/kete-loom` |
 
 プラグインとしてインストールした場合は、ホスト自身のプラグインマネージャーで更新されます。1 つのホストに対しては、プラグインインストールと `npx` インストーラーのどちらか一方だけを使ってください。両方を使うと、ホストに各 skill が二重に表示されることがあります。
+
+Claude Code プラグインは、`developer` プロファイルの 4 つの安全フック (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`) も有効にします。これらは読み取り専用で、危険なシェルコマンドと編集をブロックするだけです。`PATH` 上に Node.js が必要です。その他のフックは引き続き `npx` インストーラーで導入します。
 
 ## 開発手法
 

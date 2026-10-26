@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
 Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source 5fdefea7ddee -->
+<!-- translated from README.md, source 7d6e1539b4a9 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -90,6 +90,8 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | CLI yoyote ya skills | `npx skills add Kete-org/kete-loom` |
 
 Usakinishaji wa plugin husasishwa kupitia plugin manager ya host yenyewe. Kwa host moja, tumia ama usakinishaji wa plugin ama installer ya `npx`, si zote mbili, la sivyo host inaweza kuonyesha kila skill mara mbili.
+
+Plugin ya Claude Code pia huwasha hooks nne za usalama za profile ya `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). Ni za kusoma tu na huzuia tu amri za shell na mabadiliko hatari; zinahitaji Node.js kwenye `PATH` yako. Hooks nyingine bado zinatoka kwenye installer ya `npx`.
 
 ## Mbinu ya uundaji
 

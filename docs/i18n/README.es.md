@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagentes y comandos seleccionados y probados para agentes de programación.</strong><br/>
 Una sola fuente. Se instala sin cambios en Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code y Kiro.</p>
 
-<!-- translated from README.md, source 5fdefea7ddee -->
+<!-- translated from README.md, source 7d6e1539b4a9 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -90,6 +90,8 @@ irm https://raw.githubusercontent.com/Kete-org/kete-loom/main/install.ps1 | iex
 | Cualquier CLI de skills | `npx skills add Kete-org/kete-loom` |
 
 Las instalaciones como plugin se actualizan mediante el gestor de plugins del propio host. Para un mismo host, usa o bien la instalación como plugin o bien el instalador `npx`, no ambos; de lo contrario, el host podría mostrar cada skill dos veces.
+
+El plugin de Claude Code también activa los cuatro hooks de seguridad del perfil `developer` (`block-dangerous-commands`, `block-no-verify`, `guard-secrets`, `protect-files`). Son de solo lectura y solo bloquean comandos de shell y ediciones arriesgados; necesitan Node.js en tu `PATH`. Los demás hooks siguen llegando con el instalador `npx`.
 
 ## Un método de desarrollo
 

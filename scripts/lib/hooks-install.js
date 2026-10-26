@@ -82,6 +82,19 @@ function grouped(host, timeoutUnit = 1) {
   };
 }
 
+// The Claude Code plugin's hooks/hooks.json, for /plugin installs: the same runner and event map as the
+// installer, run from the plugin's own folder. Its commands don't match RUNNER_RE, so `uninstall` never
+// touches them, and a hook installed both ways runs twice until the npx copy is removed.
+function pluginHooks(hooks) {
+  const data = {};
+  const { add } = grouped('claude');
+  for (const h of hooks) add(data, `node "\${CLAUDE_PLUGIN_ROOT}/hooks/run.js" claude ${h.dir} ${h.event}`, h.dir, h.event);
+  return {
+    description: `Kete Loom safety hooks (the developer profile): ${hooks.map((h) => h.dir).join(', ')}`,
+    hooks: data.hooks,
+  };
+}
+
 const pascal = (s) => s.replace(/(^|-)(\w)/g, (_, __, c) => c.toUpperCase());
 
 const HOSTS = {
@@ -293,4 +306,4 @@ function installRuntime(hooks, { home, dryRun = false, sourceDir }) {
   }
 }
 
-module.exports = { HOSTS, HOOK_HOSTS, EVENTS, supports, register, unregister, registered, installRuntime, runtimeDir, command, ours, readJson, writeAtomic, CommentedFileError };
+module.exports = { HOSTS, HOOK_HOSTS, EVENTS, pluginHooks, supports, register, unregister, registered, installRuntime, runtimeDir, command, ours, readJson, writeAtomic, CommentedFileError };
