@@ -18,6 +18,11 @@ const git = (cwd, args) => {
   }
 };
 
+// Package managers are .cmd shims on Windows, which Node only starts through a shell. Their args are
+// fixed; ruff and go get file names, which cmd.exe would parse (`x&calc&.py`), so they never use one.
+const SHIMS = new Set(['npm', 'pnpm', 'yarn', 'bun']);
+const needsShell = (program, platform = process.platform) => platform === 'win32' && SHIMS.has(program);
+
 function onPath(bin) {
   const exts = process.platform === 'win32' ? (process.env.PATHEXT || '.EXE;.CMD').split(';') : [''];
   for (const dir of (process.env.PATH || '').split(path.delimiter)) for (const ext of exts) if (dir && fs.existsSync(path.join(dir, bin + ext))) return true;
@@ -56,7 +61,7 @@ function check(event) {
     .filter((f) => CODE.test(f) && fs.existsSync(path.join(root, f)));
   if (!changed.length) return { block: false };
   for (const [label, program, args] of checksFor(root, changed)) {
-    const r = spawnSync(program, args, { cwd: root, encoding: 'utf8', timeout: TIMEOUT_MS, shell: process.platform === 'win32' });
+    const r = spawnSync(program, args, { cwd: root, encoding: 'utf8', timeout: TIMEOUT_MS, shell: needsShell(program) });
     if (r.error || r.status === 0) continue; // a check that can't start or times out says nothing about the code
     const tail = `${r.stdout || ''}${r.stderr || ''}`.trim().split('\n').slice(-30).join('\n').slice(-2500);
     return {
@@ -67,4 +72,4 @@ function check(event) {
   return { block: false };
 }
 
-module.exports = { check, checksFor };
+module.exports = { check, checksFor, needsShell };

@@ -259,6 +259,16 @@ test('verify-before-stop runs the project lint only when code changed, and once 
   assert.strictEqual(check({ cwd: tmp() }).block, false, 'not a git repository');
 });
 
+test('verify-before-stop uses a shell only for Windows package-manager shims, never for checks given file names', () => {
+  const { needsShell } = require('../hooks/verify-before-stop/hook.js');
+  for (const pm of ['npm', 'pnpm', 'yarn', 'bun']) assert.strictEqual(needsShell(pm, 'win32'), true, pm);
+  // ruff gets changed file names; through cmd.exe a name like `x&calc&.py` would run `calc`.
+  assert.strictEqual(needsShell('ruff', 'win32'), false);
+  assert.strictEqual(needsShell('go', 'win32'), false);
+  assert.strictEqual(needsShell('npm', 'darwin'), false);
+  assert.strictEqual(needsShell('npm', 'linux'), false);
+});
+
 test('capture-lessons asks once per session; read-before-edit refuses only the first edit', () => {
   const prev = process.env.KETE_LOOM_STATE_DIR;
   process.env.KETE_LOOM_STATE_DIR = tmp();

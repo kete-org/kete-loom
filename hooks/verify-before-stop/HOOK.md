@@ -3,7 +3,7 @@ name: verify-before-stop
 description: When the agent says it is done, runs the project's own lint and type-check commands if files changed, and sends it back to fix any failure instead of letting it finish with broken code.
 license: MIT
 metadata:
-  kete-loom/version: "0.1.0"
+  kete-loom/version: "0.1.1"
   kete-loom/category: testing
   kete-loom/risk: runs-commands
   kete-loom/event: "stop-gate"
