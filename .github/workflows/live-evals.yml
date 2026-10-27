@@ -34,11 +34,11 @@ jobs:
         if: env.ANTHROPIC_API_KEY == '' && env.KETE_LOOM_EVAL_API_KEY == ''
         run: |
           echo "::notice::Live evals skipped: add the ANTHROPIC_API_KEY secret to run them."
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         if: env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != ''
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         if: env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != ''
         with:
           node-version: 22
@@ -56,7 +56,7 @@ jobs:
       - name: Behaviour of everything (weekly or manual)
         if: always() && github.event_name != 'pull_request' && (env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != '')
         run: node scripts/run-behavior-evals.js --live --report behavior-evals.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always() && (env.ANTHROPIC_API_KEY != '' || env.KETE_LOOM_EVAL_API_KEY != '')
         with:
           name: live-evals
