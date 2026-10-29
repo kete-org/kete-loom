@@ -48,3 +48,16 @@ test('writeVersion refuses a file with more than one version field', () => {
   }
   assert.throws(() => writeVersion(root, '0.7.0'), /expected one "version" field, found 2/);
 });
+
+test('writeVersion sets the package version in package-lock.json and leaves dependency versions alone', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'kl-bump-'));
+  for (const file of VERSION_FILES) {
+    fs.mkdirSync(path.join(root, path.dirname(file)), { recursive: true });
+    fs.writeFileSync(path.join(root, file), '{\n  "version": "0.6.0"\n}\n');
+  }
+  const lock = { name: 'x', version: '0.6.0', lockfileVersion: 3, packages: { '': { name: 'x', version: '0.6.0' }, 'node_modules/a': { version: '1.0.0' } } };
+  fs.writeFileSync(path.join(root, 'package-lock.json'), `${JSON.stringify(lock, null, 2)}\n`);
+  writeVersion(root, '0.7.0');
+  lock.version = lock.packages[''].version = '0.7.0';
+  assert.strictEqual(fs.readFileSync(path.join(root, 'package-lock.json'), 'utf8'), `${JSON.stringify(lock, null, 2)}\n`);
+});

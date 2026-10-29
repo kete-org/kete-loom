@@ -3,7 +3,7 @@
 
 // Picks the next version from the Conventional Commits since the last vX.Y.Z tag
 // (major for `!` or BREAKING CHANGE, minor for feat, patch otherwise; see docs/RELEASING.md)
-// and, with --write, sets it in package.json and every plugin manifest. Prints the new
+// and, with --write, sets it in package.json, package-lock.json and every plugin manifest. Prints the new
 // version, or nothing when there are no commits to release.
 
 const fs = require('fs');
@@ -39,6 +39,13 @@ function writeVersion(root, version) {
     if (matches.length !== 1) throw new Error(`${file}: expected one "version" field, found ${matches.length}`);
     fs.writeFileSync(p, text.replace(/"version": "[^"]*"/, `"version": "${version}"`));
   }
+  // The lockfile repeats the version for the root package; its other "version" fields are dependencies'.
+  const lockPath = path.join(root, 'package-lock.json');
+  if (!fs.existsSync(lockPath)) return;
+  const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+  lock.version = version;
+  if (lock.packages && lock.packages['']) lock.packages[''].version = version;
+  fs.writeFileSync(lockPath, `${JSON.stringify(lock, null, 2)}\n`);
 }
 
 function commitsSinceTag(root) {
