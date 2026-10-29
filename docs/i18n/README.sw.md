@@ -7,7 +7,7 @@
 <p align="center"><strong>Agent Skills, subagents na commands zilizochaguliwa kwa makini na kujaribiwa, kwa ajili ya coding agents.</strong><br/>
 Chanzo kimoja. Husakinishwa bila mabadiliko katika Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code na Kiro.</p>
 
-<!-- translated from README.md, source f072ba777c4f -->
+<!-- translated from README.md, source 71f6d298dd66 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -191,7 +191,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry, na `lsp` kwa urambazaji wa language-server), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Servers za Claude Code huongezwa kwa `claude mcp add-json --scope user` (au `.mcp.json` kwa `--project`); Codex huzipata ndani ya block iliyowekewa alama ya `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode na Kete Code ndani ya faili zao za MCP config. Server uliyokwisha kuisanidi kwa jina lilelile haibadilishwi kamwe. Copilot CLI hupata local servers pekee, kwa sababu haina njia iliyoandikwa rasmi ya kuingia kwenye remote servers.
+Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry, na `lsp` kwa urambazaji wa language-server), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Servers za Claude Code huongezwa kwa `claude mcp add-json --scope user` (au `.mcp.json` kwa `--project`); Codex huzipata ndani ya block iliyowekewa alama ya `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode na Kete Code ndani ya faili zao za MCP config. Server uliyokwisha kuisanidi kwa jina lilelile haibadilishwi kamwe. Kwenye Windows, servers za Claude Code zinaweza kuongezwa hivi tu ukiwa na native installer ya Claude Code (`claude.exe`); ukiwa umesakinisha kupitia npm, kete-loom huchapisha amri ya `claude mcp add-json` uiendeshe mwenyewe. Copilot CLI hupata local servers pekee, kwa sababu haina njia iliyoandikwa rasmi ya kuingia kwenye remote servers.
 
 Orodha kamili iko kwenye README ya Kiingereza: [MCP servers](../../README.md#mcp-servers), na pia ndani ya `catalog.json`.
 

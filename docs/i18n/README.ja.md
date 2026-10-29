@@ -7,7 +7,7 @@
 <p align="center"><strong>コーディングエージェントのための、厳選されテスト済みの Agent Skills、サブエージェント、コマンド。</strong><br/>
 ひとつのソースから、Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code、Kiro にそのままインストールできます。</p>
 
-<!-- translated from README.md, source f072ba777c4f -->
+<!-- translated from README.md, source 71f6d298dd66 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -191,7 +191,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-パック: `mcp-web`、`mcp-code`(GitHub、Git、Sentry、言語サーバーによるコードナビゲーションの `lsp`)、`mcp-team`(Linear、Notion、Atlassian)、`mcp-cloud`(Cloudflare、Vercel、Supabase 読み取り専用、Stripe)、`mcp-design`(Figma)。Claude Code のサーバーは `claude mcp add-json --scope user`(`--project` を指定した場合は `.mcp.json`)で追加されます。Codex には `config.toml` のマーク付きブロックに、Gemini CLI、Cursor、Copilot CLI、OpenCode、Kete Code にはそれぞれの MCP 設定ファイルに追加されます。同じ名前ですでに設定済みのサーバーが置き換えられることはありません。Copilot CLI にはローカルサーバーだけが追加されます。リモートサーバーにサインインする方法が文書化されていないためです。
+パック: `mcp-web`、`mcp-code`(GitHub、Git、Sentry、言語サーバーによるコードナビゲーションの `lsp`)、`mcp-team`(Linear、Notion、Atlassian)、`mcp-cloud`(Cloudflare、Vercel、Supabase 読み取り専用、Stripe)、`mcp-design`(Figma)。Claude Code のサーバーは `claude mcp add-json --scope user`(`--project` を指定した場合は `.mcp.json`)で追加されます。Codex には `config.toml` のマーク付きブロックに、Gemini CLI、Cursor、Copilot CLI、OpenCode、Kete Code にはそれぞれの MCP 設定ファイルに追加されます。同じ名前ですでに設定済みのサーバーが置き換えられることはありません。Windows では、この方法で Claude Code のサーバーを追加できるのは Claude Code のネイティブインストーラー(`claude.exe`)を使っている場合だけです。npm でインストールした場合、kete-loom は自分で実行する `claude mcp add-json` コマンドを表示します。Copilot CLI にはローカルサーバーだけが追加されます。リモートサーバーにサインインする方法が文書化されていないためです。
 
 全一覧は英語版 README の [MCP servers](../../README.md#mcp-servers) と `catalog.json` にあります。
 

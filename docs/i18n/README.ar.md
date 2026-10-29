@@ -7,7 +7,7 @@
 <p align="center" dir="rtl"><strong>مجموعة منتقاة ومُختبَرة من الـ Agent Skills والوكلاء الفرعيين (subagents) والأوامر لوكلاء البرمجة.</strong><br/>
 مصدر واحد، يُثبَّت كما هو في Claude Code وCodex وOpenCode وCursor وGemini CLI وGitHub Copilot وKete Code وKiro.</p>
 
-<!-- translated from README.md, source f072ba777c4f -->
+<!-- translated from README.md, source 71f6d298dd66 -->
 
 <!-- counts:start -->
 <!-- counts:end -->
@@ -226,7 +226,7 @@ npx @ketecode/loom uninstall --mcp github
 
 </div>
 
-الحزم: `mcp-web`، و`mcp-code` (GitHub وGit وSentry، و`lsp` للتنقّل عبر خادم اللغة)، و`mcp-team` (Linear وNotion وAtlassian)، و`mcp-cloud` (Cloudflare وVercel وSupabase للقراءة فقط وStripe)، و`mcp-design` (Figma). تُضاف خوادم Claude Code عبر `claude mcp add-json --scope user` (أو `.mcp.json` مع `--project`)؛ ويحصل عليها Codex في كتلة مُعلَّمة داخل `config.toml`؛ أما Gemini CLI وCursor وCopilot CLI وOpenCode وKete Code ففي ملفات إعدادات MCP الخاصة بها. ولا يُستبدَل أبدًا خادم سبق أن أعددته بالاسم نفسه. يحصل Copilot CLI على الخوادم المحلية فقط، لأنه لا يملك طريقة موثّقة لتسجيل الدخول إلى الخوادم البعيدة.
+الحزم: `mcp-web`، و`mcp-code` (GitHub وGit وSentry، و`lsp` للتنقّل عبر خادم اللغة)، و`mcp-team` (Linear وNotion وAtlassian)، و`mcp-cloud` (Cloudflare وVercel وSupabase للقراءة فقط وStripe)، و`mcp-design` (Figma). تُضاف خوادم Claude Code عبر `claude mcp add-json --scope user` (أو `.mcp.json` مع `--project`)؛ ويحصل عليها Codex في كتلة مُعلَّمة داخل `config.toml`؛ أما Gemini CLI وCursor وCopilot CLI وOpenCode وKete Code ففي ملفات إعدادات MCP الخاصة بها. ولا يُستبدَل أبدًا خادم سبق أن أعددته بالاسم نفسه. على Windows، لا يمكن إضافة خوادم Claude Code بهذه الطريقة إلا مع المثبّت الأصلي لـ Claude Code (`claude.exe`)؛ أما مع التثبيت عبر npm فيطبع kete-loom أمر `claude mcp add-json` لتشغيله بنفسك. يحصل Copilot CLI على الخوادم المحلية فقط، لأنه لا يملك طريقة موثّقة لتسجيل الدخول إلى الخوادم البعيدة.
 
 القائمة الكاملة موجودة في ملف README الإنجليزي: [MCP servers](../../README.md#mcp-servers)، وفي `catalog.json`.
 

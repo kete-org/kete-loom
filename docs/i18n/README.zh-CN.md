@@ -7,7 +7,7 @@
 <p align="center"><strong>为编程 agent 精选并经过测试的 Agent Skills、subagent 与命令。</strong><br/>
 一套源文件，无需改动即可安装到 Claude Code、Codex、OpenCode、Cursor、Gemini CLI、GitHub Copilot、Kete Code 和 Kiro。</p>
 
-<!-- translated from README.md, source f072ba777c4f -->
+<!-- translated from README.md, source 71f6d298dd66 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -191,7 +191,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-配置包：`mcp-web`、`mcp-code`（GitHub、Git、Sentry，以及用于语言服务器导航的 `lsp`）、`mcp-team`（Linear、Notion、Atlassian）、`mcp-cloud`（Cloudflare、Vercel、Supabase 只读、Stripe）、`mcp-design`（Figma）。Claude Code 的服务器通过 `claude mcp add-json --scope user` 添加（使用 `--project` 时写入 `.mcp.json`）；Codex 的服务器写入 `config.toml` 中一个带标记的区块；Gemini CLI、Cursor、Copilot CLI、OpenCode 和 Kete Code 则写入各自的 MCP 配置文件。如果你已经用同一名称配置过某个服务器，它绝不会被替换。Copilot CLI 只会获得本地服务器，因为它没有公开文档说明如何登录远程服务器。
+配置包：`mcp-web`、`mcp-code`（GitHub、Git、Sentry，以及用于语言服务器导航的 `lsp`）、`mcp-team`（Linear、Notion、Atlassian）、`mcp-cloud`（Cloudflare、Vercel、Supabase 只读、Stripe）、`mcp-design`（Figma）。Claude Code 的服务器通过 `claude mcp add-json --scope user` 添加（使用 `--project` 时写入 `.mcp.json`）；Codex 的服务器写入 `config.toml` 中一个带标记的区块；Gemini CLI、Cursor、Copilot CLI、OpenCode 和 Kete Code 则写入各自的 MCP 配置文件。如果你已经用同一名称配置过某个服务器，它绝不会被替换。在 Windows 上，只有使用 Claude Code 的原生安装程序（`claude.exe`）时才能这样添加 Claude Code 服务器；如果是通过 npm 安装的，kete-loom 会打印出 `claude mcp add-json` 命令，由你自己运行。Copilot CLI 只会获得本地服务器，因为它没有公开文档说明如何登录远程服务器。
 
 完整列表见英文版 README：[MCP servers](../../README.md#mcp-servers)，也可查阅 [catalog.json](../../catalog.json)。
 

@@ -7,7 +7,7 @@
 <p align="center"><strong>Des Agent Skills, sous-agents et commandes sélectionnés et testés pour les agents de code.</strong><br/>
 Une seule source. S'installe tel quel dans Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code et Kiro.</p>
 
-<!-- translated from README.md, source f072ba777c4f -->
+<!-- translated from README.md, source 71f6d298dd66 -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -191,7 +191,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Packs : `mcp-web`, `mcp-code` (GitHub, Git, Sentry, et `lsp` pour la navigation par serveur de langage), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase en lecture seule, Stripe), `mcp-design` (Figma). Les serveurs pour Claude Code sont ajoutés avec `claude mcp add-json --scope user` (ou dans `.mcp.json` avec `--project`) ; Codex les reçoit dans un bloc balisé de `config.toml` ; Gemini CLI, Cursor, Copilot CLI, OpenCode et Kete Code dans leurs fichiers de configuration MCP. Un serveur que vous avez déjà configuré sous le même nom n'est jamais remplacé. Copilot CLI ne reçoit que les serveurs locaux, car il n'offre aucun moyen documenté de s'authentifier auprès des serveurs distants.
+Packs : `mcp-web`, `mcp-code` (GitHub, Git, Sentry, et `lsp` pour la navigation par serveur de langage), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase en lecture seule, Stripe), `mcp-design` (Figma). Les serveurs pour Claude Code sont ajoutés avec `claude mcp add-json --scope user` (ou dans `.mcp.json` avec `--project`) ; Codex les reçoit dans un bloc balisé de `config.toml` ; Gemini CLI, Cursor, Copilot CLI, OpenCode et Kete Code dans leurs fichiers de configuration MCP. Un serveur que vous avez déjà configuré sous le même nom n'est jamais remplacé. Sous Windows, les serveurs Claude Code ne peuvent être ajoutés ainsi qu'avec l'installateur natif de Claude Code (`claude.exe`) ; avec une installation npm, kete-loom affiche la commande `claude mcp add-json` à lancer vous-même. Copilot CLI ne reçoit que les serveurs locaux, car il n'offre aucun moyen documenté de s'authentifier auprès des serveurs distants.
 
 La liste complète se trouve dans le README en anglais : [MCP servers](../../README.md#mcp-servers), ainsi que dans `catalog.json`.
 

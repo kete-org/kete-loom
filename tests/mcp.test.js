@@ -88,6 +88,13 @@ test('a Claude Code server you already have is never replaced', { skip: process.
   assert.strictEqual(stub.servers().github.url, 'https://example.com/mine');
 });
 
+test('a missing claude CLI skips the server and prints the command to add it by hand', () => {
+  const home = tmp();
+  const out = run(['install', '--home', home, '--target', 'claude', '--mcp', 'context7'], { claudeBin: path.join(home, 'no-such-claude') });
+  assert.match(out, process.platform === 'win32' ? /needs Claude Code's native installer \(claude\.exe\)/ : /the claude CLI isn't on your PATH/);
+  assert.match(out, /claude mcp add-json context7 /);
+});
+
 test('Codex servers you defined yourself block ours instead of producing invalid TOML', () => {
   const home = tmp();
   fs.mkdirSync(path.join(home, '.codex'));

@@ -616,7 +616,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry, and `lsp` for language-server navigation), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Claude Code servers are added with `claude mcp add-json --scope user` (or `.mcp.json` with `--project`); Codex gets them in a marked block of `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode and Kete Code in their MCP config files. A server you already configured under the same name is never replaced. Copilot CLI gets local servers only, because it has no documented way to sign in to remote ones.
+Packs: `mcp-web`, `mcp-code` (GitHub, Git, Sentry, and `lsp` for language-server navigation), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Claude Code servers are added with `claude mcp add-json --scope user` (or `.mcp.json` with `--project`); Codex gets them in a marked block of `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode and Kete Code in their MCP config files. A server you already configured under the same name is never replaced. On Windows, Claude Code servers can only be added this way with Claude Code's native installer (`claude.exe`); with an npm install, kete-loom prints the `claude mcp add-json` command to run yourself. Copilot CLI gets local servers only, because it has no documented way to sign in to remote ones.
 
 <!-- mcp:start -->
 | Server | Kind | Sign-in | What it does |
