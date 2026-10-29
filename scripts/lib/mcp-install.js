@@ -191,7 +191,12 @@ function claudeEnv(home) {
 // Without a shell, Windows only finds claude.exe (Claude Code's native installer), not npm's claude.cmd.
 const claudeMissing = () =>
   process.platform === 'win32' ? "kete-loom can't run claude: it needs Claude Code's native installer (claude.exe), not an npm install" : "the claude CLI isn't on your PATH";
-const claude = (args, home) => execFileSync(claudeBin(), args, { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', timeout: 30000, env: claudeEnv(home) });
+// A .js override (the tests' fake claude) runs through node: Windows can't start a script without a shell.
+const claude = (args, home) => {
+  const bin = claudeBin();
+  const [file, argv] = bin.endsWith('.js') ? [process.execPath, [bin, ...args]] : [bin, args];
+  return execFileSync(file, argv, { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', timeout: 30000, env: claudeEnv(home) });
+};
 
 function claudeUserRegister(servers, { home, dryRun }) {
   const state = readState(home);

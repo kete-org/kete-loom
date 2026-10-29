@@ -123,7 +123,6 @@ test('a --home install registers Claude Code servers under that home, never your
 require('fs').appendFileSync(${JSON.stringify(seen)}, process.env.HOME + '\\n');
 process.exit(process.argv[3] === 'get' ? 1 : 0);
 `);
-  fs.chmodSync(bin, 0o755);
   run(['install', '--home', home, '--target', 'claude', '--skill', 'tdd-workflow', '--mcp', 'context7'], { claudeBin: bin });
   const homes = fs.readFileSync(seen, 'utf8').trim().split('\n');
   assert.ok(homes.length >= 2, 'get, then add-json');
