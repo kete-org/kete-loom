@@ -188,6 +188,9 @@ function claudeEnv(home) {
   delete env.CLAUDE_CONFIG_DIR;
   return env;
 }
+// Without a shell, Windows only finds claude.exe (Claude Code's native installer), not npm's claude.cmd.
+const claudeMissing = () =>
+  process.platform === 'win32' ? "kete-loom can't run claude: it needs Claude Code's native installer (claude.exe), not an npm install" : "the claude CLI isn't on your PATH";
 const claude = (args, home) => execFileSync(claudeBin(), args, { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf8', timeout: 30000, env: claudeEnv(home) });
 
 function claudeUserRegister(servers, { home, dryRun }) {
@@ -216,7 +219,7 @@ function claudeUserRegister(servers, { home, dryRun }) {
       mine.add(s.dir);
       return { name: s.dir, action: 'installed', dest };
     } catch (e) {
-      const reason = e.code === 'ENOENT' ? `the claude CLI isn't on your PATH; run: claude mcp add-json ${s.dir} '${json}' --scope user` : `claude mcp failed: ${(e.stderr || e.message).trim().slice(0, 200)}`;
+      const reason = e.code === 'ENOENT' ? `${claudeMissing()}; run: claude mcp add-json ${s.dir} '${json}' --scope user` : `claude mcp failed: ${(e.stderr || e.message).trim().slice(0, 200)}`;
       return { name: s.dir, action: 'skipped', reason, dest };
     }
   });

@@ -7,7 +7,7 @@
 <p align="center"><strong>Kuratierte, getestete Agent Skills, Subagents und Commands für Coding-Agents.</strong><br/>
 Eine Quelle. Lässt sich unverändert in Claude Code, Codex, OpenCode, Cursor, Gemini CLI, GitHub Copilot, Kete Code und Kiro installieren.</p>
 
-<!-- translated from README.md, source 5fdefea7ddee -->
+<!-- translated from README.md, source 1098500fc32b -->
 
 <!-- counts:start --><!-- counts:end -->
 
@@ -189,7 +189,7 @@ npx @ketecode/loom install --profile mcp-web                # a pack: playwright
 npx @ketecode/loom uninstall --mcp github
 ```
 
-Pakete: `mcp-web`, `mcp-code` (GitHub, Git, Sentry und `lsp` für die Navigation per Language-Server), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Für Claude Code werden Server mit `claude mcp add-json --scope user` hinzugefügt (bzw. in `.mcp.json` mit `--project`); Codex erhält sie in einem markierten Block der `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode und Kete Code in ihren MCP-Konfigurationsdateien. Ein Server, den du bereits unter demselben Namen konfiguriert hast, wird nie ersetzt. Copilot CLI erhält nur lokale Server, weil es keinen dokumentierten Weg gibt, sich dort bei Remote-Servern anzumelden.
+Pakete: `mcp-web`, `mcp-code` (GitHub, Git, Sentry und `lsp` für die Navigation per Language-Server), `mcp-team` (Linear, Notion, Atlassian), `mcp-cloud` (Cloudflare, Vercel, Supabase read-only, Stripe), `mcp-design` (Figma). Für Claude Code werden Server mit `claude mcp add-json --scope user` hinzugefügt (bzw. in `.mcp.json` mit `--project`); Codex erhält sie in einem markierten Block der `config.toml`; Gemini CLI, Cursor, Copilot CLI, OpenCode und Kete Code in ihren MCP-Konfigurationsdateien. Ein Server, den du bereits unter demselben Namen konfiguriert hast, wird nie ersetzt. Unter Windows lassen sich Claude-Code-Server so nur mit dem nativen Installer von Claude Code (`claude.exe`) hinzufügen; bei einer npm-Installation gibt kete-loom den Befehl `claude mcp add-json` aus, den du selbst ausführst. Copilot CLI erhält nur lokale Server, weil es keinen dokumentierten Weg gibt, sich dort bei Remote-Servern anzumelden.
 
 Die vollständige Liste findest du im englischen README: [MCP-Server](../../README.md#mcp-servers), sowie in [`catalog.json`](../../catalog.json).
 
