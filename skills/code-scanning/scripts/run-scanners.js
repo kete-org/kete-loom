@@ -41,7 +41,8 @@ const sarif = (name, version, results) => ({
   runs: [{ tool: { driver: { name, version: version || undefined } }, results }],
 });
 
-const at = (file, line) => [{ physicalLocation: { artifactLocation: { uri: file }, region: { startLine: line || 1 } } }];
+// A SARIF uri uses forward slashes; path.relative gives backslashes on Windows.
+const at = (file, line) => [{ physicalLocation: { artifactLocation: { uri: file.split(path.sep).join('/') }, region: { startLine: line || 1 } } }];
 
 function eslintToSarif(stdout, root, version) {
   const results = [];

@@ -4,7 +4,7 @@ description: Tool-driven security scan of a whole repository or a pull request d
 license: MIT
 compatibility: Any Agent Skills host that can run commands. Scripts need Node 18+ and git; each scanner is optional and used only if installed. Scanners may update their vulnerability databases over the network.
 metadata:
-  kete-loom/version: "0.1.1"
+  kete-loom/version: "0.1.2"
   kete-loom/category: security
   kete-loom/risk: runs-commands
   kete-loom/requires: "node, git"
