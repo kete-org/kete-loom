@@ -93,8 +93,15 @@ function lintManifests() {
     if (JSON.stringify(claude.agents || []) !== want) errors.push(`.claude-plugin/plugin.json: "agents" must be ${want}. Run "npm run catalog".`);
     if (claude.hooks !== PLUGIN_HOOKS_FILE) errors.push(`.claude-plugin/plugin.json: "hooks" must be "${PLUGIN_HOOKS_FILE}". Run "npm run catalog".`);
     const hooksPath = path.join(REPO_ROOT, PLUGIN_HOOKS_FILE);
+    // Compared as JSON: a Windows checkout may turn the file's line endings into CRLF.
     const current = fs.existsSync(hooksPath) ? fs.readFileSync(hooksPath, 'utf8') : '';
-    if (current !== pluginHooksText()) errors.push(`${PLUGIN_HOOKS_FILE.slice(2)} is out of date with the developer profile. Run "npm run catalog".`);
+    let same = false;
+    try {
+      same = JSON.stringify(JSON.parse(current)) === JSON.stringify(pluginHooks());
+    } catch {
+      same = false;
+    }
+    if (!same) errors.push(`${PLUGIN_HOOKS_FILE.slice(2)} is out of date with the developer profile. Run "npm run catalog".`);
     if (fs.existsSync(path.join(REPO_ROOT, 'hooks', 'hooks.json'))) errors.push('hooks/hooks.json must not exist: Gemini CLI and Codex would read it as their own hooks file.');
   }
   return errors;
