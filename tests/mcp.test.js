@@ -106,7 +106,8 @@ test('project scope writes the shared project files, and MCP packs install throu
   assert.ok(!fs.existsSync(path.join(repo, '.claude', 'skills')), 'an MCP pack installs only its servers');
 });
 
-test('a --home install registers Claude Code servers under that home, never your own config', () => {
+// Skipped on Windows like the other tests above that fake claude: Windows can't run a .js file as a program.
+test('a --home install registers Claude Code servers under that home, never your own config', { skip: process.platform === 'win32' }, () => {
   const dir = tmp();
   const home = path.join(dir, 'home');
   fs.mkdirSync(home);
