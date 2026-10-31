@@ -1,6 +1,6 @@
 {
   "name": "kete-loom",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Kete Loom: curated, tested Agent Skills for coding agents (TDD, verification, security review, Paystack, skill authoring).",
   "author": {
     "name": "Kete-org",
