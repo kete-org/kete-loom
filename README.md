@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/brand/kete-loom.svg" alt="Kete Loom" width="96" />
+  <img src="assets/brand/kete-logo-512.png" alt="Kete Loom" width="96" />
 </p>
 
 <h1 align="center">Kete Loom</h1>
